@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DE51CBF7-CE4A-4078-BB92-E45E20D8F775}</ProjectGuid>
+    <Keyword>QtVS_v303</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CustomWin32.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CustomWin32.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>CORE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>base.lib;network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <AdditionalDependencies>base.lib;network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>CORE_LIBRARY;INFRARED_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
+    <QtInstall>msvc2017</QtInstall>
+    <QtModules>core;gui;quickwidgets;serialport;webchannel;webenginewidgets;widgets;xml</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="QtSettings">
+    <QtInstall>msvc2017</QtInstall>
+    <QtModules>core;gui;quickwidgets;serialport;webchannel;webenginewidgets;widgets;xml</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="core_global.h" />
+    <ClInclude Include="file\appconfig.h" />
+    <ClInclude Include="file\globalconfigfile.h" />
+    <ClInclude Include="file\programfilepath.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="map\map2d\js\jsjsonutils.h" />
+    <ClInclude Include="network\datarecord\binaryfilerecord.h" />
+    <ClInclude Include="network\datarecord\filerecord.h" />
+    <ClInclude Include="network\taskmanager.h" />
+    <ClInclude Include="officalwidget\statusbaritemparsemethod.h" />
+    <ClInclude Include="pluginmanager\layout\layoutparsemethod.h" />
+    <ClInclude Include="pluginmanager\mailbox\observer.h" />
+    <ClInclude Include="pluginmanager\mailbox\subject.h" />
+    <ClInclude Include="pluginmanager\plugin\pluginloader.h" />
+    <ClInclude Include="pluginmanager\plugin\pluginxmlparse.h" />
+    <ClInclude Include="protocol\datastruct.h" />
+    <ClInclude Include="protocol\protocolField.h" />
+    <ClInclude Include="protocol\protocolmanager.h" />
+    <ClInclude Include="protocol\simpleprotocolparser.h" />
+    <ClInclude Include="protocol\waitimplemneted.h" />
+    <QtMoc Include="widgets\titlebar.h" />
+    <QtMoc Include="widgets\statusbar.h" />
+    <QtMoc Include="widgets\shortcutsettings.h" />
+    <QtMoc Include="widgets\rapplication.h" />
+    <QtMoc Include="widgets\pluginviewdialog.h" />
+    <QtMoc Include="widgets\officestylewindow.h" />
+    <QtMoc Include="widgets\modulesetting.h" />
+    <QtMoc Include="widgets\mainwindow.h" />
+    <QtMoc Include="widgets\statusbartool\netstatecontroltool.h" />
+    <QtMoc Include="widgets\statusbartool\globalstatusinfotool.h" />
+    <QtMoc Include="widgets\statusbartool\datetimetool.h" />
+    <QtMoc Include="widgets\statusbartool\abstractstatustool.h" />
+    <QtMoc Include="widgets\setting\systemsetting.h" />
+    <QtMoc Include="widgets\setting\abstractsettingpage.h" />
+    <QtMoc Include="widgets\officestylemenu\officemenubar.h" />
+    <QtMoc Include="widgets\officestylemenu\menugroup.h" />
+    <QtMoc Include="widgets\officestylemenu\flowmenucontainer.h" />
+    <QtMoc Include="widgets\officestylemenu\abstractofficemenuitem.h" />
+    <QtMoc Include="widgets\flowcomponent\globalstatusflowcomponent.h" />
+    <QtMoc Include="widgets\flowcomponent\flowcomponentcontainer.h" />
+    <QtMoc Include="widgets\flowcomponent\abstractflowcomponent.h" />
+    <QtMoc Include="selfwidget\widget.h" />
+    <QtMoc Include="selfwidget\mytabwidget.h" />
+    <QtMoc Include="selfwidget\mydockwidgettitlebutton.h" />
+    <QtMoc Include="selfwidget\mydockwidget.h" />
+    <QtMoc Include="pluginmanager\plugin\pluginmanager.h" />
+    <QtMoc Include="pluginmanager\mailbox\pluginmailbox.h" />
+    <QtMoc Include="pluginmanager\mailbox\globalmailbox.h" />
+    <QtMoc Include="pluginmanager\mailbox\abstractmailbox.h" />
+    <QtMoc Include="pluginmanager\layout\officallayoutmanager.h" />
+    <QtMoc Include="pluginmanager\layout\layoutmanager.h" />
+    <QtMoc Include="pluginmanager\interface\rtoolcomponent.h" />
+    <QtMoc Include="pluginmanager\interface\rcomponent.h" />
+    <QtMoc Include="officalwidget\rtoolbar.h" />
+    <QtMoc Include="officalwidget\rstatusbar.h" />
+    <QtMoc Include="officalwidget\rdockwidget.h" />
+    <QtMoc Include="network\rtask.h" />
+    <QtMoc Include="network\dataparse\protocolparsethread.h" />
+    <QtMoc Include="network\dataforward\abstractdataforward.h" />
+    <QtMoc Include="map\map2d\map2dview.h" />
+    <QtMoc Include="map\map2d\js\jsbridge.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="topiclist.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="file\appconfig.cpp" />
+    <ClCompile Include="file\globalconfigfile.cpp" />
+    <ClCompile Include="file\programfilepath.cpp" />
+    <ClCompile Include="global.cpp" />
+    <ClCompile Include="map\map2d\js\jsbridge.cpp" />
+    <ClCompile Include="map\map2d\js\jsjsonutils.cpp" />
+    <ClCompile Include="map\map2d\map2dview.cpp" />
+    <ClCompile Include="network\dataforward\abstractdataforward.cpp" />
+    <ClCompile Include="network\dataparse\protocolparsethread.cpp" />
+    <ClCompile Include="network\datarecord\binaryfilerecord.cpp" />
+    <ClCompile Include="network\datarecord\filerecord.cpp" />
+    <ClCompile Include="network\rtask.cpp" />
+    <ClCompile Include="network\taskmanager.cpp" />
+    <ClCompile Include="officalwidget\rdockwidget.cpp" />
+    <ClCompile Include="officalwidget\rstatusbar.cpp" />
+    <ClCompile Include="officalwidget\rtoolbar.cpp" />
+    <ClCompile Include="officalwidget\statusbaritemparsemethod.cpp" />
+    <ClCompile Include="pluginmanager\interface\rcomponent.cpp" />
+    <ClCompile Include="pluginmanager\interface\rtoolcomponent.cpp" />
+    <ClCompile Include="pluginmanager\layout\layoutmanager.cpp" />
+    <ClCompile Include="pluginmanager\layout\layoutparsemethod.cpp" />
+    <ClCompile Include="pluginmanager\layout\officallayoutmanager.cpp" />
+    <ClCompile Include="pluginmanager\mailbox\abstractmailbox.cpp" />
+    <ClCompile Include="pluginmanager\mailbox\globalmailbox.cpp" />
+    <ClCompile Include="pluginmanager\mailbox\observer.cpp" />
+    <ClCompile Include="pluginmanager\mailbox\pluginmailbox.cpp" />
+    <ClCompile Include="pluginmanager\mailbox\subject.cpp" />
+    <ClCompile Include="pluginmanager\plugin\pluginloader.cpp" />
+    <ClCompile Include="pluginmanager\plugin\pluginmanager.cpp" />
+    <ClCompile Include="pluginmanager\plugin\pluginxmlparse.cpp" />
+    <ClCompile Include="protocol\datastruct.cpp" />
+    <ClCompile Include="protocol\protocolField.cpp" />
+    <ClCompile Include="protocol\protocolmanager.cpp" />
+    <ClCompile Include="protocol\simpleprotocolparser.cpp" />
+    <ClCompile Include="protocol\waitimplemneted.cpp" />
+    <ClCompile Include="selfwidget\mydockwidget.cpp" />
+    <ClCompile Include="selfwidget\mydockwidgettitlebutton.cpp" />
+    <ClCompile Include="selfwidget\mytabwidget.cpp" />
+    <ClCompile Include="selfwidget\widget.cpp" />
+    <ClCompile Include="widgets\flowcomponent\abstractflowcomponent.cpp" />
+    <ClCompile Include="widgets\flowcomponent\flowcomponentcontainer.cpp" />
+    <ClCompile Include="widgets\flowcomponent\globalstatusflowcomponent.cpp" />
+    <ClCompile Include="widgets\mainwindow.cpp" />
+    <ClCompile Include="widgets\modulesetting.cpp" />
+    <ClCompile Include="widgets\officestylemenu\abstractofficemenuitem.cpp" />
+    <ClCompile Include="widgets\officestylemenu\flowmenucontainer.cpp" />
+    <ClCompile Include="widgets\officestylemenu\menugroup.cpp" />
+    <ClCompile Include="widgets\officestylemenu\officemenubar.cpp" />
+    <ClCompile Include="widgets\officestylewindow.cpp" />
+    <ClCompile Include="widgets\pluginviewdialog.cpp" />
+    <ClCompile Include="widgets\rapplication.cpp" />
+    <ClCompile Include="widgets\setting\abstractsettingpage.cpp" />
+    <ClCompile Include="widgets\setting\systemsetting.cpp" />
+    <ClCompile Include="widgets\shortcutsettings.cpp" />
+    <ClCompile Include="widgets\statusbar.cpp" />
+    <ClCompile Include="widgets\statusbartool\abstractstatustool.cpp" />
+    <ClCompile Include="widgets\statusbartool\datetimetool.cpp" />
+    <ClCompile Include="widgets\statusbartool\globalstatusinfotool.cpp" />
+    <ClCompile Include="widgets\statusbartool\netstatecontroltool.cpp" />
+    <ClCompile Include="widgets\titlebar.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="mainwindow.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="res.qrc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

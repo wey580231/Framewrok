@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+    <net>
+        <network>
+            <id>通用网络</id>
+            <ip>192.168.0.101</ip>
+            <port>8018</port>
+            <protocol>tcp</protocol>
+            <type>server</type>
+            <recordfile>1</recordfile>
+            <recordPath>D:/模拟2</recordPath>
+            <filesize>128</filesize>
+        </network>
+    </net>
+    <moudles>
+		<moudle>
+            <layout>bottom</layout>
+            <geometry>
+                <x>2</x>
+                <y>160</y>
+                <w>300</w>
+                <h>620</h>
+            </geometry>
+            <closeable>1</closeable>
+            <visible>1</visible>
+            <floatable>1</floatable>
+            <name>地理信息地图</name>
+            <plugin>0x0021</plugin>
+        </moudle>
+		<moudle>
+            <layout>bottom</layout>
+            <geometry>
+                <x>2</x>
+                <y>160</y>
+                <w>300</w>
+                <h>620</h>
+            </geometry>
+            <closeable>1</closeable>
+            <visible>1</visible>
+            <floatable>1</floatable>
+            <name>数据可视化</name>
+            <plugin>0x0022</plugin>
+        </moudle>
+    </moudles>
+</root>

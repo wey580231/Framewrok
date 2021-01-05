@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Root>
+    <Containers>
+        <Container id="StatusBar.Plugin"/>
+        <Container id="StatusBar.System">
+            <Item Text="网络状态控制" Id="SYSTEM.NETSTATECONTROL" Visible="1"/>
+            <Item Text="运行状态记录" Id="SYSTEM.STATUSINFO" Visible="0"/>
+            <Item Text="系统时间" Id="SYSTEM.DATETIME" Visible="1"/>
+        </Container>
+    </Containers>
+</Root>

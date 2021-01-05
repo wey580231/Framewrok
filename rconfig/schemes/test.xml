@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<mapping>
+    <shortcut key="Action.Core.About" value=""/>
+    <shortcut key="Action.Core.DataPlayback" value="Ctrl+P"/>
+    <shortcut key="Action.Core.DelayShot" value="Ctrl+S"/>
+    <shortcut key="Action.Core.Exit" value="Ctrl+Q"/>
+    <shortcut key="Action.Core.ExportView" value="Ctrl+Shift+E"/>
+    <shortcut key="Action.Core.FullScreen" value="Ctrl+Shift+F11"/>
+    <shortcut key="Action.Core.ImportView" value="Ctrl+Shift+I"/>
+    <shortcut key="Action.Core.MapToolBar" value=""/>
+    <shortcut key="Action.Core.NetConnectionState" value=""/>
+    <shortcut key="Action.Core.PluginDesc" value=""/>
+    <shortcut key="Action.Core.ScreenShot" value=""/>
+    <shortcut key="Action.Core.ShortCut" value="Ctrl+Shift+K"/>
+    <shortcut key="Action.Core.SystemSetting" value=""/>
+    <shortcut key="Action.Core.TecSupport" value=""/>
+    <shortcut key="Action.Core.TopHint" value="Ctrl+Shift+T"/>
+    <shortcut key="Plugin.AutoTest.AutoTest_19" value=""/>
+    <shortcut key="Plugin.Core.Core" value=""/>
+    <shortcut key="Plugin.DataDisplay.AllPluse_15" value=""/>
+    <shortcut key="Plugin.DataDisplay.FreqSpectrum_16" value=""/>
+    <shortcut key="Plugin.DataDisplay.Identification_21" value=""/>
+    <shortcut key="Plugin.DataDisplay.LargeCapacityDataStorage_18" value=""/>
+    <shortcut key="Plugin.DataDisplay.MidFreq_17" value=""/>
+    <shortcut key="Plugin.DataDisplay.RadiationSource_14" value=""/>
+    <shortcut key="Plugin.HealthManager.HealthManager_13" value=""/>
+    <shortcut key="Plugin.HealthManager.HealthManager_YW_20" value=""/>
+    <shortcut key="Plugin.HealthManager.ReloadCrcReply_22" value=""/>
+    <shortcut key="Plugin.HealthManager.ReloadResultReply_23" value=""/>
+    <shortcut key="Plugin.TaskControl.TaskControl_12" value=""/>
+</mapping>

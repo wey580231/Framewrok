@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+    <plugins>
+		<plugin>
+            <id>0x0001</id>
+            <name>二维电子海图</name>
+        </plugin>
+		<plugin>
+            <id>0x0002</id>
+            <name>数据可视化</name>
+        </plugin>
+    </plugins>
+</root>
