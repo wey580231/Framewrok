@@ -51,6 +51,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -59,6 +60,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -105,6 +107,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
+    <ClCompile Include="databasemanage\leftpanel.cpp" />
+    <ClCompile Include="databasemanage\titlepanel.cpp" />
+    <ClCompile Include="databasemanage\widgetcontainer.cpp" />
     <ClCompile Include="datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardmanager.cpp" />
@@ -113,18 +119,24 @@
     <ClCompile Include="forwardcontroller\ruleparsemethod.cpp" />
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="global.cpp" />
+    <ClCompile Include="databasemanage\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="databasemanage\leftpanel.h" />
+    <QtMoc Include="databasemanage\titlepanel.h" />
+    <QtMoc Include="databasemanage\widgetcontainer.h" />
+    <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
     <ClInclude Include="datastruct.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
     <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
     <ClInclude Include="forwardcontroller\webserver.h" />
     <ClInclude Include="global.h" />
+    <QtMoc Include="databasemanage\mainwindow.h" />
     <ClInclude Include="related_global.h" />
     <ClInclude Include="startupcallback.h" />
     <ClInclude Include="topiclist.h" />

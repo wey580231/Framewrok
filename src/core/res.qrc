@@ -3,6 +3,7 @@
         <file>resource/style/Black.qss</file>
         <file>resource/style/White.qss</file>
         <file>resource/style/Technology.qss</file>
+        <file>resource/style/QYBlue.qss</file>
     </qresource>
     <qresource prefix="/tech">
         <file>resource/technology/background.png</file>
@@ -99,5 +100,14 @@
     </qresource>
     <qresource prefix="/related">
         <file>resource/image/radar.png</file>
+    </qresource>
+    <qresource prefix="/QYBlue">
+        <file>resource/qyblue/列表内容修饰条右.png</file>
+        <file>resource/qyblue/首页icon.png</file>
+        <file>resource/qyblue/数据分析icon.png</file>
+        <file>resource/qyblue/数据管理icon.png</file>
+        <file>resource/qyblue/系统设置icon.png</file>
+        <file>resource/qyblue/导航收缩.png</file>
+        <file>resource/qyblue/导航展开.png</file>
     </qresource>
 </RCC>

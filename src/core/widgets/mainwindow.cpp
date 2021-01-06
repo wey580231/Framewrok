@@ -173,6 +173,7 @@ void MainWindow::initAll()
         RSingleton<StyleManager>::instance()->addStyle(new CustomStyle(tr("Technology style"),":/resource/style/Technology.qss",true));
         RSingleton<StyleManager>::instance()->addStyle(new CustomStyle(tr("Dark style"),":/resource/style/Black.qss",false));
         RSingleton<StyleManager>::instance()->addStyle(new CustomStyle(tr("Light style"),":/resource/style/White.qss",false));
+        RSingleton<StyleManager>::instance()->addStyle(new CustomStyle(tr("QYBlue style"),":/resource/style/QYBlue.qss",false));
 
 		//注册动态解析样式表
         RSingleton<StyleManager>::instance()->dynamicLoadStyle(programPath.stylePath);

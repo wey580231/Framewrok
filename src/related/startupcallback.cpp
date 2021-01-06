@@ -2,6 +2,8 @@
 
 #include <core/widgets/mainwindow.h>
 
+#include "databasemanage\mainwindow.h"
+
 namespace Related {
 
 /*!
@@ -17,7 +19,8 @@ void BeforeStartUpCallback()
 */
 void AfterStartUpCallback()
 {
-
+	MainWindow  * window = new MainWindow();
+	Core::MainWindow::instance()->setCentralWidget(window);
 }
 
 } //namespace Related

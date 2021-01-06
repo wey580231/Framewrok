@@ -85,7 +85,7 @@ private:
         QColor m_hoverTextColor;
     };
 
-private:
+protected:
     QSize m_iconSize;               /*!< 图标和文字之间的间隔 */
     int m_spacing;
 
