@@ -1,7 +1,21 @@
 ﻿QLabel#Label_ProgramName{
 	font-weight:600;
-	font-size:30px;
+	font-size:23px;
 	color:white;
+}
+
+QLabel#Label_ProgramTitle{
+	font-weight:600;
+	font-size:25px;
+	color:white;
+}
+
+QWidget#Widget_LeftPanel,QWidget#Widget_RightPanel{
+	background-color: qlineargradient(spread:pad, x1:0.205, y1:0, x2:0.58, y2:1,stop:0 rgba(43,67,128, 255), stop:1 rgba(26,38,86, 255));
+}
+
+QWidget#Widget_TitlePanel{
+	border-bottom:1px solid rgba(216, 216, 216, 30);
 }
 
 QWidget#mainWidget{
@@ -21,10 +35,11 @@ QWidget#tabWidget_mainWidget{
 
 QWidget{
     color: white;
+	font-family:"微软雅黑";
     selection-color: #eff0f1;
     background-clip: border;
     border: 0px transparent black;
-    background-color:rgb(21,50,75,215);
+    /*background-color:rgb(21,50,75,215);*/
     font-size: 9pt;
 }
 

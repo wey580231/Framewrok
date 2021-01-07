@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <qstackedwidget.h>
 
 namespace Related {
 
@@ -11,5 +12,12 @@ namespace Related {
 	public:
 		WidgetContainer(QWidget *parent);
 		~WidgetContainer();
+
+	private:
+		void init();
+
+	private:
+		QStackedWidget * m_stackedWidget;
+
 	};
 } //namespace Related 

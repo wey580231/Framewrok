@@ -2,15 +2,17 @@
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <qdebug.h>
 
 namespace Base{
 
 IconButton::IconButton(QWidget *parent):QAbstractButton(parent),
-    m_spacing(5),m_mouseEnter(false),m_colorChoose(Color_All)
+    m_spacing(5),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true)
 {
     setIconSize(ICON_16);
     setContentsMargins(6,5,6,5);
 
+	m_textFont = font();
     m_disableColor = QColor(0,0,0,0);
 
     m_colorCollect.m_normalBackGroundColor = QColor(255,0,0,0);
@@ -52,6 +54,16 @@ void IconButton::setIconSize(IconButton::IconSize type, QSize size)
     }
 }
 
+void IconButton::setTextFont(QFont & fontt)
+{
+	m_textFont = fontt;
+}
+
+void IconButton::setTextVisible(bool visible)
+{
+	m_textVixible = visible;
+}
+
 QSize IconButton::sizeHint() const
 {
     return calcMiniumSize();
@@ -72,6 +84,18 @@ void IconButton::disableColor(IconButton::ColorChoose choose)
 {
     m_colorChoose &= ~choose;
     updateColor(choose,m_disableColor);
+}
+
+void IconButton::disableColors(ColorChooses chooses)
+{
+	int start = Color_NormalBackGround;
+	while (start <= Color_HoverText) {
+		if (chooses & start) {
+			m_colorChoose &= ~start;
+			updateColor((ColorChoose)start, m_disableColor);
+		}
+		start <<= 1;
+	}
 }
 
 void IconButton::paintEvent(QPaintEvent *event)
@@ -133,17 +157,15 @@ void IconButton::paintEvent(QPaintEvent *event)
     }
 
     //[3]绘制文字
-    if(!text().isEmpty()){
-        const QFont & ft = font();
-
-        QFontMetrics fm(ft);
+    if(!text().isEmpty() && m_textVixible){
+        QFontMetrics fm(m_textFont);
         int minWidth = fm.width(text());
         int minHeight = fm.height();
 
         int txtY = (rect().height() - minHeight) / 2;
         QRect rect(startPoint.x(),txtY,minWidth,minHeight);
 
-        painter.setFont(font());
+        painter.setFont(m_textFont);
 
         if(isChecked()){
             painter.setPen(QPen(m_colorCollect.m_checkedTextColor,1));
@@ -189,10 +211,8 @@ QSize IconButton::calcMiniumSize() const
         startPoint.setX(startPoint.x() + m_spacing);
     }
 
-    if(!text().isEmpty()){
-        const QFont & ft = font();
-
-        QFontMetrics fm(ft);
+    if(!text().isEmpty() && m_textVixible){
+        QFontMetrics fm(m_textFont);
 
         if(fm.height() > m_maxY)
             m_maxY = fm.height();

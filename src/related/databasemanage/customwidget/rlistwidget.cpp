@@ -10,11 +10,11 @@ namespace Related {
 
 	RListWidgetItem::RListWidgetItem(QWidget * parent /*= nullptr*/):Base::IconButton(parent), m_mouseEnter(false), m_expandModel(true)
 	{
-		m_colorCollect.m_normalTextColor = QColor(255, 255, 255,153);
+		m_colorCollect.m_normalTextColor = QColor(255, 255, 255,120);
 
 		m_colorCollect.m_checkedTextColor = QColor(255,255,255);
 		m_colorCollect.m_checkedBorderColor = QColor(216, 216, 216, 30);
-		m_colorCollect.m_checkedBackGroundColor = m_colorCollect.m_checkedTextColor;
+		m_colorCollect.m_checkedBackGroundColor = QColor(0,220,246);
 		
 		setCheckable(true);
 	}

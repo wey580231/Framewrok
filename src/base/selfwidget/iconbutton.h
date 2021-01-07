@@ -52,14 +52,19 @@ public:
 
     Q_DECLARE_FLAGS(ColorChooses,ColorChoose)
 
-    void setCheckedIcon(const QIcon & icon);
+    void enableColor(ColorChoose choose,QColor color = QColor(255,0,0,0));
+    void disableColor(ColorChoose choose);
+	void disableColors(ColorChooses chooses);
+
+	void setCheckedIcon(const QIcon & icon);
     void setIconSize(IconSize type, QSize size = QSize());
+	void setIconTextSpacing(int spacing = 5) { m_spacing = spacing; }
+
+	void setTextFont(QFont & font);
+	void setTextVisible(bool visible);
 
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
-
-    void enableColor(ColorChoose choose,QColor color = QColor(255,0,0,0));
-    void disableColor(ColorChoose choose);
 
 protected:
     void paintEvent(QPaintEvent * event);
@@ -90,10 +95,12 @@ protected:
     int m_spacing;
 
     QIcon m_checkedIcon;            /*!< 选中状态下图标 */
+	QFont m_textFont;				/*!< 文字字体 */
+	bool m_textVixible;				/*!< 文字是否可见 */
 
     bool m_mouseEnter;
     ColorChooses m_colorChoose;      /*!< 各个颜色开关 */
-    QColor m_disableColor;          /*!< 无效的颜色：默认为透明色 */
+    QColor m_disableColor;           /*!< 无效的颜色：默认为透明色 */
 
     ColorCollect m_colorCollect;
 

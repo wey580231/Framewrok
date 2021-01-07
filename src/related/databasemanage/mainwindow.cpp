@@ -2,7 +2,6 @@
 
 #include <qboxlayout.h>
 
-#include "titlepanel.h"
 #include "leftpanel.h"
 #include "widgetcontainer.h"
 
@@ -24,18 +23,22 @@ namespace Related {
 
 		m_leftPanel = new LeftPanel(mainWidget);
 
-		m_titlePanel = new TitlePanel(mainWidget);
 		m_widgetContainer = new WidgetContainer(mainWidget);
 
+		QWidget * rightWidget = new QWidget();
+		rightWidget->setObjectName("Widget_RightPanel");
+
 		QVBoxLayout * rightLayout = new QVBoxLayout();
-		rightLayout->addWidget(m_titlePanel);
+		rightLayout->setSpacing(0);
 		rightLayout->addWidget(m_widgetContainer);
+		rightWidget->setLayout(rightLayout);
 
 		QHBoxLayout * mainLayout = new QHBoxLayout();
+		mainLayout->setSpacing(0);
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		
 		mainLayout->addWidget(m_leftPanel);
-		mainLayout->addLayout(rightLayout);
+		mainLayout->addWidget(rightWidget);
 
 		mainWidget->setLayout(mainLayout);
 		

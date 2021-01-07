@@ -102,12 +102,13 @@
         <file>resource/image/radar.png</file>
     </qresource>
     <qresource prefix="/QYBlue">
-        <file>resource/qyblue/列表内容修饰条右.png</file>
         <file>resource/qyblue/首页icon.png</file>
         <file>resource/qyblue/数据分析icon.png</file>
         <file>resource/qyblue/数据管理icon.png</file>
         <file>resource/qyblue/系统设置icon.png</file>
         <file>resource/qyblue/导航收缩.png</file>
         <file>resource/qyblue/导航展开.png</file>
+        <file>resource/qyblue/通知.png</file>
+        <file>resource/qyblue/用户.png</file>
     </qresource>
 </RCC>

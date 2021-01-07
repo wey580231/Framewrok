@@ -12,7 +12,7 @@ namespace Related {
 	{
 		init();
 		respLeftPanelExpand(true);
-		setMaximumWidth(m_expandStateWidth);
+		setFixedWidth(m_expandStateWidth);
 	}
 
 	LeftPanel::~LeftPanel()
@@ -23,8 +23,11 @@ namespace Related {
 	{
 		m_listWidget->setExpanded(checked);
 
+		m_userloginButt->setTextVisible(checked);
+		m_notifyButt->setTextVisible(checked);
+
 		if (checked) {
-			m_prgoramIcon->setText(QStringLiteral("学院"));
+			m_prgoramIcon->setText(QStringLiteral("数据管理系统软件"));
 			m_expandButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/导航收缩.png")));
 			m_expandButt->setToolTip(QStringLiteral("折叠"));
 		}
@@ -38,7 +41,7 @@ namespace Related {
 	void LeftPanel::init()
 	{
 		QWidget * mainWidget = new QWidget();
-		mainWidget->setStyleSheet("background-color:rgba(43,67,128,255)");
+		mainWidget->setObjectName("Widget_LeftPanel");
 
 		m_prgoramIcon = new QLabel(mainWidget);
 		m_prgoramIcon->setObjectName("Label_ProgramName");
@@ -86,10 +89,47 @@ namespace Related {
 
 		m_listWidget->setCurrentIndex(0);
 
+		QSize iconSize(40, 40);
+		QFont iconFont(QStringLiteral("微软雅黑"),11);
+		Base::IconButton::ColorChooses disableColors = Base::IconButton::Color_NormalBorder | Base::IconButton::Color_CheckedBorder
+			| Base::IconButton::Color_CheckedBorder | Base::IconButton::Color_HoverBackground | Base::IconButton::Color_HoverBorder;
+
+		auto setButtonProop = [&](Base::IconButton * butt,QString text,QString pixmap) {
+			butt->setIconTextSpacing(15);
+			butt->setTextFont(iconFont);
+			butt->setIconSize(Base::IconButton::ICON_24);
+			butt->disableColors(disableColors);
+			butt->enableColor(Base::IconButton::Color_NormalText, QColor(255, 255, 255, 120));
+			butt->enableColor(Base::IconButton::Color_HoverText, QColor(255, 255, 255));
+			butt->setText(text);
+			butt->setIcon(QIcon(pixmap));
+		};
+
+		m_userloginButt = new Base::IconButton();
+		setButtonProop(m_userloginButt,QStringLiteral("用户"), QStringLiteral(":/QYBlue/resource/qyblue/用户.png"));
+
+		m_notifyButt = new Base::IconButton();
+		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));
+
+		QWidget * bottomWidget = new QWidget();
+		QVBoxLayout * bottomLayout = new QVBoxLayout();
+		bottomLayout->setSpacing(15);
+		bottomLayout->setContentsMargins(9, 9, 9, 15);
+		bottomLayout->addWidget(m_userloginButt);
+		bottomLayout->addWidget(m_notifyButt);
+		bottomWidget->setLayout(bottomLayout);
+		bottomWidget->setFixedHeight(iconSize.height() * bottomLayout->count() + (bottomLayout->count() - 1) * bottomLayout->spacing());
+
+		QHBoxLayout * bottomHorizonalLayout = new QHBoxLayout();
+		bottomHorizonalLayout->addStretch(1);
+		bottomHorizonalLayout->addWidget(bottomWidget);
+		bottomHorizonalLayout->addStretch(1);
+
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(tmpWidget);
 		mainLayout->addWidget(m_listWidget);
+		mainLayout->addLayout(bottomHorizonalLayout);
 		mainWidget->setLayout(mainLayout);
 
 		QVBoxLayout * layout = new QVBoxLayout();

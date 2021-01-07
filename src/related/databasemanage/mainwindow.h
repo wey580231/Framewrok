@@ -5,7 +5,6 @@
 namespace Related {
 
 	class LeftPanel;
-	class TitlePanel;
 	class WidgetContainer;
 
 	class MainWindow : public QWidget
@@ -21,7 +20,6 @@ namespace Related {
 
 	private:
 		LeftPanel * m_leftPanel;
-		TitlePanel * m_titlePanel;
 		WidgetContainer * m_widgetContainer;
 	};
 

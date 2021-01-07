@@ -109,7 +109,6 @@
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\leftpanel.cpp" />
-    <ClCompile Include="databasemanage\titlepanel.cpp" />
     <ClCompile Include="databasemanage\widgetcontainer.cpp" />
     <ClCompile Include="datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
@@ -127,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="databasemanage\leftpanel.h" />
-    <QtMoc Include="databasemanage\titlepanel.h" />
     <QtMoc Include="databasemanage\widgetcontainer.h" />
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
     <ClInclude Include="datastruct.h" />

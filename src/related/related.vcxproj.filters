@@ -60,9 +60,6 @@
     <ClCompile Include="databasemanage\leftpanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\titlepanel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\widgetcontainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\leftpanel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\titlepanel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\widgetcontainer.h">
