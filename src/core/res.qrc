@@ -110,5 +110,8 @@
         <file>resource/qyblue/导航展开.png</file>
         <file>resource/qyblue/通知.png</file>
         <file>resource/qyblue/用户.png</file>
+        <file>resource/qyblue/上传.png</file>
+        <file>resource/qyblue/数据库记录.png</file>
+        <file>resource/qyblue/未处理.png</file>
     </qresource>
 </RCC>

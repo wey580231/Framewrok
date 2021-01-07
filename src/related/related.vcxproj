@@ -51,7 +51,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -60,7 +60,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -109,8 +109,14 @@
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\leftpanel.cpp" />
+    <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\mainpage\mainpage.cpp" />
+    <ClCompile Include="databasemanage\pages\mainpage\overviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\widgetcontainer.cpp" />
-    <ClCompile Include="datastruct.cpp" />
+    <ClCompile Include="databasemanage\datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardmanager.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardserver.cpp" />
@@ -128,7 +134,13 @@
     <QtMoc Include="databasemanage\leftpanel.h" />
     <QtMoc Include="databasemanage\widgetcontainer.h" />
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
-    <ClInclude Include="datastruct.h" />
+    <QtMoc Include="databasemanage\pages\mainpage\mainpage.h" />
+    <QtMoc Include="databasemanage\pages\mainpage\overviewitem.h" />
+    <ClInclude Include="databasemanage\datastruct.h" />
+    <QtMoc Include="databasemanage\pages\abstractpage.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
     <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
@@ -140,6 +152,9 @@
     <ClInclude Include="topiclist.h" />
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

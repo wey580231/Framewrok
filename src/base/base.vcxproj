@@ -142,7 +142,6 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <QtMoc Include="selfwidget\rlabel.h" />
     <QtMoc Include="selfwidget\ripwidget.h" />
     <QtMoc Include="selfwidget\rinputdialog.h" />
-    <QtMoc Include="selfwidget\riconbutton.h" />
     <QtMoc Include="selfwidget\rbutton.h" />
     <QtMoc Include="selfwidget\iconbutton.h" />
     <QtMoc Include="selfwidget\flowcontrol.h" />
@@ -152,6 +151,7 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <QtMoc Include="selfwidget\lonlatedit\rpositionviewlabel.h" />
     <QtMoc Include="selfwidget\lonlatedit\rlonlatedit.h" />
     <QtMoc Include="selfwidget\switchpage.h" />
+    <QtMoc Include="selfwidget\rtabbar.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
     <ClInclude Include="util\regexp.h" />
@@ -189,11 +189,11 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <ClCompile Include="selfwidget\lonlatedit\rlonlatedit.cpp" />
     <ClCompile Include="selfwidget\lonlatedit\rpositionviewlabel.cpp" />
     <ClCompile Include="selfwidget\rbutton.cpp" />
-    <ClCompile Include="selfwidget\riconbutton.cpp" />
     <ClCompile Include="selfwidget\rinputdialog.cpp" />
     <ClCompile Include="selfwidget\ripwidget.cpp" />
     <ClCompile Include="selfwidget\rlabel.cpp" />
     <ClCompile Include="selfwidget\rmessagebox.cpp" />
+    <ClCompile Include="selfwidget\rtabbar.cpp" />
     <ClCompile Include="selfwidget\rwidget.cpp" />
     <ClCompile Include="selfwidget\switchpage.cpp" />
     <ClCompile Include="selfwidget\toolbar.cpp" />

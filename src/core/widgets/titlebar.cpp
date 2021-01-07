@@ -211,7 +211,7 @@ void TitleBar::addMenu(QString name, QString id, QPixmap buttPix)
         hlayout = dynamic_cast<QHBoxLayout *>(d->iconWidget->layout());
     }
 
-    IconButton * butt = new IconButton(d->iconWidget);
+	IconButton * butt = new IconButton(d->iconWidget);
     butt->setText(name);
     butt->setPixmap(name);
 	Base::ActionContainer * container = Base::ActionManager::instance()->actionContainer(id.toLocal8Bit().data());

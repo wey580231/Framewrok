@@ -20,7 +20,7 @@
 
 namespace Base{
 
-class IconButton;
+class RIconButton;
 
 typedef QPair<double,double> LocationPos;
 
@@ -74,7 +74,7 @@ private:
 
 private:
     QLabel * m_positionLabel;           /*!< 位置信息显示 */
-    IconButton * m_chooseMapButt;       /*!< 海图选点按钮 */
+	RIconButton * m_chooseMapButt;       /*!< 海图选点按钮 */
 
     QStackedWidget * m_widgetContainer;
 

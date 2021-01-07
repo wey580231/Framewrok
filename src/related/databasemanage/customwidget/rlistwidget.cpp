@@ -8,7 +8,7 @@
 
 namespace Related {
 
-	RListWidgetItem::RListWidgetItem(QWidget * parent /*= nullptr*/):Base::IconButton(parent), m_mouseEnter(false), m_expandModel(true)
+	RListWidgetItem::RListWidgetItem(QWidget * parent /*= nullptr*/):Base::RIconButton(parent), m_mouseEnter(false), m_expandModel(true), m_pageId(0)
 	{
 		m_colorCollect.m_normalTextColor = QColor(255, 255, 255,120);
 
@@ -27,6 +27,11 @@ namespace Related {
 	QSize RListWidgetItem::minimumSizeHint() const
 	{
 		return QSize(120,70);
+	}
+
+	void RListWidgetItem::setPageId(int pageId)
+	{
+		m_pageId = pageId;
 	}
 
 	void RListWidgetItem::paintEvent(QPaintEvent * e)
@@ -138,9 +143,10 @@ namespace Related {
 		m_items.append(item);
 	}
 
-	void RListWidget::addItem(QString text, QIcon icon)
+	void RListWidget::addItem(int pageId,QString text, QIcon icon)
 	{
 		RListWidgetItem * item = new RListWidgetItem(this);
+		item->setPageId(pageId);
 		item->setText(text);
 		item->setIcon(icon);
 		addItem(item);
@@ -166,7 +172,7 @@ namespace Related {
 		RListWidgetItem * item = dynamic_cast<RListWidgetItem *>(butt);
 
 		if (m_items.contains(item))
-			emit currentIndexChanged(m_items.indexOf(item));
+			emit currentIndexChanged(item->m_pageId);
 	}
 
 	void RListWidget::init()

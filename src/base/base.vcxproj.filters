@@ -149,9 +149,6 @@
     <ClCompile Include="selfwidget\rbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="selfwidget\riconbutton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="selfwidget\rinputdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -221,6 +218,9 @@
     <ClCompile Include="selfwidget\switchpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="selfwidget\rtabbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="util\fileutils.h">
@@ -257,9 +257,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rbutton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="selfwidget\riconbutton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rinputdialog.h">
@@ -302,6 +299,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\switchpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selfwidget\rtabbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

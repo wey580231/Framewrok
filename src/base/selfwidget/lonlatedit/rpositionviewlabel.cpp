@@ -51,7 +51,7 @@ void RPositionViewLabel::init()
     m_widgetContainer->addWidget(m_positionLabel);
     m_widgetContainer->addWidget(chooseWidget);
 
-    m_chooseMapButt = new IconButton();
+    m_chooseMapButt = new RIconButton();
     connect(m_chooseMapButt,SIGNAL(toggled(bool)),this,SLOT(switchWorkModel(bool)));
     m_chooseMapButt->setToolTip(QStringLiteral("海图选点"));
     m_chooseMapButt->setCheckable(true);

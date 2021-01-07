@@ -1,5 +1,5 @@
 ﻿/*!
- *  @brief     插件之间共用结构体
+ *  @brief	   数据定义
  *  @details
  *  @author    wey
  *  @version   1.0
@@ -11,20 +11,20 @@
 #ifndef DATASTRUCT_H_2019_05_20
 #define DATASTRUCT_H_2019_05_20
 
-#include <QtGlobal>
-#include <QVariant>
-#include <QDateTime>
-
 #include <commondefines/datastruct.h>
-#include "related_global.h"
-
-#pragma pack(push,1)
+#include "../related_global.h"
 
 namespace Related {
+
+	enum PageType {
+		Page_MainPage,
+		Page_DataManage,
+		Page_DataAnalyse,
+		Page_Setting
+	};
 
 
 } //namespace Related
 
-#pragma pack(pop)
 
 #endif // DATASTRUCT_H

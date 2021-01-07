@@ -4,6 +4,7 @@
 #include <qdebug.h>
 
 #include "customwidget\rlistwidget.h"
+#include "datastruct.h"
 
 namespace Related {
 
@@ -46,19 +47,19 @@ namespace Related {
 		m_prgoramIcon = new QLabel(mainWidget);
 		m_prgoramIcon->setObjectName("Label_ProgramName");
 
-		m_expandButt = new Base::IconButton(mainWidget);
+		m_expandButt = new Base::RIconButton(mainWidget);
 		m_expandButt->setCheckable(true);
 		m_expandButt->setChecked(true);
-		m_expandButt->setIconSize(Base::IconButton::ICON_24);
+		m_expandButt->setIconSize(Base::RIconButton::ICON_24);
 		m_expandButt->setContentsMargins(0,0,0,0);
 		m_expandButt->setFixedSize(32, 32);
 
-		m_expandButt->disableColor(Base::IconButton::Color_NormalBorder);
-		m_expandButt->disableColor(Base::IconButton::Color_HoverBorder);
-		m_expandButt->disableColor(Base::IconButton::Color_CheckedBorder);
-		m_expandButt->disableColor(Base::IconButton::Color_CheckedBackGround);
+		m_expandButt->disableColor(Base::RIconButton::Color_NormalBorder);
+		m_expandButt->disableColor(Base::RIconButton::Color_HoverBorder);
+		m_expandButt->disableColor(Base::RIconButton::Color_CheckedBorder);
+		m_expandButt->disableColor(Base::RIconButton::Color_CheckedBackGround);
 
-		connect(m_expandButt, &Base::IconButton::clicked, [&](bool clicked) {
+		connect(m_expandButt, &Base::RIconButton::clicked, [&](bool clicked) {
 			if (clicked) {
 				m_animation.addVariantAnimation(m_contractionWidth, m_expandStateWidth,[&](QVariant val) {
 				this->setFixedWidth(val.toInt());
@@ -69,7 +70,6 @@ namespace Related {
 					this->setFixedWidth(val.toInt());
 				});
 			}
-
 			respLeftPanelExpand(clicked);
 		});
 
@@ -82,33 +82,35 @@ namespace Related {
 		tmpWidget->setFixedHeight(100);
 
 		m_listWidget = new RListWidget(this);
-		m_listWidget->addItem(QStringLiteral("主页"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
-		m_listWidget->addItem(QStringLiteral("数据管理"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
-		m_listWidget->addItem(QStringLiteral("数据分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
-		m_listWidget->addItem(QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
+		connect(m_listWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
+
+		m_listWidget->addItem(Page_MainPage,QStringLiteral("主页"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
+		m_listWidget->addItem(Page_DataManage,QStringLiteral("数据管理"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
+		m_listWidget->addItem(Page_DataAnalyse,QStringLiteral("数据分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
+		m_listWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
 
 		m_listWidget->setCurrentIndex(0);
 
 		QSize iconSize(40, 40);
 		QFont iconFont(QStringLiteral("微软雅黑"),11);
-		Base::IconButton::ColorChooses disableColors = Base::IconButton::Color_NormalBorder | Base::IconButton::Color_CheckedBorder
-			| Base::IconButton::Color_CheckedBorder | Base::IconButton::Color_HoverBackground | Base::IconButton::Color_HoverBorder;
+		Base::RIconButton::ColorChooses disableColors = Base::RIconButton::Color_NormalBorder | Base::RIconButton::Color_CheckedBorder
+			| Base::RIconButton::Color_CheckedBorder | Base::RIconButton::Color_HoverBackground | Base::RIconButton::Color_HoverBorder;
 
-		auto setButtonProop = [&](Base::IconButton * butt,QString text,QString pixmap) {
+		auto setButtonProop = [&](Base::RIconButton * butt,QString text,QString pixmap) {
 			butt->setIconTextSpacing(15);
 			butt->setTextFont(iconFont);
-			butt->setIconSize(Base::IconButton::ICON_24);
+			butt->setIconSize(Base::RIconButton::ICON_24);
 			butt->disableColors(disableColors);
-			butt->enableColor(Base::IconButton::Color_NormalText, QColor(255, 255, 255, 120));
-			butt->enableColor(Base::IconButton::Color_HoverText, QColor(255, 255, 255));
+			butt->enableColor(Base::RIconButton::Color_NormalText, QColor(255, 255, 255, 120));
+			butt->enableColor(Base::RIconButton::Color_HoverText, QColor(255, 255, 255));
 			butt->setText(text);
 			butt->setIcon(QIcon(pixmap));
 		};
 
-		m_userloginButt = new Base::IconButton();
+		m_userloginButt = new Base::RIconButton();
 		setButtonProop(m_userloginButt,QStringLiteral("用户"), QStringLiteral(":/QYBlue/resource/qyblue/用户.png"));
 
-		m_notifyButt = new Base::IconButton();
+		m_notifyButt = new Base::RIconButton();
 		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));
 
 		QWidget * bottomWidget = new QWidget();

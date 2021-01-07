@@ -25,21 +25,13 @@ namespace Related {
 
 		m_widgetContainer = new WidgetContainer(mainWidget);
 
-		QWidget * rightWidget = new QWidget();
-		rightWidget->setObjectName("Widget_RightPanel");
-
-		QVBoxLayout * rightLayout = new QVBoxLayout();
-		rightLayout->setSpacing(0);
-		rightLayout->addWidget(m_widgetContainer);
-		rightWidget->setLayout(rightLayout);
+		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), m_widgetContainer,SLOT(switchPage(int)));
 
 		QHBoxLayout * mainLayout = new QHBoxLayout();
 		mainLayout->setSpacing(0);
 		mainLayout->setContentsMargins(0, 0, 0, 0);
-		
 		mainLayout->addWidget(m_leftPanel);
-		mainLayout->addWidget(rightWidget);
-
+		mainLayout->addWidget(m_widgetContainer);
 		mainWidget->setLayout(mainLayout);
 		
 		QHBoxLayout * layout = new QHBoxLayout();

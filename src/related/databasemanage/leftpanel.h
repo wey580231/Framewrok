@@ -1,3 +1,13 @@
+/*!
+ *  @brief     左侧操作窗口
+ *  @details   包含标题区、列表操作区、用户管理等子区域
+ *  @author    wey
+ *  @version   1.0
+ *  @date      2021.01.07
+ *  @warning
+ *  @copyright NanJing RenGu.
+ *  @note
+ */
 #pragma once
 
 #include <QWidget>
@@ -18,6 +28,9 @@ namespace Related {
 		LeftPanel(QWidget *parent);
 		~LeftPanel();
 
+	signals:
+		void currentIndexChanged(int);
+
 	private slots:
 		void respLeftPanelExpand(bool checked);
 
@@ -30,12 +43,12 @@ namespace Related {
 		Base::WidgetAnimation m_animation;
 
 		QLabel * m_prgoramIcon;
-		Base::IconButton * m_expandButt;
+		Base::RIconButton * m_expandButt;
 		int m_expandStateWidth;		//展开状态下宽度
 		int m_contractionWidth;		//收缩状态下宽度
 
-		Base::IconButton * m_userloginButt;
-		Base::IconButton * m_notifyButt;
+		Base::RIconButton * m_userloginButt;
+		Base::RIconButton * m_notifyButt;
 	};
 
 } //namespace Related 

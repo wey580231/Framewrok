@@ -1,3 +1,13 @@
+/*!
+ *  @brief     自定义list列表窗口
+ *  @details   
+ *  @author    wey
+ *  @version   1.0
+ *  @date      2021.01.06
+ *  @warning
+ *  @copyright NanJing RenGu.
+ *  @note
+ */
 #pragma once
 
 #include <QWidget>
@@ -12,7 +22,7 @@ namespace Related {
 
 	class RListWidget;
 
-	class RListWidgetItem : public Base::IconButton 
+	class RListWidgetItem : public Base::RIconButton 
 	{
 		Q_OBJECT
 
@@ -21,6 +31,7 @@ namespace Related {
 		RListWidgetItem();
 
 		QSize minimumSizeHint() const;
+		void setPageId(int pageId);
 
 	protected:
 		void paintEvent(QPaintEvent * e) override;
@@ -33,6 +44,7 @@ namespace Related {
 	private:
 		bool m_mouseEnter;
 		bool m_expandModel;			// 是否为展开模式，默认为true
+		int m_pageId;
 
 		friend class RListWidget;
 	};
@@ -45,14 +57,14 @@ namespace Related {
 		RListWidget(QWidget *parent);
 		~RListWidget();
 
-		void addItem(QString text,QIcon icon);
+		void addItem(int pageId,QString text,QIcon icon);
 		void addItem(RListWidgetItem * item);
 
 		void setExpanded(bool enable);
 		void setCurrentIndex(int index);
 
 	signals:
-		void currentIndexChanged(int index);
+		void currentIndexChanged(int pageId);
 
 	private slots:
 		void indexChanged(QAbstractButton * butt);

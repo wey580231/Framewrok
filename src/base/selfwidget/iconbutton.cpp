@@ -6,7 +6,7 @@
 
 namespace Base{
 
-IconButton::IconButton(QWidget *parent):QAbstractButton(parent),
+	RIconButton::RIconButton(QWidget *parent):QAbstractButton(parent),
     m_spacing(5),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true)
 {
     setIconSize(ICON_16);
@@ -28,13 +28,13 @@ IconButton::IconButton(QWidget *parent):QAbstractButton(parent),
     m_colorCollect.m_hoverTextColor = QColor(Qt::white);
 }
 
-void IconButton::setCheckedIcon(const QIcon &icon)
+void RIconButton::setCheckedIcon(const QIcon &icon)
 {
     m_checkedIcon = icon;
     update();
 }
 
-void IconButton::setIconSize(IconButton::IconSize type, QSize size)
+void RIconButton::setIconSize(RIconButton::IconSize type, QSize size)
 {
     switch (type) {
         case ICON_16: m_iconSize = QSize(16,16);break;
@@ -54,39 +54,39 @@ void IconButton::setIconSize(IconButton::IconSize type, QSize size)
     }
 }
 
-void IconButton::setTextFont(QFont & fontt)
+void RIconButton::setTextFont(QFont & fontt)
 {
 	m_textFont = fontt;
 }
 
-void IconButton::setTextVisible(bool visible)
+void RIconButton::setTextVisible(bool visible)
 {
 	m_textVixible = visible;
 }
 
-QSize IconButton::sizeHint() const
+QSize RIconButton::sizeHint() const
 {
     return calcMiniumSize();
 }
 
-QSize IconButton::minimumSizeHint() const
+QSize RIconButton::minimumSizeHint() const
 {
     return calcMiniumSize();
 }
 
-void IconButton::enableColor(IconButton::ColorChoose choose, QColor color)
+void RIconButton::enableColor(RIconButton::ColorChoose choose, QColor color)
 {
     m_colorChoose |= choose;
     updateColor(choose,color);
 }
 
-void IconButton::disableColor(IconButton::ColorChoose choose)
+void RIconButton::disableColor(RIconButton::ColorChoose choose)
 {
     m_colorChoose &= ~choose;
     updateColor(choose,m_disableColor);
 }
 
-void IconButton::disableColors(ColorChooses chooses)
+void RIconButton::disableColors(ColorChooses chooses)
 {
 	int start = Color_NormalBackGround;
 	while (start <= Color_HoverText) {
@@ -98,7 +98,7 @@ void IconButton::disableColors(ColorChooses chooses)
 	}
 }
 
-void IconButton::paintEvent(QPaintEvent *event)
+void RIconButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter painter(this);
@@ -181,19 +181,19 @@ void IconButton::paintEvent(QPaintEvent *event)
     }
 }
 
-void IconButton::enterEvent(QEvent *event)
+void RIconButton::enterEvent(QEvent *event)
 {
     m_mouseEnter = true;
     update();
 }
 
-void IconButton::leaveEvent(QEvent *event)
+void RIconButton::leaveEvent(QEvent *event)
 {
     m_mouseEnter = false;
     update();
 }
 
-QSize IconButton::calcMiniumSize() const
+QSize RIconButton::calcMiniumSize() const
 {
     QMargins margins = contentsMargins();
 
@@ -223,7 +223,7 @@ QSize IconButton::calcMiniumSize() const
     return QSize(startPoint.x() + margins.right(),m_maxY + margins.top() + margins.bottom());
 }
 
-void IconButton::updateColor(IconButton::ColorChoose choose, QColor color)
+void RIconButton::updateColor(RIconButton::ColorChoose choose, QColor color)
 {
     switch(choose){
         case Color_NormalBackGround:m_colorCollect.m_normalBackGroundColor = color;break;

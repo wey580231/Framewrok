@@ -1,4 +1,19 @@
-﻿QLabel#Label_ProgramName{
+﻿
+QWidget#mainWidget{
+    color: white;
+    background-clip: border;
+    border: 1px solid rgba(255,255,255,50);
+    background-color: rgba(0,64,110);
+}
+
+/***************适用与页面内部窗口，用于分割其它功能模块***/
+QWidget#widgetContainer{
+    color: white;
+    background-color: rgba(0,64,110);
+}
+
+/*************************左侧菜单管理区********************************/
+QLabel#Label_ProgramName{
 	font-weight:600;
 	font-size:23px;
 	color:white;
@@ -11,21 +26,26 @@ QLabel#Label_ProgramTitle{
 }
 
 QWidget#Widget_LeftPanel,QWidget#Widget_RightPanel{
-	background-color: qlineargradient(spread:pad, x1:0.205, y1:0, x2:0.58, y2:1,stop:0 rgba(43,67,128, 255), stop:1 rgba(26,38,86, 255));
+	background-color: qlineargradient(spread:pad, x1:0.205, y1:0, x2:0.58, y2:1,stop:0 rgba(0,69,121, 255), stop:1 rgba(4,59,100, 255));
 }
 
-QWidget#Widget_TitlePanel{
-	border-bottom:1px solid rgba(216, 216, 216, 30);
+/*************************主页-概览信息显示条目区********************************/
+QWidget#Widget_OverViewItem{
+	background-color:rgb(0,69,121);
 }
 
-QWidget#mainWidget{
-    color: white;
-    background-clip: border;
-    border: 1px solid rgba(255,255,255,50);
-    background-color: rgba(21,50,75,215);
-
-    /*background-color: rgba(13,26,42,235);*/
+QLabel#labelItemText{
+	color:white;
+	font-size:13px;
 }
+
+QLabel#labelItemData{
+	color:white;
+	font-size:35px;
+}
+
+
+
 
 QWidget#tabWidget_mainWidget{
     background-clip: border;

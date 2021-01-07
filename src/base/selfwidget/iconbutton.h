@@ -17,11 +17,11 @@
 
 namespace Base{
 
-class BASESHARED_EXPORT IconButton : public QAbstractButton
+class BASESHARED_EXPORT RIconButton : public QAbstractButton
 {
     Q_OBJECT
 public:
-    IconButton(QWidget * parent = nullptr);
+	RIconButton(QWidget * parent = nullptr);
 
     /*!
      *  @brief 图标尺寸
