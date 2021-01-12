@@ -10,8 +10,9 @@ namespace Related {
 
 	OverViewItem::~OverViewItem()
 	{
-	}
 
+	}
+	
 	void OverViewItem::setLabelText(QString text)
 	{
 		ui.labelItemText->setText(text);

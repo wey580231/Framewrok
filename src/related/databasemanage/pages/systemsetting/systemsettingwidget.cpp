@@ -20,7 +20,7 @@ namespace Related {
 	void SystemSettingWidget::init()
 	{
 		m_tabWidget = new Base::RTabBar();
-		m_tabWidget->setFixedHeight(75);
+		m_tabWidget->setFixedHeight(60);
 		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
 
 		Base::RTabButton * userMangeButt = new Base::RTabButton(QStringLiteral("用户管理"));

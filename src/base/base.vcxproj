@@ -57,6 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <QtMoc>
       <QtMocDir>$(IntDir)moc\</QtMocDir>
@@ -75,6 +76,7 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -152,6 +154,10 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <QtMoc Include="selfwidget\lonlatedit\rlonlatedit.h" />
     <QtMoc Include="selfwidget\switchpage.h" />
     <QtMoc Include="selfwidget\rtabbar.h" />
+    <QtMoc Include="selfwidget\tablemode\rtablemodel.h" />
+    <QtMoc Include="selfwidget\tablemode\rtableview.h" />
+    <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h" />
+    <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
     <ClInclude Include="util\regexp.h" />
@@ -196,6 +202,9 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <ClCompile Include="selfwidget\rtabbar.cpp" />
     <ClCompile Include="selfwidget\rwidget.cpp" />
     <ClCompile Include="selfwidget\switchpage.cpp" />
+    <ClCompile Include="selfwidget\tablemode\rtablemodel.cpp" />
+    <ClCompile Include="selfwidget\tablemode\rtableview.cpp" />
+    <ClCompile Include="selfwidget\tablemode\tablecolumneditwindow.cpp" />
     <ClCompile Include="selfwidget\toolbar.cpp" />
     <ClCompile Include="selfwidget\treemode\rtreemodel.cpp" />
     <ClCompile Include="selfwidget\treemode\rtreeview.cpp" />

@@ -113,5 +113,18 @@
         <file>resource/qyblue/上传.png</file>
         <file>resource/qyblue/数据库记录.png</file>
         <file>resource/qyblue/未处理.png</file>
+        <file>resource/qyblue/向上.png</file>
+        <file>resource/qyblue/向下.png</file>
+        <file>resource/qyblue/编辑.png</file>
+        <file>resource/qyblue/高级搜索.png</file>
+        <file>resource/qyblue/更多.png</file>
+        <file>resource/qyblue/刷新.png</file>
+        <file>resource/qyblue/搜索.png</file>
+        <file>resource/qyblue/新增.png</file>
+        <file>resource/qyblue/删除.png</file>
+        <file>resource/qyblue/大于号.png</file>
+        <file>resource/qyblue/到首页.png</file>
+        <file>resource/qyblue/到尾页.png</file>
+        <file>resource/qyblue/小于号.png</file>
     </qresource>
 </RCC>

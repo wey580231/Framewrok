@@ -2,12 +2,12 @@
 
 #include <QPainter>
 #include <QPaintEvent>
-#include <qdebug.h>
+#include <QDebug>
 
 namespace Base{
 
 	RIconButton::RIconButton(QWidget *parent):QAbstractButton(parent),
-    m_spacing(5),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true)
+    m_spacing(6),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true)
 {
     setIconSize(ICON_16);
     setContentsMargins(6,5,6,5);
@@ -177,7 +177,7 @@ void RIconButton::paintEvent(QPaintEvent *event)
             }
         }
 
-        painter.drawText(rect,Qt::AlignLeft,text());
+        painter.drawText(rect,Qt::AlignLeft | Qt::AlignVCenter,text());
     }
 }
 

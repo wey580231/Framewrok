@@ -1,6 +1,7 @@
 #include "datamanagewidget.h"
 
 #include <qboxlayout.h>
+#include <QHeaderView>
 
 namespace Related {
 
@@ -22,7 +23,8 @@ namespace Related {
 	void DataManageWidget::init()
 	{
 		m_tabWidget = new Base::RTabBar();
-		m_tabWidget->setFixedHeight(75);
+		m_tabWidget->setFixedHeight(60);
+		
 		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
 
 		Base::RTabButton * level0Butt = new Base::RTabButton(QStringLiteral("0¼¶¿â"));
@@ -37,7 +39,12 @@ namespace Related {
 
 		m_stackedWidget = new QStackedWidget();
 
+		m_pageLevel0 = new Level0Page(this);
+
+		m_stackedWidget->addWidget(m_pageLevel0);
+
 		QVBoxLayout * layout = new QVBoxLayout();
+		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_tabWidget);
 		layout->addWidget(m_stackedWidget);
 		setLayout(layout);

@@ -11,10 +11,12 @@
 #pragma once
 
 #include <QWidget>
-#include <qstackedwidget.h>
+#include <QStackedWidget>
 
 #include <base\selfwidget\rtabbar.h>
+
 #include "../abstractpage.h"
+#include "level0page.h"
 
 namespace Related {
 
@@ -40,6 +42,9 @@ namespace Related {
 
 	private:
 		Base::RTabBar * m_tabWidget;
+
+		Level0Page * m_pageLevel0;
+
 		QStackedWidget * m_stackedWidget;
 	};
 

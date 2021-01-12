@@ -152,7 +152,7 @@ namespace Base {
 		};
 		Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
-			void setButton(int butts);
+		void setButton(int butts);
 		void setButton(int butt, QObject * reiver, const char * slot);
 		void setContentWidget(QWidget * widget);
 		void enableToolButtonArea(bool flag = true);

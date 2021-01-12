@@ -90,6 +90,9 @@
     <ClInclude Include="common\sql\sqliteutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="selfwidget\tablemode\tablestruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util\fileutils.cpp">
@@ -221,6 +224,15 @@
     <ClCompile Include="selfwidget\rtabbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="selfwidget\tablemode\rtablemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selfwidget\tablemode\rtableview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selfwidget\tablemode\tablecolumneditwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="util\fileutils.h">
@@ -302,6 +314,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rtabbar.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selfwidget\tablemode\rtablemodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selfwidget\tablemode\rtableview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

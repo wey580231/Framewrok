@@ -1,4 +1,5 @@
-﻿/*!
+﻿
+/*!
  *  @brief	   数据定义
  *  @details
  *  @author    wey
@@ -15,12 +16,28 @@
 #include "../related_global.h"
 
 namespace Related {
-
+	
 	enum PageType {
 		Page_MainPage,
 		Page_DataManage,
 		Page_DataAnalyse,
 		Page_Setting
+	};
+
+	enum Level0ColumnIndex {
+		C_Id,
+		C_Num,
+		C_Timestamp,
+		C_ExperienceName,
+		C_PlatformName,
+		C_TimeLength,
+		C_DataType
+	};
+
+	struct Level0Data {
+		int m_id;
+		QString m_name;
+		QString m_timestamp;
 	};
 
 

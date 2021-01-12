@@ -84,6 +84,12 @@
     <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -123,6 +129,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\databasemanage\level0page.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

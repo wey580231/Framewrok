@@ -17,7 +17,8 @@ namespace Base {
 		m_disableTextColor = QColor(241, 241, 241, 100);
 
 		setCheckable(true);
-		setFixedSize(TAB_BUTT_FIXED_WIDTH, TAB_BUTT_FIXED_HEIGHT);
+		setFixedWidth(TAB_BUTT_FIXED_WIDTH);
+		setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 	}
 
 	RTabButton::~RTabButton()
@@ -44,9 +45,10 @@ namespace Base {
 
 				QLinearGradient linear(0,0, rect().width(), rectHeight);
 				linear.setColorAt(0, QColor(0,174,239));
-				linear.setColorAt(1, QColor(0,0,255));
+				linear.setColorAt(1, QColor(15,242,246));
 				painter.setBrush(linear);
 
+				painter.setPen(Qt::NoPen);
 				painter.drawRect(QRect(0, rect().height() - rectHeight, width(), rectHeight));
 
 				painter.restore();
@@ -200,6 +202,7 @@ namespace Base {
 		mainWidget->setLayout(m_mainLayout);
 
 		m_tabContainer = new QWidget();
+
 		QHBoxLayout * tabContainer = new QHBoxLayout();
 		tabContainer->setContentsMargins(9, 9, 9, 0);
 		m_tabContainer->setLayout(tabContainer);
