@@ -20,9 +20,15 @@ namespace Related {
 		return Page_DataManage;
 	}
 
+	void DataManageWidget::respTabChanged(int page)
+	{
+		m_stackedWidget->setCurrentIndex(page);
+	}
+
 	void DataManageWidget::init()
 	{
 		m_tabWidget = new Base::RTabBar();
+		connect(m_tabWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(respTabChanged(int)));
 		m_tabWidget->setFixedHeight(60);
 		
 		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
@@ -40,8 +46,12 @@ namespace Related {
 		m_stackedWidget = new QStackedWidget();
 
 		m_pageLevel0 = new Level0Page(this);
+		m_pageLevel1 = new Level1Page(this);
+		m_pageLevel2 = new Level2Page(this);
 
 		m_stackedWidget->addWidget(m_pageLevel0);
+		m_stackedWidget->addWidget(m_pageLevel1);
+		m_stackedWidget->addWidget(m_pageLevel2);
 
 		QVBoxLayout * layout = new QVBoxLayout();
 		layout->setContentsMargins(0, 0, 0, 0);

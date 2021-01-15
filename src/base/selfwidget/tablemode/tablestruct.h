@@ -1,5 +1,5 @@
 /*!
- * @brief     表格通用数据结构   
+ * @brief     表格通用数据结构
  * @author    wey
  * @version   1.0
  * @date      2021.01.09 16:32:24
@@ -21,7 +21,7 @@ namespace Base {
 		Fixed,				/*!< 列固定模式，可resizeSection改变大小 */
 		Strech,				/*!< 列自动调整，不可编码改变大小 */
 		ResizeToContents	/*!< 自动改变至内容宽度，不可编码或用户拖拽改变大小 */
-	};	
+	};
 
 	/*!
 	* @brief 自定义数据显示列
@@ -29,8 +29,9 @@ namespace Base {
 	*/
 	struct ColumnItem
 	{
-		ColumnItem() :ColumnItem(0,"",true,Qt::AlignCenter,Interactive,80){}
-		ColumnItem(int id, QString name, bool visible = true, Qt::Alignment align = Qt::AlignCenter, ColumnResizeMode  model = Interactive,int width = 80 ) :m_id(id), m_name(name), m_visible(visible), m_align(align) {}
+		ColumnItem() :ColumnItem(0, "", true, Qt::AlignCenter, Interactive, 80) {}
+		ColumnItem(int id, QString name, bool visible = true, Qt::Alignment align = Qt::AlignCenter, ColumnResizeMode  model = Interactive, int width = 80) :m_id(id), m_name(name), m_visible(visible), m_align(align) {}
+		ColumnItem(int id, QString name, int width):ColumnItem(id,name,true,Qt::AlignCenter,Interactive,width){}
 
 		int m_id;			/*!< 列唯一标识 */
 		QString m_name;		/*!< 列名称 */

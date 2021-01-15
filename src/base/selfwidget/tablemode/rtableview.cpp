@@ -11,7 +11,7 @@
 namespace Base {
 
 	RTableView::RTableView(QWidget *parent)
-		: QTableView(parent), m_headMenu(nullptr), m_ascending(true), m_columResizeByUser(true)
+		: QTableView(parent), m_headMenu(nullptr), m_ascending(false), m_columResizeByUser(true)
 	{
 		verticalHeader()->setVisible(false);
 		verticalHeader()->setDefaultSectionSize(35);
@@ -31,14 +31,12 @@ namespace Base {
 
 	}
 
-	void RTableView::setModel(QAbstractItemModel *model)
+	void RTableView::setModel(RTableModel *model)
 	{
-		RTableModel * tmodel = dynamic_cast<RTableModel *>(model);
-		if (tmodel) {
-			tmodel->updateColumnItems(m_columns);
+		if (model) {
+			model->updateColumnItems(m_columns);
+			QTableView::setModel(model);
 		}
-
-		QTableView::setModel(model);
 	}
 
 	bool RTableView::addColumnItem(ColumnItem item)
@@ -55,6 +53,11 @@ namespace Base {
 		RTableModel * tmodel = dynamic_cast<RTableModel *>(model());
 		if (tmodel) {
 			tmodel->updateColumnItems(m_columns);
+		}
+
+		if (item.m_columnWidth > 0) {
+			int visibleCount = std::count_if(m_columns.begin(), m_columns.end(), [](ColumnItem & titem) {return titem.m_visible;});
+			horizontalHeader()->resizeSection(visibleCount - 1, item.m_columnWidth);
 		}
 
 		return true;
@@ -146,16 +149,19 @@ namespace Base {
 
 	void RTableView::respSectionClicked(int column)
 	{
+		RTableModel * tmodel = dynamic_cast<RTableModel *>(model());
+		if (!tmodel)
+			return;
+
 		if (m_lastClickedColumn != column) {
 			m_ascending = true;
 		}
 
-		if (m_ascending) {
-			sortByColumn(column, Qt::AscendingOrder);
-		}
-		else {
-			sortByColumn(column, Qt::DescendingOrder);
-		}
+		Qt::SortOrder st = m_ascending ? Qt::AscendingOrder : Qt::DescendingOrder;
+		tmodel->sortByColumn(column, st);
+		tmodel->refresh();
+
+		horizontalHeader()->setSortIndicator(column, st);
 
 		m_ascending = !m_ascending;
 		m_lastClickedColumn = column;
@@ -176,27 +182,26 @@ namespace Base {
 
 	void RTableView::udateFeature()
 	{
+		disconnect(horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(respCustomContextMenu(const QPoint &)));
+		disconnect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(respSectionClicked(int)));
+
 		if (m_tableFeatures.testFlag(T_ColumnEdit)) {
 			if (horizontalHeader()) {
 				horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-				disconnect(horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(respCustomContextMenu(const QPoint &)));
 				connect(horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(respCustomContextMenu(const QPoint &)));
 			}
 		}
 		else {
 			if (horizontalHeader()) {
 				horizontalHeader()->setContextMenuPolicy(Qt::DefaultContextMenu);
-				disconnect(horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(respCustomContextMenu(const QPoint &)));
 			}
 		}
 
 		setSortingEnabled(m_tableFeatures.testFlag(T_HeadSorting));
 
 		if (m_tableFeatures.testFlag(T_HeadSorting)) {
-			disconnect(this, SLOT(respSectionClicked(int)));
 			connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(respSectionClicked(int)));
 			horizontalHeader()->setSortIndicatorShown(true);
-			horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 		}
 		else {
 			horizontalHeader()->setSortIndicatorShown(false);

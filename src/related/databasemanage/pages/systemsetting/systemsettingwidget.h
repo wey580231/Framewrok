@@ -16,6 +16,8 @@
 #include <base\selfwidget\rtabbar.h>
 #include "../abstractpage.h"
 
+#include "usermanagepage.h"
+
 namespace Related {
 
 	class SystemSettingWidget : public AbstractPage
@@ -39,6 +41,7 @@ namespace Related {
 	private:
 		Base::RTabBar * m_tabWidget;
 		QStackedWidget * m_stackedWidget;
+		UserManagePage *m_usermanagepage;
 	};
 
 } //namespace Related 

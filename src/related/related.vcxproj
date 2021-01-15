@@ -45,6 +45,8 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\3rdPartyLib\libuv1_40\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
   </PropertyGroup>
@@ -54,7 +56,7 @@
       <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>base.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,16 +109,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\leftpanel.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\candidatedatapage.cpp" />
     <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\datasamplepage.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\gatherwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\inspectwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\SpectrogramWidget.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.cpp" />
+    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\mainpage.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\overviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
+    <ClCompile Include="databasemanage\util.cpp" />
+    <ClCompile Include="databasemanage\utils\operationtoolspage.cpp" />
     <ClCompile Include="databasemanage\widgetcontainer.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
@@ -138,6 +155,7 @@
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
     <QtMoc Include="databasemanage\pages\mainpage\mainpage.h" />
     <QtMoc Include="databasemanage\pages\mainpage\overviewitem.h" />
+    <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\pages\abstractpage.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
@@ -145,6 +163,20 @@
     <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level0page.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\candidatedatapage.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\datasamplepage.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\gatherwidget.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\inspectwidget.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\SpectrogramWidget.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.h" />
+    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\level1page.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\level2page.h" />
+    <ClInclude Include="databasemanage\util.h" />
+    <QtMoc Include="databasemanage\utils\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
     <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
@@ -158,6 +190,9 @@
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.ui" />
+    <QtUic Include="databasemanage\pages\dataanalyse\gatherwidget.ui" />
+    <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui" />
     <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

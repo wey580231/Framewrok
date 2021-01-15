@@ -5,7 +5,7 @@
   <PropertyGroup>
     <OutDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\$(ProjectName)\</IntDir>
-    <IncludePath>../;D:\Qt\Qt5.12.10\5.12.10\msvc2017\include;$(IncludePath)</IncludePath>
+    <IncludePath>../;F:\Qt\Qt5.12.6\5.12.6\msvc2017\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>

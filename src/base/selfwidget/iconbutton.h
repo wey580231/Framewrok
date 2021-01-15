@@ -1,6 +1,7 @@
 ﻿/*!
  *  @brief     带图标的按钮
  *  @file      1.可选择的设置按钮图标
+			   2.可设置图标和文字的排列方向
  *  @author    wey
  *  @version   1.0
  *  @date      2020.10.14
@@ -63,6 +64,12 @@ public:
 	void setTextFont(QFont & font);
 	void setTextVisible(bool visible);
 
+	/*!
+	 * @brief 设置图标和文本的位置关系
+	 * @param iconLeftToText true:图标在左，文字在右；false:图标在右，文字在左
+	 */
+	void setIconTextDirection(bool iconLeftToText = true);
+
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
 
@@ -97,6 +104,7 @@ protected:
     QIcon m_checkedIcon;            /*!< 选中状态下图标 */
 	QFont m_textFont;				/*!< 文字字体 */
 	bool m_textVixible;				/*!< 文字是否可见 */
+	bool m_iconLeftToText;			/*!< 图标在左、文字在右 */
 
     bool m_mouseEnter;
     ColorChooses m_colorChoose;      /*!< 各个颜色开关 */

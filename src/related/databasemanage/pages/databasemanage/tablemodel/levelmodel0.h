@@ -25,9 +25,8 @@ namespace Related {
 		LevelModel0(QObject *parent = nullptr);
 		~LevelModel0();
 
-		int rowCount(const QModelIndex &parent /* = QModelIndex() */) const;
-
 		void prepareData();
+		int datasSize() const;
 
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;

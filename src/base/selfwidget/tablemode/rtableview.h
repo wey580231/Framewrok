@@ -2,6 +2,7 @@
  * @brief     自定义表格视图
  * @details   1.支持表格列手动调整
 			  2.支持列排序
+			  3.支持记录当前列宽度，当列隐藏显示后，可确保列的宽度信息不变
  * @author    wey
  * @version   1.0
  * @date      2021.01.08 16:44:51
@@ -30,7 +31,12 @@ namespace Base {
 		RTableView(QWidget *parent = nullptr);
 		~RTableView();
 
-		void setModel(QAbstractItemModel *model) override;
+		/*!
+		 * @brief 设置表格数据模型
+		 * @attention 此方法会覆盖QTableView的同名方法，只接受自定义的模型
+		 * @param model 自定义表格模型
+		 */
+		void setModel(RTableModel *model);
 
 		/*!
 		 * @brief 表格功能项
@@ -40,7 +46,6 @@ namespace Base {
 			T_HeadSorting = 0x0002, 		/*!< 表头排序 */
 			T_AlternatingRowColors = 0x0004	/*!< 隔行变色 */
 		};
-
 		Q_DECLARE_FLAGS(TableFeatures, TableFeature);
 		
 		/*!
@@ -62,6 +67,11 @@ namespace Base {
 
 		void showColumnVisibleEditWindow(bool flag);
 		void updateModelColumnVisible(bool flag);
+
+		/*!
+		 * @brief 表头点击排序
+		 * @param column 点击的表头列编号
+		 */
 		void respSectionClicked(int column);
 
 		/*!

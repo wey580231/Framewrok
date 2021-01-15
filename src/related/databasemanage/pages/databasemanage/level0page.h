@@ -7,7 +7,6 @@
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QWidget>
@@ -28,6 +27,9 @@ namespace Related {
 		Level0Page(QWidget *parent);
 		~Level0Page();
 
+	private slots:
+		void setPageNum(int newPage);
+
 	private:
 		void init();
 
@@ -43,13 +45,6 @@ namespace Related {
 		Base::RIconButton * m_searchButton;
 		Base::RIconButton * m_advanceSearchButton;
 		Base::RIconButton * m_moreButton;
-
-		Base::RIconButton * m_firstButton;
-		Base::RIconButton * m_prePageButton;
-		Base::RIconButton * m_nextPageButton;
-		Base::RIconButton * m_lastButton;
-
-		QComboBox * m_pageItemCountBox;
 	};
 
 } //namespace Related 

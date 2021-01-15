@@ -28,13 +28,19 @@ namespace Related {
 
 		m_tabWidget->addTabButton(userMangeButt, Tab_userManage);
 		m_tabWidget->addTabButton(systemSettingButt, Tab_systemSetting);
-
+		m_tabWidget->setFixedHeight(60);
 		m_stackedWidget = new QStackedWidget();
+
+		m_usermanagepage = new  UserManagePage();
+		m_stackedWidget->addWidget(m_usermanagepage);
 
 		QVBoxLayout * layout = new QVBoxLayout();
 		layout->addWidget(m_tabWidget);
 		layout->addWidget(m_stackedWidget);
+		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);
+
+		m_stackedWidget->setCurrentWidget(m_usermanagepage);
 	}
 
 } //namespace Related 

@@ -12,11 +12,6 @@ namespace Related {
 	{
 	}
 
-	int LevelModel0::rowCount(const QModelIndex &parent /* = QModelIndex() */) const
-	{
-		return m_dataList.size();
-	}
-
 	QVariant LevelModel0::displayData(int rowIndex, int dataIndex, int columnId) const
 	{
 		Level0ColumnIndex cindex = static_cast<Level0ColumnIndex>(columnId);
@@ -25,15 +20,26 @@ namespace Related {
 
 			switch (cindex)
 			{
-			case C_Id:
+			case L0_Id:
 				return data.m_id;
-				break;
-			case C_Num:
+			case L0_Num:
+				return data.m_num;
+			case L0_Name:
 				return data.m_name;
-				break;
-			case C_Timestamp:
+			case L0_Timestamp:
 				return data.m_timestamp;
-				break;
+			case L0_ExperienceName:
+				return data.m_experienceName;
+			case L0_PlatformName:
+				return data.m_platformName;
+			case L0_SampleRate:
+				return data.m_sampleRate;
+			case L0_TimeLength:
+				return data.m_timeLength;
+			case L0_DataType:
+				return data.m_datatype;
+			case L0_DataSource:
+				return data.m_datasource;
 			default:
 				break;
 			}
@@ -52,7 +58,7 @@ namespace Related {
 
 	void LevelModel0::prepareData()
 	{
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			Level0Data ld;
 			ld.m_id = i + 1;
 			ld.m_name = QString("Name_%1").arg(i + 1);
@@ -61,6 +67,11 @@ namespace Related {
 		}
 
 		refresh();
+	}
+
+	int LevelModel0::datasSize() const
+	{
+		return m_dataList.size();
 	}
 
 } //namespace Related 

@@ -12,9 +12,15 @@
 #pragma once
 
 #include <QWidget>
+#include <QStackedWidget>
+#include <QVBoxLayout>
 
 #include <base\selfwidget\rtabbar.h>
 #include "../abstractpage.h"
+
+#include "DemonSpectrogramWidget.h"
+#include "gatherwidget.h"
+#include "inspectwidget.h"
 
 namespace Related {
 
@@ -28,8 +34,15 @@ namespace Related {
 
 		PageType getPageType() const;
 
+	private slots:
+		void slotDataGather();
+		void slotSignalOut();
+		void slotInspectSignalOut();
 	private:
 		void init();
+
+	private:
+		QStackedWidget *m_stackedWidget;
 	};
 
 }//namespace Related 

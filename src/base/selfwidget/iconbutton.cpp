@@ -7,7 +7,7 @@
 namespace Base{
 
 	RIconButton::RIconButton(QWidget *parent):QAbstractButton(parent),
-    m_spacing(6),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true)
+    m_spacing(6),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true), m_iconLeftToText(true)
 {
     setIconSize(ICON_16);
     setContentsMargins(6,5,6,5);
@@ -62,6 +62,11 @@ void RIconButton::setTextFont(QFont & fontt)
 void RIconButton::setTextVisible(bool visible)
 {
 	m_textVixible = visible;
+}
+
+void RIconButton::setIconTextDirection(bool iconLeftToText /*= true*/)
+{
+	m_iconLeftToText = iconLeftToText;
 }
 
 QSize RIconButton::sizeHint() const
@@ -128,15 +133,30 @@ void RIconButton::paintEvent(QPaintEvent *event)
 
     QMargins margins = contentsMargins();
 
-    QPoint startPoint(margins.left(),margins.top());
-
+	QPoint startPoint;
+	if (m_iconLeftToText) {
+		startPoint = QPoint(margins.left(), margins.top());
+	}
+	else
+	{
+		startPoint = QPoint(width() - margins.right(), margins.top());
+	}
+	
     //若控件尺寸大于最小绘制尺寸，则将其居中绘制
     QSize minSize = calcMiniumSize();
-    if(width() > minSize.width())
-        startPoint.setX(startPoint.x() + (width() - minSize.width()) / 2);
 
-    if(height() > minSize.height())
-        startPoint.setY(startPoint.y() + (height() - minSize.height()) / 2);
+	if (m_iconLeftToText) {
+		if (width() > minSize.width())
+			startPoint.setX(startPoint.x() + (width() - minSize.width()) / 2);
+	}
+	else {
+		if (width() > minSize.width())
+			startPoint.setX(startPoint.x() - (width() - minSize.width()) / 2);
+	}
+
+	if (height() > minSize.height())
+		startPoint.setY(startPoint.y() + (height() - minSize.height()) / 2);
+
 
     //[2]绘制图标
     QIcon qic = icon();
@@ -147,13 +167,26 @@ void RIconButton::paintEvent(QPaintEvent *event)
     if(!qic.isNull()){
         QPixmap pic = qic.pixmap(m_iconSize,QIcon::Normal);
         int picY = (rect().height() - m_iconSize.height())/2;
-        painter.drawPixmap(QPoint(startPoint.x(),picY),pic);
 
-        startPoint += QPoint(m_iconSize.width(),0);
+		if (m_iconLeftToText) {
+			painter.drawPixmap(QPoint(startPoint.x(),picY),pic);
+			startPoint += QPoint(m_iconSize.width(),0);
+		}
+		else
+		{
+			painter.drawPixmap(QPoint(startPoint.x() - m_iconSize.width(),picY),pic);
+			startPoint -= QPoint(m_iconSize.width(),0);
+		}
     }
 
     if(!qic.isNull() && !text().isEmpty()){
-        startPoint.setX(startPoint.x() + m_spacing);
+		if (m_iconLeftToText) {
+			startPoint.setX(startPoint.x() + m_spacing);
+		}
+		else
+		{
+			startPoint.setX(startPoint.x() - m_spacing);
+		}
     }
 
     //[3]绘制文字
@@ -163,7 +196,15 @@ void RIconButton::paintEvent(QPaintEvent *event)
         int minHeight = fm.height();
 
         int txtY = (rect().height() - minHeight) / 2;
-        QRect rect(startPoint.x(),txtY,minWidth,minHeight);
+
+		QRect rect;
+		if (m_iconLeftToText) {
+			rect = QRect(startPoint.x(), txtY, minWidth, minHeight);
+		}
+		else
+		{
+			rect = QRect(startPoint.x() - minWidth, txtY, minWidth, minHeight);
+		}
 
         painter.setFont(m_textFont);
 
@@ -177,7 +218,13 @@ void RIconButton::paintEvent(QPaintEvent *event)
             }
         }
 
-        painter.drawText(rect,Qt::AlignLeft | Qt::AlignVCenter,text());
+		if (m_iconLeftToText) {
+			painter.drawText(rect,Qt::AlignLeft | Qt::AlignVCenter,text());
+		}
+		else
+		{
+			painter.drawText(rect,Qt::AlignRight | Qt::AlignVCenter,text());
+		}
     }
 }
 
