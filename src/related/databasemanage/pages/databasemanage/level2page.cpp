@@ -35,19 +35,19 @@ namespace Related {
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Id, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Num, QStringLiteral("批号")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Timestamp, QStringLiteral("时间")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Type, QStringLiteral("类型")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_JyNum, QStringLiteral("桨叶数")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_ZxDegree, QStringLiteral("置信度")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Direction, QStringLiteral("方位")));
-		m_tableView->addColumnItem(Base::ColumnItem(L2_Nation, QStringLiteral("国籍")));
-
-		m_tableModel = new LevelModel0();
+		m_tableModel = new LevelModel2();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
+
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Id, QStringLiteral("索引")));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Num, QStringLiteral("批号")));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Timestamp, QStringLiteral("时间"),150));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Type, QStringLiteral("类型")));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_JyNum, QStringLiteral("桨叶数")));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_ZxDegree, QStringLiteral("置信度")));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Location, QStringLiteral("坐标"),220));
+		m_tableView->addColumnItem(Base::ColumnItem(L2_Nation, QStringLiteral("国籍")));
 
 		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/新增.png"),QStringLiteral("新增"));
 		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"),QStringLiteral("删除"));

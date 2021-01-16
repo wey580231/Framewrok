@@ -1,5 +1,5 @@
 /*!
- * @brief     0级表格数据模型 
+ * @brief     1级表格数据模型 
  * @author    wey
  * @version   1.0
  * @date      2021.01.10 13:53:43
@@ -16,13 +16,13 @@
 
 namespace Related {
 
-	class LevelModel0 : public Base::RTableModel
+	class LevelModel1 : public Base::RTableModel
 	{
 		Q_OBJECT
 
 	public:
-		LevelModel0(QObject *parent = nullptr);
-		~LevelModel0();
+		LevelModel1(QObject *parent = nullptr);
+		~LevelModel1();
 
 		void prepareData();
 		int datasSize() const;
@@ -32,7 +32,7 @@ namespace Related {
 		QVariant customProcessRole(int role, int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<Level0Data> m_dataList;
+		QList<Level1Data> m_dataList;
 	};
 
 } //namespace Related 

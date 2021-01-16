@@ -33,7 +33,8 @@ namespace Base {
 
 		/*!
 		 * @brief 设置表格数据模型
-		 * @attention 此方法会覆盖QTableView的同名方法，只接受自定义的模型
+		 * @attention 1.此方法会覆盖QTableView的同名方法，只接受自定义的模型
+		 *			  2.只有先调用setModel()，设置表格的列宽才会生效
 		 * @param model 自定义表格模型
 		 */
 		void setModel(RTableModel *model);

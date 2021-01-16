@@ -17,6 +17,7 @@
 #include "../abstractpage.h"
 
 #include "usermanagepage.h"
+#include "othersettingpage.h"
 
 namespace Related {
 
@@ -35,13 +36,18 @@ namespace Related {
 			Tab_systemSetting,
 		};
 
+	private slots:
+		void respTabChanged(int page);
+
 	private:
 		void init();
 
 	private:
 		Base::RTabBar * m_tabWidget;
 		QStackedWidget * m_stackedWidget;
-		UserManagePage *m_usermanagepage;
+
+		UserManagePage * m_userManagePage;
+		OtherSettingPage * m_otherSettingPage;
 	};
 
 } //namespace Related 

@@ -19,7 +19,7 @@ namespace Base {
 		horizontalHeader()->sectionResizeMode(QHeaderView::Stretch);
 		horizontalHeader()->setStretchLastSection(true);
 
-		connect(horizontalHeader(), SIGNAL(sectionResized(int, int, int)),this,SLOT(respColumnResize(int, int, int)));
+		//connect(horizontalHeader(), SIGNAL(sectionResized(int, int, int)),this,SLOT(respColumnResize(int, int, int)));
 
 		setTableFeature(T_ColumnEdit, true);
 		setTableFeature(T_HeadSorting, true);
@@ -56,8 +56,9 @@ namespace Base {
 		}
 
 		if (item.m_columnWidth > 0) {
+			//NOTE 20210116 只有先调用setModel()，设置表格的列宽才会生效
 			int visibleCount = std::count_if(m_columns.begin(), m_columns.end(), [](ColumnItem & titem) {return titem.m_visible;});
-			horizontalHeader()->resizeSection(visibleCount - 1, item.m_columnWidth);
+			setColumnWidth(visibleCount - 1, item.m_columnWidth);
 		}
 
 		return true;

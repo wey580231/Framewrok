@@ -35,21 +35,21 @@ namespace Related {
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableView->addColumnItem(Base::ColumnItem(L0_Id, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_Num, QStringLiteral("编号")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_Name, QStringLiteral("文件名")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_Timestamp, QStringLiteral("录入时间"), 230));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_ExperienceName, QStringLiteral("实验名")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_PlatformName, QStringLiteral("平台名")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_SampleRate, QStringLiteral("采样率")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_TimeLength, QStringLiteral("数据时长(s)")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_DataType, QStringLiteral("数据类型")));
-		m_tableView->addColumnItem(Base::ColumnItem(L0_DataSource, QStringLiteral("数据来源")));
-
 		m_tableModel = new LevelModel0();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
+
+		m_tableView->addColumnItem(Base::ColumnItem(L0_Id, QStringLiteral("索引")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_Num, QStringLiteral("编号")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_Name, QStringLiteral("文件名")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_Timestamp, QStringLiteral("录入时间"), 150));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_ExperienceName, QStringLiteral("实验名")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_PlatformName, QStringLiteral("平台信息")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_SampleRate, QStringLiteral("采样率")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_TimeLength, QStringLiteral("数据时长(s)")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_DataType, QStringLiteral("数据类型")));
+		m_tableView->addColumnItem(Base::ColumnItem(L0_DataSource, QStringLiteral("数据来源")));
 
 		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/新增.png"),QStringLiteral("新增"));
 		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"),QStringLiteral("删除"));

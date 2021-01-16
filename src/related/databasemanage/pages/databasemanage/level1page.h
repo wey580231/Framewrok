@@ -15,7 +15,7 @@
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 
-#include "tablemodel/levelmodel0.h"
+#include "tablemodel/levelmodel1.h"
 
 namespace Related {
 
@@ -35,7 +35,7 @@ namespace Related {
 
 	private:
 		Base::RTableView * m_tableView;
-		LevelModel0 * m_tableModel;
+		LevelModel1 * m_tableModel;
 
 		Base::RIconButton * m_addButton;
 		Base::RIconButton * m_delButton;

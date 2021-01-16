@@ -135,6 +135,15 @@
     <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -222,6 +231,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\databasemanage\level2page.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

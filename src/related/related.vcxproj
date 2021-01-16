@@ -127,8 +127,11 @@
     <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\mainpage.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\overviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
@@ -175,6 +178,9 @@
     <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level1page.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level2page.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h" />
     <ClInclude Include="databasemanage\util.h" />
     <QtMoc Include="databasemanage\utils\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />

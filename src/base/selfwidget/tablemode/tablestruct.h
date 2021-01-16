@@ -29,8 +29,8 @@ namespace Base {
 	*/
 	struct ColumnItem
 	{
-		ColumnItem() :ColumnItem(0, "", true, Qt::AlignCenter, Interactive, 80) {}
-		ColumnItem(int id, QString name, bool visible = true, Qt::Alignment align = Qt::AlignCenter, ColumnResizeMode  model = Interactive, int width = 80) :m_id(id), m_name(name), m_visible(visible), m_align(align) {}
+		ColumnItem() :ColumnItem(0, "", true, Qt::AlignCenter, Interactive, 120) {}
+		ColumnItem(int id, QString name, bool visible = true, Qt::Alignment align = Qt::AlignCenter, ColumnResizeMode  model = Interactive, int width = 120) :m_id(id), m_name(name), m_visible(visible), m_align(align), m_columnWidth(width){}
 		ColumnItem(int id, QString name, int width):ColumnItem(id,name,true,Qt::AlignCenter,Interactive,width){}
 
 		int m_id;			/*!< 列唯一标识 */

@@ -62,6 +62,7 @@ namespace Related {
 	enum Level1ColumnIndex {
 		L1_Id,
 		L1_Num,
+		L1_Name,
 		L1_Timestamp,
 		L1_PlatformName,
 		L1_TimeLength,
@@ -73,8 +74,12 @@ namespace Related {
 	 */
 	struct Level1Data {
 		int m_id;
+		QString m_num;					/*!< 批号 */
 		QString m_name;
 		QString m_timestamp;
+		QString m_platformName;			/*!< 平台名 */
+		QString m_timeLength;			/*!< 采样时长 */
+		QString m_datatype;				/*!< 文件格式 */
 	};
 
 	/*!
@@ -88,7 +93,7 @@ namespace Related {
 		L2_Type,				/*!< 类型 */
 		L2_JyNum,				/*!< 桨叶数 */
 		L2_ZxDegree,			/*!< 置信度 */
-		L2_Direction			/*!< 方位 */
+		L2_Location				/*!< 录取地点 */
 	};
 
 	/*!
@@ -96,8 +101,13 @@ namespace Related {
 	 */
 	struct Level2Data {
 		int m_id;
-		QString m_name;
+		QString m_num;
 		QString m_timestamp;
+		QString m_nation;
+		QString m_type;
+		QString m_jyNum;
+		QString m_zxDegree;
+		QString m_location;
 	};
 
 	/*!
@@ -130,8 +140,9 @@ namespace Related {
 	struct UserManageData {
 		int m_id;
 		QString m_name;				/*!< 用户名 */
-		QString m_timestamp;		/*!< 用户名 */
-		QString m_loginTimestamp;	/*!< 用户名 */
+		QString m_timestamp;		/*!< 注册时间 */
+		QString m_loginTimestamp;	/*!< 上次登录时间 */
+		QString m_rights;			/*!< 用户权限 */
 	};
 	
 } //namespace Related

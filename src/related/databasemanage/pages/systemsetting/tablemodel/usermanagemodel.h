@@ -29,7 +29,6 @@ namespace Related {
 
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
-		QVariant customProcessRole(int role, int rowIndex, int dataIndex, int columnId) const;
 
 	private:
 		QList<UserManageData> m_dataList;

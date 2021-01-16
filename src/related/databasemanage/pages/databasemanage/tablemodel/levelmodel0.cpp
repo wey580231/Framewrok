@@ -61,8 +61,16 @@ namespace Related {
 		for (int i = 0; i < 100; i++) {
 			Level0Data ld;
 			ld.m_id = i + 1;
+			ld.m_num = QString("%1").arg(100000 + i);
 			ld.m_name = QString("Name_%1").arg(i + 1);
 			ld.m_timestamp = QString("2021-01-10 12:00:0%1").arg(i);
+			ld.m_experienceName = QStringLiteral("XXX实验");
+			ld.m_platformName = QStringLiteral("XX平台%1").arg(i);
+			ld.m_sampleRate = "44.1MHz";
+			ld.m_timeLength = "120";
+			ld.m_datatype = "mp3";
+			ld.m_datasource = QStringLiteral("手动录入");
+			
 			m_dataList.append(ld);
 		}
 

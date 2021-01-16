@@ -35,17 +35,17 @@ namespace Related {
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableView->addColumnItem(Base::ColumnItem(L1_Id, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(L1_Num, QStringLiteral("编号")));
-		m_tableView->addColumnItem(Base::ColumnItem(L1_Timestamp, QStringLiteral("平台名")));
-		m_tableView->addColumnItem(Base::ColumnItem(L1_PlatformName, QStringLiteral("平台信息")));
-		m_tableView->addColumnItem(Base::ColumnItem(L1_TimeLength, QStringLiteral("数据时长")));
-		m_tableView->addColumnItem(Base::ColumnItem(L1_DataType, QStringLiteral("数据类型")));
-
-		m_tableModel = new LevelModel0();
+		m_tableModel = new LevelModel1();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
+
+		m_tableView->addColumnItem(Base::ColumnItem(L1_Id, QStringLiteral("索引")));
+		m_tableView->addColumnItem(Base::ColumnItem(L1_Num, QStringLiteral("编号")));
+		m_tableView->addColumnItem(Base::ColumnItem(L1_Timestamp, QStringLiteral("时间"),150));
+		m_tableView->addColumnItem(Base::ColumnItem(L1_PlatformName, QStringLiteral("平台信息")));
+		m_tableView->addColumnItem(Base::ColumnItem(L1_TimeLength, QStringLiteral("数据时长")));
+		m_tableView->addColumnItem(Base::ColumnItem(L1_DataType, QStringLiteral("数据类型")));
 
 		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/新增.png"),QStringLiteral("新增"));
 		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"),QStringLiteral("删除"));

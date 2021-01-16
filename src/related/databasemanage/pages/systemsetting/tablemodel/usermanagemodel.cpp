@@ -11,19 +11,6 @@ namespace Related {
 	{
 	}
 
-	void UserManageModel::prepareData()
-	{
-		for (int i = 0; i < 10; i++) {
-			UserManageData ld;
-			ld.m_id = i + 1;
-			ld.m_name = QString("Name_%1").arg(i + 1);
-			ld.m_timestamp = QString("2021-01-10 12:00:0%1").arg(i);
-			m_dataList.append(ld);
-		}
-
-		refresh();
-	}
-
 	int UserManageModel::datasSize() const
 	{
 		return m_dataList.size();
@@ -45,6 +32,12 @@ namespace Related {
 				break;
 			case U_RegisterTime:
 				return data.m_timestamp;
+				break; 
+			case U_LastLoginTime:
+				return data.m_timestamp;
+				break;
+			case U_UserRights:
+				return data.m_rights;
 				break;
 			default:
 				break;
@@ -52,12 +45,21 @@ namespace Related {
 		}
 
 		return QVariant();
-		return QVariant();
 	}
 
-	QVariant UserManageModel::customProcessRole(int role, int rowIndex, int dataIndex, int columnId) const
+	void UserManageModel::prepareData()
 	{
-		return QVariant();
+		for (int i = 0; i < 10; i++) {
+			UserManageData ld;
+			ld.m_id = i + 1;
+			ld.m_name = QString("Name_%1").arg(i + 1);
+			ld.m_timestamp = QString("2021-01-10 12:00:0%1").arg(i);
+			ld.m_loginTimestamp = QString("2021-01-10 12:00:0%1").arg(i);
+			ld.m_rights = QStringLiteral("数据查看/数据删除");
+			m_dataList.append(ld);
+		}
+
+		refresh();
 	}
 
 }//namespace Related 
