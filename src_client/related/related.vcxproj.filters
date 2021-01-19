@@ -150,6 +150,12 @@
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\mainpage\taskoverviewitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -254,6 +260,12 @@
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="databasemanage\customwidget\timerangeedit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\mainpage\taskoverviewitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forwardcontroller\dataforwardmanager.h">
@@ -298,6 +310,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="databasemanage\pages\mainpage\taskoverviewitem.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

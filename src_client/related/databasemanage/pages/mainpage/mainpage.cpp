@@ -1,11 +1,14 @@
 #include "mainpage.h"
 
+#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 #include <QDateTime>
+#include <QListView>
 
 #include "../../customwidget/customwidgetcontainer.h"
-
+#include "taskoverviewitem.h"
 
 namespace Related {
 
@@ -13,6 +16,8 @@ namespace Related {
 		: AbstractPage(parent)
 	{
 		init();
+
+		initTaskList();
 	}
 
 	MainPage::~MainPage()
@@ -24,153 +29,117 @@ namespace Related {
 		return Page_MainPage;
 	}
 
+	void MainPage::respOpenTask(QString taskId)
+	{
+		
+	}
+
+	void MainPage::respDeleteTask(QString taskId)
+	{
+
+	}
+
 	void MainPage::init()
 	{
 		QWidget * mainWidget = new QWidget();
 
 		CustomWidgetContainer * overViewContainer = new CustomWidgetContainer();
 
-		QSize maxSize(415, 170);
-		QSize minSize(345, 170);
-		m_todayAddItem = new OverViewItem();
-		m_todayAddItem->setLabelText(QStringLiteral("今日新增条数"));
-		m_todayAddItem->setLabelBackground(QColor(237, 168, 27));
-		m_todayAddItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/上传.png"));
-		m_todayAddItem->setMaximumSize(maxSize);
-		m_todayAddItem->setMinimumSize(minSize);
-
-		m_totalItem = new OverViewItem();
-		m_totalItem->setLabelBackground(QColor(77, 174, 116));
-		m_totalItem->setLabelText(QStringLiteral("识别库条数"));
-		m_totalItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据库记录.png"));
-		m_totalItem->setMaximumSize(maxSize);
-		m_totalItem->setMinimumSize(minSize);
-
-		m_unprocessItem = new OverViewItem();
-		m_unprocessItem->setLabelBackground(QColor(199, 99, 116));
-		m_unprocessItem->setLabelText(QStringLiteral("未处理条数"));
-		m_unprocessItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/未处理.png"));
-		m_unprocessItem->setMaximumSize(maxSize);
-		m_unprocessItem->setMinimumSize(minSize);
-
-		QHBoxLayout * overViewLayout = new QHBoxLayout();
-		overViewLayout->setContentsMargins(10, 15, 10, 15);
-		overViewLayout->addWidget(m_todayAddItem);
-		overViewLayout->addWidget(m_totalItem);
-		overViewLayout->addWidget(m_unprocessItem);
-
-		QWidget * tmpWidget = new QWidget();
-		tmpWidget->setLayout(overViewLayout);
-		overViewContainer->setContent(tmpWidget);
-
-		CustomWidgetContainer * leftChart = new CustomWidgetContainer();
-		leftChart->setMinimumHeight(450);
-
-		CustomWidgetContainer * rightChart = new CustomWidgetContainer();
-		rightChart->setMinimumHeight(450);
-
-		//左侧一周数据统计
+		//概览页面
 		{
-			QCustomPlot * leftPlot = new QCustomPlot();
-			leftChart->setContent(leftPlot);
-			initPlot(leftPlot);
+			QSize maxSize(415, 170);
+			QSize minSize(345, 170);
+			m_taskNumItem = new OverViewItem();
+			m_taskNumItem->setLabelData(QString::number(12));
+			m_taskNumItem->setLabelText(QStringLiteral("任务总数"));
+			m_taskNumItem->setLabelBackground(QColor(237, 168, 27));
+			m_taskNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/上传.png"));
+			m_taskNumItem->setFixedSize(maxSize);
+			m_taskNumItem->setMinimumSize(minSize);
 
-			QCPAxis *keyAxis = leftPlot->xAxis;
-			QCPAxis *valueAxis = leftPlot->yAxis;
-			QCPBars * bars = new QCPBars(keyAxis, valueAxis);
+			m_diskSpaceItem = new OverViewItem();
+			m_diskSpaceItem->setLabelData("120GB");
+			m_diskSpaceItem->setLabelBackground(QColor(77, 174, 116));
+			m_diskSpaceItem->setLabelText(QStringLiteral("占用空间"));
+			m_diskSpaceItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据库记录.png"));
+			m_diskSpaceItem->setMaximumSize(maxSize);
+			m_diskSpaceItem->setMinimumSize(minSize);
 
-			bars->setAntialiased(false);
-			bars->setName("bars fuels");
-			bars->setPen(QPen(QColor(0, 168, 140).lighter(130)));
-			bars->setBrush(QColor(0, 168, 140));
+			m_platNumItem = new OverViewItem();
+			m_platNumItem->setLabelData(QString::number(8));
+			m_platNumItem->setLabelBackground(QColor(199, 99, 116));
+			m_platNumItem->setLabelText(QStringLiteral("平台数量"));
+			m_platNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/未处理.png"));
+			m_platNumItem->setMaximumSize(maxSize);
+			m_platNumItem->setMinimumSize(minSize);
 
-			QVector<double> ticks;
-			QVector<QString> labels;
+			QHBoxLayout * overViewLayout = new QHBoxLayout();
+			overViewLayout->setContentsMargins(10, 15, 10, 15);
+			overViewLayout->addWidget(m_taskNumItem);
+			overViewLayout->addWidget(m_diskSpaceItem);
+			overViewLayout->addWidget(m_platNumItem);
 
-			for (int i = 0; i < 7; i++)
-			{
-				ticks << i + 1;
-
-				QDateTime cdateTime = QDateTime::currentDateTime();
-				cdateTime = cdateTime.addDays(i - 6);
-				labels << cdateTime.toString("MM-dd");
-			}
-
-			QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
-			textTicker->addTicks(ticks, labels);
-			keyAxis->setTicker(textTicker);
-
-			keyAxis->setSubTicks(false);
-			keyAxis->setTickLength(0, 4);
-			keyAxis->setRange(0, 8);
-			keyAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-
-			valueAxis->setPadding(35);
-			valueAxis->setLabel(QStringLiteral("最近一周统计"));
-			valueAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
-
-			QVector<double> barsData;
-			barsData << 35 << 18 << 24 << 41 << 10 << 8 << 39;
-			bars->setData(ticks, barsData);
-
-			valueAxis->rescale(true);
-			leftPlot->replot();
+			QWidget * tmpWidget = new QWidget();
+			tmpWidget->setLayout(overViewLayout);
+			overViewContainer->setFixedHeight(maxSize.height() + overViewLayout->contentsMargins().top() + overViewLayout->contentsMargins().bottom());
+			overViewContainer->setContent(tmpWidget);
 		}
 
-		//右侧三库数据统计
+		//任务概览
+		CustomWidgetContainer * taskContainer = new CustomWidgetContainer();
 		{
-			QCustomPlot * rightPlot = new QCustomPlot();
-			initPlot(rightPlot);
-			rightChart->setContent(rightPlot);
+			m_newTaskButt = new Base::RIconButton();
+			m_newTaskButt->setText(QStringLiteral("新建任务"));
+			m_newTaskButt->setMinimumSize(60,30);
+			m_newTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/新增.png")));		
+			
+			m_refreshTaskButt = new Base::RIconButton();
+			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
+			m_refreshTaskButt->setMinimumSize(60, 30);
+			m_refreshTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/刷新.png")));
 
-			QCPAxis *keyAxis = rightPlot->xAxis;
-			QCPAxis *valueAxis = rightPlot->yAxis;
-			QCPBars * bars = new QCPBars(keyAxis, valueAxis);
+			m_timeRange = new TimeRangeEdit();
 
-			bars->setAntialiased(false);
-			bars->setName("bars fuels");
-			bars->setPen(QPen(QColor(0, 168, 140).lighter(130)));
-			bars->setBrush(QColor(0, 168, 140));
+			m_locationBox = new QComboBox();
+			m_locationBox->setView(new QListView());
+			m_locationBox->addItem(QStringLiteral("选择海区"));
 
-			QVector<double> ticks;
-			QVector<QString> labels;
+			m_platBox = new QComboBox();
+			m_platBox->setView(new QListView());
+			m_platBox->addItem(QStringLiteral("选择平台"));
 
-			ticks << 1 << 2 << 3;
-			labels << QStringLiteral("0级库") << QStringLiteral("1级库") << QStringLiteral("2级库");
+			QHBoxLayout * hlayout = new QHBoxLayout();
+			hlayout->setContentsMargins(0, 0, 0, 0);
+			hlayout->addWidget(m_newTaskButt);
+			hlayout->addWidget(m_refreshTaskButt);
+			hlayout->addStretch(1);
+			hlayout->addWidget(m_timeRange);
+			hlayout->addWidget(m_locationBox);
+			hlayout->addWidget(m_platBox);
 
-			QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
-			textTicker->addTicks(ticks, labels);
-			keyAxis->setTicker(textTicker);
+			m_taskSrollArea = new QScrollArea();
+			m_taskSrollArea->setStyleSheet("background-color:rgba(0,0,0,0)");
+			m_taskSrollArea->setWidgetResizable(true);
 
-			keyAxis->setSubTicks(false);
-			keyAxis->setTickLength(0, 4);
-			keyAxis->setRange(0, 4);
-			keyAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+			m_taskWindow = new QWidget();
+			m_taskWindow->setStyleSheet("background-color:rgba(0,0,0,0)");
+			//m_taskWindow->setObjectName("widgetContainer");
+			m_taskSrollArea->setWidget(m_taskWindow);
 
-			valueAxis->setPadding(35);
-			valueAxis->setLabel(QStringLiteral("三库数据统计"));
-			valueAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+			QWidget * tmpWidget = new QWidget();
+			QVBoxLayout * tmpLayout = new QVBoxLayout();
+			tmpLayout->setContentsMargins(0, 0, 0, 0);
+			tmpLayout->addLayout(hlayout);
+			tmpLayout->addWidget(m_taskSrollArea);
+			tmpWidget->setLayout(tmpLayout);
 
-			QVector<double> barsData;
-			barsData << 167 << 210 << 349;
-			bars->setData(ticks, barsData);
-
-			valueAxis->rescale(true);
-			rightPlot->replot();
+			taskContainer->setContent(tmpWidget);
 		}
-
-		QHBoxLayout * chartLayout = new QHBoxLayout();
-		chartLayout->setContentsMargins(0, 0, 0, 0);
-		chartLayout->addWidget(leftChart);
-		chartLayout->addWidget(rightChart);
-		chartLayout->setStretch(0, 1);
-		chartLayout->setStretch(1, 1);
 
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(overViewContainer);
-		mainLayout->addLayout(chartLayout);
-		mainLayout->addStretch(1);
+		mainLayout->addWidget(taskContainer);
 
 		mainWidget->setLayout(mainLayout);
 
@@ -180,28 +149,37 @@ namespace Related {
 		setLayout(layout);
 	}
 
-	void MainPage::initPlot(QCustomPlot * plot)
+	void MainPage::initTaskList()
 	{
-		plot->setBackground(QColor(0, 0, 0, 0));
+		for (int i = 0; i < 15; i++) {
+			TaskOverViewItem * item = new TaskOverViewItem();
+			connect(item, SIGNAL(openTask(QString)), this, SLOT(respOpenTask(QString)));
+			connect(item, SIGNAL(deleteTask(QString)), this, SLOT(respDeleteTask(QString)));
+			m_taskItems.append(item);
+		}
 
-		auto setAxisStyle = [](QCPAxis * axis) {
-			QColor baseColor(118, 121, 124);
-			axis->setBasePen(QPen(baseColor, 1.5));
-			axis->setTickPen(QPen(baseColor, 1.5));
-			axis->setSubTickPen(baseColor);
+		QGridLayout * glayout = nullptr;
 
-			QColor tickColor(143, 222, 231);
-			QFont labelFont(QStringLiteral("微软雅黑"), 11);
-			axis->setTickLabelFont(labelFont);
-			axis->setTickLabelColor(tickColor);
+		if (m_taskWindow->layout() == nullptr) {
+			glayout = new QGridLayout();
+			glayout->setContentsMargins(4, 4, 4, 4);
+			m_taskWindow->setLayout(glayout);
+		}
+		else {
+			glayout = dynamic_cast<QGridLayout *>(m_taskWindow->layout());
 
-			labelFont.setPixelSize(13);
-			axis->setLabelFont(labelFont);
-			axis->setLabelColor(tickColor);
-		};
+			for (int i = glayout->count(); i >= 0; i--) {
+				if (glayout->itemAt(i)->widget()) {
+					delete glayout->takeAt(i);
+				}
+			}
+		}
 
-		setAxisStyle(plot->xAxis);
-		setAxisStyle(plot->yAxis);
+		for (int i = 0; i < m_taskItems.size(); i++) {
+			int row = i / 5;
+			int column = i % 5;
+			glayout->addWidget(m_taskItems.at(i), row, column, 1, 1);
+		}
 	}
 
 } //namespace Related 

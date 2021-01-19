@@ -11,12 +11,20 @@
 #pragma once
 
 #include <QWidget>
+#include <QDateTimeEdit>
+#include <QComboBox>
+#include <QtWidgets/QScrollArea>
+
+#include <base/selfwidget/iconbutton.h>
 
 #include "overviewitem.h"
+#include "../../customwidget/timerangeedit.h"
 #include "../abstractpage.h"
 #include "../../3rdLibrary/qcustomplot.h"
 
 namespace Related {
+
+	class TaskOverViewItem;
 
 	class MainPage : public AbstractPage
 	{
@@ -28,14 +36,39 @@ namespace Related {
 
 		PageType getPageType() const;
 
-	private:
-		void init();
-		void initPlot(QCustomPlot * plot);
+	private slots:
+		/*!
+		 * @brief 打开指定任务
+		 * @param taskId 任务ID
+		 */
+		void respOpenTask(QString taskId);
+
+		/*!
+		 * @brief 删除指定任务
+		 * @param taskId 任务ID
+		 */
+		void respDeleteTask(QString taskId);
 
 	private:
-		OverViewItem * m_todayAddItem;
-		OverViewItem * m_totalItem;
-		OverViewItem * m_unprocessItem;
+		void init();
+		void initTaskList();
+
+	private:
+		OverViewItem * m_taskNumItem;
+		OverViewItem * m_diskSpaceItem;
+		OverViewItem * m_platNumItem;
+
+		Base::RIconButton * m_newTaskButt;
+		Base::RIconButton * m_refreshTaskButt;
+
+		TimeRangeEdit * m_timeRange;
+		QComboBox * m_locationBox;
+		QComboBox * m_platBox;	
+
+		QScrollArea * m_taskSrollArea;	
+		QWidget * m_taskWindow;			/*!< 任务窗口区 */
+
+		QList<TaskOverViewItem *> m_taskItems;
 	};
 
 } //namespace Related

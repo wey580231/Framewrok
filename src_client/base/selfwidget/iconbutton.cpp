@@ -115,13 +115,14 @@ void RIconButton::paintEvent(QPaintEvent *event)
         painter.setBrush(QBrush(m_colorCollect.m_checkedBackGroundColor));
         painter.setPen(QPen(m_colorCollect.m_checkedBorderColor,1));
     }else{
-        if(m_mouseEnter){
-            painter.setBrush(QBrush(m_colorCollect.m_hoverBackGroundColor));
-            painter.setPen(QPen(m_colorCollect.m_hoverBorderColor,1));
-        }else{
-            painter.setBrush(QBrush(m_colorCollect.m_normalBackGroundColor));
-            painter.setPen(QPen(m_colorCollect.m_normalBorderColor,1));
-        }
+		if (m_mouseEnter) {
+			painter.setBrush(QBrush(m_colorCollect.m_hoverBackGroundColor));
+			painter.setPen(QPen(m_colorCollect.m_hoverBorderColor, 1));
+		}
+		else {
+			painter.setBrush(QBrush(m_colorCollect.m_normalBackGroundColor));
+			painter.setPen(QPen(m_colorCollect.m_normalBorderColor, 1));
+		}
     }
 
     QRect rec = rect();
@@ -161,7 +162,7 @@ void RIconButton::paintEvent(QPaintEvent *event)
     //[2]绘制图标
     QIcon qic = icon();
 
-    if(isChecked() && !m_checkedIcon.isNull())
+    if((m_mouseEnter || isChecked()) && !m_checkedIcon.isNull())
         qic = m_checkedIcon;
 
     if(!qic.isNull()){

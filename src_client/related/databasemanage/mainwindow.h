@@ -30,9 +30,14 @@ namespace Related {
 	private:
 		void init();
 
+	private slots:
+		void respLoginSuccess();
+
 	private:
 		LeftPanel * m_leftPanel;
 		WidgetContainer * m_widgetContainer;
+
+		QWidget * m_mainWidget;
 
 		LoginPage * m_loginPage;
 

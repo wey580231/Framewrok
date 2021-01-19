@@ -8,7 +8,14 @@
 /***************适用与页面内部窗口，用于分割其它功能模块***/
 QWidget#widgetContainer{
     color: white;
-    background-color: rgba(0,64,110);
+    background-color:rgba(0,77,136, 255);
+}
+
+/*************************登录页面********************************/
+QLabel#Label_Login_TitleLabel{
+	font-size:32px;
+	font-weight:600;
+	font-family: "微软雅黑";
 }
 
 /*************************左侧菜单管理区********************************/
@@ -34,13 +41,15 @@ QWidget#Widget_LeftPanel,QWidget#Widget_RightPanel{
 }
 
 /*************************主页-概览信息显示条目区********************************/
+
 QWidget#Widget_OverViewItem{
 	background-color:rgb(6,81,139);
 }
 
 QLabel#labelItemText{
 	color:white;
-	font-size:13px;
+	font-size:16px;
+	font-family:"微软雅黑"
 }
 
 QLabel#labelItemData{
@@ -48,7 +57,19 @@ QLabel#labelItemData{
 	font-size:35px;
 }
 
+/*单个任务概览窗口*/
+QWidget#taskOverItemContainer{
+	border:1px solid rgb(50,112,159);
+}
+QWidget#taskOverItemContainer:hover{
+	border:1px solid rgb(9,213,243);
+}
 
+QWidget#taskOverItemHoverContainer{
+	background-color:rgba(0,77,136, 210);
+}
+
+/*************************主页-概览信息显示条目区********************************/
 
 
 QWidget#tabWidget_mainWidget{

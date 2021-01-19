@@ -23,11 +23,12 @@ namespace Related {
 
 		//µÇÂ¼Ò³Ãæ
 		m_loginPage = new LoginPage();
+		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
 
-		QWidget * mainWidget = new QWidget();
+		m_mainWidget = new QWidget();
 
-		m_leftPanel = new LeftPanel(mainWidget);
-		m_widgetContainer = new WidgetContainer(mainWidget);
+		m_leftPanel = new LeftPanel(m_mainWidget);
+		m_widgetContainer = new WidgetContainer(m_mainWidget);
 
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), m_widgetContainer,SLOT(switchPage(int)));
 
@@ -36,15 +37,20 @@ namespace Related {
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(m_leftPanel);
 		mainLayout->addWidget(m_widgetContainer);
-		mainWidget->setLayout(mainLayout);
+		m_mainWidget->setLayout(mainLayout);
 
-		//m_stackedWidget->addWidget(m_loginPage);
-		m_stackedWidget->addWidget(mainWidget);
+		m_stackedWidget->addWidget(m_loginPage);
+		m_stackedWidget->addWidget(m_mainWidget);
 		
 		QHBoxLayout * layout = new QHBoxLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_stackedWidget);
 		setLayout(layout);
+	}
+
+	void MainWindow::respLoginSuccess()
+	{
+		m_stackedWidget->setCurrentWidget(m_mainWidget);
 	}
 
 } //namespace Related 

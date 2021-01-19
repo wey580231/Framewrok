@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -62,7 +62,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -112,6 +112,7 @@
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
+    <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp" />
     <ClCompile Include="databasemanage\leftpanel.cpp" />
     <ClCompile Include="databasemanage\loginpage.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\mainpage.cpp" />
     <ClCompile Include="databasemanage\pages\mainpage\overviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\mainpage\taskoverviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
@@ -162,6 +164,7 @@
     <QtMoc Include="databasemanage\pages\mainpage\overviewitem.h" />
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
+    <QtMoc Include="databasemanage\customwidget\timerangeedit.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\pages\abstractpage.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
@@ -185,6 +188,7 @@
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h" />
     <QtMoc Include="databasemanage\loginpage.h" />
+    <QtMoc Include="databasemanage\pages\mainpage\taskoverviewitem.h" />
     <ClInclude Include="databasemanage\util.h" />
     <QtMoc Include="databasemanage\utils\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
@@ -204,6 +208,7 @@
     <QtUic Include="databasemanage\pages\dataanalyse\gatherwidget.ui" />
     <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui" />
     <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui" />
+    <QtUic Include="databasemanage\pages\mainpage\taskoverviewitem.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

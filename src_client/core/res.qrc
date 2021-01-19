@@ -126,5 +126,10 @@
         <file>resource/qyblue/到首页.png</file>
         <file>resource/qyblue/到尾页.png</file>
         <file>resource/qyblue/小于号.png</file>
+        <file>resource/qyblue/登录.png</file>
+        <file>resource/qyblue/删除_48.png</file>
+        <file>resource/qyblue/打开_48.png</file>
+        <file>resource/qyblue/打开_48_hover.png</file>
+        <file>resource/qyblue/删除_48_hover.png</file>
     </qresource>
 </RCC>
