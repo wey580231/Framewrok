@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  *  @brief     封装libuv中eventloop
  *  @details   主事件循环上可以挂载多个监控目标
  *  @author    wey
@@ -16,11 +16,16 @@ namespace Network {
 
 	typedef std::function<void()> TimerCallback;
 
-	class Uv_EventLoop
+	class NETWORKSHARED_EXPORT Uv_EventLoop
 	{
 	public:
 		Uv_EventLoop();
 
+		/*! 
+		 * @brief 开启事件循环
+		 * @param status 事件循环运行模式
+		 * @return true:开启成功；false；开启失败
+		 */
 		bool startLoop(uv_run_mode status = UV_RUN_DEFAULT);
 		void stopLoop();
 

@@ -26,7 +26,7 @@ namespace Network {
 	typedef function<void(Uv_TcpClient *, int)> WriteCallBack;
 	typedef function<void(Uv_TcpClient *)> CloseCallBack;
 
-	class Uv_TcpClient
+	class NETWORKSHARED_EXPORT Uv_TcpClient
 	{
 	public:
 		Uv_TcpClient(uv_loop_t * loop);

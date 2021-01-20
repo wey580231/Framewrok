@@ -27,7 +27,7 @@ namespace Network {
 
 	typedef function<void(AcceptTcpClient *, int)> AcceptClientWriteCallBack;
 
-	class Uv_TcpServer
+	class NETWORKSHARED_EXPORT Uv_TcpServer
 	{
 	public:
 		Uv_TcpServer(uv_loop_t * eventLoop);
@@ -68,17 +68,17 @@ namespace Network {
 		static void removeClient(AcceptTcpClient * client);
 
 	private:
-		string m_localIp;
-		int m_localPort;
+		string m_localIp;		/*!< 绑定本地ip */
+		int m_localPort;		/*!< 绑定本地端口 */
 		bool m_bClosed;
 		bool m_bForceQuit;      /*!< 主动退出 */
-		uv_async_t m_handleClose;
+		uv_async_t m_handleClose;	/*!< 线程间通信消息体 */
 
 		uv_loop_t * m_eventLoop;
-		uv_tcp_t m_tcpServer;
+		uv_tcp_t m_tcpServer;	
 
-		uv_mutex_t m_clientMutex;
-		list<AcceptTcpClient *> m_clientList;
+		uv_mutex_t m_clientMutex;							/*!< 客户端句柄集合锁 */
+		list<AcceptTcpClient *> m_clientList;				/*!< 客户端连接句柄集合 */
 
 		NewConnectionCallBack m_newConnCallback;
 		MessageRecvCallBack m_messRecvCallback;
@@ -90,7 +90,11 @@ namespace Network {
 		string m_errorMsg;
 	};
 
-	class AcceptTcpClient
+	/*!
+	 * @brief 服务器单个客户端连接请求对象
+	 * @details 用于表示一个客户端与服务器之间的连接管道
+	 */
+	class NETWORKSHARED_EXPORT AcceptTcpClient
 	{
 	public:
 		AcceptTcpClient(uv_loop_t * eventLoop, ClientConnHandle * handle);

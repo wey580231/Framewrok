@@ -50,8 +50,10 @@ using namespace std;
 
 #include <uv.h>
 
+#include "../network_global.h"
+
 #define BUFFER_SIZE (1024*64)
-#define MAC_SEND_LIST_SIZE 20
+#define MAX_SEND_LIST_SIZE 20
 
 /*!
  * @brief uv_tcpclient客户端连接句柄

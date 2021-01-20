@@ -2,6 +2,11 @@
 
 namespace Network {
 
+	/*! 
+	 * @brief 为单个数据连接分配数据管理单元
+	 * @param data 服务器句柄
+	 * @return 创建后的数据单元
+	 */
 	ClientConnHandle * allocateConnHandle(Uv_TcpServer * data)
 	{
 		ClientConnHandle * handle = new ClientConnHandle();
@@ -179,6 +184,10 @@ namespace Network {
 		return ++client;
 	}
 
+	/*! 
+	 * @brief 新客户端连接回调
+	 * @param server 服务器数据信息
+	 */
 	void Uv_TcpServer::acceptCB(uv_stream_t *server, int status)
 	{
 		Uv_TcpServer * tcpServer = static_cast<Uv_TcpServer *>(server->data);
@@ -256,7 +265,7 @@ namespace Network {
 					printf("client %i rst!\n", hdl->clientId);
 				}
 				else {
-					//printf("other recv error %s.\n", RUtil::getLastUvError(nread).data());
+					printf("other recv error %s.\n", getLastUvError(nread).data());
 				}
 
 				remoteClient->close();
@@ -411,7 +420,7 @@ namespace Network {
 	{
 		WriteSegment * seg = (WriteSegment*)req;
 		if (req) {
-			if (m_sendList.size() > MAC_SEND_LIST_SIZE) {
+			if (m_sendList.size() > MAX_SEND_LIST_SIZE) {
 				freeWriteSegment(seg);
 			}
 			else {
@@ -452,7 +461,7 @@ namespace Network {
 		AcceptTcpClient* tcpClient = (AcceptTcpClient*)req->data;
 
 		if (status < 0) {
-			if (tcpClient->m_sendList.size() > MAC_SEND_LIST_SIZE) {
+			if (tcpClient->m_sendList.size() > MAX_SEND_LIST_SIZE) {
 				freeWriteSegment((WriteSegment*)req);
 			}
 			else {

@@ -326,7 +326,7 @@ namespace Network {
 	{
 		WriteSegment * seg = (WriteSegment*)req;
 		if (req) {
-			if (m_sendList.size() > MAC_SEND_LIST_SIZE) {
+			if (m_sendList.size() > MAX_SEND_LIST_SIZE) {
 				freeWriteSegment(seg);
 			}
 			else {
@@ -366,7 +366,7 @@ namespace Network {
 		Uv_TcpClient* tcpClient = (Uv_TcpClient*)req->data;
 
 		if (status < 0) {
-			if (tcpClient->m_sendList.size() > MAC_SEND_LIST_SIZE) {
+			if (tcpClient->m_sendList.size() > MAX_SEND_LIST_SIZE) {
 				freeWriteSegment((WriteSegment*)req);
 			}
 			else {

@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  *  @brief     封装libuv的udp客户端
  *  @details
  *             1.支持组播设置
@@ -17,7 +17,7 @@ namespace Network {
 
 	typedef std::function<void(char * data, int len, const sockaddr_in * remote)> UdpRecvCallBack;
 
-	class Uv_UdpClient
+	class NETWORKSHARED_EXPORT Uv_UdpClient
 	{
 	public:
 		Uv_UdpClient(uv_loop_t * eventLoop);
