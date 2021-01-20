@@ -132,6 +132,15 @@
     <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -219,6 +228,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\taskanalyse\taskanalysepage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

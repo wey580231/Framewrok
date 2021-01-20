@@ -23,6 +23,8 @@
 #include "pages\taskrecord\taskrecordpage.h"
 #include "pages\taskanalyse\taskanalysepage.h"
 
+#include "pages/targetdatabase/targetdatabasewidget.h"
+
 namespace Related {
 
 	class LeftPanel;
@@ -62,6 +64,8 @@ namespace Related {
 		TaskOverViewPage * m_taskOverViewPage;
 		TaskRecordPage * m_taskRecordPage;
 		TaskAnalysePage * m_taskAnalysePage;
+
+		TargetDatabaseWidget *m_targetDatabaseWidget;
 
 		QWidget * m_mainWidget;
 	};
