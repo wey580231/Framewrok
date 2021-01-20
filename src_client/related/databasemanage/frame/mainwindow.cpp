@@ -51,8 +51,11 @@ namespace Related {
 			//任务分析
 			m_taskAnalysePage = new TaskAnalysePage();
 
+			//目标库界面
+			m_targetDatabaseWidget = new TargetDatabaseWidget();
+
 			QList<AbstractPage *> pages;
-			pages << m_mainPage << m_dataMangePage << m_systemSettingPage
+			pages << m_mainPage << m_dataMangePage << m_targetDatabaseWidget << m_systemSettingPage 
 				<< m_taskOverViewPage << m_taskRecordPage << m_taskAnalysePage;
 
 			for (AbstractPage * page : pages) {	
