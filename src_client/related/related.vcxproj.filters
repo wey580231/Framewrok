@@ -81,9 +81,6 @@
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,34 +93,10 @@
     <ClCompile Include="databasemanage\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\candidatedatapage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\datasamplepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\gatherwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\inspectwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\SpectrogramWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\utils\operationtoolspage.cpp">
@@ -194,9 +167,6 @@
     <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -206,34 +176,10 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\candidatedatapage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\datasamplepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\gatherwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\inspectwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\SpectrogramWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\utils\operationtoolspage.h">
@@ -301,15 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\gatherwidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="databasemanage\pages\mainpage\taskoverviewitem.ui">

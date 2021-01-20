@@ -47,7 +47,6 @@ namespace Related {
 		int m_expandStateWidth;		//展开状态下宽度
 		int m_contractionWidth;		//收缩状态下宽度
 
-		Base::RIconButton * m_userloginButt;
 		Base::RIconButton * m_notifyButt;
 	};
 

@@ -116,15 +116,6 @@
     <ClCompile Include="databasemanage\leftpanel.cpp" />
     <ClCompile Include="databasemanage\loginpage.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\candidatedatapage.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\datasamplepage.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\gatherwidget.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\inspectwidget.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\SpectrogramWidget.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.cpp" />
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp" />
@@ -169,19 +160,10 @@
     <QtMoc Include="databasemanage\pages\abstractpage.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level0page.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\candidatedatapage.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\datasamplepage.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\gatherwidget.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\inspectwidget.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\SpectrogramWidget.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.h" />
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level1page.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\level2page.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h" />
@@ -204,9 +186,6 @@
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.ui" />
-    <QtUic Include="databasemanage\pages\dataanalyse\gatherwidget.ui" />
-    <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui" />
     <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\mainpage\taskoverviewitem.ui" />
   </ItemGroup>

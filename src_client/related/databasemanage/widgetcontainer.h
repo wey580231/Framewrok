@@ -16,7 +16,6 @@
 
 #include "pages\mainpage\mainpage.h"
 #include "pages\databasemanage\datamanagewidget.h"
-#include "pages\dataanalyse\dataanalysewidget.h"
 #include "pages\systemsetting\systemsettingwidget.h"
 
 namespace Related {
@@ -41,7 +40,6 @@ namespace Related {
 
 		MainPage * m_mainPage;
 		DataManageWidget * m_dataMangePage;
-		DataAnalyseWidget * m_dataAnalysePage;
 		SystemSettingWidget * m_systemSettingPage;
 
 		QMap<PageType, AbstractPage *> m_pageMapping;

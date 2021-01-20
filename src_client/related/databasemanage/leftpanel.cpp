@@ -24,7 +24,6 @@ namespace Related {
 	{
 		m_listWidget->setExpanded(checked);
 
-		m_userloginButt->setTextVisible(checked);
 		m_notifyButt->setTextVisible(checked);
 
 		if (checked) {
@@ -84,7 +83,7 @@ namespace Related {
 		m_listWidget = new RListWidget(this);
 		connect(m_listWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
 
-		m_listWidget->addItem(Page_MainPage,QStringLiteral("主页"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
+		m_listWidget->addItem(Page_MainPage,QStringLiteral("任务统计"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
 		m_listWidget->addItem(Page_DataManage,QStringLiteral("数据管理"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
 		m_listWidget->addItem(Page_DataAnalyse,QStringLiteral("数据分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
 		m_listWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
@@ -107,9 +106,6 @@ namespace Related {
 			butt->setIcon(QIcon(pixmap));
 		};
 
-		m_userloginButt = new Base::RIconButton();
-		setButtonProop(m_userloginButt,QStringLiteral("用户"), QStringLiteral(":/QYBlue/resource/qyblue/用户.png"));
-
 		m_notifyButt = new Base::RIconButton();
 		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));
 
@@ -117,7 +113,6 @@ namespace Related {
 		QVBoxLayout * bottomLayout = new QVBoxLayout();
 		bottomLayout->setSpacing(15);
 		bottomLayout->setContentsMargins(9, 9, 9, 15);
-		bottomLayout->addWidget(m_userloginButt);
 		bottomLayout->addWidget(m_notifyButt);
 		bottomWidget->setLayout(bottomLayout);
 		bottomWidget->setFixedHeight(iconSize.height() * bottomLayout->count() + (bottomLayout->count() - 1) * bottomLayout->spacing());

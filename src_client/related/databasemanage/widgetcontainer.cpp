@@ -44,17 +44,12 @@ namespace Related {
 		m_dataMangePage = new DataManageWidget();
 		m_stackedWidget->addWidget(m_dataMangePage);
 
-		//数据分析
-		m_dataAnalysePage = new DataAnalyseWidget();
-		m_stackedWidget->addWidget(m_dataAnalysePage);
-
 		//系统设置
 		m_systemSettingPage = new SystemSettingWidget();
 		m_stackedWidget->addWidget(m_systemSettingPage);
 		
 		m_pageMapping.insert(m_mainPage->getPageType(), m_mainPage);
 		m_pageMapping.insert(m_dataMangePage->getPageType(), m_dataMangePage);
-		m_pageMapping.insert(m_dataAnalysePage->getPageType(), m_dataAnalysePage);
 		m_pageMapping.insert(m_systemSettingPage->getPageType(), m_systemSettingPage);
 	}
 
