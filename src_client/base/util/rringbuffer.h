@@ -46,7 +46,7 @@ namespace Base {
 		int emptySize() { return bufferSize - dataSize(); }
 
 		/*!< 读写处理 */
-		void append(const char * data, int length);
+		int append(const char * data, int length);
 		int read(char * data, int maxLen);
 		int read(QByteArray & data, int maxLen);
 		void skipRead(quint64 skipLen);

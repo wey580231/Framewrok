@@ -13,6 +13,11 @@
   <ItemGroup>
     <ClInclude Include="base\socket.h" />
     <QtMoc Include="http\rhttp.h" />
+    <ClInclude Include="libuv\uv_eventloop.h" />
+    <ClInclude Include="libuv\uv_headfile.h" />
+    <ClInclude Include="libuv\uv_tcpclient.h" />
+    <ClInclude Include="libuv\uv_tcpserver.h" />
+    <ClInclude Include="libuv\uv_udpclient.h" />
     <ClInclude Include="network_global.h" />
     <ClInclude Include="reactor\acceptor.h" />
     <ClInclude Include="reactor\base\rthread.h" />
@@ -32,6 +37,11 @@
   <ItemGroup>
     <ClCompile Include="base\socket.cpp" />
     <ClCompile Include="http\rhttp.cpp" />
+    <ClCompile Include="libuv\uv_eventloop.cpp" />
+    <ClCompile Include="libuv\uv_headfile.cpp" />
+    <ClCompile Include="libuv\uv_tcpclient.cpp" />
+    <ClCompile Include="libuv\uv_tcpserver.cpp" />
+    <ClCompile Include="libuv\uv_udpclient.cpp" />
     <ClCompile Include="reactor\acceptor.cpp" />
     <ClCompile Include="reactor\base\rthread.cpp" />
     <ClCompile Include="reactor\callbacks.cpp" />
@@ -85,6 +95,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
     <OutDir>$(OutDir)</OutDir>
     <IntDir>$(IntDir)</IntDir>
+    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\3rdPartyLib\libuv1_40\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
   </PropertyGroup>
@@ -93,7 +105,7 @@
       <PreprocessorDefinitions>NETWORK_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>base.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>base.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

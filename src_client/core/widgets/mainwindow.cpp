@@ -1078,7 +1078,6 @@ void MainWindow::displayResize()
 #ifdef OFFICAL_DOCK
     OfficalLayoutManager::instance()->resetDefaultLayout(RGlobal::G_GlobalConfigFile->systemConfigInfo.layout);
     showMaximized();
-    raise();
 #else
     layoutManager->importView();
     RGlobal::G_GlobalConfigFile->systemConfigInfo.layout = layoutManager->getCurrentLayout();
@@ -1087,6 +1086,8 @@ void MainWindow::displayResize()
 
     if(!RGlobal::G_GlobalConfigFile->systemConfigInfo.fullscreen)
         showMaximized();
+
+	raise();
 }
 
 #ifdef OFFICAL_DOCK
