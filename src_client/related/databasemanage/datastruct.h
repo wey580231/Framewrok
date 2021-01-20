@@ -159,6 +159,29 @@ namespace Related {
 		QString m_loginTimestamp;	/*!< 上次登录时间 */
 		QString m_rights;			/*!< 用户权限 */
 	};
+
+	/*!
+	 * @brief 
+	 */
+	enum  TargetDatabaseDataColumnIndex {
+		T_Index,					/*!< 索引 */
+		T_TargetName,				/*!< 目标名称 */
+		T_Edttime,					/*!< 录取时间 */
+		T_Tonnage,					/*!< 吨位 */
+		T_AxlesNumber,				/*!< 轴数 */
+		T_Datalength,				/*!< 数据时长 */
+		T_Type						/*!< 类型 */
+	};
+
+	struct TargetDatabaseData{
+		int  index;					/*!< 索引 */
+		QString targetName;			/*!< 目标名称 */
+		QString edttime;			/*!< 录取时间 */
+		double tonnage;				/*!< 吨位 */
+		int  axlesNumber;			/*!< 轴数 */
+		int datalength;				/*!< 数据时长 */
+		int type;					/*!< 类型 */
+	};
 	
 } //namespace Related
 
