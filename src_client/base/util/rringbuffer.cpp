@@ -35,15 +35,15 @@ bool RFixedRingBuffer::isFull()
  * @param[in]  data 待写入数据启动位置
  * @param[in] length 待写入长度
  */
-void RFixedRingBuffer::append(const char *data, int length)
+int RFixedRingBuffer::append(const char *data, int length)
 {
     //[0]
     if(data == NULL || length <= 0)
-        return;
+        return 0;
 
     //[1]
     if(!isValid() || isFull())
-        return;
+        return 0;
 
     //[2]
     int writeBytes = qMin(emptySize(),length);
@@ -58,6 +58,8 @@ void RFixedRingBuffer::append(const char *data, int length)
         ::memcpy(buffer.data() + pos,data,writeBytes);
     }
     writePointer += writeBytes;
+
+	return writeBytes;
 }
 
 /*!
