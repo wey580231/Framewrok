@@ -40,7 +40,10 @@ namespace Related {
 
 		QFont font;
 		font.setFamily(QStringLiteral("微软雅黑"));
-		font.setPixelSize(19);
+		if(m_expandModel)
+			font.setPixelSize(19);
+		else
+			font.setPixelSize(12);
 		font.setBold(true);
 		painter.setFont(font);
 
@@ -58,9 +61,10 @@ namespace Related {
 
 		if (m_expandModel)
 			paddingLeft += 35;
-
+		
+		QPixmap pix = icon().pixmap(fixIconSize);
 		int paddingTop = (height() - fixIconSize.height())/2;
-		painter.drawPixmap(QPoint(paddingLeft,paddingTop),icon().pixmap(fixIconSize));
+		painter.drawPixmap(QPoint(paddingLeft,paddingTop), pix);
 
 		//左侧选择指示线条
 		if (m_mouseEnter || isChecked()) {
@@ -85,10 +89,16 @@ namespace Related {
 		painter.drawLine(polygons[0], polygons[1]);
 		painter.drawLine(polygons[1], polygons[2]);
 
-		paddingLeft += 25;
-
 		if (m_expandModel) {
+			paddingLeft += 25;
 			painter.drawText(QRect(paddingLeft + fixIconSize.width(),0,rect().width(),height()), Qt::AlignLeft | Qt::AlignVCenter, text());
+		}
+		else {
+			QFontMetrics metrics(font);
+			int textWidth = metrics.width(text());
+			int offsetLeft = (paddingLeft + fixIconSize.width() / 2) - textWidth / 2;
+			int offsetTop = paddingTop + pix.height();
+			painter.drawText(QRect(offsetLeft,offsetTop,textWidth,height() - offsetTop),Qt::AlignCenter, text());
 		}
 	}
 
