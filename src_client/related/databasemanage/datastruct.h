@@ -182,6 +182,18 @@ namespace Related {
 		int datalength;				/*!< 数据时长 */
 		int type;					/*!< 类型 */
 	};
+
+	struct TargetDatsssabaseData {
+		int  index;					/*!< 索引 */
+		QString targetName;			/*!< 目标名称 */
+		QString edttime;			/*!< 录取时间 */
+		double tonnage;				/*!< 吨位 */
+		int  axlesNumber;			/*!< 轴数 */
+		int datalength;				/*!< 数据时长 */
+		int type;					/*!< 类型 */
+	};
+
+
 	
 } //namespace Related
 
