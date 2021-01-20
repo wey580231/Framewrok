@@ -1,4 +1,4 @@
-#include "mainpage.h"
+#include "systemmainpage.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -12,7 +12,7 @@
 
 namespace Related {
 
-	MainPage::MainPage(QWidget *parent)
+	SystemMainPage::SystemMainPage(QWidget *parent)
 		: AbstractPage(parent)
 	{
 		init();
@@ -20,26 +20,16 @@ namespace Related {
 		initTaskList();
 	}
 
-	MainPage::~MainPage()
+	SystemMainPage::~SystemMainPage()
 	{
 	}
 
-	Related::PageType MainPage::getPageType() const
+	Related::PageType SystemMainPage::getPageType() const
 	{
-		return Page_MainPage;
+		return Page_SystemMainPage;
 	}
 
-	void MainPage::respOpenTask(QString taskId)
-	{
-		
-	}
-
-	void MainPage::respDeleteTask(QString taskId)
-	{
-
-	}
-
-	void MainPage::init()
+	void SystemMainPage::init()
 	{
 		QWidget * mainWidget = new QWidget();
 
@@ -149,12 +139,12 @@ namespace Related {
 		setLayout(layout);
 	}
 
-	void MainPage::initTaskList()
+	void SystemMainPage::initTaskList()
 	{
 		for (int i = 0; i < 15; i++) {
 			TaskOverViewItem * item = new TaskOverViewItem();
-			connect(item, SIGNAL(openTask(QString)), this, SLOT(respOpenTask(QString)));
-			connect(item, SIGNAL(deleteTask(QString)), this, SLOT(respDeleteTask(QString)));
+			connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
+			connect(item, SIGNAL(deleteTask(QString)), this, SIGNAL(deleteTask(QString)));
 			m_taskItems.append(item);
 		}
 

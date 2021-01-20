@@ -45,31 +45,13 @@
     <ClCompile Include="forwardcontroller\webserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="global.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="startupcallback.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\leftpanel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\widgetcontainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\datastruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\mainpage\mainpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\mainpage\overviewitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\abstractpage.cpp">
@@ -81,9 +63,6 @@
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\dataanalysewidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -93,40 +72,10 @@
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\candidatedatapage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\datasamplepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\gatherwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\inspectwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\SpectrogramWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\utils\operationtoolspage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp">
@@ -144,16 +93,43 @@
     <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\loginpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\mainpage\taskoverviewitem.cpp">
+    <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\utils\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\frame\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\frame\loginpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\frame\leftpanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,22 +143,7 @@
     <QtMoc Include="forwardcontroller\multidataforwardclients.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\leftpanel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\widgetcontainer.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\mainpage\mainpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\mainpage\overviewitem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\abstractpage.h">
@@ -194,9 +155,6 @@
     <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\dataanalysewidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -206,37 +164,10 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\candidatedatapage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\datasamplepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\gatherwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\inspectwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\SpectrogramWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\candidatedatamodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\dataanalyse\tablemodel\datasamplemodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\utils\operationtoolspage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\databasemanage\level1page.h">
@@ -254,16 +185,40 @@
     <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\loginpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\customwidget\timerangeedit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\mainpage\taskoverviewitem.h">
+    <QtMoc Include="databasemanage\pages\systemmainpage\overviewitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\systemmainpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\taskoverviewitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\customwidget\operationtoolspage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\frame\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\frame\loginpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\frame\leftpanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\taskoverviewpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\taskrecordpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\taskanalysepage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -280,9 +235,6 @@
     <ClInclude Include="forwardcontroller\webserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="related_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -295,24 +247,15 @@
     <ClInclude Include="databasemanage\datastruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="databasemanage\util.h">
+    <ClInclude Include="databasemanage\utils\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="databasemanage\pages\mainpage\overviewitem.ui">
+    <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\DemonSpectrogramWidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\gatherwidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\dataanalyse\inspectwidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\mainpage\taskoverviewitem.ui">
+    <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

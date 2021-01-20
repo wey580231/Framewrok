@@ -26,28 +26,28 @@ namespace Related {
 
 	class TaskOverViewItem;
 
-	class MainPage : public AbstractPage
+	class SystemMainPage : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
-		MainPage(QWidget *parent = nullptr);
-		~MainPage();
+		SystemMainPage(QWidget *parent = nullptr);
+		~SystemMainPage();
 
 		PageType getPageType() const;
 
-	private slots:
+	signals:
 		/*!
 		 * @brief 打开指定任务
 		 * @param taskId 任务ID
 		 */
-		void respOpenTask(QString taskId);
+		void openTask(QString taskId);
 
 		/*!
 		 * @brief 删除指定任务
 		 * @param taskId 任务ID
 		 */
-		void respDeleteTask(QString taskId);
+		void deleteTask(QString taskId);
 
 	private:
 		void init();

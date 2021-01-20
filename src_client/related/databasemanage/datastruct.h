@@ -1,5 +1,4 @@
-﻿
-/*!
+﻿/*!
  *  @brief	   数据定义
  *  @details
  *  @author    wey
@@ -16,12 +15,28 @@
 #include "../related_global.h"
 
 namespace Related {
+
+	/*!
+	 * @brief 窗口整体布局视图类型
+	 * @details 
+	 */
+	enum ViewModel {
+		SystemView,		/*!< 系统级视图 */
+		TaskView		/*!< 任务级视图 */
+	};
 	
+	/*!
+	 * @brief 左侧菜单页面类型
+	 * @details 用于关联左侧菜单项目和右侧页面
+	 */
 	enum PageType {
-		Page_MainPage,
-		Page_DataManage,
-		Page_DataAnalyse,
-		Page_Setting
+		Page_SystemMainPage,	/*!< 系统主页 */
+		Page_TargetDatabase,	/*!< 系统目标库 */
+		Page_Setting,			/*!< 系统设置 */
+		
+		Page_TaskOverviewPage,	/*!< 任务概览页面 */
+		Page_TaskRecordPage,	/*!< 任务记录页面 */
+		Page_TaskDataAnalyse	/*!< 任务数据分析 */	
 	};
 
 	/*!

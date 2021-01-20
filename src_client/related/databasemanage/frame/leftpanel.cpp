@@ -14,18 +14,45 @@ namespace Related {
 		init();
 		respLeftPanelExpand(true);
 		setFixedWidth(m_expandStateWidth);
+
+		switchViewModel(SystemView);
 	}
 
 	LeftPanel::~LeftPanel()
 	{
 	}
 
+	void LeftPanel::switchViewModel(ViewModel model)
+	{
+		m_currViewModel = model;
+		m_backToSystemViewButt->setVisible(model == TaskView);
+
+		if (model == SystemView) {
+			m_systemListWidget->setCurrentIndex(0);
+		}
+		else if (model == TaskView) {
+			m_taskListWidget->setCurrentIndex(0);
+		}
+		m_leftMenuContainer->setCurrentIndex(static_cast<int>(model));
+	}
+
+	int LeftPanel::getCurrentPage() const
+	{
+		if (m_currViewModel == SystemView) {
+			return m_systemListWidget->currentIndex();
+		}
+		else if (m_currViewModel == TaskView) {
+			return m_taskListWidget->currentIndex();
+		}
+	}
+
 	void LeftPanel::respLeftPanelExpand(bool checked)
 	{
-		m_listWidget->setExpanded(checked);
+		m_systemListWidget->setExpanded(checked);
+		m_taskListWidget->setExpanded(checked);
 
-		m_userloginButt->setTextVisible(checked);
 		m_notifyButt->setTextVisible(checked);
+		m_backToSystemViewButt->setTextVisible(checked);
 
 		if (checked) {
 			m_prgoramIcon->setText(QStringLiteral("数据管理系统软件"));
@@ -37,6 +64,15 @@ namespace Related {
 			m_expandButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/导航展开.png")));
 			m_expandButt->setToolTip(QStringLiteral("展开"));
 		}
+	}
+
+	/*!
+	 * @brief 返回系统视图
+	 */
+	void LeftPanel::backToSystemView()
+	{
+		switchViewModel(SystemView);
+		emit switchToSystemView();
 	}
 
 	void LeftPanel::init()
@@ -81,15 +117,26 @@ namespace Related {
 		tmpWidget->setLayout(tmpLayout);
 		tmpWidget->setFixedHeight(100);
 
-		m_listWidget = new RListWidget(this);
-		connect(m_listWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
+		//系统级菜单
+		m_systemListWidget = new RListWidget(this);
+		connect(m_systemListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
 
-		m_listWidget->addItem(Page_MainPage,QStringLiteral("主页"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
-		m_listWidget->addItem(Page_DataManage,QStringLiteral("数据管理"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
-		m_listWidget->addItem(Page_DataAnalyse,QStringLiteral("数据分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
-		m_listWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
+		m_systemListWidget->addItem(Page_SystemMainPage,QStringLiteral("任务统计"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
+		m_systemListWidget->addItem(Page_TargetDatabase,QStringLiteral("目标库"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
+		m_systemListWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
+		m_systemListWidget->setCurrentIndex(0);
 
-		m_listWidget->setCurrentIndex(0);
+		//任务级菜单
+		m_taskListWidget = new RListWidget(this);
+		connect(m_taskListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
+		m_taskListWidget->addItem(Page_TaskOverviewPage, QStringLiteral("任务概览"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/概览.png")));
+		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/记录.png")));
+		m_taskListWidget->addItem(Page_TaskDataAnalyse, QStringLiteral("任务分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
+		m_taskListWidget->setCurrentIndex(0);
+
+		m_leftMenuContainer = new QStackedWidget();
+		m_leftMenuContainer->addWidget(m_systemListWidget);
+		m_leftMenuContainer->addWidget(m_taskListWidget);
 
 		QSize iconSize(40, 40);
 		QFont iconFont(QStringLiteral("微软雅黑"),11);
@@ -107,17 +154,18 @@ namespace Related {
 			butt->setIcon(QIcon(pixmap));
 		};
 
-		m_userloginButt = new Base::RIconButton();
-		setButtonProop(m_userloginButt,QStringLiteral("用户"), QStringLiteral(":/QYBlue/resource/qyblue/用户.png"));
-
 		m_notifyButt = new Base::RIconButton();
-		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));
+		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));	
+		
+		m_backToSystemViewButt = new Base::RIconButton();
+		connect(m_backToSystemViewButt, SIGNAL(pressed()), this, SLOT(backToSystemView()));
+		setButtonProop(m_backToSystemViewButt, QStringLiteral("返回"), QStringLiteral(":/QYBlue/resource/qyblue/后退.png"));
 
 		QWidget * bottomWidget = new QWidget();
 		QVBoxLayout * bottomLayout = new QVBoxLayout();
 		bottomLayout->setSpacing(15);
 		bottomLayout->setContentsMargins(9, 9, 9, 15);
-		bottomLayout->addWidget(m_userloginButt);
+		bottomLayout->addWidget(m_backToSystemViewButt);
 		bottomLayout->addWidget(m_notifyButt);
 		bottomWidget->setLayout(bottomLayout);
 		bottomWidget->setFixedHeight(iconSize.height() * bottomLayout->count() + (bottomLayout->count() - 1) * bottomLayout->spacing());
@@ -130,7 +178,7 @@ namespace Related {
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(tmpWidget);
-		mainLayout->addWidget(m_listWidget);
+		mainLayout->addWidget(m_leftMenuContainer);
 		mainLayout->addLayout(bottomHorizonalLayout);
 		mainWidget->setLayout(mainLayout);
 

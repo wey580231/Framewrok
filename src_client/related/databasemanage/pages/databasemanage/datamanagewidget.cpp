@@ -17,7 +17,7 @@ namespace Related {
 
 	Related::PageType DataManageWidget::getPageType() const
 	{
-		return Page_DataManage;
+		return Page_TaskDataAnalyse;
 	}
 
 	void DataManageWidget::respTabChanged(int page)

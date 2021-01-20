@@ -63,6 +63,12 @@ namespace Related {
 		void setExpanded(bool enable);
 		void setCurrentIndex(int index);
 
+		/*!
+		 * @brief 获取当前选中项对应的页面ID
+		 * @return -1:未添加项；>= 0 : 被选中的页面ID
+		 */
+		int currentIndex() const;
+
 	signals:
 		void currentIndexChanged(int pageId);
 
