@@ -131,5 +131,8 @@
         <file>resource/qyblue/打开_48.png</file>
         <file>resource/qyblue/打开_48_hover.png</file>
         <file>resource/qyblue/删除_48_hover.png</file>
+        <file>resource/qyblue/后退.png</file>
+        <file>resource/qyblue/记录.png</file>
+        <file>resource/qyblue/概览.png</file>
     </qresource>
 </RCC>

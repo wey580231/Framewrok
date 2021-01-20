@@ -167,6 +167,14 @@ namespace Related {
 			m_items.at(index)->setChecked(true);
 	}
 
+	int RListWidget::currentIndex() const
+	{
+		if (m_items.size() > 0)
+			return m_items.first()->m_pageId;
+
+		return -1;
+	}
+
 	void RListWidget::indexChanged(QAbstractButton * butt)
 	{
 		RListWidgetItem * item = dynamic_cast<RListWidgetItem *>(butt);

@@ -17,7 +17,7 @@
 #include <base\selfwidget\iconbutton.h>
 
 #include "tablemodel/usermanagemodel.h"
-#include "utils/operationtoolspage.h"
+#include "customwidget/operationtoolspage.h"
 
 namespace Related {
 

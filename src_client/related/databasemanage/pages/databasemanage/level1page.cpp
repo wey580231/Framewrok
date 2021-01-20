@@ -6,7 +6,7 @@
 #include <QListView>
 #include <QDebug>
 
-#include "../util.h"
+#include "../utils/util.h"
 #include "../customwidget/pageswitchbar.h"
 #include "../customwidget/customwidgetcontainer.h"
 
