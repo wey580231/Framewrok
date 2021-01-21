@@ -12,7 +12,7 @@ namespace Network {
 	}
 
 	Uv_TcpClient::Uv_TcpClient(uv_loop_t *loop) :m_eventLoop(loop), m_bAutoReconnect(false), m_repeatConnTime(5000),
-		m_bIsReconnecting(false), m_fixedRingBuffer(), m_bForceClosed(false), m_bIsClosed(true), m_connectedState(R_CLOSED),
+		m_bIsReconnecting(false), m_fixedRingBuffer(), m_bForceClosed(false), m_connectedState(R_CLOSED),
 		m_connectedCallback(nullptr), m_recvCallback(nullptr),
 		m_writeCallback(nullptr), m_closeCallback(nullptr),
 		m_bExit(false), m_bindLocalPort(0)
@@ -41,11 +41,13 @@ namespace Network {
 	 */
 	bool Uv_TcpClient::connect(string remoteAddr, int port, string bindLocalIp, int bindLocalPort)
 	{
-		Check_Return(m_connectedState != R_CLOSED, false);
+		Check_Return(m_connectedState != R_CLOSED  && m_connectedState != R_ERROR, false);
 
 		Check_Return(remoteAddr.size() == 0 || port <= 0, false);
 		Check_Return(!init(), false);
+
 		cout << "start connect:" << remoteAddr << "_" << port << " threadId:" << this_thread::get_id() << endl;
+
 		struct sockaddr_in addr;
 		Check_Return(uv_ip4_addr(remoteAddr.data(), port, &addr) != 0, false);
 
@@ -115,7 +117,7 @@ namespace Network {
 
 	bool Uv_TcpClient::connected() const
 	{
-		return m_bConnected;
+		return !m_bIsClosed;
 	}
 
 	bool Uv_TcpClient::isClosed() const
@@ -160,7 +162,7 @@ namespace Network {
 
 	bool Uv_TcpClient::init()
 	{
-		if (!m_bIsClosed)
+		if (!m_bIsClosed )
 			return false;
 
 		int ret = 0;
@@ -186,9 +188,9 @@ namespace Network {
 			}
 
 			m_reconnectTimer.data = this;
-			m_bIsClosed = false;
 
 			return true;
+
 		} while (0);
 
 		getLastUvError(ret);
@@ -232,6 +234,12 @@ namespace Network {
 		}
 	}
 
+	/*! 
+	 * @brief 连接远程服务器回调
+	 * @param handle 客户端句柄
+	 * @param status 连接结果，<0表示连接错误；=0表示正确
+	 * @return 
+	 */
 	void Uv_TcpClient::connectCB(uv_connect_t *handle, int status)
 	{
 		TcpClientHandle *  thdl = static_cast<TcpClientHandle *>(handle->handle->data);
@@ -243,10 +251,17 @@ namespace Network {
 
 			if (tcpClient->m_bAutoReconnect) {
 				uv_timer_stop(&tcpClient->m_reconnectTimer);
+
 				tcpClient->m_repeatConnTime += 1000;
 				tcpClient->m_bIsReconnecting = true;
+
 				cout << "start reconnect:" << tcpClient->m_repeatConnTime << endl;
 				uv_timer_start(&tcpClient->m_reconnectTimer, Uv_TcpClient::reconnectTimerCB, tcpClient->m_repeatConnTime, tcpClient->m_repeatConnTime);
+			}
+			else {
+				if (tcpClient->m_connectedCallback) {
+					tcpClient->m_connectedCallback(nullptr);
+				}
 			}
 			return;
 		}
@@ -254,13 +269,14 @@ namespace Network {
 		cout << "connect successs,[" << tcpClient->m_remoteIp.data() << ":" << tcpClient->m_remotePort << "]" << endl;
 
 		int ret = uv_read_start(handle->handle, allocBufferForRecvCB, recvDataCB);
+
 		if (ret != 0) {
 			tcpClient->m_connectedState = R_ERROR;
 			tcpClient->m_errorMsg = getLastUvError(status);
 		}
 		else {
 			tcpClient->m_connectedState = R_ESTABLISHED;
-			tcpClient->m_bConnected = true;
+			tcpClient->m_bIsClosed = false;
 
 			if (tcpClient->m_connectedCallback) {
 				tcpClient->m_connectedCallback(tcpClient);
@@ -441,7 +457,7 @@ namespace Network {
 		Uv_TcpClient * tcpClient = static_cast<Uv_TcpClient*>(hdl->uv_tcpClient);
 		assert(tcpClient != nullptr);
 
-		tcpClient->m_bConnected = false;
+		tcpClient->m_bIsClosed = true;
 		tcpClient->m_connectedState = R_CLOSED;
 
 		if (handle == (uv_handle_t*)&tcpClient->m_handle->client && !tcpClient->m_bForceClosed && tcpClient->m_bIsReconnecting) {

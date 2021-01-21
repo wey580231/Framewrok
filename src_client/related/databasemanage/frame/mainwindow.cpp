@@ -83,7 +83,7 @@ namespace Related {
 	void MainWindow::initConnect()
 	{
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(switchPage(int)));
-		connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));
+		//connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));
 
 		connect(m_mainPage, SIGNAL(openTask(QString)), this, SLOT(siwtchToTaskView(QString)));
 	}

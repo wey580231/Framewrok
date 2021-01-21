@@ -19,6 +19,12 @@ namespace Related {
 	{
 	}
 
+	void UserManagePage::setPageNum(int page)
+	{
+		m_tableModel->setPageNum(page);
+		m_tableModel->refresh();
+	}
+
 	void UserManagePage::init()
 	{
 		m_operationToolsPage = new OperationToolsPage();

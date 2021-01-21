@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
     <OutDir>$(OutDir)</OutDir>
     <IntDir>$(IntDir)</IntDir>
-    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\3rdPartyLib\libuv1_40\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">

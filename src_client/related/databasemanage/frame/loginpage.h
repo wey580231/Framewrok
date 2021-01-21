@@ -12,6 +12,8 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <base/selfwidget/iconbutton.h>
+#include <base\selfwidget\ripwidget.h>
+#include <base\util\widgetanimation.h>
 
 namespace Related {
 
@@ -27,21 +29,45 @@ namespace Related {
 
 	protected:
 		void resizeEvent(QResizeEvent *event);
+		bool eventFilter(QObject *watched, QEvent *event);
 
 	signals:
 		void switchToMainPage();
 
 	private slots:
-		void respLogin();
+		void connectToServer();
+		void respNetConnected(bool connected);
+		
+		void showSystemSetting();
+
+		void respSave();
+		void respCancel();
 
 	private:
 		void init();
+		void initConnect();
+		void loadNetConfig();
 
 	private:
+		struct ConfigKey {
+			QString m_netGroupId = "RemoteServer";
+			QString m_remoteServerIp = "ServerIp";
+			QString m_remoteServerDataPort = "ServerDataPort";
+		};
+	
+	private:
 		CustomWidgetContainer * m_container;
+		QWidget * m_loginWidget;
 		QLineEdit * m_userName;
 		QLineEdit * m_password;
 		Base::RIconButton * m_loginButt;
+
+		Base::RIconButton * m_systemSetting;		/*!< 系统设置按钮 */
+		QWidget * m_systemWidget;
+		Base::RIPWidget * m_ipWidget;
+		QLineEdit * m_portWidget;
+
+		Base::WidgetAnimation m_animation;
 	};
 
 } //namespace Related 

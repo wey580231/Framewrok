@@ -71,6 +71,9 @@ namespace Network {
 		void closing();
 
 	private:
+		/*!
+		 * @brief 连接状态
+		 */
 		enum ConnectedState {
 			R_CLOSED,
 			R_CONNECTING,
@@ -86,7 +89,6 @@ namespace Network {
 
 		uv_connect_t m_connReq;
 		ConnectedState m_connectedState;
-		bool m_bConnected;
 
 		uv_timer_t m_reconnectTimer;    /*!< 重连定时器 */
 		bool m_bAutoReconnect;      /*!< 是否自动重连，默认为false */
