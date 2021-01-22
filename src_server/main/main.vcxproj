@@ -43,10 +43,10 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
-    <OutDir>$(SolutionDir)..\..\$(SolutionName)_buildout\Server_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\..\$(SolutionName)_buildout\Server_$(Configuration)_obj\$(ProjectName)\</IntDir>
-    <IncludePath>..\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\..\$(SolutionName)_buildout\Server_$(Configuration)_obj\lib\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\$(ProjectName)\</IntDir>
+    <IncludePath>..\;$(SolutionDir)..\framework;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
     <IncludePath>..\;$(IncludePath)</IncludePath>

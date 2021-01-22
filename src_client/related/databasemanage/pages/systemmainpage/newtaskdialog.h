@@ -7,9 +7,9 @@
 #include <QFileDialog>
 #include <QDir>
 
-#include "../../base/selfwidget/dialogproxy.h"
-#include "../../base/selfwidget/treemode/rtreeview.h"
-#include "../../base/selfwidget/treemode/rtreemodel.h"
+#include <base/selfwidget/dialogproxy.h>
+#include <base/selfwidget/treemode/rtreeview.h>
+#include <base/selfwidget/treemode/rtreemodel.h>
 #include <base/selfwidget/iconbutton.h>
 
 #include "controlwidget/newtaskinfosetwidget.h"
