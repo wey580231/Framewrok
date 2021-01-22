@@ -13,6 +13,7 @@
 
 #include <QObject>
 
+#include <base\util\rringbuffer.h>
 #include <network\libuv\uv_eventloop.h>
 #include <network\libuv\uv_tcpclient.h>
 
@@ -45,6 +46,10 @@ namespace Related {
 
 	signals:
 		void netConnected(bool isConnected);
+		void netRecvData(QByteArray array);
+
+	private slots:
+		void respRectNetData(QByteArray array);
 
 	private:
 		NetConnector(QObject *parent = nullptr);
@@ -52,6 +57,9 @@ namespace Related {
 
 		void connectCallBack(Network::Uv_TcpClient * client);
 		void closeCallBack(Network::Uv_TcpClient * client);
+		void recvDataCallBack(Network::Uv_TcpClient * remoteClient, const char * data, int dataLen);
+
+		bool searchNextPackHead();
 
 		QByteArray makePacket(PacketType type,QByteArray & body);
 
@@ -60,6 +68,8 @@ namespace Related {
 
 		Network::Uv_EventLoop * m_eventLoop;		/*!< 事件循环线程 */
 		Network::Uv_TcpClient * m_dataTcpClient;	/*!< 普通数据连接 */
+
+		Base::RFixedRingBuffer m_dataRecvRingBuffer;	/*!< 数据接收环形缓冲区 */
 	};
 
 } //namespace Related 

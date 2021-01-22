@@ -29,8 +29,13 @@ namespace Related {
 
 		QByteArray wrap(PacketType type, const UserLoginRequest & request);
 
+		void unwrap(const QByteArray & data);
+
 	private:
 		JsonWrapper(QObject *parent = nullptr);
+
+	private:
+		
 
 	private:
 		static JsonWrapper * m_instance;

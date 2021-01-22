@@ -15,6 +15,8 @@
 #include <base\selfwidget\ripwidget.h>
 #include <base\util\widgetanimation.h>
 
+#include "../net/protocol.h"
+
 namespace Related {
 
 	class CustomWidgetContainer;
@@ -37,9 +39,10 @@ namespace Related {
 	private slots:
 		void connectToServer();
 		void respNetConnected(bool connected);
+		void processUserLoginResponse(const UserLoginResponse & response);
 		
 		void showSystemSetting();
-
+		
 		void respSave();
 		void respCancel();
 

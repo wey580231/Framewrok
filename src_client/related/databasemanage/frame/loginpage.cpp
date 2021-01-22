@@ -9,7 +9,7 @@
 
 #include "customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
-#include "../net/protocol.h"
+#include "../net/signaldispatch.h"
 
 namespace Related {
 
@@ -31,8 +31,8 @@ namespace Related {
 		QSize windowSize = event->size();
 
 		int x = (windowSize.width() - m_container->width()) / 2;
-		int y = (windowSize.height() - m_container->height() ) / 2 - 20;
-		m_container->move(x,y);
+		int y = (windowSize.height() - m_container->height()) / 2 - 20;
+		m_container->move(x, y);
 
 	}
 
@@ -40,7 +40,7 @@ namespace Related {
 	{
 		if (watched == m_loginWidget) {
 			if (event->type() == QEvent::Resize) {
-				m_systemSetting->move(QPoint((m_loginWidget->width() - m_systemSetting->width())/2, m_loginWidget->height() - m_systemSetting->height() - 10));
+				m_systemSetting->move(QPoint((m_loginWidget->width() - m_systemSetting->width()) / 2, m_loginWidget->height() - m_systemSetting->height() - 10));
 			}
 		}
 		return QWidget::eventFilter(watched, event);
@@ -57,11 +57,9 @@ namespace Related {
 		else {
 			respNetConnected(true);
 		}
-
-		//emit switchToMainPage();
 	}
 
-	/*! 
+	/*!
 	 * @brief 接收网络是否连接成功信号
 	 * @param connected true:网络连接成功；false:网络连接失败
 	 */
@@ -75,7 +73,22 @@ namespace Related {
 			NetConnector::instance()->write(P_UserLogin, request);
 		}
 		else {
-			
+			//TODO 提示网络连接失败
+			qDebug() << "Net connect error!";
+		}
+	}
+
+	/*!
+	 * @brief 处理用户登录结果响应
+	 * @param response 用户登录结果报文
+	 */
+	void LoginPage::processUserLoginResponse(const UserLoginResponse & response)
+	{
+		if (response.m_loginResult) {
+			emit switchToMainPage();
+		}
+		else {
+			qDebug() << "Login Error:" << response.m_errorInfo;
 		}
 	}
 
@@ -92,7 +105,7 @@ namespace Related {
 	{
 		ConfigKey ckey;
 		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, m_ipWidget->getIPString());
-		Base::RUtil::setGlobalValue(ckey.m_netGroupId,ckey.m_remoteServerDataPort, m_portWidget->text());
+		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, m_portWidget->text());
 
 		respCancel();
 	}
@@ -111,7 +124,7 @@ namespace Related {
 
 		m_loginWidget = new QWidget();
 		m_loginWidget->installEventFilter(this);
-		
+
 		QLabel * titleLabel = new QLabel();
 		titleLabel->setObjectName("Label_Login_TitleLabel");
 		titleLabel->setAlignment(Qt::AlignCenter);
@@ -152,7 +165,7 @@ namespace Related {
 		{
 			m_systemWidget = new QWidget(m_loginWidget);
 			m_systemWidget->setStyleSheet("background-color:rgba(0,77,136, 210)");
-			
+
 			int fixedWidth = 80;
 
 			QLabel * remoteIp = new QLabel();
@@ -169,7 +182,7 @@ namespace Related {
 
 			m_portWidget = new QLineEdit();
 
-			QSize fixSize(70,25);
+			QSize fixSize(70, 25);
 			Base::RIconButton * saveButt = new Base::RIconButton();
 			saveButt->setText(QStringLiteral("更新"));
 			saveButt->setFixedSize(fixSize);
@@ -219,6 +232,7 @@ namespace Related {
 	void LoginPage::initConnect()
 	{
 		connect(NetConnector::instance(), SIGNAL(netConnected(bool)), this, SLOT(respNetConnected(bool)));
+		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const UserLoginResponse &)), this, SLOT(processUserLoginResponse(const UserLoginResponse &)));
 	}
 
 	void LoginPage::loadNetConfig()
