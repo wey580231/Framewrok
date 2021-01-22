@@ -2,7 +2,7 @@
 
 #include <core/widgets/mainwindow.h>
 
-#include "databasemanage\mainwindow.h"
+#include "databasemanage\frame\mainwindow.h"
 
 namespace Related {
 

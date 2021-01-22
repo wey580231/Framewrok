@@ -17,6 +17,9 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
       <Command>
       </Command>
     </PreBuildEvent>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

@@ -85,6 +85,18 @@ void RIconButton::enableColor(RIconButton::ColorChoose choose, QColor color)
     updateColor(choose,color);
 }
 
+void RIconButton::enableColors(ColorChooses chooses, QColor color /*= QColor(255, 0, 0, 0)*/)
+{
+	int start = Color_NormalBackGround;
+	while (start <= Color_HoverText) {
+		if (chooses & start) {
+			m_colorChoose &= start;
+			updateColor((ColorChoose)start, color);
+		}
+		start <<= 1;
+	}
+}
+
 void RIconButton::disableColor(RIconButton::ColorChoose choose)
 {
     m_colorChoose &= ~choose;

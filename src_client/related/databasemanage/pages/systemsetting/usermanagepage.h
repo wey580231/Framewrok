@@ -29,6 +29,9 @@ namespace Related {
 		UserManagePage(QWidget *parent = nullptr);
 		~UserManagePage();
 
+	private slots:
+		void setPageNum(int page);
+
 	private:
 		void init();
 

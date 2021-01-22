@@ -5,7 +5,7 @@
 #include <QListView>
 #include <QLineEdit>
 
-#include "../util.h"
+#include "../utils/util.h"
 
 #define BUTT_ID "CUSTOM_BUTT_ID"
 
