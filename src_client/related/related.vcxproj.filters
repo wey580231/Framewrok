@@ -144,6 +144,27 @@
     <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -245,6 +266,27 @@
     <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\newtaskdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forwardcontroller\dataforwardmanager.h">
@@ -280,6 +322,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

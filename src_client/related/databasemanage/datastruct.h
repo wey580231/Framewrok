@@ -183,16 +183,31 @@ namespace Related {
 		int type;					/*!< 类型 */
 	};
 
-	struct TargetDatsssabaseData {
-		int  index;					/*!< 索引 */
-		QString targetName;			/*!< 目标名称 */
-		QString edttime;			/*!< 录取时间 */
-		double tonnage;				/*!< 吨位 */
-		int  axlesNumber;			/*!< 轴数 */
-		int datalength;				/*!< 数据时长 */
-		int type;					/*!< 类型 */
+	/*!
+	 * @brief 平台描述信息
+	 */
+	struct platformInfo {
+		QString path;
+
 	};
 
+	typedef  QList<platformInfo> PlatformInfos;
+	/*!
+	 * @brief 任务基本信息
+	 */
+	struct  TaskBaseInfo {
+		QString id;					/*!< 任务Id */	
+		QString  taskName;			/*!< 任务名称 */
+		QString  taskTime;			/*!< 任务时间 */
+		QString  taskplace;			/*!< 任务地点 */
+		QString  startTime;			/*!< 起始时间 */
+		QString  endTime;			/*!< 结束时间 */
+		QString  timeLength;		/*!< 时长 */
+		int datasize;				/*!< 数据大小 */
+		//[] 平台信息
+		int m_platformtype;			/*!< 平台类型 */ 
+		QMap<int, PlatformInfos> mapPlatformInfos;		/*!< 不同平台信息 */
+	};
 
 	
 } //namespace Related

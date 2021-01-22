@@ -82,11 +82,13 @@ namespace Related {
 			m_newTaskButt->setText(QStringLiteral("新建任务"));
 			m_newTaskButt->setMinimumSize(60,30);
 			m_newTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/新增.png")));		
+			connect(m_newTaskButt, SIGNAL(clicked()), this, SLOT(slotNewTaskClickde()));
 			
 			m_refreshTaskButt = new Base::RIconButton();
 			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
 			m_refreshTaskButt->setMinimumSize(60, 30);
 			m_refreshTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/刷新.png")));
+			connect(m_refreshTaskButt, SIGNAL(clicked()), this, SLOT(slotRefreshTaskClicked()));
 
 			m_timeRange = new TimeRangeEdit();
 
@@ -170,6 +172,22 @@ namespace Related {
 			int column = i % 5;
 			glayout->addWidget(m_taskItems.at(i), row, column, 1, 1);
 		}
+	}
+
+
+	void SystemMainPage::slotNewTaskClickde()
+	{
+		qDebug() << "_______1212__________";
+		NewTaskDialog *t_pNewTaskDialog = new NewTaskDialog();
+		t_pNewTaskDialog->exec();
+		
+
+	}
+
+	
+	void SystemMainPage::slotRefreshTaskClicked()
+	{
+
 	}
 
 } //namespace Related 
