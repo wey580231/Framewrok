@@ -22,6 +22,8 @@
 #include "../abstractpage.h"
 #include "../../3rdLibrary/qcustomplot.h"
 
+#include "newtaskdialog.h"
+
 namespace Related {
 
 	class TaskOverViewItem;
@@ -48,6 +50,11 @@ namespace Related {
 		 * @param taskId »ŒŒÒID
 		 */
 		void deleteTask(QString taskId);
+
+	private slots:
+		void slotNewTaskClickde();
+		void slotRefreshTaskClicked();
+
 
 	private:
 		void init();
