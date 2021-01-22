@@ -12,11 +12,11 @@
 
 #include <QObject>
 
+#include <commondefines/protocol.h>
 #include <network/libuv/uv_eventloop.h>
 #include <network/libuv/uv_tcpserver.h>
 
 #include "../datastruct.h"
-#include "../net/protocol.h"
 
 namespace Related {
 

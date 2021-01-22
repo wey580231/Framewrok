@@ -51,8 +51,8 @@ namespace Related {
 	{
 		m_dataRecvRingBuffer.append(data, dataLen);
 
-		PacketHead packHead;
-		int packHeadLen = sizeof(PacketHead);
+		Datastruct::PacketHead packHead;
+		int packHeadLen = sizeof(Datastruct::PacketHead);
 
 		if (m_dataRecvRingBuffer.dataSize() > packHeadLen)
 		{
@@ -67,7 +67,7 @@ namespace Related {
 					{
 						int endCode = 0;
 						//NOTE 20190711 接收到数据长度为0时，需重新寻找下一个数据头
-						int t_offsetRead = packHead.m_dataLen - sizeof(PacketTail);
+						int t_offsetRead = packHead.m_dataLen - sizeof(Datastruct::PacketTail);
 						if (t_offsetRead > 0) {
 							m_dataRecvRingBuffer.preRead(t_offsetRead, (char *)&endCode, sizeof(int));
 						}
@@ -123,8 +123,8 @@ namespace Related {
 	bool NetConnector::searchNextPackHead()
 	{
 		qint64 t_iHasSearchLen = 1;
-		int t_iPackHeadLen = sizeof(PacketHead);
-		PacketHead t_packHead;
+		int t_iPackHeadLen = sizeof(Datastruct::PacketHead);
+		Datastruct::PacketHead t_packHead;
 		
 		uint dd = PACK_HEAD;
 
@@ -170,23 +170,23 @@ namespace Related {
 		return m_dataTcpClient->connected();
 	}
 
-	void NetConnector::write(PacketType type, const UserLoginRequest & request)
+	void NetConnector::write(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request)
 	{
 		QByteArray array = makePacket(type, JsonWrapper::instance()->wrap(type, request));
 
 		m_dataTcpClient->send(array.data(), array.length());
 	}
 
-	QByteArray NetConnector::makePacket(PacketType type, QByteArray & body)
+	QByteArray NetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
 	{
-		static int headLen = sizeof(PacketHead);
-		static int tailLen = sizeof(PacketTail);
+		static int headLen = sizeof(Datastruct::PacketHead);
+		static int tailLen = sizeof(Datastruct::PacketTail);
 
-		PacketHead phead;
+		Datastruct::PacketHead phead;
 		phead.m_packetType = type;
 		phead.m_dataLen = headLen + body.length() + tailLen;
 
-		PacketTail ptail;
+		Datastruct::PacketTail ptail;
 
 		QByteArray data;
 		data.append((char *)&phead, headLen);

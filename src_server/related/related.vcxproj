@@ -110,7 +110,6 @@
     <ClCompile Include="databasemanage\global.cpp" />
     <ClCompile Include="databasemanage\net\jsonwrapper.cpp" />
     <ClCompile Include="databasemanage\net\netacceptor.cpp" />
-    <ClCompile Include="databasemanage\net\protocol.cpp" />
     <ClCompile Include="databasemanage\net\requestprocessthread.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
@@ -134,7 +133,6 @@
     <QtMoc Include="databasemanage\net\jsonwrapper.h" />
     <ClInclude Include="databasemanage\global.h" />
     <QtMoc Include="databasemanage\net\netacceptor.h" />
-    <ClInclude Include="databasemanage\net\protocol.h" />
     <QtMoc Include="databasemanage\net\requestprocessthread.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />

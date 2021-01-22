@@ -27,12 +27,12 @@
     <ClInclude Include="commondefines_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="datastruct.h">
+    <ClInclude Include="protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="datastruct.cpp">
+    <ClCompile Include="protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

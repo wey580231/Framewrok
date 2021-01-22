@@ -50,7 +50,6 @@
     <ClCompile Include="forwardcontroller\ruleparsemethod.cpp" />
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
-    <ClCompile Include="databasemanage\net\protocol.cpp" />
     <ClCompile Include="startupcallback.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +59,6 @@
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
     <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
     <ClInclude Include="forwardcontroller\webserver.h" />
-    <ClInclude Include="databasemanage\net\protocol.h" />
     <ClInclude Include="related_global.h" />
     <ClInclude Include="startupcallback.h" />
     <ClInclude Include="topiclist.h" />

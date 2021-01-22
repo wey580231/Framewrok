@@ -89,10 +89,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="commondefines_global.h" />
-    <ClInclude Include="datastruct.h" />
+    <ClInclude Include="protocol.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="datastruct.cpp" />
+    <ClCompile Include="protocol.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

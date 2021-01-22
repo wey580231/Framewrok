@@ -69,9 +69,6 @@
     <ClCompile Include="databasemanage\net\jsonwrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\net\protocol.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="databasemanage\datastruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="databasemanage\net\protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="databasemanage\global.h">

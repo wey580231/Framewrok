@@ -32,7 +32,6 @@
 class QDockWidget;
 
 #include <core/core_global.h>
-#include <commondefines/datastruct.h>
 
 #include "protocolField.h"
 

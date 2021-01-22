@@ -13,7 +13,7 @@
 #define DATASTRUCT_H_2019_05_20
 
 #include <base/util/rringbuffer.h>
-#include <commondefines/datastruct.h>
+#include <commondefines/protocol.h>
 #include <network/libuv/uv_tcpserver.h>
 #include "../related_global.h"
 

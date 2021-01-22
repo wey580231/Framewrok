@@ -14,10 +14,9 @@
 #include <QObject>
 
 #include <base\util\rringbuffer.h>
+#include <commondefines/protocol.h>
 #include <network\libuv\uv_eventloop.h>
 #include <network\libuv\uv_tcpclient.h>
-
-#include "protocol.h"
 
 namespace Related {
 
@@ -42,7 +41,7 @@ namespace Related {
 		 */
 		bool isConnected();
 
-		void write(PacketType type,const UserLoginRequest & request);
+		void write(Datastruct::PacketType type,const Datastruct::UserLoginRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);
@@ -61,7 +60,7 @@ namespace Related {
 
 		bool searchNextPackHead();
 
-		QByteArray makePacket(PacketType type,QByteArray & body);
+		QByteArray makePacket(Datastruct::PacketType type,QByteArray & body);
 
 	private:
 		static NetConnector * m_instance;

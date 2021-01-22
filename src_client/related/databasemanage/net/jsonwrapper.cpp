@@ -23,7 +23,7 @@ namespace Related {
 	{
 	}
 
-	QByteArray JsonWrapper::wrap(PacketType type, const UserLoginRequest & request)
+	QByteArray JsonWrapper::wrap(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request)
 	{
 		QJsonObject obj;
 		obj.insert("name", request.m_name);
@@ -37,10 +37,10 @@ namespace Related {
 
 	void JsonWrapper::unwrap(const QByteArray & array)
 	{
-		PacketHead head;
-		memcpy((char *)&head, array.data(), sizeof(PacketHead));
+		Datastruct::PacketHead head;
+		memcpy((char *)&head, array.data(), sizeof(Datastruct::PacketHead));
 
-		QByteArray jsonData(array.data() + sizeof(head), array.size() - sizeof(PacketHead) - sizeof(PacketTail));
+		QByteArray jsonData(array.data() + sizeof(head), array.size() - sizeof(Datastruct::PacketHead) - sizeof(Datastruct::PacketTail));
 
 		QJsonObject jsonObject = QJsonDocument::fromJson(jsonData).object();
 
@@ -49,8 +49,8 @@ namespace Related {
 
 		switch (head.m_packetType)
 		{
-			case P_UserLogin: {
-				UserLoginResponse response;
+			case Datastruct::P_UserLogin: {
+				Datastruct::UserLoginResponse response;
 				response.m_loginResult = jsonObject.value("result").toBool();
 				response.m_errorInfo = jsonObject.value("errorinfo").toString();
 				

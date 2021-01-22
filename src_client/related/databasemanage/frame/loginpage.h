@@ -15,7 +15,7 @@
 #include <base\selfwidget\ripwidget.h>
 #include <base\util\widgetanimation.h>
 
-#include "../net/protocol.h"
+#include <commondefines/protocol.h>
 
 namespace Related {
 
@@ -39,7 +39,7 @@ namespace Related {
 	private slots:
 		void connectToServer();
 		void respNetConnected(bool connected);
-		void processUserLoginResponse(const UserLoginResponse & response);
+		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		
 		void showSystemSetting();
 		

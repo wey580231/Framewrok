@@ -9,7 +9,7 @@ namespace Related {
 	{
 	}
 
-	void SignalDispatch::recvUserLoginResponse(const UserLoginResponse & response)
+	void SignalDispatch::recvUserLoginResponse(const Datastruct::UserLoginResponse & response)
 	{
 		emit respUserLoginResponse(response);
 	}
