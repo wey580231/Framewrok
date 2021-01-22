@@ -141,6 +141,8 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
+    <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp">
     <ClCompile Include="databasemanage\net\protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -251,6 +253,8 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+
+    <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h">
     <QtMoc Include="databasemanage\net\netconnector.h">
       <Filter>Header Files</Filter>
     </QtMoc>
