@@ -108,6 +108,8 @@ namespace Network {
 		void close();
 		bool isClosed()const;
 
+		int id() const;
+
 		int send(const char * data, int len);
 
 		void setWriteCallBack(AcceptClientWriteCallBack back) { m_writeCallback = back; }

@@ -11,6 +11,9 @@
 
 #include <QWidget>
 #include <QStackedWidget>
+#include <QMap>
+
+#include "../datastruct.h"
 
 namespace Related {
 
@@ -27,6 +30,11 @@ namespace Related {
 
 	private:
 		void init();
+		void initThread();
+		void initNetwork();
+
+	private slots:
+		void processResponse(ResponseUnit * unit);
 
 	private:
 		QStackedWidget * m_stackedWidget;

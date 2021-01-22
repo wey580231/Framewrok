@@ -1,7 +1,9 @@
 ﻿#include "connector.h"
 
-#include <QDebug>
 #include <future>
+
+#include <QDebug>
+
 #include "socketsops.h"
 #include "channel.h"
 #include "eventloop.h"

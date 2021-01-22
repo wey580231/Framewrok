@@ -365,6 +365,11 @@ namespace Network {
 		return m_bIsClosed;
 	}
 
+	int AcceptTcpClient::id() const
+	{
+		return m_connHandle->clientId;
+	}
+
 	int AcceptTcpClient::send(const char *data, int len)
 	{
 		Check_Return(data == nullptr || len <= 0, 0);

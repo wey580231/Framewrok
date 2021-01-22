@@ -85,6 +85,18 @@ void RIconButton::enableColor(RIconButton::ColorChoose choose, QColor color)
     updateColor(choose,color);
 }
 
+void RIconButton::enableColors(ColorChooses chooses, QColor color /*= QColor(255, 0, 0, 0)*/)
+{
+	int start = Color_NormalBackGround;
+	while (start <= Color_HoverText) {
+		if (chooses & start) {
+			m_colorChoose &= start;
+			updateColor((ColorChoose)start, color);
+		}
+		start <<= 1;
+	}
+}
+
 void RIconButton::disableColor(RIconButton::ColorChoose choose)
 {
     m_colorChoose &= ~choose;
@@ -115,13 +127,14 @@ void RIconButton::paintEvent(QPaintEvent *event)
         painter.setBrush(QBrush(m_colorCollect.m_checkedBackGroundColor));
         painter.setPen(QPen(m_colorCollect.m_checkedBorderColor,1));
     }else{
-        if(m_mouseEnter){
-            painter.setBrush(QBrush(m_colorCollect.m_hoverBackGroundColor));
-            painter.setPen(QPen(m_colorCollect.m_hoverBorderColor,1));
-        }else{
-            painter.setBrush(QBrush(m_colorCollect.m_normalBackGroundColor));
-            painter.setPen(QPen(m_colorCollect.m_normalBorderColor,1));
-        }
+		if (m_mouseEnter) {
+			painter.setBrush(QBrush(m_colorCollect.m_hoverBackGroundColor));
+			painter.setPen(QPen(m_colorCollect.m_hoverBorderColor, 1));
+		}
+		else {
+			painter.setBrush(QBrush(m_colorCollect.m_normalBackGroundColor));
+			painter.setPen(QPen(m_colorCollect.m_normalBorderColor, 1));
+		}
     }
 
     QRect rec = rect();
@@ -161,7 +174,7 @@ void RIconButton::paintEvent(QPaintEvent *event)
     //[2]绘制图标
     QIcon qic = icon();
 
-    if(isChecked() && !m_checkedIcon.isNull())
+    if((m_mouseEnter || isChecked()) && !m_checkedIcon.isNull())
         qic = m_checkedIcon;
 
     if(!qic.isNull()){

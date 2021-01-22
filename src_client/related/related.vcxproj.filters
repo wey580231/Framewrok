@@ -141,7 +141,18 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
     <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp">
+    <ClCompile Include="databasemanage\net\protocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\netconnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\jsonwrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\signaldispatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\taskrecord\trialsheetpage.cpp">
@@ -263,7 +274,15 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+
     <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h">
+    <QtMoc Include="databasemanage\net\netconnector.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\jsonwrapper.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\signaldispatch.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\taskrecord\trialsheetpage.h">
@@ -314,6 +333,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="databasemanage\utils\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="databasemanage\net\protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

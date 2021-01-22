@@ -45,31 +45,40 @@
     <ClCompile Include="forwardcontroller\webserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="global.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="startupcallback.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\datastruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\utils\operationtoolspage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\utils\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\frame\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\datastruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\jsonwrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\protocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\requestprocessthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\netacceptor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,19 +92,25 @@
     <QtMoc Include="forwardcontroller\multidataforwardclients.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\utils\operationtoolspage.h">
+    <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h">
+    <QtMoc Include="databasemanage\frame\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\jsonwrapper.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\requestprocessthread.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\netacceptor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -112,9 +127,6 @@
     <ClInclude Include="forwardcontroller\webserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="related_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -124,10 +136,16 @@
     <ClInclude Include="topiclist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="databasemanage\utils\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="databasemanage\datastruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="databasemanage\util.h">
+    <ClInclude Include="databasemanage\net\protocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="databasemanage\global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
