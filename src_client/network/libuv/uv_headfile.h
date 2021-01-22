@@ -79,8 +79,8 @@ struct WriteSegment {
  * @brief 服务器保存远程连接句柄
  */
 struct ClientConnHandle {
-	uv_tcp_t tcpConn;
-	uv_buf_t readBuff;
+	uv_tcp_t tcpConn;		/*!< 客户端连接句柄 */
+	uv_buf_t readBuff;		/*!< 接收缓冲区 */
 	int clientId;           /*!< 客户端标志，大于使用 */
 	void * server;          /*!< 所属服务器 */
 	void * acceptClient;    /*!< 关联的接收client */

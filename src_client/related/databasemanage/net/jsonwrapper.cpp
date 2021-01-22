@@ -44,15 +44,15 @@ namespace Related {
 
 		QJsonObject jsonObject = QJsonDocument::fromJson(jsonData).object();
 
-		if (!jsonObject.isEmpty())
+		if (jsonObject.isEmpty())
 			return;
 
 		switch (head.m_packetType)
 		{
 			case P_UserLogin: {
 				UserLoginResponse response;
-				response.m_loginResult = jsonObject.value("name").toBool();
-				response.m_errorInfo = jsonObject.value("password").toString();
+				response.m_loginResult = jsonObject.value("result").toBool();
+				response.m_errorInfo = jsonObject.value("errorinfo").toString();
 				
 				SignalDispatch::instance()->recvUserLoginResponse(response);
 			}

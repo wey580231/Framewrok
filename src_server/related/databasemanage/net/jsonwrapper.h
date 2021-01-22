@@ -9,6 +9,8 @@
  */
  #pragma once
 
+#include <functional>
+
 #include <QObject>
 #include <QByteArray>
 #include <QJsonDocument>
@@ -28,14 +30,21 @@ namespace Related {
 		~JsonWrapper();
 
 		QByteArray wrap(PacketType type, const UserLoginRequest & request);
+		bool unrap(const QByteArray & data, UserLoginRequest & request);
 
-		void unwrap(const QByteArray & data);
+		QByteArray wrap(PacketType type, const UserLoginResponse & response);
+		bool unrap(const QByteArray & data, UserLoginResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);
 
-	private:
-
+		/*! 
+		 * @brief 用JSON对原始数据解包，解包后调用回调处理函数
+		 * @param data 网络原始数据
+		 * @param callback 回调处理函数
+		 * @return true:解包成功;false:解包失败
+		 */
+		bool unwrapObject(const QByteArray & data,std::function<void(QJsonObject &)> callback);
 
 	private:
 		static JsonWrapper * m_instance;

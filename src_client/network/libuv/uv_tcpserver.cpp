@@ -40,11 +40,6 @@ namespace Network {
 		stop();
 	}
 
-	/*!
-	 * @brief 开启服务器并在指定参属下运行
-	 * @param[in] backlog 最大处理连接数
-	 * @return true:启动成功，false:启动失败，可调用错误响应函数
-	 */
 	bool Uv_TcpServer::start(string localIp, int localPort, int backlog)
 	{
 		m_localIp = localIp;
@@ -235,6 +230,8 @@ namespace Network {
 			return;
 
 		} while (0);
+
+		freeConnHandle(conn);
 
 		tcpServer->m_errorMsg = getLastUvError(ret);
 		//RLOG_ERROR_S(tcpServer->m_errorMsg);

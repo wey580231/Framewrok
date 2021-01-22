@@ -72,6 +72,21 @@
     <ClInclude Include="base\socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="libuv\uv_eventloop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libuv\uv_headfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libuv\uv_tcpclient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libuv\uv_tcpserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libuv\uv_udpclient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="reactor\base\rthread.cpp">
@@ -120,6 +135,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="base\socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libuv\uv_eventloop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libuv\uv_headfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libuv\uv_tcpclient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libuv\uv_tcpserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libuv\uv_udpclient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

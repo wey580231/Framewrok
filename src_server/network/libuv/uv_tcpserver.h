@@ -33,6 +33,11 @@ namespace Network {
 		Uv_TcpServer(uv_loop_t * eventLoop);
 		~Uv_TcpServer();
 
+		/*!
+		 * @brief 开启服务器并在指定参属下运行
+		 * @param[in] backlog 最大处理连接数
+		 * @return true:启动成功，false:启动失败，可调用错误响应函数
+		 */
 		bool start(string localIp, int localPort, int backlog = 20);
 		void stop();
 
@@ -102,6 +107,8 @@ namespace Network {
 
 		void close();
 		bool isClosed()const;
+
+		int id() const;
 
 		int send(const char * data, int len);
 
