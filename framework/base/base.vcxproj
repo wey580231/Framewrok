@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{73E804E5-C03A-4897-833B-8819E2DE652C}</ProjectGuid>
+    <Keyword>QtVS_v303</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <ProjectName>base</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CustomWin32.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="..\..\CustomWin32.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
+    <TargetName>$(ProjectName)</TargetName>
+    <OutDir>$(OutDir)</OutDir>
+    <IntDir>$(IntDir)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <OutDir>$(OutDir)</OutDir>
+    <IntDir>$(IntDir)</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <QtMoc>
+      <QtMocDir>$(IntDir)moc\</QtMocDir>
+    </QtMoc>
+    <QtRcc>
+      <QtRccDir>$(IntDir)rcc\</QtRccDir>
+    </QtRcc>
+    <QtUic>
+      <QtUicDir>$(IntDir)uic\</QtUicDir>
+    </QtUic>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
+    <QtInstall>msvc2017</QtInstall>
+    <QtModules>core;gui;sql;widgets;xml</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="QtSettings">
+    <QtInstall>msvc2017</QtInstall>
+    <QtModules>core;gui;sql;widgets;xml</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="actionmanager\id.h" />
+    <ClInclude Include="common\sql\sqliteutil.h" />
+    <ClInclude Include="protocol\datastruct.h" />
+    <QtMoc Include="common\stylemanager.h" />
+    <QtMoc Include="common\languagemanager.h" />
+    <ClInclude Include="common\sql\autotransaction.h" />
+    <ClInclude Include="common\sql\database.h" />
+    <ClInclude Include="common\sql\databasemanager.h" />
+    <ClInclude Include="common\sql\rpersistence.h" />
+    <ClInclude Include="common\validator\rcombinevalidator.h" />
+    <ClInclude Include="common\validator\rvalidator.h" />
+    <QtMoc Include="actionmanager\statusbarcontainer.h" />
+    <QtMoc Include="actionmanager\command.h" />
+    <QtMoc Include="actionmanager\actionmanager.h" />
+    <QtMoc Include="actionmanager\actioncontainer.h" />
+    <QtMoc Include="actionmanager\action.h" />
+    <ClInclude Include="base_global.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="messagetype.h" />
+    <QtMoc Include="selfwidget\toolbar.h" />
+    <QtMoc Include="selfwidget\rwidget.h" />
+    <QtMoc Include="selfwidget\rmessagebox.h" />
+    <QtMoc Include="selfwidget\rlabel.h" />
+    <QtMoc Include="selfwidget\ripwidget.h" />
+    <QtMoc Include="selfwidget\rinputdialog.h" />
+    <QtMoc Include="selfwidget\rbutton.h" />
+    <QtMoc Include="selfwidget\iconbutton.h" />
+    <QtMoc Include="selfwidget\flowcontrol.h" />
+    <QtMoc Include="selfwidget\dialogproxy.h" />
+    <QtMoc Include="selfwidget\treemode\rtreeview.h" />
+    <QtMoc Include="selfwidget\treemode\rtreemodel.h" />
+    <QtMoc Include="selfwidget\lonlatedit\rpositionviewlabel.h" />
+    <QtMoc Include="selfwidget\lonlatedit\rlonlatedit.h" />
+    <QtMoc Include="selfwidget\switchpage.h" />
+    <QtMoc Include="selfwidget\rtabbar.h" />
+    <QtMoc Include="selfwidget\tablemode\rtablemodel.h" />
+    <QtMoc Include="selfwidget\tablemode\rtableview.h" />
+    <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h" />
+    <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
+    <ClInclude Include="util\rblockingqueue.h" />
+    <ClInclude Include="util\rbuffer.h" />
+    <ClInclude Include="util\regexp.h" />
+    <ClInclude Include="util\rringbuffer.h" />
+    <ClInclude Include="util\rsingleton.h" />
+    <ClInclude Include="util\rutil.h" />
+    <ClInclude Include="util\scaleswitcher.h" />
+    <ClInclude Include="util\threadpool.h" />
+    <ClInclude Include="util\widgetpropsetting.h" />
+    <QtMoc Include="util\widgetanimation.h" />
+    <QtMoc Include="util\rlog.h" />
+    <QtMoc Include="util\imagemanager.h" />
+    <QtMoc Include="util\fileutils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="actionmanager\action.cpp" />
+    <ClCompile Include="actionmanager\actioncontainer.cpp" />
+    <ClCompile Include="actionmanager\actionmanager.cpp" />
+    <ClCompile Include="actionmanager\command.cpp" />
+    <ClCompile Include="actionmanager\id.cpp" />
+    <ClCompile Include="actionmanager\statusbarcontainer.cpp" />
+    <ClCompile Include="common\languagemanager.cpp" />
+    <ClCompile Include="common\sql\autotransaction.cpp" />
+    <ClCompile Include="common\sql\database.cpp" />
+    <ClCompile Include="common\sql\databasemanager.cpp" />
+    <ClCompile Include="common\sql\rpersistence.cpp" />
+    <ClCompile Include="common\sql\sqliteutil.cpp" />
+    <ClCompile Include="common\stylemanager.cpp" />
+    <ClCompile Include="common\validator\rcombinevalidator.cpp" />
+    <ClCompile Include="common\validator\rvalidator.cpp" />
+    <ClCompile Include="protocol\datastruct.cpp" />
+    <ClCompile Include="selfwidget\dialogproxy.cpp" />
+    <ClCompile Include="selfwidget\flowcontrol.cpp" />
+    <ClCompile Include="selfwidget\iconbutton.cpp" />
+    <ClCompile Include="selfwidget\lonlatedit\rlonlatedit.cpp" />
+    <ClCompile Include="selfwidget\lonlatedit\rpositionviewlabel.cpp" />
+    <ClCompile Include="selfwidget\rbutton.cpp" />
+    <ClCompile Include="selfwidget\rinputdialog.cpp" />
+    <ClCompile Include="selfwidget\ripwidget.cpp" />
+    <ClCompile Include="selfwidget\rlabel.cpp" />
+    <ClCompile Include="selfwidget\rmessagebox.cpp" />
+    <ClCompile Include="selfwidget\rtabbar.cpp" />
+    <ClCompile Include="selfwidget\rwidget.cpp" />
+    <ClCompile Include="selfwidget\switchpage.cpp" />
+    <ClCompile Include="selfwidget\tablemode\rtablemodel.cpp" />
+    <ClCompile Include="selfwidget\tablemode\rtableview.cpp" />
+    <ClCompile Include="selfwidget\tablemode\tablecolumneditwindow.cpp" />
+    <ClCompile Include="selfwidget\toolbar.cpp" />
+    <ClCompile Include="selfwidget\treemode\rtreemodel.cpp" />
+    <ClCompile Include="selfwidget\treemode\rtreeview.cpp" />
+    <ClCompile Include="util\fileutils.cpp" />
+    <ClCompile Include="util\imagemanager.cpp" />
+    <ClCompile Include="util\rbuffer.cpp" />
+    <ClCompile Include="util\regexp.cpp" />
+    <ClCompile Include="util\rlog.cpp" />
+    <ClCompile Include="util\rringbuffer.cpp" />
+    <ClCompile Include="util\rutil.cpp" />
+    <ClCompile Include="util\scaleswitcher.cpp" />
+    <ClCompile Include="util\threadpool.cpp" />
+    <ClCompile Include="util\widgetanimation.cpp" />
+    <ClCompile Include="util\widgetpropsetting.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

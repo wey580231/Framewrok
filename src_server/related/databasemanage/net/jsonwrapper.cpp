@@ -33,7 +33,7 @@ namespace Related {
 	{
 	}
 
-	QByteArray JsonWrapper::wrap(PacketType type, const UserLoginRequest & request)
+	QByteArray JsonWrapper::wrap(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request)
 	{
 		QJsonObject obj;
 		obj.insert("name", request.m_name);
@@ -45,7 +45,7 @@ namespace Related {
 		return doc.toJson(QJsonDocument::Compact);
 	}
 
-	QByteArray JsonWrapper::wrap(PacketType type, const UserLoginResponse & response)
+	QByteArray JsonWrapper::wrap(Datastruct::PacketType type, const Datastruct::UserLoginResponse & response)
 	{
 		QJsonObject obj;
 		obj.insert("result", response.m_loginResult);
@@ -57,7 +57,7 @@ namespace Related {
 		return doc.toJson(QJsonDocument::Compact);
 	}
 
-	bool JsonWrapper::unrap(const QByteArray & data, UserLoginRequest & request)
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::UserLoginRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			request.m_name = jsonObject.value("name").toString();
@@ -66,7 +66,7 @@ namespace Related {
 		});
 	}
 
-	bool JsonWrapper::unrap(const QByteArray & data, UserLoginResponse & response)
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::UserLoginResponse & response)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_loginResult = jsonObject.value("result").toBool();

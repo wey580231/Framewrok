@@ -11,7 +11,8 @@
 #ifndef DATASTRUCT_H_2019_05_20
 #define DATASTRUCT_H_2019_05_20
 
-#include <commondefines/datastruct.h>
+#include <QMap>
+
 #include "../related_global.h"
 
 namespace Related {

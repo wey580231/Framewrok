@@ -3,8 +3,8 @@
 #include <QObject>
 
 #include <core/network/rtask.h>
+#include <commondefines/protocol.h>
 
-#include "../net/protocol.h"
 #include "../datastruct.h"
 
 namespace Related {
@@ -30,7 +30,7 @@ namespace Related {
 
 	private:
 		void parseRequest(RequestUnit * unit);
-		QByteArray makePacket(PacketType type, const QByteArray & body);
+		QByteArray makePacket(Datastruct::PacketType type, const QByteArray & body);
 	};
 
 } //namespace Related 

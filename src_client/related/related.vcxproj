@@ -34,7 +34,7 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\CustomWin32.props" />
+    <Import Project="..\..\CustomWin32.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -53,7 +53,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-
       <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\net;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -64,7 +63,6 @@
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\pages\taskoverview\statisticalgraph;.\databasemanage\pages\systemmainpage\controlpage;.\databasemanage\pages\systemmainpage;.\databasemanage\pages\systemmainpage\controlwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -159,7 +157,6 @@
     <ClCompile Include="forwardcontroller\ruleparsemethod.cpp" />
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
-    <ClCompile Include="databasemanage\net\protocol.cpp" />
     <ClCompile Include="startupcallback.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +209,6 @@
     <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
     <ClInclude Include="forwardcontroller\webserver.h" />
     <QtMoc Include="databasemanage\frame\mainwindow.h" />
-    <ClInclude Include="databasemanage\net\protocol.h" />
     <ClInclude Include="related_global.h" />
     <ClInclude Include="startupcallback.h" />
     <ClInclude Include="topiclist.h" />

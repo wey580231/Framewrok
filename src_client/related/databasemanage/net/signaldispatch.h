@@ -12,7 +12,7 @@
 
 #include <QObject>
 
-#include "protocol.h"
+#include <commondefines/protocol.h>
 
 namespace Related {
 
@@ -25,12 +25,12 @@ namespace Related {
 		~SignalDispatch();
 
 	signals:
-		void respUserLoginResponse(const UserLoginResponse & response);
+		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 
 	private:
 		SignalDispatch(QObject *parent = nullptr);
 
-		void recvUserLoginResponse(const UserLoginResponse & response);
+		void recvUserLoginResponse(const Datastruct::UserLoginResponse & response);
 
 	private:
 		static SignalDispatch * m_instance;

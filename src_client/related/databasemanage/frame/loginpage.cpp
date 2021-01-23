@@ -66,11 +66,11 @@ namespace Related {
 	void LoginPage::respNetConnected(bool connected)
 	{
 		if (connected) {
-			UserLoginRequest request;
+			Datastruct::UserLoginRequest request;
 			request.m_name = m_userName->text();
 			request.m_password = Base::RUtil::MD5(m_password->text());
 
-			NetConnector::instance()->write(P_UserLogin, request);
+			NetConnector::instance()->write(Datastruct::P_UserLogin, request);
 		}
 		else {
 			//TODO 提示网络连接失败
@@ -82,7 +82,7 @@ namespace Related {
 	 * @brief 处理用户登录结果响应
 	 * @param response 用户登录结果报文
 	 */
-	void LoginPage::processUserLoginResponse(const UserLoginResponse & response)
+	void LoginPage::processUserLoginResponse(const Datastruct::UserLoginResponse & response)
 	{
 		if (response.m_loginResult) {
 			emit switchToMainPage();
@@ -232,7 +232,7 @@ namespace Related {
 	void LoginPage::initConnect()
 	{
 		connect(NetConnector::instance(), SIGNAL(netConnected(bool)), this, SLOT(respNetConnected(bool)));
-		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const UserLoginResponse &)), this, SLOT(processUserLoginResponse(const UserLoginResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const Datastruct::UserLoginResponse &)), this, SLOT(processUserLoginResponse(const Datastruct::UserLoginResponse &)));
 	}
 
 	void LoginPage::loadNetConfig()

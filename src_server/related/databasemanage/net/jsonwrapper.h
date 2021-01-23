@@ -17,7 +17,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "protocol.h"
+#include <commondefines/protocol.h>
 
 namespace Related {
 
@@ -29,11 +29,11 @@ namespace Related {
 		static JsonWrapper * instance();
 		~JsonWrapper();
 
-		QByteArray wrap(PacketType type, const UserLoginRequest & request);
-		bool unrap(const QByteArray & data, UserLoginRequest & request);
+		QByteArray wrap(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::UserLoginRequest & request);
 
-		QByteArray wrap(PacketType type, const UserLoginResponse & response);
-		bool unrap(const QByteArray & data, UserLoginResponse & response);
+		QByteArray wrap(Datastruct::PacketType type, const Datastruct::UserLoginResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::UserLoginResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{60464C69-3093-4AE8-8CFA-7F8C95014721}</ProjectGuid>
+    <ProjectGuid>{A1B94BBE-2B7C-458C-9315-CC9981E885F0}</ProjectGuid>
     <Keyword>QtVS_v303</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
@@ -40,37 +40,22 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\3rdPartyLib\libuv1_40\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>COMMONDEFINE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>base.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
     <QtInstall>msvc2017</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;network;printsupport;sql;webchannel;webenginewidgets;widgets;xml</QtModules>
+    <QtModules>core</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="QtSettings">
     <QtInstall>msvc2017</QtInstall>
-    <QtModules>charts;core;datavisualization;gui;network;printsupport;sql;webchannel;webenginewidgets;widgets;xml</QtModules>
+    <QtModules>core</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
@@ -103,48 +88,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
-    <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
-    <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
-    <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
-    <ClCompile Include="databasemanage\global.cpp" />
-    <ClCompile Include="databasemanage\net\jsonwrapper.cpp" />
-    <ClCompile Include="databasemanage\net\netacceptor.cpp" />
-    <ClCompile Include="databasemanage\net\requestprocessthread.cpp" />
-    <ClCompile Include="databasemanage\utils\util.cpp" />
-    <ClCompile Include="databasemanage\datastruct.cpp" />
-    <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
-    <ClCompile Include="forwardcontroller\dataforwardmanager.cpp" />
-    <ClCompile Include="forwardcontroller\dataforwardserver.cpp" />
-    <ClCompile Include="forwardcontroller\multidataforwardclients.cpp" />
-    <ClCompile Include="forwardcontroller\ruleparsemethod.cpp" />
-    <ClCompile Include="forwardcontroller\webserver.cpp" />
-    <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
-    <ClCompile Include="startupcallback.cpp" />
+    <ClInclude Include="commondefines_global.h" />
+    <ClInclude Include="protocol.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="3rdLibrary\qcustomplot.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
-    <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
-    <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
-    <ClInclude Include="databasemanage\datastruct.h" />
-    <QtMoc Include="databasemanage\net\jsonwrapper.h" />
-    <ClInclude Include="databasemanage\global.h" />
-    <QtMoc Include="databasemanage\net\netacceptor.h" />
-    <QtMoc Include="databasemanage\net\requestprocessthread.h" />
-    <ClInclude Include="databasemanage\utils\util.h" />
-    <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
-    <ClInclude Include="forwardcontroller\dataforwardserver.h" />
-    <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
-    <ClInclude Include="forwardcontroller\webserver.h" />
-    <QtMoc Include="databasemanage\frame\mainwindow.h" />
-    <ClInclude Include="related_global.h" />
-    <ClInclude Include="startupcallback.h" />
-    <ClInclude Include="topiclist.h" />
-    <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
-    <QtMoc Include="forwardcontroller\dataforwardclient.h" />
+    <ClCompile Include="protocol.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,353 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
+    <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
+    <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
+    <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
+    <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp" />
+    <ClCompile Include="databasemanage\frame\leftpanel.cpp" />
+    <ClCompile Include="databasemanage\frame\loginpage.cpp" />
+    <ClCompile Include="databasemanage\net\jsonwrapper.cpp" />
+    <ClCompile Include="databasemanage\net\netconnector.cpp" />
+    <ClCompile Include="databasemanage\net\signaldispatch.cpp" />
+    <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp" />
+    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
+    <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp" />
+    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp" />
+    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetpage.cpp" />
+    <ClCompile Include="databasemanage\utils\util.cpp" />
+    <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
+    <ClCompile Include="databasemanage\datastruct.cpp" />
+    <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
+    <ClCompile Include="forwardcontroller\dataforwardmanager.cpp" />
+    <ClCompile Include="forwardcontroller\dataforwardserver.cpp" />
+    <ClCompile Include="forwardcontroller\multidataforwardclients.cpp" />
+    <ClCompile Include="forwardcontroller\ruleparsemethod.cpp" />
+    <ClCompile Include="forwardcontroller\webserver.cpp" />
+    <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
+    <ClCompile Include="startupcallback.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3rdLibrary\qcustomplot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\dataforwardclient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\dataforwardmanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\dataforwardserver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\multidataforwardclients.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\ruleparsemethod.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forwardcontroller\webserver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="startupcallback.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\datastruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\abstractpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\utils\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\frame\mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\frame\loginpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\frame\leftpanel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-
-    <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp">
-    <ClCompile Include="databasemanage\net\protocol.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\net\netconnector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\net\jsonwrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\net\signaldispatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="databasemanage\datastruct.h" />
+    <ClInclude Include="databasemanage\utils\util.h" />
+    <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
+    <ClInclude Include="forwardcontroller\dataforwardserver.h" />
+    <ClInclude Include="forwardcontroller\ruleparsemethod.h" />
+    <ClInclude Include="forwardcontroller\webserver.h" />
+    <ClInclude Include="related_global.h" />
+    <ClInclude Include="startupcallback.h" />
+    <ClInclude Include="topiclist.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="3rdLibrary\qcustomplot.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="forwardcontroller\dataforwardclient.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="forwardcontroller\multidataforwardclients.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\rlistwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\abstractpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\level0page.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\pageswitchbar.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\level1page.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\level2page.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\timerangeedit.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\overviewitem.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\systemmainpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\taskoverviewitem.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\operationtoolspage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\frame\mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\frame\loginpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\frame\leftpanel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\taskoverviewpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\taskrecordpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\taskanalysepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-
-    <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h">
-    <QtMoc Include="databasemanage\net\netconnector.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\net\jsonwrapper.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\net\signaldispatch.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\newtaskdialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
+    <QtMoc Include="3rdLibrary\qcustomplot.h" />
+    <QtMoc Include="databasemanage\frame\leftpanel.h" />
+    <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\systemmainpage.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\overviewitem.h" />
+    <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
+    <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
+    <QtMoc Include="databasemanage\customwidget\timerangeedit.h" />
+    <QtMoc Include="databasemanage\pages\abstractpage.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\level0page.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\level1page.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\level2page.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h" />
+    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h" />
+    <QtMoc Include="databasemanage\frame\loginpage.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\taskoverviewitem.h" />
+    <QtMoc Include="databasemanage\pages\taskoverview\taskoverviewpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\taskrecordpage.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\taskanalysepage.h" />
+    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h" />
+    <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h" />
+    <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetpage.h" />
+    <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h" />
+    <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h" />
+    <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h" />
+    <QtMoc Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\newtaskdialog.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
+    <QtMoc Include="databasemanage\net\netconnector.h" />
+    <QtMoc Include="databasemanage\net\jsonwrapper.h" />
+    <QtMoc Include="databasemanage\net\signaldispatch.h" />
+    <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
+    <QtMoc Include="databasemanage\frame\mainwindow.h" />
+    <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
+    <QtMoc Include="forwardcontroller\dataforwardclient.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="forwardcontroller\dataforwardmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="forwardcontroller\dataforwardserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="forwardcontroller\ruleparsemethod.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="forwardcontroller\webserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="related_global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="startupcallback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="topiclist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="databasemanage\datastruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="databasemanage\utils\util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="databasemanage\net\protocol.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
+    <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui" />
+    <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
+    <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
   </ItemGroup>
 </Project>

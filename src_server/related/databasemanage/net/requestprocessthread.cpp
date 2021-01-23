@@ -2,9 +2,10 @@
 
 #include <QDebug>
 
+#include <commondefines/protocol.h>
+
 #include "../global.h"
 #include "../datastruct.h"
-#include "protocol.h"
 #include "jsonwrapper.h"
 
 namespace Related {
@@ -57,23 +58,23 @@ namespace Related {
 	 */
 	void RequestProcessThread::parseRequest(RequestUnit * unit)
 	{
-		PacketHead head;
-		memcpy((char *)&head, unit->m_requestData.data(), sizeof(PacketHead));
+		Datastruct::PacketHead head;
+		memcpy((char *)&head, unit->m_requestData.data(), sizeof(Datastruct::PacketHead));
 
-		QByteArray jsonData(unit->m_requestData.data() + sizeof(head), unit->m_requestData.size() - sizeof(PacketHead) - sizeof(PacketTail));
+		QByteArray jsonData(unit->m_requestData.data() + sizeof(head), unit->m_requestData.size() - sizeof(Datastruct::PacketHead) - sizeof(Datastruct::PacketTail));
 
 		switch (head.m_packetType)
 		{
-			case P_UserLogin: {
-				UserLoginRequest request;
+			case Datastruct::P_UserLogin: {
+				Datastruct::UserLoginRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
 
 					ResponseUnit * runit = new ResponseUnit();
-					UserLoginResponse response;
+					Datastruct::UserLoginResponse response;
 					response.m_loginResult = true;
 
 					runit->m_clientId = unit->m_clientId;
-					runit->m_resposneData = makePacket(P_UserLogin,JsonWrapper::instance()->wrap(P_UserLogin,response));
+					runit->m_resposneData = makePacket(Datastruct::P_UserLogin,JsonWrapper::instance()->wrap(Datastruct::P_UserLogin,response));
 
 					//发送回主线程
 					sendProcessResult(runit);
@@ -87,16 +88,16 @@ namespace Related {
 		delete unit;
 	}
 
-	QByteArray RequestProcessThread::makePacket(PacketType type, const QByteArray & body)
+	QByteArray RequestProcessThread::makePacket(Datastruct::PacketType type, const QByteArray & body)
 	{
-		static int headLen = sizeof(PacketHead);
-		static int tailLen = sizeof(PacketTail);
+		static int headLen = sizeof(Datastruct::PacketHead);
+		static int tailLen = sizeof(Datastruct::PacketTail);
 
-		PacketHead phead;
+		Datastruct::PacketHead phead;
 		phead.m_packetType = type;
 		phead.m_dataLen = headLen + body.length() + tailLen;
 
-		PacketTail ptail;
+		Datastruct::PacketTail ptail;
 
 		QByteArray data;
 		data.append((char *)&phead, headLen);
