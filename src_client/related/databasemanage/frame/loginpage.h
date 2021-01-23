@@ -40,16 +40,22 @@ namespace Related {
 		void connectToServer();
 		void respNetConnected(bool connected);
 		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
+		void processUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		
 		void showSystemSetting();
+		void showRegistWindow();
 		
 		void respSave();
 		void respCancel();
+
+		void respRegist();
+		void respCancelRegist();
 
 	private:
 		void init();
 		void initConnect();
 		void loadNetConfig();
+		void clearRegistInput();
 
 	private:
 		struct ConfigKey {
@@ -67,10 +73,20 @@ namespace Related {
 
 		Base::RIconButton * m_systemSetting;		/*!< 系统设置按钮 */
 		QWidget * m_systemWidget;
+
 		Base::RIPWidget * m_ipWidget;
 		QLineEdit * m_portWidget;
 
+		Base::RIconButton * m_userRegistSetting;	/*!< 用户注册按钮 */
+		QWidget * m_registWidget;
+
+		QLineEdit * m_registUserName;
+		QLineEdit * m_registPassword1;
+		QLineEdit * m_registPassword2;
+
 		Base::WidgetAnimation m_animation;
+
+		bool m_loginModel;		/*!< true:登录模式；false:注册模式 */
 	};
 
 } //namespace Related 

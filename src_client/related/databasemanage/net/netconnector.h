@@ -43,6 +43,7 @@ namespace Related {
 		bool isConnected();
 
 		void write(const Datastruct::UserLoginRequest & request);
+		void write(const Datastruct::UserRegistRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);
@@ -62,6 +63,7 @@ namespace Related {
 		bool searchNextPackHead();
 
 		QByteArray makePacket(Datastruct::PacketType type,QByteArray & body);
+		void sendData(const QByteArray & data);
 
 	private:
 		static NetConnector * m_instance;

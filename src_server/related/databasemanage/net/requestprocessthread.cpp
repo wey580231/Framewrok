@@ -74,26 +74,35 @@ namespace Related {
 
 		QByteArray jsonData(unit->m_requestData.data() + sizeof(head), unit->m_requestData.size() - sizeof(Datastruct::PacketHead) - sizeof(Datastruct::PacketTail));
 
+		ResponseUnit * runit = new ResponseUnit();
+		runit->m_clientId = unit->m_clientId;
+
 		switch (head.m_packetType)
 		{
 			case Datastruct::P_UserLogin: {
 				Datastruct::UserLoginRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-
-					ResponseUnit * runit = new ResponseUnit();
-
 					Datastruct::UserLoginResponse response = m_processCenter.processUserLogin(unit->m_clientId,request);
+					runit->m_resposneData = makePacket(Datastruct::P_UserLogin,JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
 
-					runit->m_clientId = unit->m_clientId;
-					runit->m_resposneData = makePacket(Datastruct::P_UserLogin,JsonWrapper::instance()->wrap(Datastruct::P_UserLogin,response));
-
-					//发送回主线程
-					sendProcessResult(runit);
+			case Datastruct::P_UserRegist: {
+				Datastruct::UserRegistRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::UserRegistResponse response = m_processCenter.processUserRegist(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_UserRegist, JsonWrapper::instance()->wrap(response));
 				}
 			}
 				break;
 			default:
 				break;
+		}
+
+		//发送回主线程
+		if (runit->m_resposneData.size() > 0) {
+			sendProcessResult(runit);
 		}
 
 		delete unit;

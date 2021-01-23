@@ -31,6 +31,7 @@ namespace Related {
 		void bindDatabase(Base::Database * db);
 
 		Datastruct::UserLoginResponse processUserLogin(int clientId,const Datastruct::UserLoginRequest & request);
+		Datastruct::UserRegistResponse processUserRegist(int clientId,const Datastruct::UserRegistRequest & request);
 
 	private:
 		Base::Database * m_database;

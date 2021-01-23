@@ -31,11 +31,17 @@ namespace CommonDefines {
 		static JsonWrapper * instance();
 		~JsonWrapper();
 
-		QByteArray wrap(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request);
-		bool unrap(const QByteArray & data, Datastruct::UserLoginRequest & request);
+		QByteArray wrap(const Datastruct::UserLoginRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::UserLoginRequest & request); 
 
-		QByteArray wrap(Datastruct::PacketType type, const Datastruct::UserLoginResponse & response);
+		QByteArray wrap(const Datastruct::UserLoginResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::UserLoginResponse & response);
+
+		QByteArray wrap(const Datastruct::UserRegistRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::UserRegistRequest & request);
+
+		QByteArray wrap(const Datastruct::UserRegistResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::UserRegistResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);
@@ -47,6 +53,8 @@ namespace CommonDefines {
 		 * @return true:解包成功;false:解包失败
 		 */
 		bool unwrapObject(const QByteArray & data,std::function<void(QJsonObject &)> callback);
+
+		QByteArray wrapObject(std::function<void(QJsonObject &)> callback);
 
 	private:
 		static JsonWrapper * m_instance;
