@@ -163,9 +163,9 @@ namespace Related {
 	{
 	}
 
-	void NetConnector::connectTo(QString remoteIp, ushort remotePort)
+	bool NetConnector::connectTo(QString remoteIp, ushort remotePort)
 	{
-		m_dataTcpClient->connect(remoteIp.toStdString(), remotePort);
+		return m_dataTcpClient->connect(remoteIp.toStdString(), remotePort);
 	}
 
 	bool NetConnector::isConnected()
@@ -173,9 +173,9 @@ namespace Related {
 		return m_dataTcpClient->connected();
 	}
 
-	void NetConnector::write(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request)
+	void NetConnector::write(const Datastruct::UserLoginRequest & request)
 	{
-		QByteArray array = makePacket(type, CommonDefines::JsonWrapper::instance()->wrap(type, request));
+		QByteArray array = makePacket(Datastruct::P_UserLogin ,CommonDefines::JsonWrapper::instance()->wrap(Datastruct::P_UserLogin, request));
 
 		m_dataTcpClient->send(array.data(), array.length());
 	}

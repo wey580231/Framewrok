@@ -11,7 +11,6 @@
 #include <QHelpEvent>
 #include <QMetaEnum>
 
-#include "../protocol/datastruct.h"
 #include "../constants.h"
 #include "../actionmanager/actionmanager.h"
 #include "../util/rsingleton.h"

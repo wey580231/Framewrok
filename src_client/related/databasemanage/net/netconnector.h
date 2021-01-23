@@ -32,8 +32,9 @@ namespace Related {
 		 * @attention 调用此方法后，需要等待接收netConnected信号，并判断对应的参数，才可以确定网络是否连接成功
 		 * @param remoteIp 远程服务器IP
 		 * @param remotePort 远程服务器端口号
+		 * @return true:调用成功，不不代表网络连接成功；false:调用失败
 		 */
-		void connectTo(QString remoteIp,ushort remotePort);
+		bool connectTo(QString remoteIp,ushort remotePort);
 
 		/*! 
 		 * @brief 与服务器的网络连接是否建立
@@ -41,7 +42,7 @@ namespace Related {
 		 */
 		bool isConnected();
 
-		void write(Datastruct::PacketType type,const Datastruct::UserLoginRequest & request);
+		void write(const Datastruct::UserLoginRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);

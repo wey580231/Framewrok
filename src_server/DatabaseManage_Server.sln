@@ -21,6 +21,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "related", "related\related.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "..\framework\base\base.vcxproj", "{73E804E5-C03A-4897-833B-8819E2DE652C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1B94BBE-2B7C-458C-9315-CC9981E885F0} = {A1B94BBE-2B7C-458C-9315-CC9981E885F0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "commondefines", "..\framework\commondefines\commondefines.vcxproj", "{A1B94BBE-2B7C-458C-9315-CC9981E885F0}"
 EndProject
@@ -33,6 +36,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "..\framework\core\c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network", "..\framework\network\network.vcxproj", "{EB51883C-F40E-40D8-8702-832AB263C101}"
 	ProjectSection(ProjectDependencies) = postProject
+		{A1B94BBE-2B7C-458C-9315-CC9981E885F0} = {A1B94BBE-2B7C-458C-9315-CC9981E885F0}
 		{73E804E5-C03A-4897-833B-8819E2DE652C} = {73E804E5-C03A-4897-833B-8819E2DE652C}
 	EndProjectSection
 EndProject

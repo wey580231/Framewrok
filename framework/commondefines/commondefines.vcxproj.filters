@@ -33,6 +33,9 @@
     <ClInclude Include="wrapper\jsonkey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="databaseprotocol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="protocol.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wrapper\jsonkey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databaseprotocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

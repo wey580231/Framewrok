@@ -48,7 +48,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;commondefines.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -104,6 +104,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\business\dataprocesscenter.cpp" />
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
@@ -128,6 +129,7 @@
     <QtMoc Include="databasemanage\customwidget\rlistwidget.h" />
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
+    <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <ClInclude Include="databasemanage\global.h" />
     <QtMoc Include="databasemanage\net\netacceptor.h" />

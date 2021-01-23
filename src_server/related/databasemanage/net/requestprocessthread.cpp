@@ -72,8 +72,8 @@ namespace Related {
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
 
 					ResponseUnit * runit = new ResponseUnit();
-					Datastruct::UserLoginResponse response;
-					response.m_loginResult = true;
+
+					Datastruct::UserLoginResponse response = m_processCenter.processUserLogin(unit->m_clientId,request);
 
 					runit->m_clientId = unit->m_clientId;
 					runit->m_resposneData = makePacket(Datastruct::P_UserLogin,JsonWrapper::instance()->wrap(Datastruct::P_UserLogin,response));
