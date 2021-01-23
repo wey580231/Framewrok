@@ -17,11 +17,13 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include <commondefines/protocol.h>
+#include "../protocol.h"
+#include "../commondefines_global.h"
+#include "jsonkey.h"
 
-namespace Related {
+namespace CommonDefines {
 
-	class JsonWrapper : public QObject
+	class COMMONDEFINESHARED_EXPORT JsonWrapper : public QObject
 	{
 		Q_OBJECT
 
@@ -48,7 +50,7 @@ namespace Related {
 
 	private:
 		static JsonWrapper * m_instance;
-
+		JsonKey m_jsonKey;
 	};
 
-} //namespace Related 
+} //namespace CommonDefines 

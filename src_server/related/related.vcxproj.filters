@@ -66,9 +66,6 @@
     <ClCompile Include="databasemanage\datastruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\net\jsonwrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\frame\mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\net\jsonwrapper.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\net\requestprocessthread.h">

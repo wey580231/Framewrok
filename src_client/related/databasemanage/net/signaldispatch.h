@@ -24,13 +24,14 @@ namespace Related {
 		static SignalDispatch * instance();
 		~SignalDispatch();
 
+		void recvUserLoginResponse(const Datastruct::UserLoginResponse & response);
+
 	signals:
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 
 	private:
 		SignalDispatch(QObject *parent = nullptr);
 
-		void recvUserLoginResponse(const Datastruct::UserLoginResponse & response);
 
 	private:
 		static SignalDispatch * m_instance;

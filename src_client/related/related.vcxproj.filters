@@ -8,7 +8,6 @@
     <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp" />
     <ClCompile Include="databasemanage\frame\leftpanel.cpp" />
     <ClCompile Include="databasemanage\frame\loginpage.cpp" />
-    <ClCompile Include="databasemanage\net\jsonwrapper.cpp" />
     <ClCompile Include="databasemanage\net\netconnector.cpp" />
     <ClCompile Include="databasemanage\net\signaldispatch.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
@@ -101,7 +100,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\newtaskdialog.h" />
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
-    <QtMoc Include="databasemanage\net\jsonwrapper.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <QtMoc Include="databasemanage\frame\mainwindow.h" />

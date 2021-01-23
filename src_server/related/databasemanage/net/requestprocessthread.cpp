@@ -3,10 +3,12 @@
 #include <QDebug>
 
 #include <commondefines/protocol.h>
+#include <commondefines/wrapper/jsonwrapper.h>
 
 #include "../global.h"
 #include "../datastruct.h"
-#include "jsonwrapper.h"
+
+using namespace CommonDefines;
 
 namespace Related {
 
