@@ -26,6 +26,14 @@ namespace Related {
 		QString m_netGroupId = "RemoteServer";
 		QString m_remoteServerIp = "ServerIp";
 		QString m_remoteServerDataPort = "ServerDataPort";
+
+		QString m_dbGroupId = "Database";
+		QString m_dbType = "DatabaseType";
+		QString m_dbHost = "HostName";
+		QString m_dbName = "DatabaseName";
+		QString m_userName = "UserName";
+		QString m_password = "Password";
+		QString m_userInnerPassword = "UsePasswordInProgram";
 	};
 
 	/*!

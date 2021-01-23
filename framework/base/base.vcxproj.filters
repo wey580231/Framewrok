@@ -84,9 +84,6 @@
     <ClInclude Include="common\validator\rvalidator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="protocol\datastruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\sql\sqliteutil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -210,9 +207,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\stylemanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="protocol\datastruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\sql\sqliteutil.cpp">

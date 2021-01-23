@@ -30,6 +30,7 @@ namespace Related {
 
 	private:
 		void init();
+		void initDatabase();
 		void initThread();
 		void initNetwork();
 

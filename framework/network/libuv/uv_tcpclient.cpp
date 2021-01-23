@@ -31,14 +31,14 @@ namespace Network {
 	}
 
 	/*!
-	 * @brief 主动发起连接远程服务器
-	 * @attention 返回值为true只表示调用成功，不表示已经连接成功
-	 * @param[in] 远程主机Ip
-	 * @param[in] 远程主机端口
-	 * @param[in] 绑定本地主机ip
-	 * @param[in] 绑定主机中端口,0表示不绑定,
-	 * @return true:调用成功;false:调用失败
-	 */
+	* @brief 主动发起连接远程服务器
+	* @attention 返回值为true只表示调用成功，不表示已经连接成功
+	* @param[in] 远程主机Ip
+	* @param[in] 远程主机端口
+	* @param[in] 绑定本地主机ip
+	* @param[in] 绑定主机中端口,0表示不绑定,
+	* @return true:调用成功;false:调用失败
+	*/
 	bool Uv_TcpClient::connect(string remoteAddr, int port, string bindLocalIp, int bindLocalPort)
 	{
 		Check_Return(m_connectedState != R_CLOSED  && m_connectedState != R_ERROR, false);
@@ -70,13 +70,6 @@ namespace Network {
 		return true;
 	}
 
-	/*!
-	 * @brief 将数据拷贝至发送缓冲区，返回实际拷贝的字节数
-	 * @attention 只是将数据拷贝至缓冲区，并未实际发送出去
-	 * @param[in] data 待发送数据起始位置
-	 * @param[in] len 待发送数据总长度
-	 * @return 实际拷贝至缓冲区的字节数
-	 */
 	int Uv_TcpClient::send(const char *data, int len)
 	{
 		if (!data || len <= 0) {

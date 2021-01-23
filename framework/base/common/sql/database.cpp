@@ -7,7 +7,7 @@
 
 namespace Base {
 
-	Database::Database(Datastruct::DatabaseType type, QString connectionName) :
+	Database::Database(DB::DatabaseType type, QString connectionName) :
 		m_open(false), m_error(false), dbType(type)
 	{
 		dbId = connectionName.size() == 0 ? connectionName = Base::RUtil::UUID() : connectionName;
@@ -24,10 +24,10 @@ namespace Base {
 		QString dbDriver;
 		switch (dbType)
 		{
-		case Datastruct::DB_ORACLE:
+		case DB::DB_ORACLE:
 			dbDriver = "QORACLE";
 			break;
-		case Datastruct::DB_MYSQL:
+		case DB::DB_MYSQL:
 		default:
 			dbDriver = "QMYSQL";
 			break;

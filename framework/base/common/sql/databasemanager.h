@@ -1,7 +1,6 @@
 ﻿/*!
- *  @brief     数据库管理
+ *  @brief     数据库管理器
  *  @details   负责创建数据库连接
- *  @file      databasemanager.h
  *  @author    wey
  *  @version   1.0
  *  @date      2018.01.XX
@@ -15,50 +14,42 @@
 #include <QSqlDriver>
 #include <QList>
 
+#include <commondefines/databaseprotocol.h>
 #include "database.h"
-#include "../../protocol/datastruct.h"
 #include "../../base_global.h"
 
 namespace Base {
 
-	class BASESHARED_EXPORT SupportedDB
-	{
-	public:
-		SupportedDB(QString drName, QString dname, Datastruct::DatabaseType dtype, bool isValid = true) :
-			driverName(drName), databaseName(dname), databaseType(dtype), valid(isValid) {
-
-		}
-		QString driverName;             /*!< 驱动名称 QMYSQL */
-		QString databaseName;           /*!< 数据库名称 MySQL */
-		Datastruct::DatabaseType databaseType;      /*!< 数据库类型 */
-		bool valid;                     /*!< 是否有效 */
-	};
-
 	class BASESHARED_EXPORT DatabaseManager
 	{
 	public:
-		DatabaseManager();
-		void setDatabaseType(Datastruct::DatabaseType type);
-		void setConnectInfo(Datastruct::DatabaseConfigInfo configInfo);
+		static DatabaseManager * instance();
 
-		typedef QList<SupportedDB> SupportedDBCollection;
-
-		static QString getDatabaseName(Datastruct::DatabaseType type);
-		static Datastruct::DatabaseType getDatabaseType(QString driverName);
-
-		static QStringList getSupportedDatabase();
-
-		static bool testConnection(Datastruct::DatabaseConfigInfo & info);
-
-		Database * newDatabase(QString connectionName = "");
-		Database database(QString connectionName = "");
+		/*! 
+		 * @brief 设置数据库基本配置信息
+		 * @param configInfo 包括类型、连接地址、用户名等配置信息
+		 */
+		void setDatabaseInfo(DB::DatabaseConfigInfo configInfo);
 
 		bool hasFeature(QSqlDriver::DriverFeature feature);
 		QStringList availableDrivers();
 
+		static bool testConnection(DB::DatabaseConfigInfo & info);
+
+		/*! 
+		 * @brief 获取新数据库连接，并指定连接名
+		 * @param connectionName 数据库连接标识，不能重复
+		 * @return 若创建并打开成功，则返回创建的指针；否则返回nullptr
+		 */
+		Database * newDatabase(QString connectionName = "");
+
 	private:
-		Datastruct::DatabaseConfigInfo dbConfigInfo;
-		static SupportedDBCollection dbList;
+		DatabaseManager();
+
+	private:
+		static DatabaseManager * m_instance;
+
+		DB::DatabaseConfigInfo dbConfigInfo;
 	};
 
 } //namespace Base

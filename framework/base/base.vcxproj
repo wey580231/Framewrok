@@ -117,7 +117,6 @@
   <ItemGroup>
     <ClInclude Include="actionmanager\id.h" />
     <ClInclude Include="common\sql\sqliteutil.h" />
-    <ClInclude Include="protocol\datastruct.h" />
     <QtMoc Include="common\stylemanager.h" />
     <QtMoc Include="common\languagemanager.h" />
     <ClInclude Include="common\sql\autotransaction.h" />
@@ -184,7 +183,6 @@
     <ClCompile Include="common\stylemanager.cpp" />
     <ClCompile Include="common\validator\rcombinevalidator.cpp" />
     <ClCompile Include="common\validator\rvalidator.cpp" />
-    <ClCompile Include="protocol\datastruct.cpp" />
     <ClCompile Include="selfwidget\dialogproxy.cpp" />
     <ClCompile Include="selfwidget\flowcontrol.cpp" />
     <ClCompile Include="selfwidget\iconbutton.cpp" />

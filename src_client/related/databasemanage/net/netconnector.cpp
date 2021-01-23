@@ -3,7 +3,10 @@
 #include <QThread>
 #include <QDebug>
 
-#include "jsonwrapper.h"
+#include <commondefines/wrapper/jsonwrapper.h>
+#include "signaldispatch.h"
+
+using namespace CommonDefines;
 
 namespace Related {
 
@@ -160,9 +163,9 @@ namespace Related {
 	{
 	}
 
-	void NetConnector::connectTo(QString remoteIp, ushort remotePort)
+	bool NetConnector::connectTo(QString remoteIp, ushort remotePort)
 	{
-		m_dataTcpClient->connect(remoteIp.toStdString(), remotePort);
+		return m_dataTcpClient->connect(remoteIp.toStdString(), remotePort);
 	}
 
 	bool NetConnector::isConnected()
@@ -170,9 +173,9 @@ namespace Related {
 		return m_dataTcpClient->connected();
 	}
 
-	void NetConnector::write(Datastruct::PacketType type, const Datastruct::UserLoginRequest & request)
+	void NetConnector::write(const Datastruct::UserLoginRequest & request)
 	{
-		QByteArray array = makePacket(type, JsonWrapper::instance()->wrap(type, request));
+		QByteArray array = makePacket(Datastruct::P_UserLogin ,CommonDefines::JsonWrapper::instance()->wrap(Datastruct::P_UserLogin, request));
 
 		m_dataTcpClient->send(array.data(), array.length());
 	}
@@ -202,7 +205,23 @@ namespace Related {
 	 */
 	void NetConnector::respRectNetData(QByteArray array)
 	{
-		JsonWrapper::instance()->unwrap(array);
+		Datastruct::PacketHead head;
+		memcpy((char *)&head, array.data(), sizeof(Datastruct::PacketHead));
+
+		QByteArray jsonData(array.data() + sizeof(head), array.size() - sizeof(Datastruct::PacketHead) - sizeof(Datastruct::PacketTail));
+
+		switch (head.m_packetType)
+		{
+			case Datastruct::P_UserLogin: {
+				Datastruct::UserLoginResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvUserLoginResponse(response);
+				}
+			}
+				break;
+			default:
+				break;
+		}
 	}
 
 } //namespace Related 

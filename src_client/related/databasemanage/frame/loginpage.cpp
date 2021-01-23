@@ -52,7 +52,12 @@ namespace Related {
 	void LoginPage::connectToServer()
 	{
 		if (!NetConnector::instance()->isConnected()) {
-			NetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_portWidget->text().toInt());
+			if (NetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_portWidget->text().toInt())) {
+
+			}
+			else {
+				//TODO 提示错误
+			}
 		}
 		else {
 			respNetConnected(true);
@@ -70,7 +75,7 @@ namespace Related {
 			request.m_name = m_userName->text();
 			request.m_password = Base::RUtil::MD5(m_password->text());
 
-			NetConnector::instance()->write(Datastruct::P_UserLogin, request);
+			NetConnector::instance()->write(request);
 		}
 		else {
 			//TODO 提示网络连接失败

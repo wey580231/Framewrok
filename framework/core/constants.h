@@ -39,15 +39,6 @@ const char LOG_LOG[] = "log";
 const char LOG_LOG_RECORDFILE[] = "log2File";
 const char LOG_LOG_LEVEL[] = "logLevel";
 
-//数据库模块
-const char DB_SETTING[] = "Database";
-const char DB_TYPE[] = "Dbtype";
-const char DB_HOST[] = "Hostname";
-const char DB_DATABASE_NAME[] = "DatabaseName";
-const char DB_USERNAME[] = "UserName";
-const char DB_PASSWORD[] = "Password";
-const char DB_PORT[] = "Port";
-
 /*人机海图设置*/
 const char MAP_SETTING[] = "MapSetting";
 const char MAP_USEMAPHTML[] = "useHtmlMap";
