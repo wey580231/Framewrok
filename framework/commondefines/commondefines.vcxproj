@@ -46,12 +46,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>COMMONDEFINE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\wrapper;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\wrapper;.\;.\sqltable;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\wrapper;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\wrapper;.\;.\sqltable;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -96,13 +96,17 @@
   <ItemGroup>
     <ClInclude Include="commondefines_global.h" />
     <ClInclude Include="databaseprotocol.h" />
+    <ClInclude Include="structdefines.h" />
     <ClInclude Include="protocol.h" />
+    <ClInclude Include="sqltable\tablemapper.h" />
     <ClInclude Include="wrapper\jsonkey.h" />
     <QtMoc Include="wrapper\jsonwrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="databaseprotocol.cpp" />
+    <ClCompile Include="structdefines.cpp" />
     <ClCompile Include="protocol.cpp" />
+    <ClCompile Include="sqltable\tablemapper.cpp" />
     <ClCompile Include="wrapper\jsonkey.cpp" />
     <ClCompile Include="wrapper\jsonwrapper.cpp" />
   </ItemGroup>

@@ -35,19 +35,38 @@ namespace Base {
 		类Criteria用于连接多个条件，可通过add()、or()方式对条件进行拼接；
 		类Restrictions用于描述具体条件，可通过eq()、gt()、lt()、like()、unlike()、in()等设置不同的条件；
 
-		通过类Criteria可返回最终的条件部分sql语句
+		通过类Criteria可返回最终的条件部分sql语句.
+
+		20210123
+		其中两个参数版：用于单张表的关系查询
+		带tableName的三参数版：用于多张表关系查询
 	*/
 
 	class BASESHARED_EXPORT Restrictions
 	{
 	public:
+		static Restrictions eq(QString key, QVariant value);
 		static Restrictions eq(QString tName, QString key, QVariant value);
+
+		static Restrictions gt(QString key, QVariant value);
 		static Restrictions gt(QString tName, QString key, QVariant value);
+
+		static Restrictions ge(QString key, QVariant value);
 		static Restrictions ge(QString tName, QString key, QVariant value);
+
+		static Restrictions lt(QString key, QVariant value);
 		static Restrictions lt(QString tName, QString key, QVariant value);
+
+		static Restrictions le(QString key, QVariant value);
 		static Restrictions le(QString tName, QString key, QVariant value);
+
+		static Restrictions ne(QString key, QVariant value);
 		static Restrictions ne(QString tName, QString key, QVariant value);
+
+		static Restrictions like(QString key, QVariant value);
 		static Restrictions like(QString tName, QString key, QVariant value);
+
+		static Restrictions in(QString key, QVariant value);
 		static Restrictions in(QString tName, QString key, QVariant value);
 
 		bool operator<(const Restrictions & src)const;
@@ -186,7 +205,8 @@ namespace Base {
 	public:
 		explicit RSelect(std::initializer_list<QString> tNames);
 		RSelect(QString tName);
-		RSelect& select(const QString & tName, std::initializer_list<QString> keys);
+		RSelect & select(const QString & tName, std::initializer_list<QString> keys);
+		RSelect & select(const QString & tName);
 		RSelect& on(const QString & tName1, const QString key1, const QString tName2, const QString value2);
 		bool limit(unsigned int start, unsigned int count);
 		RSelect & orderBy(const QString & tName, const QString key, SuperCondition::SOrder odr = SuperCondition::ASC);

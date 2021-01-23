@@ -4,6 +4,7 @@
 
 #include <commondefines/protocol.h>
 #include <commondefines/wrapper/jsonwrapper.h>
+#include <base\util\rlog.h>
 
 #include "../global.h"
 #include "../datastruct.h"
@@ -13,7 +14,7 @@ using namespace CommonDefines;
 namespace Related {
 
 	RequestProcessThread::RequestProcessThread(QObject *parent)
-		: Core::RTask(parent)
+		: Core::RTask(parent), m_dbConnect(nullptr)
 	{
 	}
 
@@ -37,6 +38,14 @@ namespace Related {
 
 	void RequestProcessThread::run()
 	{
+		m_dbConnect = Base::DatabaseManager::instance()->newDatabase();
+		if (m_dbConnect == nullptr) {
+			RLOG_ERROR("create database error!");
+			return;
+		}
+
+		m_processCenter.bindDatabase(m_dbConnect);
+
 		while (runningFlag) {
 
 			while (runningFlag && G_RequestQuque.size() == 0) {

@@ -16,6 +16,8 @@
 #include <QtGlobal>
 #include <QVariant>
 
+#include "structdefines.h"
+
 namespace Datastruct {
 
 #pragma pack(push,1)
@@ -78,8 +80,11 @@ namespace Datastruct {
 	 * @details 服务器端->客户端
 	 */
 	struct UserLoginResponse {
+		UserLoginResponse():m_loginResult(false){}
 		bool m_loginResult;		/*!< 登录结果信息，true:登录成功，false:登录失败 */
 		QString m_errorInfo;	/*!< 登录失败时说明失败原因 */
+
+		UserEntityData m_userInfo;	/*!< 登录成功后，返回基本信息；失败不返回 */
 	};
 
 

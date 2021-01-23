@@ -6,10 +6,12 @@
 #include <QDebug>
 
 #include <base\util\rutil.h>
+#include <base\selfwidget\rmessagebox.h>
 
 #include "customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
+#include "../utils/util.h"
 
 namespace Related {
 
@@ -91,9 +93,10 @@ namespace Related {
 	{
 		if (response.m_loginResult) {
 			emit switchToMainPage();
+			qDebug() << response.m_userInfo.id;
 		}
 		else {
-			qDebug() << "Login Error:" << response.m_errorInfo;
+			Util::showWarning(this, response.m_errorInfo);
 		}
 	}
 
@@ -139,11 +142,13 @@ namespace Related {
 		m_userName = new QLineEdit();
 		m_userName->setMinimumHeight(25);
 		m_userName->setPlaceholderText(QStringLiteral("请输入用户名"));
+		m_userName->setText("root");
 
 		m_password = new QLineEdit();
 		m_password->setEchoMode(QLineEdit::Password);
 		m_password->setMinimumHeight(25);
 		m_password->setPlaceholderText(QStringLiteral("请输入密码"));
+		m_password->setText("root");
 
 		m_loginButt = new Base::RIconButton();
 		m_loginButt->setIconSize(Base::RIconButton::ICON_24);

@@ -17,6 +17,7 @@ namespace Related {
 		: QWidget(parent)
 	{
 		init();
+		initDatabase();
 		initThread();
 		initNetwork();
 	}
@@ -59,6 +60,7 @@ namespace Related {
 		cinfo.hostName = Base::RUtil::getGlobalValue(ckey.m_dbGroupId, ckey.m_dbHost, "127.0.0.1").toString();
 		cinfo.dbName = Base::RUtil::getGlobalValue(ckey.m_dbGroupId, ckey.m_dbName, "DatabaseManage").toString();
 		cinfo.dbUser = Base::RUtil::getGlobalValue(ckey.m_dbGroupId, ckey.m_userName, "root").toString();
+		cinfo.port = Base::RUtil::getGlobalValue(ckey.m_dbGroupId, ckey.m_dbPort, "3306").toInt();
 
 		bool userInnerPass = Base::RUtil::getGlobalValue(ckey.m_dbGroupId, ckey.m_userInnerPassword, true).toBool();
 

@@ -2,8 +2,9 @@
 
 #include <QObject>
 
-#include <core/network/rtask.h>
 #include <commondefines/protocol.h>
+#include <base\common\sql\databasemanager.h>
+#include <core/network/rtask.h>
 
 #include "../datastruct.h"
 #include "../business/dataprocesscenter.h"
@@ -35,6 +36,8 @@ namespace Related {
 
 	private:
 		DataProcessCenter m_processCenter;		/*!< 业务处理 */
+
+		Base::Database * m_dbConnect;
 	};
 
 } //namespace Related 

@@ -12,6 +12,7 @@
 #include <QObject>
 
 #include <commondefines/protocol.h>
+#include <base\common\sql\databasemanager.h>
 
 namespace Related {
 
@@ -22,8 +23,17 @@ namespace Related {
 	public:
 		DataProcessCenter(QObject *parent = nullptr);
 		~DataProcessCenter();
+		
+		/*! 
+		 * @brief 绑定数据库连接【每个线程的数据库连接只能在当前线程中使用】
+		 * @param db 数据库连接句柄
+		 */
+		void bindDatabase(Base::Database * db);
 
 		Datastruct::UserLoginResponse processUserLogin(int clientId,const Datastruct::UserLoginRequest & request);
+
+	private:
+		Base::Database * m_database;
 
 	};
 

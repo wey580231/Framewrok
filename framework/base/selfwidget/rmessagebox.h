@@ -81,8 +81,12 @@ namespace Base {
 		};
 		Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
-			static StandardButton information(QWidget * parent, const QString &title, const QString& text, int butts, StandardButton defaultButt = NoButton);
-		static StandardButton warning(QWidget * parent, const QString &title, const QString& text, int butts, StandardButton defaultButt = NoButton);
+		inline friend QFlags<StandardButtons::enum_type> operator |(StandardButtons::enum_type a, StandardButtons::enum_type b) {
+			return QFlags<StandardButtons::enum_type>(a) | b;
+		}
+
+		static StandardButton information(QWidget * parent, const QString &title, const QString& text, StandardButtons butts, StandardButton defaultButt = NoButton);
+		static StandardButton warning(QWidget * parent, const QString &title, const QString& text, StandardButtons butts, StandardButton defaultButt = NoButton);
 
 		RMessageBox::StandardButton clickedButton()const;
 
@@ -95,7 +99,7 @@ namespace Base {
 	private:
 		RButton * addButton(RMessageBox::StandardButton butt);
 		QString standardButtText(RMessageBox::StandardButton butt);
-		static RMessageBox::StandardButton messagebox(QWidget * parent, Icon type, const QString &title, const QString& text, int buttons, StandardButton = NoButton);
+		static RMessageBox::StandardButton messagebox(QWidget * parent, Icon type, const QString &title, const QString& text, StandardButtons buttons, StandardButton = NoButton);
 
 	private:
 		RMessageBoxPrivate * d_ptr;
