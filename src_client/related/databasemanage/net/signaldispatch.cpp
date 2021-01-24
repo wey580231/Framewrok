@@ -19,6 +19,11 @@ namespace Related {
 		emit respUserRegistResponse(response);
 	}
 
+	void SignalDispatch::recvQueryUserListResponse(const Datastruct::LoadAllUserResponse & response)
+	{
+		emit respQueryUserListResponse(response);
+	}
+
 	SignalDispatch * SignalDispatch::instance()
 	{
 		if (m_instance == nullptr)

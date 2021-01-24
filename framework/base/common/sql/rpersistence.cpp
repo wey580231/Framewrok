@@ -473,7 +473,7 @@ namespace Base {
 		return result;
 	}
 
-	RSelect::RSelect(std::initializer_list<QString> tNames) :limitStart(-1), limitCount(-1), isSetLimit(false)
+	RSelect::RSelect(std::initializer_list<QString> tNames) :limitStart(-1), limitCount(-1), isSetLimit(false), isSetFunction(false)
 	{
 		QString alias("T%1");
 		int index = 0;
@@ -482,7 +482,7 @@ namespace Base {
 		}
 	}
 
-	RSelect::RSelect(QString tName) :limitStart(-1), limitCount(-1), isSetLimit(false)
+	RSelect::RSelect(QString tName) :limitStart(-1), limitCount(-1), isSetLimit(false), isSetFunction(false)
 	{
 		QString alias("T%1");
 		tableNames.insert(tName, alias.arg(0));
@@ -523,6 +523,71 @@ namespace Base {
 		return *this;
 	}
 
+	Base::RSelect & RSelect::avg(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Avg;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::count(QString columnName /*= "*"*/, bool distinct /*= false*/)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Count;
+		isDistinct = distinct;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::first(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_First;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::last(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Last;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::max(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Max;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::min(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Min;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::sum(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Sum;
+		return *this;
+	}
+
+	Base::RSelect & RSelect::var(QString columnName)
+	{
+		isSetFunction = true;
+		m_funcColumn = columnName;
+		m_functionType = F_Var;
+		return *this;
+	}
+
 	QString RSelect::sql()
 	{
 		if (tableNames.size() == 0)
@@ -532,16 +597,54 @@ namespace Base {
 		QTextStream stream(&result, QIODevice::ReadWrite);
 		stream << spacer << "SELECT" << spacer;
 
-		if (selectedKeys.size() > 0) {
-			for (int i = 0; i < selectedKeys.size(); i++) {
-				stream << tableNames.value(selectedKeys.at(i).tname) << "." << selectedKeys.at(i).tkey;
-				if (i != selectedKeys.size() - 1) {
-					stream << spacer << "," << spacer;
-				}
+		if (isSetFunction) {
+			switch (m_functionType)
+			{
+				case F_Avg:
+					stream << "AVG(" << m_funcColumn << ") ";
+					break;
+				case F_Count:
+					stream << "COUNT(";
+
+					if (isDistinct)
+						stream << "DISTINCT" << spacer;
+
+					stream << m_funcColumn << ")";
+					break;
+				case F_First:
+					stream << "FIRST(" << m_funcColumn << ")";
+					break;
+				case F_Last:
+					stream << "LAST(" << m_funcColumn << ")";
+					break;
+				case F_Max:
+					stream << "MAX(" << m_funcColumn << ")";
+					break;
+				case F_Min:
+					stream << "MIN(" << m_funcColumn << ")";
+					break;
+				case F_Sum:
+					stream << "SUM(" << m_funcColumn << ")";
+					break;
+				case F_Var:
+					stream << "VAR(" << m_funcColumn << ")";
+					break;
+				default:
+					break;
 			}
 		}
 		else {
-			stream << spacer << "*" << spacer;
+			if (selectedKeys.size() > 0) {
+				for (int i = 0; i < selectedKeys.size(); i++) {
+					stream << tableNames.value(selectedKeys.at(i).tname) << "." << selectedKeys.at(i).tkey;
+					if (i != selectedKeys.size() - 1) {
+						stream << spacer << "," << spacer;
+					}
+				}
+			}
+			else {
+				stream << spacer << "*" << spacer;
+			}
 		}
 
 		stream << spacer << "FROM" << spacer;
@@ -574,14 +677,14 @@ namespace Base {
 			stream << ctia.toSql(tableNames);
 		}
 
-		if (sortOrders.size() > 0) {
+		if (!isSetFunction && sortOrders.size() > 0) {
 			stream << spacer << "ORDER BY" << spacer;
 			for (int i = 0; i < sortOrders.size(); i++) {
 				stream << tableNames.value(sortOrders.at(i).tName) << "." << sortOrders.at(i).tkey << spacer << odrToString(sortOrders.at(i).odr);
 			}
 		}
 
-		if (isSetLimit) {
+		if (!isSetFunction && isSetLimit) {
 			stream << spacer << "LIMIT" << spacer << limitStart << spacer + "," << spacer << limitCount;
 		}
 

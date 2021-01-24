@@ -112,4 +112,42 @@ namespace Related {
 		return response;
 	}
 
+	Datastruct::LoadAllUserResponse DataProcessCenter::processUserList(int clientId, const Datastruct::LoadAllUserRequest & request)
+	{
+		Datastruct::LoadAllUserResponse response;
+
+		Table::UserEntity user;
+
+		Base::RSelect rs(user.table);
+		rs.select(user.table)
+			.limit(request.m_offsetIndex,request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::UserEntityData data;
+
+				data.id = query.value(user.id).toInt();
+				data.name = query.value(user.userName).toString();
+				data.registTime = query.value(user.regitstTime).toDateTime().toString(TIME_FORMAT);
+				data.privilege = query.value(user.privilege).toInt();
+				data.isManager = query.value(user.superManage).toBool();
+
+				response.m_userInfos.append(data);
+			}
+
+			Base::RSelect rst(user.table);
+			rst.count();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_userCount = query.value(0).toInt();
+				}
+			}
+		}
+
+		return response;
+	}
+
 } //namespace Related 

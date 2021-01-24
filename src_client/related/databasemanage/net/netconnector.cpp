@@ -185,6 +185,12 @@ namespace Related {
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::LoadAllUserRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_UserList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	QByteArray NetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
 	{
 		static int headLen = sizeof(Datastruct::PacketHead);
@@ -238,6 +244,14 @@ namespace Related {
 				Datastruct::UserRegistResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvUseRegistResponse(response);
+				}
+			}
+				break;
+
+			case Datastruct::P_UserList: {
+				Datastruct::LoadAllUserResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryUserListResponse(response);
 				}
 			}
 				break;

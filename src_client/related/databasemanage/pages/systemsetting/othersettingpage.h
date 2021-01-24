@@ -11,15 +11,19 @@
 
 #include <QWidget>
 
+#include "../abstractpage.h"
+
 namespace Related {
 
-	class OtherSettingPage : public QWidget
+	class OtherSettingPage : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
 		OtherSettingPage(QWidget *parent = nullptr);
 		~OtherSettingPage();
+
+		PageType getPageType() const;
 
 	private:
 		void init();

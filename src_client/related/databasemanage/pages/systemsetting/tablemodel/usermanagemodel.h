@@ -11,6 +11,7 @@
 
 #include <QObject>
 
+#include <commondefines\protocol.h>
 #include <base\selfwidget\tablemode\rtablemodel.h>
 #include "../../../datastruct.h"
 
@@ -24,14 +25,15 @@ namespace Related {
 		UserManageModel(QObject *parent = nullptr);
 		~UserManageModel();
 
-		void prepareData();
 		int datasSize() const;
+
+		void updateData(const QList<Datastruct::UserEntityData> & dlist);
 
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<UserManageData> m_dataList;
+		QList<Datastruct::UserEntityData> m_dataList;
 
 	};
 

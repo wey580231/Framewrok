@@ -63,10 +63,11 @@ namespace Related {
 			break;
 		}
 
+		if (m_currPage >= m_pageCount)
+			m_currPage = m_pageCount - 1;
+
 		if (m_currPage < 0)
 			m_currPage = 0;
-		else if (m_currPage >= m_pageCount)
-			m_currPage = m_pageCount - 1;
 
 		updatePageIndicate();
 	}
@@ -131,7 +132,8 @@ namespace Related {
 
 		if (m_currPage >= m_pageCount)
 			m_currPage = m_pageCount - 1;
-		else
+
+		if (m_currPage < 0)
 			m_currPage = 0;
 
 		updateButtState();

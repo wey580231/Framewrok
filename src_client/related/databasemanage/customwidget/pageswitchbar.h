@@ -28,6 +28,12 @@ namespace Related {
 
 		void setDataSize(int dataSize);
 
+		int perPageCount() const { return m_perPageItemCount; }
+
+		int dataOffset() const {
+			return m_perPageItemCount * m_currPage;
+		}
+
 	signals:
 		void perPageNumsChanged(int perPageNum);
 		void switchPage(int curPage);
@@ -63,7 +69,7 @@ namespace Related {
 		int m_dataSize;				/*!< 数据条数 */
 		int m_pageCount;			/*!< 页面总数 */
 		int m_currPage;				/*!< 当前页面索引 */
-		int m_perPageItemCount;		/*!< 当前页面数据条数 */		
+		int m_perPageItemCount;		/*!< 当前页面数据条数 */
 	};
 
 } //namespace Related 

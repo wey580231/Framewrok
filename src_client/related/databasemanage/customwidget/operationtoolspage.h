@@ -28,6 +28,19 @@ namespace Related {
 		OperationToolsPage(QWidget *parent = nullptr);
 		~OperationToolsPage();
 
+		enum ButtType {
+			Butt_Add,		/*!< Ìí¼Ó */
+			Butt_Delete,	/*!< É¾³ý */
+			Butt_Edit,		/*!< ÐÞ¸Ä */
+			Butt_Refresh	/*!< Ë¢ÐÂ */
+		};
+
+	signals:
+		void buttPressed(ButtType type);
+
+	private slots:
+		void respButtCliecked();
+
 	private:
 		void  init();
 

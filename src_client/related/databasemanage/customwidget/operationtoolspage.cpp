@@ -1,6 +1,10 @@
 #include "operationtoolspage.h"
 
+#include <QVariant>
+
 namespace Related {
+
+#define ButtId "ButtId"
 
 	OperationToolsPage::OperationToolsPage(QWidget *parent)
 		: QWidget(parent)
@@ -10,6 +14,11 @@ namespace Related {
 
 	OperationToolsPage::~OperationToolsPage()
 	{
+	}
+
+	void OperationToolsPage::respButtCliecked()
+	{
+		emit buttPressed(static_cast<ButtType>(QObject::sender()->property(ButtId).toInt()));
 	}
 
 	void OperationToolsPage::init()
@@ -29,6 +38,16 @@ namespace Related {
 		m_delButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/É¾³ý.png"), QStringLiteral("É¾³ý"));
 		m_editButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/±à¼­.png"), QStringLiteral("±à¼­"));
 		m_refreshButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/Ë¢ÐÂ.png"), QStringLiteral("Ë¢ÐÂ"));
+
+		m_addButton->setProperty(ButtId, Butt_Add);
+		m_delButton->setProperty(ButtId, Butt_Delete);
+		m_editButton->setProperty(ButtId, Butt_Edit);
+		m_refreshButton->setProperty(ButtId, Butt_Refresh);
+
+		connect(m_addButton, SIGNAL(pressed()), this, SLOT(respButtCliecked()));
+		connect(m_delButton, SIGNAL(pressed()), this, SLOT(respButtCliecked()));
+		connect(m_editButton, SIGNAL(pressed()), this, SLOT(respButtCliecked()));
+		connect(m_refreshButton, SIGNAL(pressed()), this, SLOT(respButtCliecked()));
 
 		QHBoxLayout * toolLayout = new QHBoxLayout();
 		toolLayout->setContentsMargins(0, 0, 0, 0);

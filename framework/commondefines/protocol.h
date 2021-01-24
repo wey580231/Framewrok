@@ -102,6 +102,24 @@ namespace Datastruct {
 		QString m_errorInfo;	/*!< 注册失败时说明失败原因 */
 	};
 
+	/*!
+	 * @brief 加载所有用户请求
+	 */
+	struct LoadAllUserRequest {
+		QString m_name;			/*!< 当前操作用户名 */
+		int m_offsetIndex;		/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;		/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief 加载所有用户结果报文
+	 */
+	struct LoadAllUserResponse {
+		LoadAllUserResponse():m_userCount(0){}
+		int m_userCount;		/*!< 用户总条数 */
+		QList<UserEntityData> m_userInfos;		/*!< 当前页面下用户结果集合 */
+	};
+
 } // namespace Datastruct
 
 #endif // DATASTRUCT_H

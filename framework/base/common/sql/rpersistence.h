@@ -211,17 +211,49 @@ namespace Base {
 		bool limit(unsigned int start, unsigned int count);
 		RSelect & orderBy(const QString & tName, const QString key, SuperCondition::SOrder odr = SuperCondition::ASC);
 
+		/*!< 内部查询函数 */
+		RSelect & avg(QString columnName);
+		RSelect & count(QString columnName = "*",bool distinct = false);
+		RSelect & first(QString columnName);
+		RSelect & last(QString columnName);
+		RSelect & max(QString columnName);
+		RSelect & min(QString columnName);
+		RSelect & sum(QString columnName);
+		RSelect & var(QString columnName);
+
 		QString sql();
 		void clear();
 
 	private:
-		QMap<QString, QString> tableNames;                   /*!< 所有连接表名 */
-		QVector<Keys> selectedKeys;                         /*!< 查询结果信息 */
-		QVector<OnContion> onCondtions;                     /*!< 连接查询时的条件信息 */
-		QVector<Orders> sortOrders;                         /*!< 排序列表 */
 
-		unsigned int limitStart, limitCount;                 /*!< 范围查询,查看开始位置，查询的条数 */
-		bool isSetLimit;                                    /*!< 是否设置范围查询 */
+		/*!
+		 * @brief SQL内置函数
+		 */
+		enum SQLFunctionType
+		{
+			F_Avg,				/*!< 平均数 */
+			F_Count,			/*!< 统计 */
+			F_First,			/*!< 返回在指定的域中第一个记录的值 */
+			F_Last,				/*!< 返回在指定的域中最后一个记录的值 */
+			F_Max,				/*!< 返回某列的最高值 */
+			F_Min,				/*!< 返回某列的最低值 */
+			F_Sum,				/*!< 返回某列的总和 */
+			F_Var				/*!< 返回某列的平均值 */
+		};
+
+	private:
+		QMap<QString, QString> tableNames;          /*!< 所有连接表名 */
+		QVector<Keys> selectedKeys;                 /*!< 查询结果信息 */
+		QVector<OnContion> onCondtions;             /*!< 连接查询时的条件信息 */
+		QVector<Orders> sortOrders;                 /*!< 排序列表 */
+
+		unsigned int limitStart, limitCount;        /*!< 范围查询,查看开始位置，查询的条数 */
+		bool isSetLimit;                            /*!< 是否设置范围查询 */
+
+		bool isSetFunction;							/*!< 是否为SQL函数模式，开启此模式后如limit等功能就无法使用了 */
+		SQLFunctionType m_functionType;				/*!< 内置函数类型 */		
+		QString m_funcColumn;						/*!< SQL函数绑定的列名 */
+		bool isDistinct;							/*!< 是否去除重复列，count函数有效 */
 	};
 
 	/*!

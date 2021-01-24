@@ -31,13 +31,18 @@ namespace Related {
 	 * @details 用于关联左侧菜单项目和右侧页面
 	 */
 	enum PageType {
+		/*!< 主要页面，用于左侧菜单栏切换 */
 		Page_SystemMainPage,	/*!< 系统主页 */
 		Page_TargetDatabase,	/*!< 系统目标库 */
 		Page_Setting,			/*!< 系统设置 */
 		
 		Page_TaskOverviewPage,	/*!< 任务概览页面 */
 		Page_TaskRecordPage,	/*!< 任务记录页面 */
-		Page_TaskDataAnalyse	/*!< 任务数据分析 */	
+		Page_TaskDataAnalyse,	/*!< 任务数据分析 */	
+
+		/*!< 子页面，按照‘Page_主页面_子页面’格式 */
+		Page_Setting_UserManage,	/*!< 用户管理 */
+		Page_Setting_SystemSetting	/*!< 系统设置 */
 	};
 
 	/*!

@@ -3,20 +3,39 @@
 #include <QHBoxLayout>
 #include <QDebug>
 
+#include <commondefines/protocol.h>
 #include "../utils/util.h"
 #include "../customwidget/pageswitchbar.h"
 #include "../customwidget/customwidgetcontainer.h"
+#include "../net/netconnector.h"
+#include "../net/signaldispatch.h"
 
 namespace Related {
 
 	UserManagePage::UserManagePage(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent), m_firstLoadData(true)
 	{
 		init();
+
+		connect(SignalDispatch::instance(), SIGNAL(respQueryUserListResponse(const Datastruct::LoadAllUserResponse &)), 
+			this, SLOT(respQueryUserListResponse(const Datastruct::LoadAllUserResponse &)));
 	}
 
 	UserManagePage::~UserManagePage()
 	{
+	}
+
+	PageType UserManagePage::getPageType() const
+	{
+		return Page_Setting_UserManage;
+	}
+
+	void UserManagePage::prepareBringToTop()
+	{
+		if (m_firstLoadData) {
+			refreshCurrPage();
+			m_firstLoadData = false;
+		}
 	}
 
 	void UserManagePage::setPageNum(int page)
@@ -25,9 +44,44 @@ namespace Related {
 		m_tableModel->refresh();
 	}
 
+	/*! 
+	 * @brief 处理用户列表结果查询更新
+	 * @param response 用户列表查询结果
+	 */
+	void UserManagePage::respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response)
+	{
+		m_tableModel->updateData(response.m_userInfos);
+		m_pageSwitch->setDataSize(m_tableModel->datasSize());
+	}
+
+	void UserManagePage::respToolButtPressed(OperationToolsPage::ButtType type)
+	{
+		switch (type)
+		{
+			case OperationToolsPage::Butt_Add: {
+			}
+				break;
+			case OperationToolsPage::Butt_Delete: {
+			
+			}
+				break;
+			case OperationToolsPage::Butt_Edit: {
+			
+			}
+				break;
+			case OperationToolsPage::Butt_Refresh: {
+				refreshCurrPage();
+			}
+				break;
+			default:
+				break;
+		}
+	}
+
 	void UserManagePage::init()
 	{
 		m_operationToolsPage = new OperationToolsPage();
+		connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
 
 		m_tableView = new Base::RTableView();
 		m_tableView->setFocusPolicy(Qt::NoFocus);
@@ -35,7 +89,6 @@ namespace Related {
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
 		m_tableModel = new UserManageModel();
-		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
 
@@ -45,10 +98,9 @@ namespace Related {
 		m_tableView->addColumnItem(Base::ColumnItem(U_LastLoginTime, QStringLiteral("上次登录时间"),180));
 		m_tableView->addColumnItem(Base::ColumnItem(U_UserRights, QStringLiteral("权限")));
 
-		PageSwitchBar * pageSwitch = new PageSwitchBar();
-		pageSwitch->setDataSize(m_tableModel->datasSize());
-		connect(pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
-		connect(pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
+		m_pageSwitch = new PageSwitchBar();
+		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
+		connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		cwidget->setContent(m_operationToolsPage);
@@ -57,7 +109,7 @@ namespace Related {
 		QVBoxLayout * cvlayout = new QVBoxLayout();
 		cvlayout->setContentsMargins(0, 0, 0, 0);
 		cvlayout->addWidget(m_tableView);
-		cvlayout->addWidget(pageSwitch);
+		cvlayout->addWidget(m_pageSwitch);
 		twidget->setLayout(cvlayout);
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
@@ -68,6 +120,18 @@ namespace Related {
 		vlayout->addWidget(cwidget);
 		vlayout->addWidget(ctableView);
 		setLayout(vlayout);
+	}
+
+	/*! 
+	 * @brief 刷新当前页面数据
+	 */
+	void UserManagePage::refreshCurrPage()
+	{
+		Datastruct::LoadAllUserRequest request;
+		request.m_name = "";
+		request.m_offsetIndex = m_pageSwitch->dataOffset();
+		request.m_limitIndex = m_pageSwitch->perPageCount();
+		NetConnector::instance()->write(request);
 	}
 
 }//namespace Related 

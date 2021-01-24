@@ -31,6 +31,8 @@ namespace Related {
 
 		PageType getPageType() const;
 
+		void prepareBringToTop() override;
+
 		enum TabBarIndex {
 			Tab_userManage,
 			Tab_systemSetting,
