@@ -1,13 +1,13 @@
 /*!
- * @brief     值班日志表  
+ * @brief    环境噪声信息显示界面
+ * @details
  * @author    yzg
  * @version   1.0
- * @date      2021.01.20 19:39:23
+ * @date      2021.01.23 14:31:02
  * @warning
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QWidget>
@@ -17,26 +17,24 @@
 #include <base\selfwidget\iconbutton.h>
 
 #include "customwidget/operationtoolspage.h"
-#include "tablemodel/logbookmodel.h"
-
+#include "tablemodel/ambientnoisemodel.h"
 
 namespace Related {
 
-	class LogbookPage : public QWidget
+	class AmbientNoiseDataWidget : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		LogbookPage(QWidget *parent = nullptr);
-		~LogbookPage();
-
+		AmbientNoiseDataWidget(QWidget *parent);
+		~AmbientNoiseDataWidget();
 
 	private:
 		void init();
 
 	private:
 		Base::RTableView * m_tableView;
-		LogbookModel *m_tableModel;
+		AmbientNoiseModel *m_tableModel;
 		OperationToolsPage *m_operationToolsPage;
 	};
 

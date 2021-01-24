@@ -1,4 +1,5 @@
-#include "logbookpage.h"
+#include "ambientnoisedatawidget.h"
+
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -9,17 +10,17 @@
 
 namespace Related {
 
-	LogbookPage::LogbookPage(QWidget *parent)
+	AmbientNoiseDataWidget::AmbientNoiseDataWidget(QWidget *parent)
 		: QWidget(parent)
 	{
 		init();
 	}
 
-	LogbookPage::~LogbookPage()
+	AmbientNoiseDataWidget::~AmbientNoiseDataWidget()
 	{
 	}
 
-	void LogbookPage::init()
+	void AmbientNoiseDataWidget::init()
 	{
 		m_operationToolsPage = new OperationToolsPage();
 
@@ -28,18 +29,18 @@ namespace Related {
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableModel = new LogbookModel();
+		m_tableModel = new AmbientNoiseModel();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
 
 		m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("编号"), 140));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("录入时间"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("试验名"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("平台名")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("数据时长")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("类型")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("文件名称"), 140));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("平台名称"), 180));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("时长"), 180));
+		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("数据大小")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("起始索引")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("结束索引")));
 
 		PageSwitchBar * pageSwitch = new PageSwitchBar();
 		pageSwitch->setDataSize(m_tableModel->datasSize());
@@ -66,4 +67,4 @@ namespace Related {
 		setLayout(vlayout);
 	}
 
-}//namespace Related
+}//namespace Related 

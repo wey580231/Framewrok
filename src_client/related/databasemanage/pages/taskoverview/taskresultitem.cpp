@@ -80,7 +80,6 @@ namespace Related {
 			this->update();
 			emit signalPictureIndex(m_pictureIndex, m_picturePath);
 		}
-
 	}
 
 	void TaskResultItem::init()
