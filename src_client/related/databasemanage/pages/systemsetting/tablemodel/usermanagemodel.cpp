@@ -33,7 +33,7 @@ namespace Related {
 			switch (cindex)
 			{
 			case U_Id:
-				return data.id;
+				return rowIndex + 1;
 				break;
 			case U_UserName:
 				return data.name;

@@ -36,7 +36,7 @@ namespace Related {
 		};
 
 	signals:
-		void buttPressed(ButtType type);
+		void buttPressed(OperationToolsPage::ButtType type);
 
 	private slots:
 		void respButtCliecked();

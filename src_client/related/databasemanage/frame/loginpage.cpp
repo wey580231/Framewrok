@@ -12,6 +12,7 @@
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
 #include "../utils/util.h"
+#include "../global.h"
 
 namespace Related {
 
@@ -102,6 +103,7 @@ namespace Related {
 	{
 		if (response.m_loginResult) {
 			emit switchToMainPage();
+			Global::G_UserEntity = response.m_userInfo;
 		}
 		else {
 			Util::showWarning(this, response.m_errorInfo);

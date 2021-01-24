@@ -28,7 +28,9 @@ namespace Related {
 
 		void setDataSize(int dataSize);
 
-		int perPageCount() const { return m_perPageItemCount; }
+		int perPageCount() const { 
+			return m_perPageItemCount; 
+		}
 
 		int dataOffset() const {
 			return m_perPageItemCount * m_currPage;
@@ -44,7 +46,6 @@ namespace Related {
 
 	private:
 		void init();
-
 		void reCalc();
 		void updateButtState();
 		void updatePageIndicate();

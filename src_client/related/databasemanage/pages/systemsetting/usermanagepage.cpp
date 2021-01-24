@@ -9,6 +9,7 @@
 #include "../customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
+#include "../global.h"
 
 namespace Related {
 
@@ -40,8 +41,7 @@ namespace Related {
 
 	void UserManagePage::setPageNum(int page)
 	{
-		m_tableModel->setPageNum(page);
-		m_tableModel->refresh();
+		refreshCurrPage();
 	}
 
 	/*! 
@@ -51,7 +51,7 @@ namespace Related {
 	void UserManagePage::respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response)
 	{
 		m_tableModel->updateData(response.m_userInfos);
-		m_pageSwitch->setDataSize(m_tableModel->datasSize());
+		m_pageSwitch->setDataSize(response.m_userCount);
 	}
 
 	void UserManagePage::respToolButtPressed(OperationToolsPage::ButtType type)
@@ -78,6 +78,11 @@ namespace Related {
 		}
 	}
 
+	void UserManagePage::setFixedPageRowCount(int pageItemCount)
+	{
+		m_tableModel->setFixedPageRowCount(pageItemCount);
+	}
+
 	void UserManagePage::init()
 	{
 		m_operationToolsPage = new OperationToolsPage();
@@ -99,7 +104,7 @@ namespace Related {
 		m_tableView->addColumnItem(Base::ColumnItem(U_UserRights, QStringLiteral("权限")));
 
 		m_pageSwitch = new PageSwitchBar();
-		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
+		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
 		connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
@@ -124,11 +129,12 @@ namespace Related {
 
 	/*! 
 	 * @brief 刷新当前页面数据
+	 * @details 页面切换、显示条数切换等改变时，调用此方法可获得及时刷新
 	 */
 	void UserManagePage::refreshCurrPage()
 	{
 		Datastruct::LoadAllUserRequest request;
-		request.m_name = "";
+		request.m_name = Global::G_UserEntity.name;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
 		NetConnector::instance()->write(request);

@@ -79,6 +79,7 @@ namespace Base {
 
 		/*!
 		 * @brief 设置当前页面索引
+		 * @attention 只有将所有需要显示的数据一次性设置入model中，才可以启用此功能
 		 * @param page 页面索引编号，从0开始。
 		 */
 		void setPageNum(int page);

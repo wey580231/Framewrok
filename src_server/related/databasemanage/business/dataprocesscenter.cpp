@@ -44,7 +44,7 @@ namespace Related {
 				if (pass != request.m_password) {
 					response.m_errorInfo = QStringLiteral("ÕË»§ÃÜÂë´íÎó.");
 				}
-				else {				
+				else {
 					response.m_loginResult = true;
 
 					response.m_userInfo.id = query.value(user.id).toInt();
@@ -120,7 +120,7 @@ namespace Related {
 
 		Base::RSelect rs(user.table);
 		rs.select(user.table)
-			.limit(request.m_offsetIndex,request.m_limitIndex);
+			.limit(request.m_offsetIndex, request.m_limitIndex);
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -139,6 +139,8 @@ namespace Related {
 
 			Base::RSelect rst(user.table);
 			rst.count();
+
+			qDebug() << rst.sql();
 
 			if (query.exec(rst.sql())) {
 				if (query.next()) {

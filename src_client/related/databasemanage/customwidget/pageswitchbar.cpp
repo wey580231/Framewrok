@@ -26,6 +26,9 @@ namespace Related {
 
 	void PageSwitchBar::setDataSize(int dataSize)
 	{
+		if (m_dataSize == dataSize)
+			return;
+
 		m_dataSize = dataSize;
 
 		reCalc();
@@ -36,9 +39,10 @@ namespace Related {
 	{
 		m_perPageItemCount = m_pageItemCountBox->currentData().toInt();
 		emit perPageNumsChanged(m_perPageItemCount);
-		reCalc();
 
+		reCalc();
 		updatePageIndicate();
+		emit switchPage(m_currPage);
 	}
 
 	void PageSwitchBar::buttPressed()
@@ -70,6 +74,7 @@ namespace Related {
 			m_currPage = 0;
 
 		updatePageIndicate();
+		emit switchPage(m_currPage);
 	}
 
 	void PageSwitchBar::init()
@@ -150,10 +155,7 @@ namespace Related {
 	void PageSwitchBar::updatePageIndicate()
 	{
 		m_pageNumLabel->setText(QString("%1 / %2").arg(m_currPage + 1).arg(m_pageCount));
-
 		updateButtState();
-
-		emit switchPage(m_currPage);
 	}
 
 } //namespace Related 

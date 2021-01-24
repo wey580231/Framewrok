@@ -41,6 +41,7 @@ namespace Related {
 		void setPageNum(int page);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void setFixedPageRowCount(int pageItemCount);
 
 	private:
 		void init();
