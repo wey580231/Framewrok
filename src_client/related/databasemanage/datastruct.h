@@ -210,7 +210,161 @@ namespace Related {
 		QMap<int, PlatformInfos> mapPlatformInfos;		/*!< 不同平台信息 */
 	};
 
+	/*!
+	* @brief 值班日志表格列索引
+	*/
+	enum  LogbookDataColumnIndex {
+		L_Index,					/*!< 索引 */
+		L_Number,					/*!< 编号 */
+		L_CreateTime,				/*!< 录入时间 */
+		L_TestName,					/*!< 试验名 */
+		L_PlatformName,				/*!< 平台名 */
+		L_TimeLength,				/*!< 数据时长 */
+		L_Type,						/*!< 类型 */
+	};
 	
+	/*!
+	* @brief 值班日志数据
+	*/
+	struct LogbookData {
+		int  index;					/*!< 索引 */
+		int number;					/*!< 编号 */
+		QString edttime;			/*!< 录入时间 */
+		QString tsetName;			/*!< 试验名 */
+		int  platformName;			/*!< 平台名 */
+		int timeLength;				/*!< 数据时长 */
+		int type;					/*!< 类型 */
+	};
+
+	/*!
+	* @brief 试验记录表格列索引
+	*/
+	enum TrialSheetDataColumnIndex
+	{
+		TS_Index,					/*!< 索引 */
+		TS_PlatformName,			/*!< 平台名 */
+		TS_Type,					/*!< 类型 */
+		TS_Edttime,					/*!< 录入时间 */
+	};
+
+	/*!
+	* @brief 试验记录数据信息
+	*/
+	struct TrialSheetData {
+		int  index;					/*!< 索引 */
+		QString  platformName;		/*!< 平台名 */
+		int	 type;					/*!< 类型 */
+		QString edttime;			/*!< 录入时间 */
+	};
+
+	/*!
+	* @brief 数据预览表格列
+	*/
+	enum  DataOverviewColumnIndex
+	{
+		DO_Index,					/*!< 索引 */
+		DO_FileName,				/*!< 文件名 */
+		DO_PlatformName,			/*!< 平台名称*/
+		DO_PlatformType,			/*!< 平台类型*/
+		Do_DataSize,
+		DO_StartIndex,
+		DO_EndIndex,
+	};
+
+	/*!
+	* @brief 数据预览数据
+	*/
+	struct DataOverviewData
+	{
+		int index;					/*!< 索引 */
+		QString fileName;			/*!< 文件名 */
+		QString platformName;		/*!< 平台名称 */
+		int platformType;			/*!< 平台类型 */
+		double dataSize;			/*!< 数据长度 */
+		int startIndex;				/*!< 起始帧 */
+		int endIndex;				/*!< 结束帧 */
+	}; 
+
+	/*!
+	* @brief 音频数据表格列
+	*/
+	enum AudioDataColumnIndex {
+		AD_Index,					/*!< 索引 */				
+		AD_Name,					/*!< 文件名 */
+		AD_TimeLength,				/*!< 时长 */
+		AD_PlatformName,			/*!< 平台名 */
+		AD_DataSize,				/*!< 数据大小 */
+	};
+
+	/*!
+	* @brief 音频数据信息
+	*/
+	struct AudioData
+	{
+		int index;					/*!< 索引 */
+		QString name;				/*!< 文件名 */
+		int timeLength;				/*!< 时长 */
+		QString platformName;		/*!< 平台名称 */
+		double dataSize;			/*!< 数据长度 */
+	};
+
+	/*!
+	 * @brief  环境噪声表格列
+	 * @details 
+	 */
+	enum AmbientNoiseColumnIndex{
+		AN_Index,					/*!< 索引 */
+		AN_FileName,				/*!< 文件名称 */
+		AN_PlatformName,			/*!< 平台名称 */
+		AN_TimeLength,				/*!< 时长 */
+		AN_DataSize,				/*!< 数据大小 */
+		AN_StartIndex,				/*!< 起始索引 */
+		AN_EndIndex,				/*!< 结束索引 */
+	};
+
+	/*!
+	 * @brief	环境噪声数据
+	 * @details 
+	 */
+	struct AmbientNoiseData{
+		int  index;					/*!< 索引 */
+		QString fileName;			/*!< 文件名称 */
+		QString platformName;		/*!< 平台名称 */
+		int timeLength;				/*!< 时长 */
+		int dataSize;				/*!< 数据大小 */
+		int startIndex;				/*!< 起始索引 */
+		int endIndex;				/*!< 结束索引 */
+	};
+	
+	/*!
+	 * @brief  HXJ平台信息数据表格列
+	 * @details 
+	 */
+	enum HXJPlatformInfoColumnIndex {
+		HXJPI_Index,				/*!< 索引 */
+		HXJPI_PlatformName,			/*!< 平台名称 */
+		HXJPI_DataIndex,			/*!< 数据帧索引 */
+		HXJPI_InputTime,			/*!< 录入时间 */
+		HXJPI_CourseAngle,			/*!< 航向角 */
+		HXJPI_PitchAngle,			/*!< 俯仰角 */
+		HXJPI_RollAngle,			/*!< 横滚角 */
+
+	};
+
+	/*!
+	 * @brief	HXJ平台信息数据
+	 * @details
+	 */
+	struct HXJPlatformInfoData {
+		int  index;					/*!< 索引 */
+		QString platformName;		/*!< 平台名称 */
+		int dataIndex;				/*!< 数据帧索引 */
+		QString inputTime;			/*!< 录入时间 */
+		int courseAngle;			/*!< 航向角 */
+		int pitchAngle;				/*!< 俯仰角 */
+		int rollAngle;				/*!< 横滚角 */
+	};
+
 } //namespace Related
 
 

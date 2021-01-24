@@ -1,8 +1,8 @@
 /*!
- * @brief     值班日志表  
+ * @brief     试验记录界面
  * @author    yzg
  * @version   1.0
- * @date      2021.01.20 19:39:23
+ * @date      2021.01.23 11:06:46
  * @warning
  * @copyright NanJing RenGu.
  * @note
@@ -17,27 +17,26 @@
 #include <base\selfwidget\iconbutton.h>
 
 #include "customwidget/operationtoolspage.h"
-#include "tablemodel/logbookmodel.h"
-
+#include "tablemodel/trialsheetmodel.h"
 
 namespace Related {
 
-	class LogbookPage : public QWidget
+	class TrialSheetWidget : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		LogbookPage(QWidget *parent = nullptr);
-		~LogbookPage();
+		TrialSheetWidget(QWidget *parent  = nullptr);
+		~TrialSheetWidget();
 
 
 	private:
 		void init();
 
 	private:
-		Base::RTableView * m_tableView;
-		LogbookModel *m_tableModel;
-		OperationToolsPage *m_operationToolsPage;
+		Base::RTableView * m_tableView;				
+		TrialSheetModel * m_tableModel;
+		OperationToolsPage * m_operationToolsPage;
 	};
 
-}//namespace Related
+} // namespace Related 

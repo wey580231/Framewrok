@@ -1,8 +1,9 @@
 /*!
- * @brief     值班日志表  
+ * @brief     音频数据信息展示界面  
+ * @details
  * @author    yzg
  * @version   1.0
- * @date      2021.01.20 19:39:23
+ * @date      2021.01.23 14:24:08
  * @warning
  * @copyright NanJing RenGu.
  * @note
@@ -17,18 +18,17 @@
 #include <base\selfwidget\iconbutton.h>
 
 #include "customwidget/operationtoolspage.h"
-#include "tablemodel/logbookmodel.h"
-
+#include "tablemodel/audiodatamodel.h"
 
 namespace Related {
 
-	class LogbookPage : public QWidget
+	class AudioDataWidget : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		LogbookPage(QWidget *parent = nullptr);
-		~LogbookPage();
+		AudioDataWidget(QWidget *parent);
+		~AudioDataWidget();
 
 
 	private:
@@ -36,8 +36,8 @@ namespace Related {
 
 	private:
 		Base::RTableView * m_tableView;
-		LogbookModel *m_tableModel;
+		AudioDataModel *m_tableModel;
 		OperationToolsPage *m_operationToolsPage;
 	};
 
-}//namespace Related
+}//namespace Related 

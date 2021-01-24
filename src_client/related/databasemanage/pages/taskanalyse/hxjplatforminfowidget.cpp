@@ -1,4 +1,4 @@
-#include "logbookpage.h"
+#include "hxjplatforminfowidget.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -9,17 +9,18 @@
 
 namespace Related {
 
-	LogbookPage::LogbookPage(QWidget *parent)
+	HXJPlatformInfoWidget::HXJPlatformInfoWidget(QWidget *parent)
 		: QWidget(parent)
 	{
 		init();
 	}
 
-	LogbookPage::~LogbookPage()
+	HXJPlatformInfoWidget::~HXJPlatformInfoWidget()
 	{
+
 	}
 
-	void LogbookPage::init()
+	void HXJPlatformInfoWidget::init()
 	{
 		m_operationToolsPage = new OperationToolsPage();
 
@@ -28,23 +29,21 @@ namespace Related {
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableModel = new LogbookModel();
+		m_tableModel = new HXJPlatformInfoModel();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
 
 		m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("编号"), 140));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("录入时间"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("试验名"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("平台名")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("数据时长")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("类型")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("平台名称"), 140));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("数据帧索引"), 180));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("录入时间"), 180));
+		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("航向角")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("俯仰角")));
+		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("横滚角")));
 
 		PageSwitchBar * pageSwitch = new PageSwitchBar();
 		pageSwitch->setDataSize(m_tableModel->datasSize());
-		//connect(pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
-		//connect(pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		cwidget->setContent(m_operationToolsPage);
@@ -66,4 +65,4 @@ namespace Related {
 		setLayout(vlayout);
 	}
 
-}//namespace Related
+}//namespace Related 

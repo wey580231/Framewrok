@@ -16,7 +16,9 @@
 #include <base\selfwidget\rtabbar.h>
 #include "../abstractpage.h"
 
-//#include "logbookpage.h"
+#include "logbookpage.h"
+#include "trialsheetwidget.h"
+#include "taskreportswidget.h"
 
 namespace Related {
 
@@ -47,8 +49,9 @@ namespace Related {
 		Base::RTabBar * m_tabWidget;
 		QStackedWidget * m_stackedWidget;
 
-		//LogbookPage *m_logbookPage;
-
-	};
+		LogbookPage *m_logbookPage;						/*!< 值班日志界面 */
+		TrialSheetWidget * m_trialSheetWidget;			/*!< 试验记录窗口 */
+		TaskReportsWidget * m_taskReportsWidget;		/*!< 任务报告界面 */
+	}; 
 
 } //namespace Related 

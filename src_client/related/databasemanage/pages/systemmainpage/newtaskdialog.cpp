@@ -8,7 +8,7 @@ namespace Related {
 		: Base::DialogProxy(parent)
 	{
 		init();
-		
+		this->setMinimumSize(800, 600);
 	}
 
 	NewTaskDialog::~NewTaskDialog()
@@ -26,6 +26,7 @@ namespace Related {
 			m_treeView = new Base::RTreeView();
 			m_treeView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
 			m_treeView->setObjectName("mainWidget");
+			connect(m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotTreeItemClicked(QModelIndex)));
 
 			m_treeModel = new Base::RTreeModel();
 			QStringList headList;
@@ -90,19 +91,25 @@ namespace Related {
 			bIsDir = fileInfo.isDir();
 			if (bIsDir) {
 				
-				Base::TreeNode *tempNode = createTreeNode(fileInfo.filePath());
+				Base::TreeNode *tempNode = createTreeNode(m_fileNode ,fileInfo.filePath());
 				m_fileNode->nodes.append(tempNode);
-				
-				qDebug() << " fileInfo.filePath()" <<fileInfo.filePath() << fileInfo.baseName();
 
 				FindFile(fileInfo.filePath());
+			}	
+			else  {
+				QString filePath = fileInfo.path();
+				QFileInfo t_dirFileInfo(filePath);
+				QString t_dirName = t_dirFileInfo.baseName();
 
-
-
-			}	else  {
-			
-				//fileInfo.fileName() fileInfo.baseName() fileInfo.path() fileInfo.completeSuffix() fileInfo.suffix()
-				//qDebug() << "groupId=" << fileInfo.groupId() << "lastModified=" << fileInfo.lastModified().toString("yyyy-MM-dd hh:mm:ss") << "absoluteFilePath=" << fileInfo.absoluteFilePath();
+				if (m_fileNode->nodes.size() > 0) {
+					for (int i = 0; i < m_fileNode->nodes.size();i++) {
+						Base::TreeNode * tempNode = m_fileNode->nodes.at(i);
+						if (tempNode->nodeName == t_dirName) {
+							Base::TreeNode *tempNode2 = createTreeNode(tempNode, fileInfo.filePath());
+							tempNode->nodes.append(tempNode2);
+						}
+					}
+				}
 			}
 			++i;
 		} while (i < list.size());
@@ -113,13 +120,14 @@ namespace Related {
 	/*!
 	 *  @brief 创建树节点
 	 */
-	Base::TreeNode * NewTaskDialog::createTreeNode(QString  pasth)
+	Base::TreeNode * NewTaskDialog::createTreeNode(Base::TreeNode * parentNode, QString  pasth)
 	{
 		QFileInfo t_fileInfo(pasth);
 
 		Base::TreeNode * node = new Base::TreeNode;
+		node->nodeChecked = false;
 		node->nodeName = t_fileInfo.baseName();
-
+		node->parentNode = parentNode;
 		return node;
 	}
 
@@ -129,14 +137,6 @@ namespace Related {
 		m_treeView->expandAll();
 	}
 
-	void NewTaskDialog::updateTreeNode()
-	{
-// 		if (m_treeModel->rootNodeSize() > 0) {
-// 			Datastruct::TreeNode * virtualRootNode = m_treeModel->getVirtualRootNode();
-// 			if (virtualRootNode->nodes.size() > 0)
-// 				RGlobal::g_rootTreeNode = virtualRootNode->nodes.at(0);
-// 		}
-	}
 
 	void NewTaskDialog::slotSeleteFile()
 	{
@@ -147,15 +147,21 @@ namespace Related {
 
 		m_fileLineEdit->setText(m_originalFilePath);
 
-		m_fileNode = createTreeNode(m_originalFilePath);
+		Base::TreeNode * parentNode = nullptr;
+		m_fileNode = createTreeNode(parentNode, m_originalFilePath);
 
 		FindFile(m_originalFilePath);
 
 		m_treeModel->addRootNode(m_fileNode);
 
 		qDebug() << "1512121212" << m_treeModel->rootNodeSize();
-		m_treeModel->refreshModel();
-		m_treeView->expandAll();
+		this->updateModel();
+	}
+
+	void NewTaskDialog::slotTreeItemClicked(QModelIndex index)
+	{
+		qDebug() << "12121" << index.row() << index.column();
+
 	}
 
 	void NewTaskDialog::respOk()

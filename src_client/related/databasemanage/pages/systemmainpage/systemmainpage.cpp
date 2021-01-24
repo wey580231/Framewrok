@@ -177,10 +177,8 @@ namespace Related {
 
 	void SystemMainPage::slotNewTaskClickde()
 	{
-		qDebug() << "_______1212__________";
 		NewTaskDialog *t_pNewTaskDialog = new NewTaskDialog();
 		t_pNewTaskDialog->exec();
-		
 
 	}
 
