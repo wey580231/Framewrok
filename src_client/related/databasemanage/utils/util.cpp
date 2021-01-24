@@ -23,4 +23,14 @@ namespace Related {
 		return butt;
 	}
 
+	Base::RMessageBox::StandardButton Util::showInformation(QWidget * parent, QString infoContent)
+	{
+		return Base::RMessageBox::information(parent, QStringLiteral("Ã· æ"), infoContent,Base::RMessageBox::Yes, Base::RMessageBox::Yes);
+	}
+
+	Base::RMessageBox::StandardButton Util::showWarning(QWidget * parent, QString warnContent)
+	{
+		return Base::RMessageBox::warning(parent, QStringLiteral("æØ∏Ê"),warnContent,Base::RMessageBox::Yes, Base::RMessageBox::Yes);
+	}
+
 } //namespace Related 

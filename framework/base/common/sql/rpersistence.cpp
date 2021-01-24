@@ -118,11 +118,21 @@ namespace Base {
 				}
 			}
 			if (isSupportAlias) {
-				QString alias = tableAlias.value(ctypes.at(i).tableName());
-				stream << ctypes.at(i).toSql(alias, isSupportAlias);
+				if (tableAlias.size() == 1) {
+					stream << ctypes.at(i).toSql(tableAlias.values().first(), isSupportAlias);
+				}
+				else {
+					QString alias = tableAlias.value(ctypes.at(i).tableName());
+					stream << ctypes.at(i).toSql(alias, isSupportAlias);
+				}
 			}
 			else {
-				stream << ctypes.at(i).toSql(ctypes.at(i).tableName(), isSupportAlias);
+				if (tableAlias.size() == 1) {
+					stream << ctypes.at(i).toSql(tableAlias.values().first(), isSupportAlias);
+				}
+				else {
+					stream << ctypes.at(i).toSql(ctypes.at(i).tableName(), isSupportAlias);
+				}
 			}
 		}
 		stream.flush();
@@ -141,9 +151,19 @@ namespace Base {
 		return Restrictions(tName, key, value, OperateType::EQ);
 	}
 
+	Restrictions Restrictions::eq(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::EQ);
+	}
+
 	Restrictions Restrictions::gt(QString tName, QString key, QVariant value)
 	{
 		return Restrictions(tName, key, value, OperateType::GT);
+	}
+
+	Restrictions Restrictions::gt(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::GT);
 	}
 
 	Restrictions Restrictions::ge(QString tName, QString key, QVariant value)
@@ -151,9 +171,19 @@ namespace Base {
 		return Restrictions(tName, key, value, OperateType::GE);
 	}
 
+	Restrictions Restrictions::ge(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::GE);
+	}
+
 	Restrictions Restrictions::lt(QString tName, QString key, QVariant value)
 	{
 		return Restrictions(tName, key, value, OperateType::LT);
+	}
+
+	Restrictions Restrictions::lt(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::LT);
 	}
 
 	Restrictions Restrictions::le(QString tName, QString key, QVariant value)
@@ -161,9 +191,19 @@ namespace Base {
 		return Restrictions(tName, key, value, OperateType::LE);
 	}
 
+	Restrictions Restrictions::le(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::LE);
+	}
+
 	Restrictions Restrictions::ne(QString tName, QString key, QVariant value)
 	{
 		return Restrictions(tName, key, value, OperateType::NE);
+	}
+
+	Restrictions Restrictions::ne(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::NE);
 	}
 
 	Restrictions Restrictions::like(QString tName, QString key, QVariant value)
@@ -171,9 +211,19 @@ namespace Base {
 		return Restrictions(tName, key, value, OperateType::LIKE);
 	}
 
+	Restrictions Restrictions::like(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::LIKE);
+	}
+
 	Restrictions Restrictions::in(QString tName, QString key, QVariant value)
 	{
 		return Restrictions(tName, key, value, OperateType::IN);
+	}
+
+	Restrictions Restrictions::in(QString key, QVariant value)
+	{
+		return Restrictions("", key, value, OperateType::IN);
 	}
 
 	bool Restrictions::operator<(const Restrictions & src)const
@@ -445,6 +495,11 @@ namespace Base {
 		return *this;
 	}
 
+	RSelect & RSelect::select(const QString & tName)
+	{
+		return *this;
+	}
+
 	RSelect &RSelect::on(const QString &tName1, const QString key1, const QString tName2, const QString value2)
 	{
 		onCondtions.push_back({ tName1,key1,tName2,value2 });
@@ -470,6 +525,9 @@ namespace Base {
 
 	QString RSelect::sql()
 	{
+		if (tableNames.size() == 0)
+			return QString();
+
 		QString result;
 		QTextStream stream(&result, QIODevice::ReadWrite);
 		stream << spacer << "SELECT" << spacer;
@@ -486,7 +544,7 @@ namespace Base {
 			stream << spacer << "*" << spacer;
 		}
 
-		stream << spacer << "from" << spacer;
+		stream << spacer << "FROM" << spacer;
 
 		if (tableNames.size() > 1) {
 			for (int i = 0; i < tableNames.size(); i++) {

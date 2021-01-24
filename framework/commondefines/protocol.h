@@ -1,8 +1,8 @@
 ﻿/*!
  * @brief     客户端和服务器端通信数据协议
- * @attention 1.每条协议说明清楚由谁发送、谁接收；
-			  2.若由客户端发送至服务器，则统一以Request结尾；
-			  3.若由服务器发回客户端，则统一以Response结尾；
+ * @attention 
+			  1.若由客户端发送至服务器，则统一以Request结尾；
+			  2.若由服务器发回客户端，则统一以Response结尾；
  * @author    wey
  * @version   1.0
  * @date      2021.01.20 15:45:05
@@ -15,6 +15,8 @@
 
 #include <QtGlobal>
 #include <QVariant>
+
+#include "structdefines.h"
 
 namespace Datastruct {
 
@@ -66,7 +68,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 用户登录请求
-	 * @details 客户端->服务器端
 	 */
 	struct UserLoginRequest {
 		QString m_name;			/*!< 用户名 */
@@ -75,13 +76,31 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 用户登录结果报文
-	 * @details 服务器端->客户端
 	 */
 	struct UserLoginResponse {
+		UserLoginResponse() :m_loginResult(false) {}
 		bool m_loginResult;		/*!< 登录结果信息，true:登录成功，false:登录失败 */
 		QString m_errorInfo;	/*!< 登录失败时说明失败原因 */
+
+		UserEntityData m_userInfo;	/*!< 登录成功后，返回基本信息；失败不返回 */
 	};
 
+	/*!
+	 * @brief 用户注册请求
+	 */
+	struct UserRegistRequest {
+		QString m_name;			/*!< 用户名 */
+		QString m_password;		/*!< 密码，转换成MD5 */
+	};
+
+	/*!
+	 * @brief 用户登录结果报文
+	 */
+	struct UserRegistResponse {
+		UserRegistResponse() : m_loginResult(false) {}
+		bool m_loginResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
+		QString m_errorInfo;	/*!< 注册失败时说明失败原因 */
+	};
 
 } // namespace Datastruct
 

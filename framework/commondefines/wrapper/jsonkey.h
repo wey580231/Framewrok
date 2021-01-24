@@ -21,12 +21,17 @@ namespace CommonDefines {
 		JsonKey();
 		~JsonKey();
 
+		const QString id = "id";
 		const QString name = "name";
 		const QString password = "password";
+		const QString registTime = "registTime";
+		const QString privilege = "privilege";
+		const QString manager = "manager";
 
 		const QString result = "result";
 		const QString errorInfo = "errorinfo";
 
+		const QString data = "data";
 	};
 
 } //namespace CommonDefines 

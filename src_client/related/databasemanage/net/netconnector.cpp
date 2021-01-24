@@ -175,9 +175,14 @@ namespace Related {
 
 	void NetConnector::write(const Datastruct::UserLoginRequest & request)
 	{
-		QByteArray array = makePacket(Datastruct::P_UserLogin ,CommonDefines::JsonWrapper::instance()->wrap(Datastruct::P_UserLogin, request));
+		QByteArray array = makePacket(Datastruct::P_UserLogin ,CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
 
-		m_dataTcpClient->send(array.data(), array.length());
+	void NetConnector::write(const Datastruct::UserRegistRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_UserRegist, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
 	}
 
 	QByteArray NetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
@@ -200,6 +205,15 @@ namespace Related {
 	}
 
 	/*! 
+	 * @brief 通过网络发送数据
+	 * @param data 待发送数据单元
+	 */
+	void NetConnector::sendData(const QByteArray & data)
+	{
+		m_dataTcpClient->send(data.data(), data.length());
+	}
+
+	/*!
 	 * @brief 处理解析后的网络数据
 	 * @param array 服务器端反馈数据
 	 */
@@ -216,6 +230,14 @@ namespace Related {
 				Datastruct::UserLoginResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvUserLoginResponse(response);
+				}
+			}
+				break;
+
+			case Datastruct::P_UserRegist: {
+				Datastruct::UserRegistResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvUseRegistResponse(response);
 				}
 			}
 				break;

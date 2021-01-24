@@ -209,12 +209,12 @@ namespace Base {
 		d->setIcon(icon);
 	}
 
-	RMessageBox::StandardButton RMessageBox::information(QWidget *parent, const QString &title, const QString &text, int butts, RMessageBox::StandardButton defaultButt)
+	RMessageBox::StandardButton RMessageBox::information(QWidget *parent, const QString &title, const QString &text, StandardButtons butts, RMessageBox::StandardButton defaultButt)
 	{
 		return messagebox(parent, Information, title, text, butts, defaultButt);
 	}
 
-	RMessageBox::StandardButton RMessageBox::warning(QWidget *parent, const QString &title, const QString &text, int butts, RMessageBox::StandardButton defaultButt)
+	RMessageBox::StandardButton RMessageBox::warning(QWidget *parent, const QString &title, const QString &text, StandardButtons butts, RMessageBox::StandardButton defaultButt)
 	{
 		return messagebox(parent, Warning, title, text, butts, defaultButt);
 	}
@@ -325,7 +325,7 @@ namespace Base {
 		return QString();
 	}
 
-	RMessageBox::StandardButton RMessageBox::messagebox(QWidget *parent, RMessageBox::Icon type, const QString &title, const QString &text, int buttons, StandardButton)
+	RMessageBox::StandardButton RMessageBox::messagebox(QWidget *parent, RMessageBox::Icon type, const QString &title, const QString &text, StandardButtons buttons, StandardButton)
 	{
 		RMessageBox msgBox(parent);
 

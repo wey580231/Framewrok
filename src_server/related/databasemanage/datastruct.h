@@ -31,6 +31,7 @@ namespace Related {
 		QString m_dbType = "DatabaseType";
 		QString m_dbHost = "HostName";
 		QString m_dbName = "DatabaseName";
+		QString m_dbPort = "Port";
 		QString m_userName = "UserName";
 		QString m_password = "Password";
 		QString m_userInnerPassword = "UsePasswordInProgram";

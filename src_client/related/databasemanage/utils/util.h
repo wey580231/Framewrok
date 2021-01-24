@@ -13,6 +13,7 @@
 #include <QObject>
 
 #include <base\selfwidget\iconbutton.h>
+#include <base\selfwidget\rmessagebox.h>
 
 namespace Related {
 
@@ -23,6 +24,9 @@ namespace Related {
 		~Util();
 
 		static Base::RIconButton * createButt(QString icon, QString text);
+
+		static Base::RMessageBox::StandardButton showInformation(QWidget * parent,QString infoContent);
+		static Base::RMessageBox::StandardButton showWarning(QWidget * parent,QString warnContent);
 	};
 
 } //namespace Related 
