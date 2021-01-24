@@ -19,7 +19,7 @@ namespace Related {
 
 	void TaskRecordPage::slotRespTabChanged(int page)
 	{
-
+		m_stackedWidget->setCurrentIndex(page);
 	}
 
 	void TaskRecordPage::init()
@@ -33,7 +33,7 @@ namespace Related {
 
 		Base::RTabButton * logbookButt = new Base::RTabButton(QStringLiteral("值班日志表"));
 		Base::RTabButton * trialSheetButt = new Base::RTabButton(QStringLiteral("试验记录表"));
-		Base::RTabButton * taskReportsButt = new Base::RTabButton(QStringLiteral("任务报告表"));
+		Base::RTabButton * taskReportsButt = new Base::RTabButton(QStringLiteral("任务报告"));
 
 		m_tabWidget->addTabButton(logbookButt, Tab_logbook);
 		m_tabWidget->addTabButton(trialSheetButt, Tab_trialSheet);
@@ -43,8 +43,15 @@ namespace Related {
 
 		m_stackedWidget = new QStackedWidget();
 
-		//m_logbookPage = new LogbookPage();
-		//m_stackedWidget->addWidget(m_logbookPage);
+		m_logbookPage = new LogbookPage();
+
+		m_trialSheetWidget = new TrialSheetWidget();
+
+		m_taskReportsWidget = new TaskReportsWidget();
+
+		m_stackedWidget->addWidget(m_logbookPage);
+		m_stackedWidget->addWidget(m_trialSheetWidget);
+		m_stackedWidget->addWidget(m_taskReportsWidget);
 
 
 		QVBoxLayout * mainLayout = new QVBoxLayout();

@@ -20,11 +20,6 @@ namespace Related {
 	{
 		Q_OBJECT
 
-			enum ConctrolType
-			{
-				E_
-			};
-
 	public:
 		TaskResultItem(QWidget *parent = nullptr);
 		~TaskResultItem();

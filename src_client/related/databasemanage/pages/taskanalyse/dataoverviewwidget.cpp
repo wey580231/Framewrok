@@ -1,7 +1,6 @@
-#include "logbookpage.h"
+#include "dataoverviewwidget.h"
 
 #include <QDebug>
-#include <QHBoxLayout>
 
 #include "../utils/util.h"
 #include "../customwidget/pageswitchbar.h"
@@ -9,26 +8,51 @@
 
 namespace Related {
 
-	LogbookPage::LogbookPage(QWidget *parent)
+	DataOverviewWidget::DataOverviewWidget(QWidget *parent)
 		: QWidget(parent)
 	{
 		init();
 	}
 
-	LogbookPage::~LogbookPage()
+	DataOverviewWidget::~DataOverviewWidget()
 	{
+
 	}
 
-	void LogbookPage::init()
+	void DataOverviewWidget::init()
 	{
-		m_operationToolsPage = new OperationToolsPage();
+		//
+		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
+		{
+// 			QLabel * t_input = new QLabel(QStringLiteral("录取时间："));
+// 			QDateTimeEdit *t_startTime = new QDateTimeEdit();
+// 			QLabel * t_input = new QLabel(QStringLiteral("-"));
+// 			QDateTimeEdit *t_endTime = new QDateTimeEdit();
+// 
+// 			QLabel * t_input = new QLabel(QStringLiteral("平台名称："));
+// 			QComboBox *t_platformComboBox = new QComboBox();
+// 
+// 
+// 			Base::RIconButton * t_ retrieveButt = new Base::RIconButton();
+// 			retrieveButt->setIconSize(Base::RIconButton::ICON_16);
+// 			retrieveButt->setText(QStringLiteral("JIA"));
+// 			retrieveButt->setFont(QFont(QStringLiteral("微软雅黑"), 10));
+// 			butt->setMinimumSize(60, 30);
+
+			m_operationToolsPage = new OperationToolsPage();
+			cwidget->setContent(m_operationToolsPage);
+		}
+	
+
+
+	
 
 		m_tableView = new Base::RTableView();
 		m_tableView->setFocusPolicy(Qt::NoFocus);
 		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-		m_tableModel = new LogbookModel();
+		m_tableModel = new DataOverviewMolel();
 		m_tableModel->prepareData();
 
 		m_tableView->setModel(m_tableModel);
@@ -43,11 +67,8 @@ namespace Related {
 
 		PageSwitchBar * pageSwitch = new PageSwitchBar();
 		pageSwitch->setDataSize(m_tableModel->datasSize());
-		//connect(pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
-		//connect(pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
-		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
-		cwidget->setContent(m_operationToolsPage);
+
 
 		QWidget * twidget = new QWidget();
 		QVBoxLayout * cvlayout = new QVBoxLayout();
@@ -66,4 +87,4 @@ namespace Related {
 		setLayout(vlayout);
 	}
 
-}//namespace Related
+}//namespace Related 
