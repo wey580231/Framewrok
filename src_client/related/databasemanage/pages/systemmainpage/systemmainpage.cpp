@@ -83,7 +83,6 @@ namespace Related {
 			m_newTaskButt->setMinimumSize(60,30);
 			m_newTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/新增.png")));		
 			connect(m_newTaskButt, SIGNAL(clicked()), this, SLOT(slotNewTaskClickde()));
-			
 			m_refreshTaskButt = new Base::RIconButton();
 			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
 			m_refreshTaskButt->setMinimumSize(60, 30);
@@ -143,13 +142,12 @@ namespace Related {
 
 	void SystemMainPage::initTaskList()
 	{
-		for (int i = 0; i < 15; i++) {
+ 		for (int i = 0; i < 15; i++) {
 			TaskOverViewItem * item = new TaskOverViewItem();
 			connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
 			connect(item, SIGNAL(deleteTask(QString)), this, SIGNAL(deleteTask(QString)));
 			m_taskItems.append(item);
 		}
-
 		QGridLayout * glayout = nullptr;
 
 		if (m_taskWindow->layout() == nullptr) {
