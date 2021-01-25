@@ -86,7 +86,7 @@ namespace Related {
 					refreshCurrPage();
 				}
 				else {
-					Util::showWarning(this, response.m_errorInfo);
+					Util::showWarning(this, Datastruct::G_StrError(response.m_errorCode));
 				}
 			}
 				break;
@@ -96,7 +96,7 @@ namespace Related {
 					refreshCurrPage();
 				}
 				else {
-					Util::showWarning(this, response.m_errorInfo);
+					Util::showWarning(this, Datastruct::G_StrError(response.m_errorCode));
 				}
 			}
 				break;

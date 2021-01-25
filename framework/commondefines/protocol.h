@@ -17,6 +17,7 @@
 #include <QVariant>
 
 #include "structdefines.h"
+#include "errorcode.h"
 
 namespace Datastruct {
 
@@ -79,7 +80,7 @@ namespace Datastruct {
 	struct UserLoginResponse {
 		UserLoginResponse() :m_loginResult(false) {}
 		bool m_loginResult;		/*!< 登录结果信息，true:登录成功，false:登录失败 */
-		QString m_errorInfo;	/*!< 登录失败时说明失败原因 */
+		ErrorCode m_errorCode;	/*!< 登录失败时说明失败原因 */
 
 		UserEntityData m_userInfo;	/*!< 登录成功后，返回基本信息；失败不返回 */
 	};
@@ -98,7 +99,7 @@ namespace Datastruct {
 	struct UserRegistResponse {
 		UserRegistResponse() : m_loginResult(false) {}
 		bool m_loginResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
-		QString m_errorInfo;	/*!< 注册失败时说明失败原因 */
+		ErrorCode m_errorCode;	/*!< 注册失败时说明失败原因 */
 	};
 
 	/*!
@@ -156,7 +157,7 @@ namespace Datastruct {
 	struct OperateUserResponse {
 		UserOperateType m_operateType;
 		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
-		QString m_errorInfo;		/*!< 操作失败时说明失败原因 */
+		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
 	};
 
 } // namespace Datastruct

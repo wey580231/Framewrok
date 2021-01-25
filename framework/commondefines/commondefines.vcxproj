@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="commondefines_global.h" />
     <ClInclude Include="databaseprotocol.h" />
+    <ClInclude Include="errorcode.h" />
     <ClInclude Include="structdefines.h" />
     <ClInclude Include="protocol.h" />
     <ClInclude Include="sqltable\tablemapper.h" />
@@ -104,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="databaseprotocol.cpp" />
+    <ClCompile Include="errorcode.cpp" />
     <ClCompile Include="structdefines.cpp" />
     <ClCompile Include="protocol.cpp" />
     <ClCompile Include="sqltable\tablemapper.cpp" />

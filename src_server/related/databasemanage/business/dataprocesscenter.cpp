@@ -42,7 +42,7 @@ namespace Related {
 			if (query.next()) {
 				QString pass = query.value(user.userPassword).toString();
 				if (pass != request.m_password) {
-					response.m_errorInfo = QStringLiteral("账户密码错误.");
+					response.m_errorCode = Datastruct::PASSWROD_ERROR;
 				}
 				else {
 					response.m_loginResult = true;
@@ -65,11 +65,11 @@ namespace Related {
 				}
 			}
 			else {
-				response.m_errorInfo = QStringLiteral("账户未注册.");
+				response.m_errorCode = Datastruct::NO_REGIST;
 			}
 		}
 		else {
-			response.m_errorInfo = QStringLiteral("数据访问失败.");
+			response.m_errorCode = Datastruct::SQL_EXECUTE_ERROR;
 		}
 
 		return response;
@@ -92,7 +92,7 @@ namespace Related {
 			if (query.exec(rs.sql())) {
 				if (query.numRowsAffected() > 0) {
 					response.m_loginResult = false;
-					response.m_errorInfo = QStringLiteral("用户名已存在.");
+					response.m_errorCode = Datastruct::USER_EXIST;
 					break;
 				}
 			}
@@ -113,7 +113,7 @@ namespace Related {
 				}
 			}
 			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
+				response.m_errorCode = Datastruct::SQL_EXECUTE_ERROR;
 			}
 
 		} while (0);
@@ -193,7 +193,7 @@ namespace Related {
 							response.m_operateResult = true;
 						}
 						else {
-							response.m_errorInfo = QStringLiteral("未找到指定用户!");
+							response.m_errorCode = Datastruct::NO_USER;
 						}
 					}
 				}
@@ -207,13 +207,13 @@ namespace Related {
 							response.m_operateResult = true;
 						}
 						else {
-							response.m_errorInfo = QStringLiteral("未找到指定用户!");
+							response.m_errorCode = Datastruct::NO_USER;
 						}
 					}
 				}
 			}
 			else {
-				response.m_errorInfo = QStringLiteral("无操作权限!");
+				response.m_errorCode = Datastruct::NO_PRIVILEGE;
 			}
 		}
 		else if (request.m_operateType == Datastruct::UpdateInfo) {
@@ -228,7 +228,7 @@ namespace Related {
 					response.m_operateResult = true;
 				}
 				else {
-					response.m_errorInfo = QStringLiteral("未找到指定用户!");
+					response.m_errorCode = Datastruct::NO_USER;
 				}
 			}
 		}

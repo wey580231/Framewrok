@@ -66,7 +66,7 @@ namespace CommonDefines {
 	{
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.result, response.m_loginResult);
-			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorCode);
 
 			if (response.m_loginResult) {
 				QJsonObject dataObj;
@@ -87,7 +87,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_loginResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorCode =  static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_loginResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -124,7 +124,7 @@ namespace CommonDefines {
 	{
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.result, response.m_loginResult);
-			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorCode);
 		});
 	}
 
@@ -132,7 +132,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_loginResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorCode = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -228,7 +228,7 @@ namespace CommonDefines {
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.type, response.m_operateType);
 			obj.insert(m_jsonKey.result, response.m_operateResult);
-			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorCode);
 		});
 	}
 
@@ -237,7 +237,7 @@ namespace CommonDefines {
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_operateType = static_cast<Datastruct::UserOperateType>(jsonObject.value(m_jsonKey.type).toInt());
 			response.m_operateResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorCode = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 

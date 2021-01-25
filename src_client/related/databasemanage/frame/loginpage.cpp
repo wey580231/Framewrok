@@ -106,7 +106,7 @@ namespace Related {
 			Global::G_UserEntity = response.m_userInfo;
 		}
 		else {
-			Util::showWarning(this, response.m_errorInfo);
+			Util::showWarning(this, Datastruct::G_StrError(response.m_errorCode));
 		}
 	}
 
@@ -117,7 +117,7 @@ namespace Related {
 			respCancelRegist();
 		}
 		else {
-			Util::showWarning(this, response.m_errorInfo);
+			Util::showWarning(this, Datastruct::G_StrError(response.m_errorCode));
 		}
 	}
 
