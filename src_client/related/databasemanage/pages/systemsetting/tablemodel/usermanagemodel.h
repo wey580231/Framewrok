@@ -36,6 +36,20 @@ namespace Related {
 		 */
 		int getRecordDatabaseIndex(int row);
 
+		/*!
+		 * @brief 获取指定行用户权限
+		 * @param row 表格行号
+		 * @return 用户权限
+		 */
+		int getUserPrivilege(int row);
+
+		/*!
+		 * @brief 获取指定行是否为管理员角色
+		 * @param row 表格行号
+		 * @return true:管理员角色；false:非管理员角色
+		 */
+		bool isUserManage(int row);
+
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 

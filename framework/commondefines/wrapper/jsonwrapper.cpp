@@ -207,6 +207,7 @@ namespace CommonDefines {
 			obj.insert(m_jsonKey.password, request.m_password);
 			obj.insert(m_jsonKey.privilege, request.m_privilege);
 			obj.insert(m_jsonKey.manageId, request.m_manageId);
+			obj.insert(m_jsonKey.manager, request.m_isManage);
 		});
 	}
 
@@ -218,6 +219,7 @@ namespace CommonDefines {
 			request.m_password = jsonObject.value(m_jsonKey.password).toString();
 			request.m_privilege = jsonObject.value(m_jsonKey.privilege).toInt();
 			request.m_manageId = jsonObject.value(m_jsonKey.manageId).toInt();
+			request.m_isManage = jsonObject.value(m_jsonKey.manager).toBool();
 		});
 	}
 

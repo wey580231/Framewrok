@@ -21,14 +21,13 @@ namespace Related {
 		uint tmp = 1;
 		while (tmp <= Butt_Refresh) {
 			uint sb = tmp & butts;
-			tmp <<= 1;
-
 			if (sb) {
 				ButtType bt = static_cast<ButtType>(tmp);	
 				if (m_buttMap.contains(bt))
 					m_buttMap[bt]->setVisible(visible);
 			}
 
+			tmp <<= 1;
 		}
 	}
 

@@ -6,6 +6,15 @@ namespace Related {
 
 		Datastruct::UserEntityData G_UserEntity;			/*!< 当前登录的用户 */
 
+		/*! 
+		 * @brief 检测当前登录用户是否具有某些权限
+		 * @param up 待检测的权限
+		 * @return true:具备指定权限;false:不具备指定权限
+		 */
+		bool G_HasPrivilege(Datastruct::UserPrivilege up) {
+			return G_UserEntity.privilege & up;
+		}
+
 	} //namespace Global 
 
 } //namespace Related 

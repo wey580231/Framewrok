@@ -53,6 +53,15 @@ namespace Related {
 					response.m_userInfo.registTime = query.value(user.regitstTime).toDateTime().toString(TIME_FORMAT);
 					response.m_userInfo.privilege = query.value(user.privilege).toInt();
 					response.m_userInfo.isManager = query.value(user.superManage).toBool();
+
+					Base::RUpdate rud(user.table);
+					rud.update(user.table, { {user.lastLoadTime,QDateTime::currentDateTime().toString(TIME_FORMAT)} })
+						.createCriteria()
+						.add(Base::Restrictions::eq(user.id, response.m_userInfo.id));
+
+					if (!query.exec(rud.sql())) {
+						
+					}
 				}
 			}
 			else {
@@ -94,7 +103,7 @@ namespace Related {
 					{user.userName,request.m_name},
 					{user.userPassword,request.m_password},
 					{user.regitstTime,QDateTime::currentDateTime()},
-					{user.privilege,0},
+					{user.privilege,static_cast<int>(Datastruct::ReadOnly)},
 					{user.superManage,0}
 				});
 

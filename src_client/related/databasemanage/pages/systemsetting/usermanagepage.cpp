@@ -14,6 +14,7 @@
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
 #include "../global.h"
+#include "userprivilegeeditwindow.h"
 
 namespace Related {
 
@@ -80,7 +81,13 @@ namespace Related {
 			}
 				break;
 			case Datastruct::EditPrivilege: {
-
+				if (response.m_operateResult) {
+					Util::showInformation(this, QStringLiteral("权限更新成功!"));
+					refreshCurrPage();
+				}
+				else {
+					Util::showWarning(this, response.m_errorInfo);
+				}
 			}
 				break;
 			case Datastruct::DeleteUser: {
@@ -102,10 +109,9 @@ namespace Related {
 	{
 		switch (type)
 		{
-			case OperationToolsPage::Butt_Add: {
-			}
-											   break;
-			case OperationToolsPage::Butt_Delete: {
+			case OperationToolsPage::Butt_Delete: 
+			case OperationToolsPage::Butt_Edit: {
+
 				QItemSelectionModel * selectModel = m_tableView->selectionModel();
 				QModelIndexList slist = selectModel->selectedRows();
 				if (slist.size() > 0) {
@@ -122,31 +128,50 @@ namespace Related {
 						return;
 					}
 
-					if (Global::G_UserEntity.id == dbIndex) {
-						Util::showWarning(this, QStringLiteral("不能删除自身!"));
-						return;
-					}
+					if (type == OperationToolsPage::Butt_Delete) {
+						if (Global::G_UserEntity.id == dbIndex) {
+							Util::showWarning(this, QStringLiteral("不能删除自身!"));
+							return;
+						}
 
-					Base::RMessageBox::StandardButton butt = Util::showQuestion(this, QStringLiteral("是否删除选中记录?"));
-					if (butt == Base::RMessageBox::Yes) {
-						Datastruct::OperateUserRequest request;
-						request.m_id = dbIndex;
-						request.m_operateType = Datastruct::DeleteUser;
-						request.m_manageId = Global::G_UserEntity.id;
+						Base::RMessageBox::StandardButton butt = Util::showQuestion(this, QStringLiteral("是否删除选中记录?"));
+						if (butt == Base::RMessageBox::Yes) {
+							Datastruct::OperateUserRequest request;
+							request.m_operateType = Datastruct::DeleteUser;
+							request.m_id = dbIndex;
+							request.m_manageId = Global::G_UserEntity.id;
 
-						NetConnector::instance()->write(request);
+							NetConnector::instance()->write(request);
+						}
 					}
+					else if (type == OperationToolsPage::Butt_Edit) {
+						if (Global::G_UserEntity.id == dbIndex) {
+							Util::showWarning(this, QStringLiteral("不能编辑自身!"));
+							return;
+						}
+
+						UserPrivilegeEditWindow editWindow(this);
+
+						editWindow.setInitUserPrivilege(m_tableModel->getUserPrivilege(selectedRow), m_tableModel->isUserManage(selectedRow));
+
+						if (QDialog::Accepted == editWindow.exec()) {
+							Datastruct::OperateUserRequest request;
+							request.m_operateType = Datastruct::EditPrivilege;
+							request.m_id = dbIndex;
+							request.m_privilege = editWindow.getUserPrivilege();
+							request.m_isManage = editWindow.getUserManage();
+							request.m_manageId = Global::G_UserEntity.id;
+
+							NetConnector::instance()->write(request);
+						}
+					}					
 				}
 			}
-												  break;
-			case OperationToolsPage::Butt_Edit: {
-
-			}
-												break;
+				break;
 			case OperationToolsPage::Butt_Refresh: {
 				refreshCurrPage();
 			}
-												   break;
+				break;
 			default:
 				break;
 		}

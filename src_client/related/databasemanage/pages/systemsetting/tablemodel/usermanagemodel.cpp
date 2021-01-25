@@ -32,6 +32,22 @@ namespace Related {
 		return m_dataList.at(row).id;
 	}
 
+	int UserManageModel::getUserPrivilege(int row)
+	{
+		if (row < 0 || row > m_dataList.size())
+			return -1;
+
+		return m_dataList.at(row).privilege;
+	}
+
+	bool UserManageModel::isUserManage(int row)
+	{
+		if (row < 0 || row > m_dataList.size())
+			return false;
+
+		return m_dataList.at(row).isManager;
+	}
+
 	QVariant UserManageModel::displayData(int rowIndex, int dataIndex, int columnId) const
 	{
 		UserManageColumnIndex cindex = static_cast<UserManageColumnIndex>(columnId);

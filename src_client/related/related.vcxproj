@@ -136,6 +136,7 @@
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
@@ -226,6 +227,7 @@
     <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.h" />
     <ClInclude Include="databasemanage\global.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
@@ -243,6 +245,7 @@
     <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
+    <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
     <QtUic Include="databasemanage\pages\taskrecord\taskreportswidget.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
