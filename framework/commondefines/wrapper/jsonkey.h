@@ -31,6 +31,11 @@ namespace CommonDefines {
 		const QString result = "result";
 		const QString errorInfo = "errorinfo";
 
+		const QString  offsetIndex = "offsetIndex";
+		const QString  limitIndex = "limitIndex";
+
+		const QString totalDataSize = "totalDataSize";
+
 		const QString data = "data";
 	};
 

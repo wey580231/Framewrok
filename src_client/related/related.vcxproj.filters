@@ -88,6 +88,9 @@
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\global.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -99,6 +102,9 @@
     <ClInclude Include="related_global.h" />
     <ClInclude Include="startupcallback.h" />
     <ClInclude Include="topiclist.h" />
+    <ClInclude Include="databasemanage\global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h" />

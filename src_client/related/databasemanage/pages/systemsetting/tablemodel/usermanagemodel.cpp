@@ -16,28 +16,36 @@ namespace Related {
 		return m_dataList.size();
 	}
 
+	void UserManageModel::updateData(const QList<Datastruct::UserEntityData> & dlist)
+	{
+		m_dataList.clear();
+		m_dataList.append(dlist);
+
+		refresh();
+	}
+
 	QVariant UserManageModel::displayData(int rowIndex, int dataIndex, int columnId) const
 	{
 		UserManageColumnIndex cindex = static_cast<UserManageColumnIndex>(columnId);
 		if (dataIndex >= 0 && dataIndex < m_dataList.size()) {
-			UserManageData data = m_dataList.at(dataIndex);
+			Datastruct::UserEntityData data = m_dataList.at(dataIndex);
 
 			switch (cindex)
 			{
 			case U_Id:
-				return data.m_id;
+				return rowIndex + 1;
 				break;
 			case U_UserName:
-				return data.m_name;
+				return data.name;
 				break;
 			case U_RegisterTime:
-				return data.m_timestamp;
+				return data.registTime;
 				break; 
 			case U_LastLoginTime:
-				return data.m_timestamp;
+				return data.registTime;
 				break;
 			case U_UserRights:
-				return data.m_rights;
+				return data.privilege;
 				break;
 			default:
 				break;
@@ -46,20 +54,4 @@ namespace Related {
 
 		return QVariant();
 	}
-
-	void UserManageModel::prepareData()
-	{
-		for (int i = 0; i < 10; i++) {
-			UserManageData ld;
-			ld.m_id = i + 1;
-			ld.m_name = QString("Name_%1").arg(i + 1);
-			ld.m_timestamp = QString("2021-01-10 12:00:0%1").arg(i);
-			ld.m_loginTimestamp = QString("2021-01-10 12:00:0%1").arg(i);
-			ld.m_rights = QStringLiteral("数据查看/数据删除");
-			m_dataList.append(ld);
-		}
-
-		refresh();
-	}
-
 }//namespace Related 

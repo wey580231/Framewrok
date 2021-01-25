@@ -17,9 +17,27 @@ namespace Related {
 		return Page_Setting;
 	}
 
+	/*!
+	 * @details  1.触发加载查询用户信息(只页面第一次被显示时调用)
+	 */
+	void SystemSettingWidget::prepareBringToTop()
+	{
+		AbstractPage * cpage = dynamic_cast<AbstractPage *>(m_stackedWidget->currentWidget());
+		if (cpage)
+			cpage->prepareBringToTop();
+	}
+
 	void SystemSettingWidget::respTabChanged(int page)
 	{
+		AbstractPage * preparePage = dynamic_cast<AbstractPage *>(m_stackedWidget->currentWidget());
+		if (preparePage)
+			preparePage->prepareBringToBottom();
+
 		m_stackedWidget->setCurrentIndex(page);
+
+		AbstractPage * nextPage = dynamic_cast<AbstractPage *>(m_stackedWidget->currentWidget());
+		if (nextPage)
+			nextPage->prepareBringToTop();
 	}
 
 	void SystemSettingWidget::init()

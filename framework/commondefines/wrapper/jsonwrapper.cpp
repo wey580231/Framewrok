@@ -53,7 +53,7 @@ namespace CommonDefines {
 			obj.insert(m_jsonKey.password, request.m_password);
 		});
 	}
-
+	
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::UserLoginRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
@@ -133,6 +133,69 @@ namespace CommonDefines {
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_loginResult = jsonObject.value(m_jsonKey.result).toBool();
 			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllUserRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.name,request.m_name);
+			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
+			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllUserRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
+			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
+			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllUserResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+
+			QJsonArray jarray;
+			for (int i = 0; i < response.m_userInfos.size(); i++) {
+				const Datastruct::UserEntityData & udata = response.m_userInfos.at(i);
+
+				QJsonObject dataObj;
+
+				dataObj.insert(m_jsonKey.id, udata.id);
+				dataObj.insert(m_jsonKey.name, udata.name);
+				dataObj.insert(m_jsonKey.registTime, udata.registTime);
+				dataObj.insert(m_jsonKey.privilege, udata.privilege);
+				dataObj.insert(m_jsonKey.manager, udata.isManager);
+
+				jarray.append(dataObj);
+			}
+			obj.insert(m_jsonKey.totalDataSize, response.m_userCount);
+			obj.insert(m_jsonKey.data, jarray);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllUserResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			QJsonArray jarray = jsonObject.value(m_jsonKey.data).toArray();
+			for (int i = 0; i < jarray.size(); i++) {
+				Datastruct::UserEntityData data;
+
+				QJsonObject dataObj = jarray.at(i).toObject();
+			
+				data.id = dataObj.value(m_jsonKey.id).toInt();
+				data.name = dataObj.value(m_jsonKey.name).toString();
+				data.registTime = dataObj.value(m_jsonKey.registTime).toString();
+				data.privilege = dataObj.value(m_jsonKey.privilege).toInt();
+				data.isManager = dataObj.value(m_jsonKey.manager).toInt();
+
+				response.m_userInfos.append(data);
+			}
+
+			response.m_userCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
 		});
 	}
 

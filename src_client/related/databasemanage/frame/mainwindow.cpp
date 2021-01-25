@@ -97,7 +97,15 @@ namespace Related {
 	{
 		PageType pt = static_cast<PageType>(pageIndex);
 		if (m_pageMapping.contains(pt)) {
-			m_pageContainer->setCurrentWidget(m_pageMapping.value(pt));
+			
+			AbstractPage * prePage = dynamic_cast<AbstractPage *>(m_pageContainer->currentWidget());
+			if (prePage)
+				prePage->prepareBringToBottom();
+
+			AbstractPage * nextPage = m_pageMapping.value(pt);
+			nextPage->prepareBringToTop();	
+
+			m_pageContainer->setCurrentWidget(nextPage);
 		}
 	}
 
