@@ -134,5 +134,6 @@
         <file>resource/qyblue/后退.png</file>
         <file>resource/qyblue/记录.png</file>
         <file>resource/qyblue/概览.png</file>
+        <file>resource/qyblue/权限.png</file>
     </qresource>
 </RCC>

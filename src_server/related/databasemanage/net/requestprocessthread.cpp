@@ -105,6 +105,15 @@ namespace Related {
 				}
 			}
 				break;
+
+			case Datastruct::P_UserOperate: {
+				Datastruct::OperateUserRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::OperateUserResponse response = m_processCenter.processUserOperate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_UserOperate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
 			default:
 				break;
 		}

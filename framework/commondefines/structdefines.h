@@ -16,10 +16,11 @@
 namespace Datastruct {
 
 	enum UserPrivilege {
+		NonePrivilege = 0x0000,		/*!< 无权限 */
 		ReadOnly = 0x0001,			/*!< 只可以查询，不可编辑 */
 		ReadWrite = 0x0002,			/*!< 可读写(包括更新) */
 		DeleteAble = 0x0004,		/*!< 可删除 */
-		AllPrivilege = ReadWrite | DeleteAble
+		AllPrivilege = ReadOnly | ReadWrite | DeleteAble		/*!< 全部权限 */
 	};
 
 	/*!

@@ -53,7 +53,7 @@ namespace CommonDefines {
 			obj.insert(m_jsonKey.password, request.m_password);
 		});
 	}
-	
+
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::UserLoginRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
@@ -190,12 +190,52 @@ namespace CommonDefines {
 				data.name = dataObj.value(m_jsonKey.name).toString();
 				data.registTime = dataObj.value(m_jsonKey.registTime).toString();
 				data.privilege = dataObj.value(m_jsonKey.privilege).toInt();
-				data.isManager = dataObj.value(m_jsonKey.manager).toInt();
+				data.isManager = dataObj.value(m_jsonKey.manager).toBool();
 
 				response.m_userInfos.append(data);
 			}
 
 			response.m_userCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::OperateUserRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.type, request.m_operateType);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.password, request.m_password);
+			obj.insert(m_jsonKey.privilege, request.m_privilege);
+			obj.insert(m_jsonKey.manageId, request.m_manageId);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::OperateUserRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_operateType = static_cast<Datastruct::UserOperateType>(jsonObject.value(m_jsonKey.type).toInt());
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_password = jsonObject.value(m_jsonKey.password).toString();
+			request.m_privilege = jsonObject.value(m_jsonKey.privilege).toInt();
+			request.m_manageId = jsonObject.value(m_jsonKey.manageId).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::OperateUserResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.type, response.m_operateType);
+			obj.insert(m_jsonKey.result, response.m_operateResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::OperateUserResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_operateType = static_cast<Datastruct::UserOperateType>(jsonObject.value(m_jsonKey.type).toInt());
+			response.m_operateResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
 		});
 	}
 

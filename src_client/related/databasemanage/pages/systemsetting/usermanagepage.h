@@ -12,6 +12,7 @@
 
 #include <QWidget>
 #include <QComboBox>
+#include <QStackedWidget>
 
 #include <commondefines/protocol.h>
 #include <base\selfwidget\tablemode\rtableview.h>
@@ -40,6 +41,7 @@ namespace Related {
 	private slots:
 		void setPageNum(int page);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
+		void resOperateUserResponse(const Datastruct::OperateUserResponse & response);
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setFixedPageRowCount(int pageItemCount);
 
@@ -49,6 +51,7 @@ namespace Related {
 		void refreshCurrPage();
 
 	private:
+		QStackedWidget * m_contentWidget;
 		Base::RTableView * m_tableView;
 		UserManageModel * m_tableModel;
 

@@ -16,6 +16,22 @@ namespace Related {
 	{
 	}
 
+	void OperationToolsPage::setButtVisible(ButtTypes butts, bool visible /*= false*/)
+	{
+		uint tmp = 1;
+		while (tmp <= Butt_Refresh) {
+			uint sb = tmp & butts;
+			tmp <<= 1;
+
+			if (sb) {
+				ButtType bt = static_cast<ButtType>(tmp);	
+				if (m_buttMap.contains(bt))
+					m_buttMap[bt]->setVisible(visible);
+			}
+
+		}
+	}
+
 	void OperationToolsPage::respButtCliecked()
 	{
 		emit buttPressed(static_cast<ButtType>(QObject::sender()->property(ButtId).toInt()));
@@ -38,6 +54,11 @@ namespace Related {
 		m_delButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/É¾³ý.png"), QStringLiteral("É¾³ý"));
 		m_editButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/±à¼­.png"), QStringLiteral("±à¼­"));
 		m_refreshButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/Ë¢ÐÂ.png"), QStringLiteral("Ë¢ÐÂ"));
+
+		m_buttMap.insert(Butt_Add, m_addButton);
+		m_buttMap.insert(Butt_Delete, m_delButton);
+		m_buttMap.insert(Butt_Edit, m_editButton);
+		m_buttMap.insert(Butt_Refresh, m_refreshButton);
 
 		m_addButton->setProperty(ButtId, Butt_Add);
 		m_delButton->setProperty(ButtId, Butt_Delete);

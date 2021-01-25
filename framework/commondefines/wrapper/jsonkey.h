@@ -36,6 +36,9 @@ namespace CommonDefines {
 
 		const QString totalDataSize = "totalDataSize";
 
+		const QString type = "type";
+		const QString manageId = "manageId";
+
 		const QString data = "data";
 	};
 

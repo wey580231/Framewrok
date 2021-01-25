@@ -15,6 +15,7 @@
 #include <QAbstractButton>
 
 #include "../base_global.h"
+#include "../macros.h"
 
 namespace Base {
 
@@ -52,12 +53,7 @@ namespace Base {
 		};
 
 		Q_DECLARE_FLAGS(ColorChooses, ColorChoose)
-		//Q_DECLARE_OPERATORS_FOR_FLAGS(ColorChooses) 
-
-			friend inline QFlags<ColorChooses::enum_type> operator|(ColorChooses::enum_type f1, ColorChooses::enum_type f2) Q_DECL_NOTHROW
-		{
-			return QFlags<ColorChooses::enum_type>(f1) | f2;
-		}
+		Q_DECLARE_FRIEND_FLAGS(ColorChooses)
 
 		void enableColor(ColorChoose choose, QColor color = QColor(255, 0, 0, 0));
 		void enableColors(ColorChooses chooses, QColor color = QColor(255, 0, 0, 0));

@@ -29,6 +29,13 @@ namespace Related {
 
 		void updateData(const QList<Datastruct::UserEntityData> & dlist);
 
+		/*! 
+		 * @brief 获取指定行数据在数据库中的索引
+		 * @param row 表格行号
+		 * @return 数据库索引
+		 */
+		int getRecordDatabaseIndex(int row);
+
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 

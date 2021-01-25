@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <QtMoc>
       <QtMocDir>$(IntDir)moc\</QtMocDir>
@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -132,6 +132,7 @@
     <QtMoc Include="actionmanager\action.h" />
     <ClInclude Include="base_global.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="messagetype.h" />
     <QtMoc Include="selfwidget\toolbar.h" />
     <QtMoc Include="selfwidget\rwidget.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="common\stylemanager.cpp" />
     <ClCompile Include="common\validator\rcombinevalidator.cpp" />
     <ClCompile Include="common\validator\rvalidator.cpp" />
+    <ClCompile Include="macros.cpp" />
     <ClCompile Include="selfwidget\dialogproxy.cpp" />
     <ClCompile Include="selfwidget\flowcontrol.cpp" />
     <ClCompile Include="selfwidget\iconbutton.cpp" />

@@ -140,11 +140,86 @@ namespace Related {
 			Base::RSelect rst(user.table);
 			rst.count();
 
-			qDebug() << rst.sql();
-
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
 					response.m_userCount = query.value(0).toInt();
+				}
+			}
+		}
+
+		return response;
+	}
+
+	Datastruct::OperateUserResponse DataProcessCenter::processUserOperate(int clientId, const Datastruct::OperateUserRequest & request)
+	{
+		Datastruct::OperateUserResponse response;
+		response.m_operateType = request.m_operateType;
+
+		Table::UserEntity user;
+
+		bool hasManagePrivilege = false;
+		if (request.m_operateType == Datastruct::EditPrivilege || request.m_operateType == Datastruct::DeleteUser) {
+			Base::RSelect rst(user.table);
+			rst.select(user.table, { user.superManage })
+				.createCriteria()
+				.add(Base::Restrictions::eq(user.id, request.m_manageId));
+
+			QSqlQuery query(m_database->sqlDatabase());
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					hasManagePrivilege = query.value(user.superManage).toBool();
+				}
+			}
+
+			if (hasManagePrivilege) {
+				if (request.m_operateType == Datastruct::EditPrivilege) {
+					Base::RUpdate rud(user.table);
+					rud.update(user.table, { {user.privilege,request.m_privilege} 
+						,{user.superManage,request.m_isManage} })
+						.createCriteria()
+						.add(Base::Restrictions::eq(user.id, request.m_id));
+					if (query.exec(rud.sql())) {
+						if (query.numRowsAffected()) {
+							response.m_operateResult = true;
+						}
+						else {
+							response.m_errorInfo = QStringLiteral("未找到指定用户!");
+						}
+					}
+				}
+				else {
+					Base::RDelete rde(user.table);
+					rde.createCriteria()
+						.add(Base::Restrictions::eq(user.id, request.m_id));
+
+					if (query.exec(rde.sql())) {
+						if (query.numRowsAffected()) {
+							response.m_operateResult = true;
+						}
+						else {
+							response.m_errorInfo = QStringLiteral("未找到指定用户!");
+						}
+					}
+				}
+			}
+			else {
+				response.m_errorInfo = QStringLiteral("无操作权限!");
+			}
+		}
+		else if (request.m_operateType == Datastruct::UpdateInfo) {
+			Base::RUpdate rud(user.table);
+			rud.update(user.table, { {user.userPassword,request.m_password} })
+				.createCriteria()
+				.add(Base::Restrictions::eq(user.id, request.m_id));
+
+			QSqlQuery query(m_database->sqlDatabase());
+			if (query.exec(rud.sql())) {
+				if (query.numRowsAffected()) {
+					response.m_operateResult = true;
+				}
+				else {
+					response.m_errorInfo = QStringLiteral("未找到指定用户!");
 				}
 			}
 		}

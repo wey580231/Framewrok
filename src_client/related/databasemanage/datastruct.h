@@ -152,7 +152,8 @@ namespace Related {
 		U_UserName,				/*!< 用户名 */
 		U_RegisterTime,			/*!< 注册时间 */
 		U_LastLoginTime,		/*!< 上次登录时间 */
-		U_UserRights			/*!< 用户权限 */
+		U_UserRights,			/*!< 用户权限 */
+		U_IsManage				/*!< 是否为管理员 */
 	};
 
 	/*!
