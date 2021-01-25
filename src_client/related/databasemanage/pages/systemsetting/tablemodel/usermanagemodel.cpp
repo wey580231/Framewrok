@@ -66,7 +66,7 @@ namespace Related {
 					return data.registTime;
 					break;
 				case U_LastLoginTime:
-					return data.registTime;
+					return data.lastLoadTime;
 					break;
 				case U_UserRights:
 					if (data.privilege == Datastruct::NonePrivilege)

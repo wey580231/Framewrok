@@ -25,6 +25,7 @@ namespace CommonDefines {
 		const QString name = "name";
 		const QString password = "password";
 		const QString registTime = "registTime";
+		const QString lastLoadTime = "lastLoadTime";
 		const QString privilege = "privilege";
 		const QString manager = "manager";
 

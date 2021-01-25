@@ -167,6 +167,7 @@ namespace CommonDefines {
 				dataObj.insert(m_jsonKey.id, udata.id);
 				dataObj.insert(m_jsonKey.name, udata.name);
 				dataObj.insert(m_jsonKey.registTime, udata.registTime);
+				dataObj.insert(m_jsonKey.lastLoadTime, udata.lastLoadTime);
 				dataObj.insert(m_jsonKey.privilege, udata.privilege);
 				dataObj.insert(m_jsonKey.manager, udata.isManager);
 
@@ -189,6 +190,7 @@ namespace CommonDefines {
 				data.id = dataObj.value(m_jsonKey.id).toInt();
 				data.name = dataObj.value(m_jsonKey.name).toString();
 				data.registTime = dataObj.value(m_jsonKey.registTime).toString();
+				data.lastLoadTime = dataObj.value(m_jsonKey.lastLoadTime).toString();
 				data.privilege = dataObj.value(m_jsonKey.privilege).toInt();
 				data.isManager = dataObj.value(m_jsonKey.manager).toBool();
 

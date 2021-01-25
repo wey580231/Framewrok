@@ -29,7 +29,9 @@
 #include <QDialog>
 #include <QAbstractButton>
 #include <QLayout>
+
 #include "../base_global.h"
+#include "../macros.h"
 
 class QLabel;
 
@@ -151,20 +153,21 @@ namespace Base {
 			NoAll = NoToAll,           // obsolete
 		};
 		Q_DECLARE_FLAGS(StandardButtons, StandardButton)
+		Q_DECLARE_FRIEND_FLAGS(StandardButtons)
 
-		void setButton(int butts);
-		void setButton(int butt, QObject * reiver, const char * slot);
+		void setButton(StandardButtons butts);
+		void setButton(StandardButton butt, QObject * reiver, const char * slot);
 		void setContentWidget(QWidget * widget);
 		void enableToolButtonArea(bool flag = true);
 
 		void setExtandToolWidget(QWidget * widget);
 		void setTitle(QString content);
+
 	signals:
 		void buttClicked(StandardButton butt);
 
 	protected:
 		virtual void respButtClicked(StandardButton butt);
-
 
 	private slots:
 		void respButtonClicked();

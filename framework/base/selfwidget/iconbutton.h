@@ -78,6 +78,8 @@ namespace Base {
 
 	protected:
 		void paintEvent(QPaintEvent * event);
+		void mousePressEvent(QMouseEvent * event);
+		void mouseReleaseEvent(QMouseEvent * event);
 		void enterEvent(QEvent * event);
 		void leaveEvent(QEvent * event);
 
@@ -115,6 +117,7 @@ namespace Base {
 
 		ColorCollect m_colorCollect;
 
+		bool m_mousePressed;			 /*!< 鼠标是否按下，按下后可将图标和文字向右下方偏移一定像素距离 */
 	};
 
 } //namespace Base

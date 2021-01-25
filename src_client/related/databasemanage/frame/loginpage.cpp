@@ -204,20 +204,20 @@ namespace Related {
 		m_password->setEchoMode(QLineEdit::Password);
 		m_password->setMinimumHeight(25);
 		m_password->setPlaceholderText(QStringLiteral("ÇëÊäÈëÃÜÂë"));
-		m_password->setText("root");
+		m_password->setText("1234");
 
 		m_loginButt = new Base::RIconButton();
 		m_loginButt->setIconSize(Base::RIconButton::ICON_24);
 		m_loginButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/µÇÂ¼.png")));
 		m_loginButt->setText(QStringLiteral("µÇÂ¼"));
-		connect(m_loginButt, SIGNAL(pressed()), this, SLOT(connectToServer()));
+		connect(m_loginButt, SIGNAL(clicked()), this, SLOT(connectToServer()));
 
 		m_userRegistSetting = new Base::RIconButton(m_loginWidget);
 		m_userRegistSetting->disableColors(Base::RIconButton::Color_All);
 		m_userRegistSetting->enableColors(Base::RIconButton::Color_NormalText, Qt::white);
 		m_userRegistSetting->enableColors(Base::RIconButton::Color_HoverText, Qt::red);
 		m_userRegistSetting->setText(QStringLiteral("×¢²áÕËºÅ"));
-		connect(m_userRegistSetting, SIGNAL(pressed()), this, SLOT(showRegistWindow()));
+		connect(m_userRegistSetting, SIGNAL(clicked()), this, SLOT(showRegistWindow()));
 
 
 		m_systemSetting = new Base::RIconButton(m_loginWidget);
@@ -225,7 +225,7 @@ namespace Related {
 		m_systemSetting->enableColors(Base::RIconButton::Color_NormalText, Qt::white);
 		m_systemSetting->enableColors(Base::RIconButton::Color_HoverText, Qt::red);
 		m_systemSetting->setText(QStringLiteral("ÏµÍ³ÉèÖÃ"));
-		connect(m_systemSetting, SIGNAL(pressed()), this, SLOT(showSystemSetting()));
+		connect(m_systemSetting, SIGNAL(clicked()), this, SLOT(showSystemSetting()));
 
 		QVBoxLayout * vlayout = new QVBoxLayout();
 		vlayout->addWidget(titleLabel);
@@ -249,7 +249,7 @@ namespace Related {
 			Base::RIconButton * butt = new Base::RIconButton();
 			butt->setText(text);
 			butt->setFixedSize(fixSize);
-			connect(butt, SIGNAL(pressed()), this, pslot);
+			connect(butt, SIGNAL(clicked()), this, pslot);
 			return butt;
 		};
 

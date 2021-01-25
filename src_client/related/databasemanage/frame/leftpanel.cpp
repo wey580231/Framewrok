@@ -158,7 +158,8 @@ namespace Related {
 		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));	
 		
 		m_backToSystemViewButt = new Base::RIconButton();
-		connect(m_backToSystemViewButt, SIGNAL(pressed()), this, SLOT(backToSystemView()));
+		m_backToSystemViewButt->setToolTip(QStringLiteral("返回任务概览页面"));
+		connect(m_backToSystemViewButt, SIGNAL(clicked()), this, SLOT(backToSystemView()));
 		setButtonProop(m_backToSystemViewButt, QStringLiteral("返回"), QStringLiteral(":/QYBlue/resource/qyblue/后退.png"));
 
 		QWidget * bottomWidget = new QWidget();

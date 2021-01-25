@@ -139,7 +139,7 @@ namespace Base {
 		if (!bottomWidget->layout())
 		{
 			QHBoxLayout * layout = new QHBoxLayout;
-			layout->setContentsMargins(6, 1, 1, 1);
+			layout->setContentsMargins(6, 6, 6, 6);
 			bottomWidget->setLayout(layout);
 		}
 

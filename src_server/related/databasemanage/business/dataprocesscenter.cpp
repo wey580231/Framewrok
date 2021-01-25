@@ -140,6 +140,7 @@ namespace Related {
 				data.id = query.value(user.id).toInt();
 				data.name = query.value(user.userName).toString();
 				data.registTime = query.value(user.regitstTime).toDateTime().toString(TIME_FORMAT);
+				data.lastLoadTime = query.value(user.lastLoadTime).toDateTime().toString(TIME_FORMAT);
 				data.privilege = query.value(user.privilege).toInt();
 				data.isManager = query.value(user.superManage).toBool();
 
