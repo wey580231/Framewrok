@@ -200,6 +200,12 @@ namespace Related {
 	void NetConnector::write(const Datastruct::LoadAllDutyRecordRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_ListDutyRecords, CommonDefines::JsonWrapper::instance()->wrap(request));
+			sendData(array);
+	}
+	
+	void NetConnector::write(const Datastruct::OperateUserRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_UserOperate, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 
@@ -286,6 +292,13 @@ namespace Related {
 			}
 				break;
 
+			case Datastruct::P_UserOperate: {
+				Datastruct::OperateUserResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvOperateUserResponse(response);
+				}
+			}
+				break;
 			default:
 				break;
 		}

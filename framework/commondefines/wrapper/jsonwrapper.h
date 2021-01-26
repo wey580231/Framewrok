@@ -78,6 +78,13 @@ namespace CommonDefines {
 		//TODO 20210125 23:15:29 有关试验记录
 
 
+		QByteArray wrap(const Datastruct::OperateUserRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserRequest & request);
+
+		QByteArray wrap(const Datastruct::OperateUserResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserResponse & response);
+
+
 	private:
 		JsonWrapper(QObject *parent = nullptr);
 

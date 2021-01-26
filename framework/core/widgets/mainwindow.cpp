@@ -419,7 +419,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 bool MainWindow::programExit()
 {
     int result = RMessageBox::information(this,QStringLiteral("提示"),QStringLiteral("是否退出程序?"),RMessageBox::Yes|RMessageBox::No);
-    if(result == RMessageBox::No)
+    if(result != RMessageBox::Yes)
         return false;
 
 #ifdef OFFICAL_DOCK

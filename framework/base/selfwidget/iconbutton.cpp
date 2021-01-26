@@ -2,12 +2,14 @@
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <QMouseEvent>
 #include <QDebug>
 
 namespace Base{
 
 	RIconButton::RIconButton(QWidget *parent):QAbstractButton(parent),
-    m_spacing(6),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true), m_iconLeftToText(true)
+    m_spacing(6),m_mouseEnter(false),m_colorChoose(Color_All), m_textVixible(true), m_iconLeftToText(true),
+		m_mousePressed(false)
 {
     setIconSize(ICON_16);
     setContentsMargins(6,5,6,5);
@@ -120,6 +122,9 @@ void RIconButton::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
     QPainter painter(this);
 
+	int pressOffsetX = m_mousePressed ? 1 : 0;
+	int pressOffsetY = m_mousePressed ? 1 : 0;
+
     //[1]绘制边框及背景
     painter.save();
 
@@ -182,12 +187,12 @@ void RIconButton::paintEvent(QPaintEvent *event)
         int picY = (rect().height() - m_iconSize.height())/2;
 
 		if (m_iconLeftToText) {
-			painter.drawPixmap(QPoint(startPoint.x(),picY),pic);
+			painter.drawPixmap(QPoint(startPoint.x() + pressOffsetX,picY + pressOffsetY),pic);
 			startPoint += QPoint(m_iconSize.width(),0);
 		}
 		else
 		{
-			painter.drawPixmap(QPoint(startPoint.x() - m_iconSize.width(),picY),pic);
+			painter.drawPixmap(QPoint(startPoint.x() - m_iconSize.width() + pressOffsetX,picY + pressOffsetY),pic);
 			startPoint -= QPoint(m_iconSize.width(),0);
 		}
     }
@@ -212,11 +217,11 @@ void RIconButton::paintEvent(QPaintEvent *event)
 
 		QRect rect;
 		if (m_iconLeftToText) {
-			rect = QRect(startPoint.x(), txtY, minWidth, minHeight);
+			rect = QRect(startPoint.x() + pressOffsetX, txtY + pressOffsetY, minWidth, minHeight);
 		}
 		else
 		{
-			rect = QRect(startPoint.x() - minWidth, txtY, minWidth, minHeight);
+			rect = QRect(startPoint.x() - minWidth + pressOffsetX, txtY, minWidth + pressOffsetY, minHeight);
 		}
 
         painter.setFont(m_textFont);
@@ -239,6 +244,22 @@ void RIconButton::paintEvent(QPaintEvent *event)
 			painter.drawText(rect,Qt::AlignRight | Qt::AlignVCenter,text());
 		}
     }
+}
+
+void RIconButton::mousePressEvent(QMouseEvent * event)
+{
+	m_mousePressed = true;
+	update();
+
+	QAbstractButton::mousePressEvent(event);
+}
+
+void RIconButton::mouseReleaseEvent(QMouseEvent * event)
+{
+	m_mousePressed = false;
+	update();
+
+	QAbstractButton::mouseReleaseEvent(event);
 }
 
 void RIconButton::enterEvent(QEvent *event)

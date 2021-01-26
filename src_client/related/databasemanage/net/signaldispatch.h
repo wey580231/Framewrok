@@ -27,6 +27,7 @@ namespace Related {
 		void recvUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void recvUseRegistResponse(const Datastruct::UserRegistResponse & response);
 		void recvQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
+		void recvOperateUserResponse(const Datastruct::OperateUserResponse & response);
 
 		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
@@ -35,6 +36,7 @@ namespace Related {
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
+		void resOperateUserResponse(const Datastruct::OperateUserResponse & response);
 
  		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);

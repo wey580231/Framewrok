@@ -148,7 +148,7 @@ namespace Related {
 			m_mainLayout->insertWidget(m_mainLayout->count() - 1, item);
 		}
 
-		m_buttGroup->addButton(item);
+		m_buttGroup->addButton(item,item->pageId());
 
 		m_items.append(item);
 	}
@@ -156,6 +156,7 @@ namespace Related {
 	void RListWidget::addItem(int pageId,QString text, QIcon icon)
 	{
 		RListWidgetItem * item = new RListWidgetItem(this);
+		item->setCheckable(true);
 		item->setPageId(pageId);
 		item->setText(text);
 		item->setIcon(icon);

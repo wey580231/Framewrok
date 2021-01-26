@@ -49,6 +49,7 @@ namespace Related {
 		void write(const Datastruct::UserLoginRequest & request);
 		void write(const Datastruct::UserRegistRequest & request);
 		void write(const Datastruct::LoadAllUserRequest & request);
+		void write(const Datastruct::OperateUserRequest & request);
 
 		/*!
 		 * @brief 任务操作有关
