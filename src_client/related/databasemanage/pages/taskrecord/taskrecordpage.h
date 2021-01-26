@@ -13,7 +13,7 @@
 #include <QWidget>
 #include <QStackedWidget>
 
-#include <base\selfwidget\rtabbar.h>
+#include <base\selfwidget\rtabwidget.h>
 #include "../abstractpage.h"
 
 #include "logbookpage.h"
@@ -32,22 +32,11 @@ namespace Related {
 
 		PageType getPageType() const;
 
-		enum TaskRecordIndex {
-			Tab_logbook,			/*!< 值班日志 */
-			Tab_trialSheet,			/*!< 试验记录 */
-			Tab_taskReports,		/*!< 任务报告 */
-		};
-
-
-	private slots:
-		void  slotRespTabChanged(int page);
-
 	private:
 		void init();
 
 	private:
-		Base::RTabBar * m_tabWidget;
-		QStackedWidget * m_stackedWidget;
+		Base::RTabWidget * m_tabWidget;
 
 		LogbookPage *m_logbookPage;						/*!< 值班日志界面 */
 		TrialSheetWidget * m_trialSheetWidget;			/*!< 试验记录窗口 */

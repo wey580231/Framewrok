@@ -31,7 +31,7 @@ namespace Related {
 		connect(m_tabWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(respTabChanged(int)));
 		m_tabWidget->setFixedHeight(60);
 		
-		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
+		m_tabWidget->setTabAlignment(Base::AlignLeft);
 
 		Base::RTabButton * level0Butt = new Base::RTabButton(QStringLiteral("0¼¶¿â"));
 		Base::RTabButton * level1Butt = new Base::RTabButton(QStringLiteral("1¼¶¿â"));

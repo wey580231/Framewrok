@@ -127,7 +127,6 @@
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp" />
-    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\taskpictureuploadwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp" />
@@ -213,7 +212,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\taskpictureuploadwidget.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h" />

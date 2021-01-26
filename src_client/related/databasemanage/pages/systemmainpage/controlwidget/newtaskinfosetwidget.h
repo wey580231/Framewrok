@@ -17,7 +17,6 @@
 
 #include <base/util/rutil.h>
 
-#include "taskpictureuploadwidget.h"
 #include "../datastruct.h"
 
 namespace Related {
@@ -32,15 +31,11 @@ namespace Related {
 
 		TaskBaseInfo getTaskBaseInfo();
 
-	private slots:
-		void slotPictureUploadPath(QString path);
-
 	private:
 		void init();
 
 	private:
 		Ui::NewTaskInfoSetWidget ui;
-		TaskPictureUploadWidget * m_taskPictureUploadWidget;			/*!< 任务设置图片 */
-		TaskBaseInfo m_taskBaseInfo;									/*!< 任务基本信息 */
+		TaskBaseInfo m_taskBaseInfo;			/*!< 任务基本信息 */
 	};
 }

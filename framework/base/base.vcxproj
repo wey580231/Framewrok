@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <QtMoc>
       <QtMocDir>$(IntDir)moc\</QtMocDir>
@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -153,6 +153,7 @@
     <QtMoc Include="selfwidget\tablemode\rtablemodel.h" />
     <QtMoc Include="selfwidget\tablemode\rtableview.h" />
     <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h" />
+    <QtMoc Include="selfwidget\rtabwidget.h" />
     <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="selfwidget\rlabel.cpp" />
     <ClCompile Include="selfwidget\rmessagebox.cpp" />
     <ClCompile Include="selfwidget\rtabbar.cpp" />
+    <ClCompile Include="selfwidget\rtabwidget.cpp" />
     <ClCompile Include="selfwidget\rwidget.cpp" />
     <ClCompile Include="selfwidget\switchpage.cpp" />
     <ClCompile Include="selfwidget\tablemode\rtablemodel.cpp" />

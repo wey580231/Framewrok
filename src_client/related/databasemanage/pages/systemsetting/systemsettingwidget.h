@@ -13,7 +13,7 @@
 #include <QWidget>
 #include <qstackedwidget.h>
 
-#include <base\selfwidget\rtabbar.h>
+#include <base\selfwidget\rtabwidget.h>
 #include "../abstractpage.h"
 
 #include "usermanagepage.h"
@@ -33,20 +33,11 @@ namespace Related {
 
 		void prepareBringToTop() override;
 
-		enum TabBarIndex {
-			Tab_userManage,
-			Tab_systemSetting,
-		};
-
-	private slots:
-		void respTabChanged(int page);
-
 	private:
 		void init();
 
 	private:
-		Base::RTabBar * m_tabWidget;
-		QStackedWidget * m_stackedWidget;
+		Base::RTabWidget * m_tabWidget;
 
 		UserManagePage * m_userManagePage;
 		OtherSettingPage * m_otherSettingPage;

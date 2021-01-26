@@ -14,44 +14,37 @@
 namespace Related {
 
 	NewTaskDialog::NewTaskDialog(QWidget *parent)
-		: Base::DialogProxy(parent),
-		m_newTaskInfoSetWidget(nullptr), 
-		m_treeView(nullptr), 
-		m_treeModel(nullptr),
-		m_fileRootNode(nullptr)
+		: Base::DialogProxy(parent)
 	{
 		init();
-		this->setMinimumSize(800, 600);
+
+		setTitle(QStringLiteral("新建任务"));
+		setButton(DialogProxy::Ok, this, SLOT(respOk()));
+		setButton(DialogProxy::Cancel, this, SLOT(reject()));
+
+		setMinimumSize(900, 650);
 	}
 
 	NewTaskDialog::~NewTaskDialog()
 	{
-		if (m_newTaskInfoSetWidget != nullptr) {
-			delete  m_newTaskInfoSetWidget;
-			m_newTaskInfoSetWidget = nullptr;
-		}
 
-		if (m_treeView != nullptr) {
-			delete  m_treeView;
-			m_treeView = nullptr;
-		}
-
-		if (m_treeModel != nullptr) {
-			delete  m_treeModel;
-			m_treeModel = nullptr;
-		}
-
-		if (m_fileRootNode != nullptr) {
-			delete  m_fileRootNode;
-			m_fileRootNode = nullptr;
-		}
 	}
 
 	void NewTaskDialog::init()
 	{
-		m_newTaskInfoSetWidget = new NewTaskInfoSetWidget();
+		m_newTaskWidget = new NewTaskInfoSetWidget();
+		QWidget * imageWidget = new QWidget();
+		QWidget * fileWidget = new QWidget();
 
-		QWidget *originalFileManageWidget = new QWidget();
+		m_tabWidget = new Base::RTabWidget();
+		m_tabWidget->setTabBarHeight(40);
+		m_tabWidget->setTabAligment(Base::AlignCenter);
+		m_tabWidget->setSpacing(4);
+
+		m_tabWidget->addPage(QStringLiteral("基本信息"), m_newTaskWidget);
+		m_tabWidget->addPage(QStringLiteral("任务图片"), imageWidget);
+		m_tabWidget->addPage(QStringLiteral("任务数据"), fileWidget);
+
 		{
 			m_treeView = new Base::RTreeView();
 			m_treeView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
@@ -82,19 +75,16 @@ namespace Related {
 			originalFileManageLayout->addWidget(m_treeView);
 			originalFileManageLayout->addWidget(filePathWidget);
 			originalFileManageLayout->setContentsMargins(0, 4, 4, 4);
-			originalFileManageWidget->setLayout(originalFileManageLayout);
+			fileWidget->setLayout(originalFileManageLayout);
 		}
 
-		QWidget *mainWidget = new QWidget();
+		QWidget * mainWidget = new QWidget();
 		QHBoxLayout * mainLayout = new QHBoxLayout();
-		mainLayout->addWidget(m_newTaskInfoSetWidget);
-		mainLayout->addWidget(originalFileManageWidget);
-		mainLayout->setContentsMargins(4, 4, 4, 4);
+		mainLayout->setContentsMargins(0, 0, 0, 0);
+		mainLayout->addWidget(m_tabWidget);
 		mainWidget->setLayout(mainLayout);
-		this->setContentWidget(mainWidget);
 
-		setButton(DialogProxy::Ok, this, SLOT(respOk()));
-		setButton(DialogProxy::Cancel, this, SLOT(reject()));
+		this->setContentWidget(mainWidget);
 	}
 
 	bool NewTaskDialog::FindFile(const QString & path)
@@ -117,17 +107,17 @@ namespace Related {
 			}
 			bIsDir = fileInfo.isDir();
 			if (bIsDir) {
-				Base::TreeNode *tempNode = createTreeNode(m_fileRootNode ,fileInfo.filePath());
+				Base::TreeNode *tempNode = createTreeNode(m_fileRootNode, fileInfo.filePath());
 				m_fileRootNode->nodes.append(tempNode);
 				FindFile(fileInfo.filePath());
-			}	
-			else  {
+			}
+			else {
 				QString filePath = fileInfo.path();
 				QFileInfo t_dirFileInfo(filePath);
 				QString t_dirName = t_dirFileInfo.baseName();
 
 				if (m_fileRootNode->nodes.size() > 0) {
-					for (int i = 0; i < m_fileRootNode->nodes.size();i++) {
+					for (int i = 0; i < m_fileRootNode->nodes.size(); i++) {
 						Base::TreeNode * tempNode = m_fileRootNode->nodes.at(i);
 						if (tempNode->nodeName == t_dirName) {
 							Base::TreeNode *tempNode2 = createTreeNode(tempNode, fileInfo.filePath());
@@ -155,17 +145,17 @@ namespace Related {
 		node->parentNode = parentNode;
 		// 文件描述信息
 		OriginalDataFileParameter * t_fileParameter = new OriginalDataFileParameter();
-		t_fileParameter->name		= t_fileInfo.baseName();
-		t_fileParameter->path		= pasth;
+		t_fileParameter->name = t_fileInfo.baseName();
+		t_fileParameter->path = pasth;
 		t_fileParameter->createTime = t_fileInfo.created().toString("yyyy-MM-d hh:mm:ss");
-		t_fileParameter->isDir		= t_fileInfo.isDir();
+		t_fileParameter->isDir = t_fileInfo.isDir();
 		node->nodeData = t_fileParameter;
 		return node;
 	}
 
 	/*!
 	 * @brief   刷新模型
-	 * @details 
+	 * @details
 	 */
 	void NewTaskDialog::updateModel()
 	{
@@ -175,8 +165,8 @@ namespace Related {
 
 	void NewTaskDialog::slotSeleteFile()
 	{
-		m_originalFilePath =  QFileDialog::getExistingDirectory(this, QStringLiteral("选择目录"),
-			"./",QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+		m_originalFilePath = QFileDialog::getExistingDirectory(this, QStringLiteral("选择目录"),
+			"./", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 		m_fileLineEdit->setText(m_originalFilePath);
 
 		Base::TreeNode * parentNode = nullptr;
@@ -200,7 +190,7 @@ namespace Related {
 	void NewTaskDialog::respOk()
 	{
 		// 任务基本信息
-		m_taskBaseInfo = m_newTaskInfoSetWidget->getTaskBaseInfo();
+		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
 		sendTaskBaseInfo();
 		//[] 获取文件列表
 		m_taskDataFilePaths.clear();
@@ -211,18 +201,18 @@ namespace Related {
 		respCancel();
 	}
 
-	void NewTaskDialog::respCancel() 
+	void NewTaskDialog::respCancel()
 	{
 		close();
 	}
-	
+
 	bool NewTaskDialog::getFileNode(Base::TreeNode *node)
 	{
 		if (node == nullptr) {
 			return false;
 		}
 
-		if (node->nodes.size() == 0){
+		if (node->nodes.size() == 0) {
 			return false;
 		}
 
@@ -233,12 +223,12 @@ namespace Related {
 
 			if (t_temp->nodes.size() > 0) {
 				this->getFileNode(t_temp);
-			} 
+			}
 			else
 			{
 				//if (t_temp->nodeChecked == true) {
 				qDebug() << t_fileParameter->createTime << t_fileParameter->path << t_fileParameter->name;
-			//	}
+				//	}
 				m_taskDataFilePaths.append(t_fileParameter);
 			}
 		}
@@ -248,7 +238,7 @@ namespace Related {
 
 	/*!
 	 * @brief    发送任务的基本信息
-	 * @details 
+	 * @details
 	 */
 	void NewTaskDialog::sendTaskBaseInfo()
 	{
@@ -260,7 +250,7 @@ namespace Related {
 
 	/*!
 	 * @brief  发送任务数据文件的基本信息
-	 * @details 
+	 * @details
 	 */
 	void NewTaskDialog::sendTaskOriginalDataInfo()
 	{

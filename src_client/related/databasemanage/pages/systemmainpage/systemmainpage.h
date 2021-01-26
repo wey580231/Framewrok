@@ -56,8 +56,6 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
-		void slotCreaateNewTask();
-
 		
 	private:
 		void init();

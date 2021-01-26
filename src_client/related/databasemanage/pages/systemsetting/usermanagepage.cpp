@@ -201,10 +201,10 @@ namespace Related {
 			m_tableView->setModel(m_tableModel);
 
 			m_tableView->addColumnItem(Base::ColumnItem(U_Id, QStringLiteral("序号")));
-			m_tableView->addColumnItem(Base::ColumnItem(U_UserName, QStringLiteral("用户名"), 140));
-			m_tableView->addColumnItem(Base::ColumnItem(U_RegisterTime, QStringLiteral("注册时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(U_LastLoginTime, QStringLiteral("上次登录时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(U_UserRights, QStringLiteral("权限")));
+			m_tableView->addColumnItem(Base::ColumnItem(U_UserName, QStringLiteral("用户名"), 150));
+			m_tableView->addColumnItem(Base::ColumnItem(U_RegisterTime, QStringLiteral("注册时间"), 260));
+			m_tableView->addColumnItem(Base::ColumnItem(U_LastLoginTime, QStringLiteral("上次登录时间"), 260));
+			m_tableView->addColumnItem(Base::ColumnItem(U_UserRights, QStringLiteral("权限"),280));
 			m_tableView->addColumnItem(Base::ColumnItem(U_IsManage, QStringLiteral("是否管理员")));
 
 			m_pageSwitch = new PageSwitchBar();
