@@ -55,7 +55,7 @@ namespace Related {
 		m_openTaskButt->setCheckedIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/打开_48_hover.png")));
 		m_openTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/打开_48.png")));
 		m_openTaskButt->setProperty(CustomButtProp, Butt_Open);
-		connect(m_openTaskButt, SIGNAL(pressed()),this,SLOT(respButtPressed()));
+		connect(m_openTaskButt, SIGNAL(clicked()),this,SLOT(respButtPressed()));
 
 		m_deleteTaskButt = new Base::RIconButton();
 		m_deleteTaskButt->disableColors(RIconButton::Color_All);
@@ -64,7 +64,7 @@ namespace Related {
 		m_deleteTaskButt->setCheckedIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/删除_48.png")));
 		m_deleteTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/删除_48_hover.png")));
 		m_deleteTaskButt->setProperty(CustomButtProp, Butt_Delete);
-		connect(m_deleteTaskButt, SIGNAL(pressed()),this,SLOT(respButtPressed()));
+		connect(m_deleteTaskButt, SIGNAL(clicked()),this,SLOT(respButtPressed()));
 
 		QGridLayout * glayout = new QGridLayout();
 		glayout->setRowStretch(0, 1);

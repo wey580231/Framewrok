@@ -42,7 +42,7 @@ namespace Related {
 			if (query.next()) {
 				QString pass = query.value(user.userPassword).toString();
 				if (pass != request.m_password) {
-					response.m_errorInfo = QStringLiteral("账户密码错误.");
+					response.m_errorCode = Datastruct::PASSWROD_ERROR;
 				}
 				else {
 					response.m_loginResult = true;
@@ -53,14 +53,23 @@ namespace Related {
 					response.m_userInfo.registTime = query.value(user.regitstTime).toDateTime().toString(TIME_FORMAT);
 					response.m_userInfo.privilege = query.value(user.privilege).toInt();
 					response.m_userInfo.isManager = query.value(user.superManage).toBool();
+
+					Base::RUpdate rud(user.table);
+					rud.update(user.table, { {user.lastLoadTime,QDateTime::currentDateTime().toString(TIME_FORMAT)} })
+						.createCriteria()
+						.add(Base::Restrictions::eq(user.id, response.m_userInfo.id));
+
+					if (!query.exec(rud.sql())) {
+						
+					}
 				}
 			}
 			else {
-				response.m_errorInfo = QStringLiteral("账户未注册.");
+				response.m_errorCode = Datastruct::NO_REGIST;
 			}
 		}
 		else {
-			response.m_errorInfo = QStringLiteral("数据访问失败.");
+			response.m_errorCode = Datastruct::SQL_EXECUTE_ERROR;
 		}
 
 		return response;
@@ -83,7 +92,7 @@ namespace Related {
 			if (query.exec(rs.sql())) {
 				if (query.numRowsAffected() > 0) {
 					response.m_loginResult = false;
-					response.m_errorInfo = QStringLiteral("用户名已存在.");
+					response.m_errorCode = Datastruct::USER_EXIST;
 					break;
 				}
 			}
@@ -94,7 +103,7 @@ namespace Related {
 					{user.userName,request.m_name},
 					{user.userPassword,request.m_password},
 					{user.regitstTime,QDateTime::currentDateTime()},
-					{user.privilege,0},
+					{user.privilege,static_cast<int>(Datastruct::ReadOnly)},
 					{user.superManage,0}
 				});
 
@@ -104,7 +113,7 @@ namespace Related {
 				}
 			}
 			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
+				response.m_errorCode = Datastruct::SQL_EXECUTE_ERROR;
 			}
 
 		} while (0);
@@ -131,6 +140,7 @@ namespace Related {
 				data.id = query.value(user.id).toInt();
 				data.name = query.value(user.userName).toString();
 				data.registTime = query.value(user.regitstTime).toDateTime().toString(TIME_FORMAT);
+				data.lastLoadTime = query.value(user.lastLoadTime).toDateTime().toString(TIME_FORMAT);
 				data.privilege = query.value(user.privilege).toInt();
 				data.isManager = query.value(user.superManage).toBool();
 
@@ -140,11 +150,86 @@ namespace Related {
 			Base::RSelect rst(user.table);
 			rst.count();
 
-			qDebug() << rst.sql();
-
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
 					response.m_userCount = query.value(0).toInt();
+				}
+			}
+		}
+
+		return response;
+	}
+
+	Datastruct::OperateUserResponse DataProcessCenter::processUserOperate(int clientId, const Datastruct::OperateUserRequest & request)
+	{
+		Datastruct::OperateUserResponse response;
+		response.m_operateType = request.m_operateType;
+
+		Table::UserEntity user;
+
+		bool hasManagePrivilege = false;
+		if (request.m_operateType == Datastruct::EditPrivilege || request.m_operateType == Datastruct::DeleteUser) {
+			Base::RSelect rst(user.table);
+			rst.select(user.table, { user.superManage })
+				.createCriteria()
+				.add(Base::Restrictions::eq(user.id, request.m_manageId));
+
+			QSqlQuery query(m_database->sqlDatabase());
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					hasManagePrivilege = query.value(user.superManage).toBool();
+				}
+			}
+
+			if (hasManagePrivilege) {
+				if (request.m_operateType == Datastruct::EditPrivilege) {
+					Base::RUpdate rud(user.table);
+					rud.update(user.table, { {user.privilege,request.m_privilege} 
+						,{user.superManage,request.m_isManage} })
+						.createCriteria()
+						.add(Base::Restrictions::eq(user.id, request.m_id));
+					if (query.exec(rud.sql())) {
+						if (query.numRowsAffected()) {
+							response.m_operateResult = true;
+						}
+						else {
+							response.m_errorCode = Datastruct::NO_USER;
+						}
+					}
+				}
+				else {
+					Base::RDelete rde(user.table);
+					rde.createCriteria()
+						.add(Base::Restrictions::eq(user.id, request.m_id));
+
+					if (query.exec(rde.sql())) {
+						if (query.numRowsAffected()) {
+							response.m_operateResult = true;
+						}
+						else {
+							response.m_errorCode = Datastruct::NO_USER;
+						}
+					}
+				}
+			}
+			else {
+				response.m_errorCode = Datastruct::NO_PRIVILEGE;
+			}
+		}
+		else if (request.m_operateType == Datastruct::UpdateInfo) {
+			Base::RUpdate rud(user.table);
+			rud.update(user.table, { {user.userPassword,request.m_password} })
+				.createCriteria()
+				.add(Base::Restrictions::eq(user.id, request.m_id));
+
+			QSqlQuery query(m_database->sqlDatabase());
+			if (query.exec(rud.sql())) {
+				if (query.numRowsAffected()) {
+					response.m_operateResult = true;
+				}
+				else {
+					response.m_errorCode = Datastruct::NO_USER;
 				}
 			}
 		}

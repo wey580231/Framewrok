@@ -45,6 +45,7 @@ namespace Related {
 		void write(const Datastruct::UserLoginRequest & request);
 		void write(const Datastruct::UserRegistRequest & request);
 		void write(const Datastruct::LoadAllUserRequest & request);
+		void write(const Datastruct::OperateUserRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);

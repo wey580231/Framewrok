@@ -23,6 +23,11 @@ namespace Related {
 		return butt;
 	}
 
+	Base::RMessageBox::StandardButton Util::showQuestion(QWidget * parent, QString questionContent)
+	{
+		return Base::RMessageBox::information(parent, QStringLiteral("提示"), questionContent,Base::RMessageBox::Yes | Base::RMessageBox::No, Base::RMessageBox::Yes);
+	}
+
 	Base::RMessageBox::StandardButton Util::showInformation(QWidget * parent, QString infoContent)
 	{
 		return Base::RMessageBox::information(parent, QStringLiteral("提示"), infoContent,Base::RMessageBox::Yes, Base::RMessageBox::Yes);

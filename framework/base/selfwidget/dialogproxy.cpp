@@ -82,7 +82,7 @@ namespace Base {
 	DialogTitleBar::DialogTitleBar(QWidget *parent)
 	{
 		Q_UNUSED(parent)
-			setFixedHeight(22);
+			setFixedHeight(24);
 
 		titleContent = new QWidget(this);
 
@@ -95,7 +95,7 @@ namespace Base {
 		layout->addWidget(DialogTitleBar::TitleLabel, titleLabel);
 
 		QAbstractButton *closeButt = new TitleBarButton(titleContent);
-		closeButt->setFixedSize(22, 22);
+		closeButt->setFixedSize(24, 24);
 		closeButt->setObjectName(QLatin1String("title_closebutton"));
 		connect(closeButt, SIGNAL(clicked()), this, SIGNAL(widgetClose()));
 		layout->addWidget(DialogTitleBar::CloseButton, closeButt);
@@ -125,41 +125,41 @@ namespace Base {
 		if (watched == titleLabel)
 		{
 			switch (event->type()) {
-			case QEvent::MouseButtonPress:
-			{
-				QMouseEvent * eve = dynamic_cast<QMouseEvent *>(event);
-				if (eve) {
-					mouseStartPoint = eve->pos();
-					mouseMoveable = true;
+				case QEvent::MouseButtonPress:
+				{
+					QMouseEvent * eve = dynamic_cast<QMouseEvent *>(event);
+					if (eve) {
+						mouseStartPoint = eve->pos();
+						mouseMoveable = true;
+					}
 				}
-			}
-			break;
-			case QEvent::MouseMove:
-			{
-				QMouseEvent * eve = dynamic_cast<QMouseEvent *>(event);
-				if (eve) {
-					QPoint offsetPos = eve->pos() - mouseStartPoint;
-					emit newOffsetPos(offsetPos);
-					setCursor(Qt::ClosedHandCursor);
-				}
-			}
-			break;
-			case QEvent::MouseButtonRelease:
-			{
-				mouseMoveable = false;
-				setCursor(Qt::OpenHandCursor);
-			}
-			break;
-			case QEvent::Enter: {
-				setCursor(Qt::OpenHandCursor);
-			}
-								break;
-			case QEvent::Leave: {
-				setCursor(Qt::ArrowCursor);
-			}
-								break;
-			default:
 				break;
+				case QEvent::MouseMove:
+				{
+					QMouseEvent * eve = dynamic_cast<QMouseEvent *>(event);
+					if (eve) {
+						QPoint offsetPos = eve->pos() - mouseStartPoint;
+						emit newOffsetPos(offsetPos);
+						setCursor(Qt::ClosedHandCursor);
+					}
+				}
+				break;
+				case QEvent::MouseButtonRelease:
+				{
+					mouseMoveable = false;
+					setCursor(Qt::OpenHandCursor);
+				}
+				break;
+				case QEvent::Enter: {
+					setCursor(Qt::OpenHandCursor);
+				}
+									break;
+				case QEvent::Leave: {
+					setCursor(Qt::ArrowCursor);
+				}
+									break;
+				default:
+					break;
 			}
 		}
 		return QWidget::eventFilter(watched, event);
@@ -220,7 +220,7 @@ namespace Base {
 
 		titleBar = new DialogTitleBar(q_ptr);
 		connect(titleBar, SIGNAL(newOffsetPos(QPoint)), q_ptr, SLOT(udpatePos(QPoint)));
-		connect(titleBar, SIGNAL(widgetClose()), q_ptr, SLOT(close()));
+		connect(titleBar, SIGNAL(widgetClose()), q_ptr, SLOT(reject()));
 
 		contentWidget = new QWidget(mainWidget);
 		contentWidget->setObjectName("mainWidget");
@@ -231,7 +231,7 @@ namespace Base {
 
 		QVBoxLayout * mainLayout = new QVBoxLayout;
 		mainLayout->setContentsMargins(1, 1, 1, 1);
-		mainLayout->setSpacing(2);
+		mainLayout->setSpacing(0);
 
 		mainLayout->addWidget(titleBar);
 		mainLayout->addWidget(contentWidget);
@@ -293,7 +293,7 @@ namespace Base {
 	{
 		if (!buttonContainWidget->layout()) {
 			QHBoxLayout * layout = new QHBoxLayout;
-			layout->setContentsMargins(6, 3, 3, 3);
+			layout->setContentsMargins(6, 6, 6, 6);
 			buttonContainWidget->setLayout(layout);
 		}
 	}
@@ -318,7 +318,7 @@ namespace Base {
 	 * @brief 在底部按钮区添加按钮
 	 * @param[in]  butts 待添加的按钮or集合
 	 */
-	void DialogProxy::setButton(int butts)
+	void DialogProxy::setButton(StandardButtons butts)
 	{
 		if (butts <= 0)
 			return;
@@ -339,7 +339,7 @@ namespace Base {
 	 * @param[in] butts 待添加的单个按钮
 	 * @param[in] slot 槽函数
 	 */
-	void DialogProxy::setButton(int butt, QObject *reiver, const char *slot)
+	void DialogProxy::setButton(StandardButton butt, QObject *reiver, const char *slot)
 	{
 		if (butt <= 0 || reiver == nullptr || slot == NULL)
 			return;
@@ -478,44 +478,44 @@ namespace Base {
 		{
 			switch (butt)
 			{
-			case DialogProxy::Ok:
-				return QStringLiteral("确定");
-			case DialogProxy::Save:
-				return QCoreApplication::translate("QPlatformTheme", "Save");
-			case DialogProxy::SaveAll:
-				return QCoreApplication::translate("QPlatformTheme", "SaveAll");
-			case DialogProxy::Open:
-				return QCoreApplication::translate("QPlatformTheme", "Open");
-			case DialogProxy::Yes:
-				return QStringLiteral("确定");
-			case DialogProxy::YesToAll:
-				return QCoreApplication::translate("QPlatformTheme", "YesToAll");
-			case DialogProxy::No:
-				return QStringLiteral("取消");
-			case DialogProxy::NoToAll:
-				return QCoreApplication::translate("QPlatformTheme", "NoToAll");
-			case DialogProxy::Abort:
-				return QCoreApplication::translate("QPlatformTheme", "Abort");
-			case DialogProxy::Retry:
-				return QCoreApplication::translate("QPlatformTheme", "Retry");
-			case DialogProxy::Ignore:
-				return QCoreApplication::translate("QPlatformTheme", "Ignore");
-			case DialogProxy::Close:
-				return QCoreApplication::translate("QPlatformTheme", "Close");
-			case DialogProxy::Cancel:
-				return QCoreApplication::translate("QPlatformTheme", "Cancel");
-			case DialogProxy::Discard:
-				return QCoreApplication::translate("QPlatformTheme", "Discard");
-			case DialogProxy::Help:
-				return QCoreApplication::translate("QPlatformTheme", "Help");
-			case DialogProxy::Apply:
-				return QCoreApplication::translate("QPlatformTheme", "Apply");
-			case DialogProxy::Reset:
-				return QCoreApplication::translate("QPlatformTheme", "Reset");
-			case DialogProxy::RestoreDefaults:
-				return QCoreApplication::translate("QPlatformTheme", "RestoreDefaults");
-			default:
-				break;
+				case DialogProxy::Ok:
+					return QStringLiteral("确定");
+				case DialogProxy::Save:
+					return QCoreApplication::translate("QPlatformTheme", "Save");
+				case DialogProxy::SaveAll:
+					return QCoreApplication::translate("QPlatformTheme", "SaveAll");
+				case DialogProxy::Open:
+					return QCoreApplication::translate("QPlatformTheme", "Open");
+				case DialogProxy::Yes:
+					return QStringLiteral("确定");
+				case DialogProxy::YesToAll:
+					return QCoreApplication::translate("QPlatformTheme", "YesToAll");
+				case DialogProxy::No:
+					return QStringLiteral("取消");
+				case DialogProxy::NoToAll:
+					return QCoreApplication::translate("QPlatformTheme", "NoToAll");
+				case DialogProxy::Abort:
+					return QCoreApplication::translate("QPlatformTheme", "Abort");
+				case DialogProxy::Retry:
+					return QCoreApplication::translate("QPlatformTheme", "Retry");
+				case DialogProxy::Ignore:
+					return QCoreApplication::translate("QPlatformTheme", "Ignore");
+				case DialogProxy::Close:
+					return QCoreApplication::translate("QPlatformTheme", "Close");
+				case DialogProxy::Cancel:
+					return QCoreApplication::translate("QPlatformTheme", "Cancel");
+				case DialogProxy::Discard:
+					return QCoreApplication::translate("QPlatformTheme", "Discard");
+				case DialogProxy::Help:
+					return QCoreApplication::translate("QPlatformTheme", "Help");
+				case DialogProxy::Apply:
+					return QCoreApplication::translate("QPlatformTheme", "Apply");
+				case DialogProxy::Reset:
+					return QCoreApplication::translate("QPlatformTheme", "Reset");
+				case DialogProxy::RestoreDefaults:
+					return QCoreApplication::translate("QPlatformTheme", "RestoreDefaults");
+				default:
+					break;
 			}
 		}
 		return QString();

@@ -16,10 +16,11 @@
 namespace Datastruct {
 
 	enum UserPrivilege {
+		NonePrivilege = 0x0000,		/*!< 无权限 */
 		ReadOnly = 0x0001,			/*!< 只可以查询，不可编辑 */
 		ReadWrite = 0x0002,			/*!< 可读写(包括更新) */
 		DeleteAble = 0x0004,		/*!< 可删除 */
-		AllPrivilege = ReadWrite | DeleteAble
+		AllPrivilege = ReadOnly | ReadWrite | DeleteAble		/*!< 全部权限 */
 	};
 
 	/*!
@@ -33,8 +34,9 @@ namespace Datastruct {
 		QString name;			/*!< 用户名 */
 		QString password;		/*!< 密码 */
 		QString registTime;		/*!< 注册时间 */
-		int privilege;			/*!< 权限 */
-		bool isManager;			/*!< 是否为管理员 */
+		QString lastLoadTime;	/*!< 最后一次登录时间 */
+		int privilege;			/*!< 用户具备的权限，@see UserPrivilege */
+		bool isManager;			/*!< 是否为管理员,管理员可以修改普通用户的权限，系统中至少存在一个管理员 */
 	};
 
 } //namespace Datastruct 

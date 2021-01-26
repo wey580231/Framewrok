@@ -49,6 +49,12 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::LoadAllUserResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllUserResponse & response);
 
+		QByteArray wrap(const Datastruct::OperateUserRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserRequest & request);
+
+		QByteArray wrap(const Datastruct::OperateUserResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserResponse & response);
+
 	private:
 		JsonWrapper(QObject *parent = nullptr);
 

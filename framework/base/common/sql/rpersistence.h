@@ -325,8 +325,9 @@ namespace Base {
 	 *  @code
 	 *  DataTable::RGroup_User rgu;
 		RDelete rde(rgu.table);
-		rde.createCriteria().add(Restrictions::eq(rgu.table,rgu.groupId,request->groupId))
-				.add(Restrictions::eq(rgu.table,rgu.userId,otherSideUserInfo.uuid));
+		rde.createCriteria()
+			.add(Restrictions::eq(rgu.table,rgu.groupId,request->groupId))
+			.add(Restrictions::eq(rgu.table,rgu.userId,otherSideUserInfo.uuid));
 		rde.sql();
 	 *  @endcode
 	 */

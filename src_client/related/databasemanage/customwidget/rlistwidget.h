@@ -32,11 +32,12 @@ namespace Related {
 
 		QSize minimumSizeHint() const;
 		void setPageId(int pageId);
+		int pageId()const { return m_pageId; }
 
 	protected:
 		void paintEvent(QPaintEvent * e) override;
-		void enterEvent(QEvent * event);
-		void leaveEvent(QEvent * event);
+		void enterEvent(QEvent * event) override;
+		void leaveEvent(QEvent * event) override;
 
 	private:
 		void setExpandModel(bool flag);

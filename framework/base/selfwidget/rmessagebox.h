@@ -14,6 +14,7 @@
 
 #include "dialogproxy.h"
 #include "../base_global.h"
+#include "../macros.h"
 
 namespace Base {
 
@@ -80,10 +81,7 @@ namespace Base {
 			ButtonMask = ~FlagMask          // obsolete
 		};
 		Q_DECLARE_FLAGS(StandardButtons, StandardButton)
-
-		inline friend QFlags<StandardButtons::enum_type> operator |(StandardButtons::enum_type a, StandardButtons::enum_type b) {
-			return QFlags<StandardButtons::enum_type>(a) | b;
-		}
+		Q_DECLARE_FRIEND_FLAGS(StandardButtons)
 
 		static StandardButton information(QWidget * parent, const QString &title, const QString& text, StandardButtons butts, StandardButton defaultButt = NoButton);
 		static StandardButton warning(QWidget * parent, const QString &title, const QString& text, StandardButtons butts, StandardButton defaultButt = NoButton);

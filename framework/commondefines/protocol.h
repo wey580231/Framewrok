@@ -1,6 +1,6 @@
 ﻿/*!
  * @brief     客户端和服务器端通信数据协议
- * @attention 
+ * @attention
 			  1.若由客户端发送至服务器，则统一以Request结尾；
 			  2.若由服务器发回客户端，则统一以Response结尾；
  * @author    wey
@@ -17,6 +17,7 @@
 #include <QVariant>
 
 #include "structdefines.h"
+#include "errorcode.h"
 
 namespace Datastruct {
 
@@ -35,8 +36,7 @@ namespace Datastruct {
 		P_UserLogin = 1,		/*!< 用户登录 */
 		P_UserRegist,			/*!< 用户注册 */
 		P_UserList,				/*!< 用户列表查询 */
-		P_UserUpdate,			/*!< 用户信息更新,包括权限更新 */
-		P_UserDelete,			/*!< 删除用户 */
+		P_UserOperate,			/*!< 用户信息更新,包括权限更新、删除用户 */
 
 		P_CreateTask = 10,		/*!< 创建任务 */
 		P_TaskList,				/*!< 查询所有任务 */
@@ -80,7 +80,7 @@ namespace Datastruct {
 	struct UserLoginResponse {
 		UserLoginResponse() :m_loginResult(false) {}
 		bool m_loginResult;		/*!< 登录结果信息，true:登录成功，false:登录失败 */
-		QString m_errorInfo;	/*!< 登录失败时说明失败原因 */
+		ErrorCode m_errorCode;	/*!< 登录失败时说明失败原因 */
 
 		UserEntityData m_userInfo;	/*!< 登录成功后，返回基本信息；失败不返回 */
 	};
@@ -99,7 +99,7 @@ namespace Datastruct {
 	struct UserRegistResponse {
 		UserRegistResponse() : m_loginResult(false) {}
 		bool m_loginResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
-		QString m_errorInfo;	/*!< 注册失败时说明失败原因 */
+		ErrorCode m_errorCode;	/*!< 注册失败时说明失败原因 */
 	};
 
 	/*!
@@ -115,9 +115,49 @@ namespace Datastruct {
 	 * @brief 加载所有用户结果报文
 	 */
 	struct LoadAllUserResponse {
-		LoadAllUserResponse():m_userCount(0){}
+		LoadAllUserResponse() :m_userCount(0) {}
 		int m_userCount;		/*!< 用户总条数 */
 		QList<UserEntityData> m_userInfos;		/*!< 当前页面下用户结果集合 */
+	};
+
+	/*!
+	 * @brief 用户基础操作类型
+	 */
+	enum UserOperateType {
+		UpdateInfo,			/*!< 更新信息 */
+		EditPrivilege,		/*!< 编辑用户权力 */
+		DeleteUser			/*!< 删除用户 */
+	};
+
+	/*!
+	 * @brief 用户基础操作请求
+	 * @details 包括更新权限、删除用户等
+				普通用户可以更新密码；
+				管理员可以更新自己密码，修改普通用户的权限、删除普通用户
+	 */
+	struct OperateUserRequest {
+		OperateUserRequest() :m_manageId(0), m_id(0) {}
+
+		UserOperateType m_operateType;	/*!< 用户操作类型 */
+
+		/*!< 普通用户操作内容 */
+		int m_id;					/*!< 待操作的用户ID */
+		QString m_password;			/*!< 新数据库密码 */
+
+		/*!< 管理员用户操作内容 */
+		int m_privilege;			/*!< 权限 */
+		bool m_isManage;			/*!< 是否为管理员 */
+
+		int m_manageId;				/*!< 管理员Id */
+	};
+
+	/*!
+	 * @brief 用户基础操作响应
+	 */
+	struct OperateUserResponse {
+		UserOperateType m_operateType;
+		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
+		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
 	};
 
 } // namespace Datastruct

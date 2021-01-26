@@ -30,6 +30,7 @@ namespace Table {
 		QString userName = "user_name";
 		QString userPassword = "user_password";
 		QString regitstTime = "regist_time";
+		QString lastLoadTime = "last_load_time";
 		QString privilege = "privilege";
 		QString superManage = "super_manage";
 	};

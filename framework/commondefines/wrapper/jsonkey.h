@@ -25,6 +25,7 @@ namespace CommonDefines {
 		const QString name = "name";
 		const QString password = "password";
 		const QString registTime = "registTime";
+		const QString lastLoadTime = "lastLoadTime";
 		const QString privilege = "privilege";
 		const QString manager = "manager";
 
@@ -35,6 +36,9 @@ namespace CommonDefines {
 		const QString  limitIndex = "limitIndex";
 
 		const QString totalDataSize = "totalDataSize";
+
+		const QString type = "type";
+		const QString manageId = "manageId";
 
 		const QString data = "data";
 	};
