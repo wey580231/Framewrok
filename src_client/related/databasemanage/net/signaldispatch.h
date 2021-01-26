@@ -28,10 +28,16 @@ namespace Related {
 		void recvUseRegistResponse(const Datastruct::UserRegistResponse & response);
 		void recvQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 
+		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
+		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
+
 	signals:
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
+
+ 		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
+		void respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 
 	private:
 		SignalDispatch(QObject *parent = nullptr);

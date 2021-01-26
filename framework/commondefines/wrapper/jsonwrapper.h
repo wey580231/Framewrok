@@ -49,6 +49,35 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::LoadAllUserResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllUserResponse & response);
 
+		QByteArray wrap(const Datastruct::TaskCreateRequest & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskCreateRequest & response);
+
+		//TODO 20210125 有关任务
+
+
+
+		//TODO 20210125 有关值班日志
+		QByteArray wrap(const Datastruct::DutyRecordCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::DutyRecordCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllDutyRecordRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDutyRecordRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllDutyRecordResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDutyRecordResponse & response);
+
+		QByteArray wrap(const Datastruct::ExperimentRecordDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::ExperimentRecordDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteResponse & response);
+
+		//TODO 20210125 23:15:29 有关试验记录
+
+
 	private:
 		JsonWrapper(QObject *parent = nullptr);
 

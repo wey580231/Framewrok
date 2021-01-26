@@ -44,7 +44,18 @@ namespace Datastruct {
 		P_TaskDelete,			/*!< 删除任务 */
 		P_TaskStaticsInfo,		/*!< 任务统计信息，包括任务数、占用空间大小等 */
 		P_TaskSimpleInfo,		/*!< 单个任务概览信息 */
-		P_TaskFullInfo			/*!< 单个任务详细信息 */
+		P_TaskFullInfo,			/*!< 单个任务详细信息 */
+
+		P_CreateDutyRecord = 20,/*!< 创建值班日志 */
+		P_ListDutyRecords ,		/*!< 查询所有值班日志 */
+		P_DeleteDutyRecords,	/*!< 删除值班日志 */
+		P_ModifyDutyRecord,		/*!< 修改值班日志 */
+
+		P_CreateExperimentRecord = 30,	/*!< 创建试验记录 */
+		P_ListExperimentRecords,		/*!< 查询所有试验记录 */
+		P_DeleteExperimentRecord,		/*!< 删除试验记录 */
+		P_ModifyExperimentRecord,		/*!< 修改试验记录 */
+
 	};
 
 	/*!
@@ -118,6 +129,160 @@ namespace Datastruct {
 		LoadAllUserResponse():m_userCount(0){}
 		int m_userCount;		/*!< 用户总条数 */
 		QList<UserEntityData> m_userInfos;		/*!< 当前页面下用户结果集合 */
+	};
+	
+	/*!
+	 * @brief 创建任务请求
+	 */
+	struct  TaskCreateRequest{
+		QString taskId;
+		QString taskName;
+		
+	};
+
+	/*!
+	 * @brief 任务创建结果
+	 * @details 
+	 */
+	struct  TaskCreateResponse
+	{
+		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
+		QString m_errorInfo;		/*!< 注册失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief 值班日志创建请求报文
+	 */
+	struct DutyRecordCreateRequest
+	{
+		QString id;					/*!< id */
+		QString taskId;				/*!< 任务Id  */
+		QString createTime;			/*!< 创建时间 */
+	};
+
+	/*!
+	* @brief 值班日志创建请求结果报文
+	*/
+	struct DutyRecordCreateResponse
+	{
+		DutyRecordCreateResponse(): m_createResult(false){
+		}
+		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+
+		DutyRecordEntityData dutyRecordInfo;
+	};
+
+	/*!
+	 * @brief   加载所有值班日志请求
+	 * @details 
+	 */
+	struct  LoadAllDutyRecordRequest
+	{
+		QString taskId;				/*!< 任务Id */
+		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;			/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  加载所有值班日志请求结果报文
+	 * @details 
+	 */
+	struct LoadAllDutyRecordResponse {
+		int m_dutyRecordCount;								/*!< 值班日志总条数 */
+		QList<DutyRecordEntityData> m_dutyRecordInfos;		/*!< 当前页面下值班日志结果集合 */
+	};
+
+	/*!
+	 * @brief   值班日志删除请求
+	 * @details 
+	 */
+	struct DutyRecordDeleteRequest
+	{
+		QString id;					/*!< Id */
+		QString taskId;				/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  值班日志删除请求结果报文
+	 * @details 
+	 */
+	struct DutyRecordDeleteResponse
+	{
+		DutyRecordDeleteResponse() : m_deleteResult(false) {
+		}
+		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief 试验记录创建请求报文
+	*/
+	struct ExperimentRecordCreateRequest
+	{
+		QString id;				/*!< 数据库ID */
+		QString taskId;			/*!< 任务Id */
+		QString platformId;		/*!< 平台Id */
+		double lon;				/*!< 经度 */
+		double lat;				/*!< 纬度 */
+		QString seaCondition;	/*!< 海况 */
+		QString floatingTime;	/*!< 浮动时间 */
+		QString createTime;		/*!< 记录时间 */
+	};
+
+	/*!
+	* @brief 试验记录创建请求结果报文
+	*/
+	struct ExperimentRecordCreateResponse
+	{
+		ExperimentRecordCreateResponse() : m_createResult(false) {
+		}
+		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+
+		ExperimentRecordEntityData dutyRecordInfo;
+	};
+
+	/*!
+	 * @brief   加载所有试验记录请求
+	* @details
+	*/
+	struct  LoadAllExperimentRecordsRequest
+	{
+		QString taskId;				/*!< 任务Id */
+		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;			/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  加载所有试验记录请求结果报文
+	 * @details
+	 */
+	struct LoadAllExperimentRecordsResponse {
+		int m_count;										/*!< 总条数 */
+		QList<ExperimentRecordEntityData> m_listInfos;		/*!< 当前页面下试验记录结果集合 */
+	};
+
+	/*!
+	* @brief   值班日志删除请求
+	 * @details
+	*/
+	struct ExperimentRecordDeleteRequest
+	{
+		QString id;					/*!< Id */
+		QString taskId;				/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  值班日志删除请求结果报文
+	 * @details
+	 */
+	struct ExperimentRecordDeleteResponse
+	{
+		ExperimentRecordDeleteResponse() : m_deleteResult(false) {
+		}
+		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
 } // namespace Datastruct

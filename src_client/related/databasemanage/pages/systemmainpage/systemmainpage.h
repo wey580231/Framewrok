@@ -38,6 +38,8 @@ namespace Related {
 
 		PageType getPageType() const;
 
+		void updateTaskListInfo();
+
 	signals:
 		/*!
 		 * @brief 打开指定任务
@@ -54,18 +56,20 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
+		void slotCreaateNewTask();
 
-
+		
 	private:
 		void init();
 		void initTaskList();
+		void refreshCurrTask();
 
 	private:
 		OverViewItem * m_taskNumItem;
 		OverViewItem * m_diskSpaceItem;
 		OverViewItem * m_platNumItem;
 
-		Base::RIconButton * m_newTaskButt;
+		Base::RIconButton * m_newTaskButt;				
 		Base::RIconButton * m_refreshTaskButt;
 
 		TimeRangeEdit * m_timeRange;
@@ -73,9 +77,9 @@ namespace Related {
 		QComboBox * m_platBox;	
 
 		QScrollArea * m_taskSrollArea;	
-		QWidget * m_taskWindow;			/*!< 任务窗口区 */
+		QWidget * m_taskWindow;							/*!< 任务窗口区 */
 
-		QList<TaskOverViewItem *> m_taskItems;
+		QList<TaskOverViewItem *> m_taskItems;			/*!< 任务列表 */	
 	};
 
 } //namespace Related

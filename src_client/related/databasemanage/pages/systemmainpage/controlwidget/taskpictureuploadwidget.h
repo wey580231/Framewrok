@@ -27,6 +27,10 @@ namespace Related {
 		TaskPictureUploadWidget(QWidget *parent = nullptr);
 		~TaskPictureUploadWidget();
 
+	private :
+		//void signalPictureUploadPath(QString path);
+
+
 	protected:
 		void paintEvent(QPaintEvent *event);
 		void mousePressEvent(QMouseEvent *event);

@@ -37,6 +37,29 @@ namespace CommonDefines {
 		const QString totalDataSize = "totalDataSize";
 
 		const QString data = "data";
+
+		const QString taskId = "taskId";
+		const QString createTime = "createTime";
+
+		const QString platformId = "platformId";
+
+		const QString lon = "lon";
+
+		const QString lat = "lat";
+
+		const QString seaCondition = "seaCondition";
+
+		const QString floatingTime = "floatingTime";
+
+		const QString startTime = "startTime";
+
+		const QString endTime = "endTime";
+
+		const QString location = "location";
+
+		const QString description = "description";
+
+		const QString detectPlatform = "detectPlatform";
 	};
 
 } //namespace CommonDefines 

@@ -1,7 +1,7 @@
 #include "usermanagepage.h"
 
-#include <QHBoxLayout>
 #include <QDebug>
+#include <QHBoxLayout>
 
 #include <commondefines/protocol.h>
 #include "../utils/util.h"

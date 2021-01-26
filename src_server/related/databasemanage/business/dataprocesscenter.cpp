@@ -152,4 +152,89 @@ namespace Related {
 		return response;
 	}
 
+
+	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
+	{
+		Datastruct::DutyRecordCreateResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		do {
+			if (query.exec(rs.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = false;
+					response.m_errorInfo = QStringLiteral("该记录存在");
+					break;
+				}
+			}
+
+
+			Base::RPersistence rps(dutyRecord.table);
+			rps.insert({
+					{dutyRecord.id,		request.id},
+					{dutyRecord.taskId,		request.taskId},
+					{dutyRecord.createTime, QDateTime::currentDateTime()},
+				});
+
+			qDebug() << "____" <<rps.sql();
+
+			if (query.exec(rps.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = true;
+				}
+			}
+			else {
+				response.m_errorInfo = QStringLiteral("保存数据失败.");
+			}
+
+		} while (0);
+
+		return response;
+	}
+
+	Datastruct::LoadAllDutyRecordResponse DataProcessCenter::processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request)
+	{
+		Datastruct::LoadAllDutyRecordResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+
+				Datastruct::DutyRecordEntityData data;
+				data.id = query.value(dutyRecord.id).toString();
+				data.taskId = query.value(dutyRecord.taskId).toString();
+				data.createTime = query.value(dutyRecord.createTime).toDateTime().toString(TIME_FORMAT);
+
+				response.m_dutyRecordInfos.append(data);
+			}
+
+			Base::RSelect rst(dutyRecord.table);
+			rst.count();
+
+			qDebug() << rst.sql();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_dutyRecordCount = query.value(0).toInt();
+				}
+			}
+		}
+
+		return response;
+	}
+
 } //namespace Related 

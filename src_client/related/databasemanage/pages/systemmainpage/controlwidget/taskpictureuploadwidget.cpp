@@ -44,6 +44,8 @@ namespace Related {
 			
 			m_picturePath = QFileDialog::getOpenFileName(NULL, QStringLiteral("Ñ¡ÔñÎÄ¼ş"), ".", "*.*");
 			if(!m_picturePath.isEmpty()) {
+
+			//	emit signalPictureUploadPath(m_picturePath);
 				this->update();
 			}
 		}

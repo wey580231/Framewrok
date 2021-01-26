@@ -35,7 +35,7 @@ namespace Related {
 		TaskBaseInfo t_info;
 		t_info.id			= QStringLiteral("任务01");					
 		t_info.taskName		= QStringLiteral("任务01");			
-		t_info.taskTime		= QStringLiteral("2021-01-05 11:15:12");			
+		//t_info.taskTime		= QStringLiteral("2021-01-05 11:15:12");			
 		t_info.taskplace	= QStringLiteral("青岛");			
 		t_info.startTime	= QStringLiteral("2021-01-05 11:16:12");			
 		t_info.endTime		= QStringLiteral("2021-01-05 19:15:12");			

@@ -25,8 +25,7 @@ void RTreeViewPrivate::initView()
 
 RTreeView::RTreeView(QWidget *parent):QTreeView(parent),d_ptr(new RTreeViewPrivate(this))
 {
-//    connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(slotExpand(const QModelIndex &)));
-
+    //connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(slotExpand(const QModelIndex &)));
     connect(this,SIGNAL(collapsed(QModelIndex)),this,SLOT(respItemCollapsed(QModelIndex)));
     connect(this,SIGNAL(expanded(QModelIndex)),this,SLOT(respItemExpanded(QModelIndex)));
 }
