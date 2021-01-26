@@ -41,6 +41,12 @@ namespace Related {
 			case L_CreateTime:
 				return data.createTime;
 				break;
+			case L_Description:
+				return data.description;
+				break;
+			case L_SeaCondition:
+				return data.seaCondition;
+				break;
 			default:
 				break;
 			}

@@ -1,8 +1,6 @@
 #include "logbookpage.h"
 
 #include <QDebug>
-#include <QHBoxLayout>
-#include <commondefines/protocol.h>
 
 #include "../utils/util.h"
 #include "../customwidget/customwidgetcontainer.h"
@@ -24,6 +22,31 @@ namespace Related {
 	{
 	}
 
+	void LogbookPage::respToolButtPressed(OperationToolsPage::ButtType type)
+	{
+		switch (type)
+		{
+		case OperationToolsPage::Butt_Add: {
+			insertDutyRecord();
+		}
+			break;
+		case OperationToolsPage::Butt_Delete: {
+
+		}
+			break;
+		case OperationToolsPage::Butt_Edit: {
+
+		}
+			break;
+		case OperationToolsPage::Butt_Refresh: {
+			refreshCurrPage();
+		}
+			break;
+		default:
+			break;
+		}
+	}
+
 	void LogbookPage::processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
 		if (response.m_createResult == true) {
@@ -37,29 +60,8 @@ namespace Related {
 		m_pageSwitch->setDataSize(response.m_dutyRecordCount);
 	}
 
-	void LogbookPage::respToolButtPressed(OperationToolsPage::ButtType type)
+	void LogbookPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
-		switch (type)
-		{
-			case OperationToolsPage::Butt_Add: {
-				insertDutyRecord();
-			}
-				break;
-			case OperationToolsPage::Butt_Delete: {
-
-			}
-				break;
-			case OperationToolsPage::Butt_Edit: {
-
-			}
-				break;
-			case OperationToolsPage::Butt_Refresh: {
-				refreshCurrPage();
-			}
-				break;
-		default:
-			break;
-		}
 	}
 
 	void LogbookPage::init()
@@ -83,8 +85,8 @@ namespace Related {
 			m_tableView->setModel(m_tableModel);
 			m_tableView->addColumnItem(Base::ColumnItem(L_Index, QStringLiteral("索引")));
 			m_tableView->addColumnItem(Base::ColumnItem(L_CreateTime, QStringLiteral("录入时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(L_PlatformName, QStringLiteral("平台名")));
-			m_tableView->addColumnItem(Base::ColumnItem(L_Type, QStringLiteral("类型")));
+			m_tableView->addColumnItem(Base::ColumnItem(L_Description, QStringLiteral("描述")));
+			m_tableView->addColumnItem(Base::ColumnItem(L_SeaCondition, QStringLiteral("海况信息")));
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
@@ -114,6 +116,9 @@ namespace Related {
 
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse &)),
 			this, SLOT(processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse &)));
+	
+		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)),
+			this, SLOT(processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)));
 	}
 
 	/*!
@@ -127,6 +132,8 @@ namespace Related {
 		request.taskId = m_taskId;
 		QDateTime current_date_time = QDateTime::currentDateTime();
 		request.createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
+		request.description = QStringLiteral("1");
+		request.seaCondition = QStringLiteral("1");
 		NetConnector::instance()->write(request);
 	}
 

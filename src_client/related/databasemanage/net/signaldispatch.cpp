@@ -24,6 +24,10 @@ namespace Related {
 		emit respQueryUserListResponse(response);
 	}
 
+	void SignalDispatch::recvOperateUserResponse(const Datastruct::OperateUserResponse & response)
+	{
+		emit resOperateUserResponse(response);
+	}
 
 	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
@@ -35,10 +39,26 @@ namespace Related {
 		emit respQueryAllDutyRecordResponse(response);
 
 	}
-	void SignalDispatch::recvOperateUserResponse(const Datastruct::OperateUserResponse & response)
+	void SignalDispatch::recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
-		emit resOperateUserResponse(response);
+		emit respDutyRecordDeleteResponse(response);
 	}
+
+	void SignalDispatch::recvExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response)
+	{
+		emit respExperimentRecordCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response)
+	{
+		emit respQueryAllExperimentRecordResponse(response);
+	}
+
+	void SignalDispatch::recvExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response)
+	{
+		emit respExperimentRecordDeleteResponse(response);
+	}
+
 
 	SignalDispatch * SignalDispatch::instance()
 	{

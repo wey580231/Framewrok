@@ -1,5 +1,7 @@
 #include "trialsheetmodel.h"
 
+#include <QDebug>
+
 namespace Related {
 
 	TrialSheetModel::TrialSheetModel(QObject *parent)
@@ -12,17 +14,10 @@ namespace Related {
 	{
 	}
 
-	void TrialSheetModel::prepareData()
+	void TrialSheetModel::prepareData(QList<Datastruct::ExperimentRecordEntityData> listInfos)
 	{
-		for (int i = 0; i < 10; i++) {
-			TrialSheetData ld;
-			ld.index = i + 1;
-			ld.platformName = QString("Name_%1").arg(i + 1);
-			ld.edttime = QString("2021-01-10 12:00:0%1").arg(i);
-			ld.index = i + 1;;
-			ld.type = i;
-			m_dataList.append(ld);
-		}
+		m_dataList.clear();
+		m_dataList.append(listInfos);
 
 		refresh();
 	}
@@ -36,21 +31,27 @@ namespace Related {
 	{
 		TrialSheetDataColumnIndex cindex = static_cast<TrialSheetDataColumnIndex>(columnId);
 		if (dataIndex >= 0 && dataIndex < m_dataList.size()) {
-			TrialSheetData data = m_dataList.at(dataIndex);
+			Datastruct::ExperimentRecordEntityData data = m_dataList.at(dataIndex);
 
 			switch (cindex)
 			{
 			case TS_Index:
-				return data.index;
+				return dataIndex;
 				break;
-			case TS_PlatformName:
-				return data.platformName;
+			case TS_PlatformId:
+				return data.platformId;
 				break;
-			case TS_Type:
-				return data.type;
+			case TS_Lon:
+				return data.lon;;
 				break;
-			case TS_Edttime:
-				return data.edttime;
+			case TS_Lat:
+				return data.lat;
+				break;
+			case TS_SeaCondition:
+				return data.seaCondition;
+				break;
+			case TS_FloatingTime:
+				return data.floatingTime;
 				break;
 			default:
 				break;

@@ -1,5 +1,6 @@
 /*!
  * @brief	  试验记录数据表格模型     
+ * @details
  * @author    yzg
  * @version   1.0
  * @date      2021.01.23 10:33:46
@@ -7,12 +8,13 @@
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QObject>
 
 #include <base\selfwidget\tablemode\rtablemodel.h>
+#include <commondefines\protocol.h>
+
 #include "../../../datastruct.h"
 
 namespace Related {
@@ -25,7 +27,7 @@ namespace Related {
 		TrialSheetModel(QObject *parent = nullptr);
 		~TrialSheetModel();
 
-		void prepareData();
+		void prepareData(QList<Datastruct::ExperimentRecordEntityData> listInfos);
 		int datasSize() const;
 
 	protected:
@@ -33,8 +35,7 @@ namespace Related {
 
 
 	private:
-		QList<TrialSheetData> m_dataList;
-
+		QList<Datastruct::ExperimentRecordEntityData> m_dataList;
 	};
 
 }//namespace Related 

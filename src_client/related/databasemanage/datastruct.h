@@ -238,40 +238,24 @@ namespace Related {
 	*/
 	enum  LogbookDataColumnIndex {
 		L_Index,					/*!< 索引 */
+		L_TaskId,					/*!< 任务Id */
 		L_CreateTime,				/*!< 录入时间 */
-		L_PlatformName,				/*!< 平台名 */
-		L_Type,						/*!< 平台类型 */
+		L_Description,				/*!< 描述 */
+		L_SeaCondition,				/*!< 海况信息 */
 	};
 	
-	/*!
-	* @brief 值班日志数据
-	*/
-	struct LogbookData {
-		int  index;					/*!< 索引 */
-		QString edttime;			/*!< 录入时间 */
-		int  platformName;			/*!< 平台名 */
-		int type;					/*!< 平台类型 */
-	};
-
 	/*!
 	* @brief 试验记录表格列索引
 	*/
 	enum TrialSheetDataColumnIndex
 	{
 		TS_Index,					/*!< 索引 */
-		TS_PlatformName,			/*!< 平台名 */
-		TS_Type,					/*!< 类型 */
-		TS_Edttime,					/*!< 录入时间 */
-	};
-
-	/*!
-	* @brief 试验记录数据信息
-	*/
-	struct TrialSheetData {
-		int  index;					/*!< 索引 */
-		QString  platformName;		/*!< 平台名 */
-		int	 type;					/*!< 类型 */
-		QString edttime;			/*!< 录入时间 */
+		TS_TaskId,					/*!< 任务Id */
+		TS_PlatformId,				/*!< 平台Id */
+		TS_Lon,						/*!< 经度 */
+		TS_Lat,						/*!< 纬度 */
+		TS_SeaCondition,			/*!< 海况 */
+		TS_FloatingTime,			/*!< 浮动时间 */
 	};
 
 	/*!

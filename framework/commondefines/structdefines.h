@@ -47,12 +47,15 @@ namespace Datastruct {
 	{
 		TaskEntityData(){
 		}
-		QString id;					/*!< 数据库Id */
+		QString id;				/*!< 数据库Id */
 		QString taskName;		/*!< 任务名称 */
 		QString startTime;		/*!< 起始时间 */
 		QString endTime;		/*!< 结束时间 */
 		QString location;		/*!< 任务地点 */
-
+		double lon;				/*!< 经度 */
+		double lat;				/*!< 纬度 */
+		QString description;	/*!< 描述 */
+		QString detectPlatform;	/*!< 检测平台 */
 	};
 
 	/*!
@@ -66,6 +69,8 @@ namespace Datastruct {
 		QString id;				/*!< 数据库ID */
 		QString taskId;			/*!< 任务Id */
 		QString createTime;		/*!< 创建时间 */
+		QString description;	/*!< 描述 */
+		QString seaCondition;	/*!< 海况信息 */
 	};
 
 	/*!
