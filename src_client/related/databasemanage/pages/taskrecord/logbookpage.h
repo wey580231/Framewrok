@@ -52,7 +52,6 @@ namespace Related {
 		LogbookModel * m_tableModel;						/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */				
 
-
 		QString m_taskId;
 	};
 

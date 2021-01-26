@@ -171,31 +171,79 @@ namespace Datastruct {
 		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
 	};
 
-	
 	/*!
 	 * @brief 创建任务请求
 	 */
 	struct  TaskCreateRequest{
-		QString taskId;
-		QString taskName;
-		
+		QString taskId;				/*!< 数据库Id */
+		QString taskName;			/*!< 任务名称 */
+		QString startTime;			/*!< 起始时间 */
+		QString endTime;			/*!< 结束时间 */
+		QString location;			/*!< 任务地点 */
+		double lon;					/*!< 经度 */
+		double lat;					/*!< 纬度 */
+		QString description;		/*!< 描述 */
+		QString detectPlatform;		/*!< 检测平台 */	
 	};
 
 	/*!
-	 * @brief 任务创建结果
+	 * @brief 任务创建请求结果报文
 	 * @details 
 	 */
-	struct  TaskCreateResponse
-	{
+	struct TaskCreateResponse {
+		TaskCreateResponse() : m_createResult(false) {
+		}
 		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
 		QString m_errorInfo;		/*!< 注册失败时说明失败原因 */
+
+		TaskEntityData taskInfo;
+	};
+
+	/*!
+	* @brief   加载所任务请求
+	* @details
+	*/
+	struct  LoadAllTaskRequest {
+		LoadAllTaskRequest():m_offsetIndex(0), m_limitIndex(0){
+
+		}
+		QString taskId;				/*!< 任务Id */
+		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;			/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	* @brief  加载所有任务请求结果报文
+	* @details
+	*/
+	struct LoadAllTaskResponse {
+		int m_count;									/*!< 任务总条数 */
+		QList<TaskEntityData> m_taskInfos;				/*!< 当前页面下任务结果集合 */
+	};
+
+	/*!
+	 * @brief   任务删除请求
+	 * @details
+	 */
+	struct TaskDeleteRequest {
+		QString taskId;				/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  任务删除请求结果报文
+	 * @details
+	 */
+	struct TaskDeleteResponse {
+		TaskDeleteResponse() : m_deleteResult(false) {
+		}
+		bool m_deleteResult;					/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;					/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
 	 * @brief 值班日志创建请求报文
 	 */
-	struct DutyRecordCreateRequest
-	{
+	struct DutyRecordCreateRequest {
 		QString id;					/*!< id */
 		QString taskId;				/*!< 任务Id  */
 		QString createTime;			/*!< 创建时间 */
@@ -206,8 +254,7 @@ namespace Datastruct {
 	/*!
 	* @brief 值班日志创建请求结果报文
 	*/
-	struct DutyRecordCreateResponse
-	{
+	struct DutyRecordCreateResponse	{
 		DutyRecordCreateResponse(): m_createResult(false){
 		}
 		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */

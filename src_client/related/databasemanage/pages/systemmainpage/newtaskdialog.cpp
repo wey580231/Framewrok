@@ -2,9 +2,6 @@
 
 #include <QDebug>
 
-#include <base\util\rutil.h>
-#include <base\selfwidget\rmessagebox.h>
-
 #include "customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
@@ -19,6 +16,7 @@ namespace Related {
 		init();
 
 		setTitle(QStringLiteral("新建任务"));
+
 		setButton(DialogProxy::Ok, this, SLOT(respOk()));
 		setButton(DialogProxy::Cancel, this, SLOT(reject()));
 
@@ -33,6 +31,7 @@ namespace Related {
 	void NewTaskDialog::init()
 	{
 		m_newTaskWidget = new NewTaskInfoSetWidget();
+
 		QWidget * imageWidget = new QWidget();
 		QWidget * fileWidget = new QWidget();
 
@@ -192,11 +191,11 @@ namespace Related {
 		// 任务基本信息
 		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
 		sendTaskBaseInfo();
-		//[] 获取文件列表
-		m_taskDataFilePaths.clear();
-		getFileNode(m_fileRootNode);
-		sendTaskOriginalDataInfo();
-		emit signalCreaateNewTask();
+// 		//[] 获取文件列表
+// 		m_taskDataFilePaths.clear();
+// 		getFileNode(m_fileRootNode);
+// 		sendTaskOriginalDataInfo();
+// 		emit signalCreaateNewTask();
 
 		respCancel();
 	}
@@ -242,9 +241,19 @@ namespace Related {
 	 */
 	void NewTaskDialog::sendTaskBaseInfo()
 	{
-		Datastruct::DutyRecordCreateRequest request;
-		request.taskId = m_taskBaseInfo.id;
-		request.taskId = m_taskBaseInfo.taskName;
+		QDateTime current_date_time = QDateTime::currentDateTime();
+
+		Datastruct::TaskCreateRequest request;
+		request.taskId = Base::RUtil::UUID();
+		request.taskName = m_taskBaseInfo.taskName;
+		request.startTime = m_taskBaseInfo.startTime;
+		request.endTime = m_taskBaseInfo.endTime;
+		request.location = m_taskBaseInfo.taskLocation;
+		request.lon = m_taskBaseInfo.lon;
+		request.lat = m_taskBaseInfo.lat;
+		request.description = QStringLiteral("description");
+		request.detectPlatform = QStringLiteral("detectPlatform");
+
 		NetConnector::instance()->write(request);
 	}
 

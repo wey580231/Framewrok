@@ -54,7 +54,9 @@ namespace Related {
 		/*!
 		 * @brief 任务操作有关
 		 */
-
+		void write(const Datastruct::TaskCreateRequest & request);
+		void write(const Datastruct::LoadAllTaskRequest & request);
+		void write(const Datastruct::TaskDeleteRequest & request);
 
 		/*!
 		 * @brief  值班日志有关

@@ -14,14 +14,20 @@
 #include <QDateTimeEdit>
 #include <QComboBox>
 #include <QtWidgets/QScrollArea>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QDateTime>
+#include <QListView>
 
 #include <base/selfwidget/iconbutton.h>
+#include <commondefines/protocol.h>
 
 #include "overviewitem.h"
 #include "../../customwidget/timerangeedit.h"
 #include "../abstractpage.h"
-#include "../../3rdLibrary/qcustomplot.h"
-
+#include "taskoverviewitem.h"
 #include "newtaskdialog.h"
 
 namespace Related {
@@ -56,11 +62,17 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
-		
+		void slotDeleteTask(QString taskId);
+		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
+		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
+
 	private:
 		void init();
-		void initTaskList();
+		void initConnent();
+
 		void refreshCurrTask();
+		void UpdateTaskListWidget();
 
 	private:
 		OverViewItem * m_taskNumItem;

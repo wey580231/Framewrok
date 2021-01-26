@@ -236,6 +236,13 @@ namespace CommonDefines {
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.id, response.taskId);
 			obj.insert(m_jsonKey.name, response.taskName);
+			obj.insert(m_jsonKey.startTime, response.startTime);
+			obj.insert(m_jsonKey.endTime, response.endTime);
+			obj.insert(m_jsonKey.location, response.location);
+			obj.insert(m_jsonKey.lon, response.lon);
+			obj.insert(m_jsonKey.lat, response.lat);
+			obj.insert(m_jsonKey.description, response.description);
+			obj.insert(m_jsonKey.detectPlatform, response.detectPlatform);
 		});
 	}
 
@@ -244,6 +251,160 @@ namespace CommonDefines {
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.taskId = jsonObject.value(m_jsonKey.id).toString();
 			response.taskName = jsonObject.value(m_jsonKey.name).toString();
+			response.startTime = jsonObject.value(m_jsonKey.startTime).toString();
+			response.endTime = jsonObject.value(m_jsonKey.endTime).toString();
+			response.location = jsonObject.value(m_jsonKey.location).toString();
+			response.lon = jsonObject.value(m_jsonKey.lon).toDouble();
+			response.lat = jsonObject.value(m_jsonKey.lat).toDouble();
+			response.description = jsonObject.value(m_jsonKey.description).toString();
+			response.detectPlatform = jsonObject.value(m_jsonKey.detectPlatform).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskCreateResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_createResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+
+			if (response.m_createResult) {
+				QJsonObject dataObj;
+
+				dataObj.insert(m_jsonKey.id, response.taskInfo.id);
+				dataObj.insert(m_jsonKey.name, response.taskInfo.taskName);
+				dataObj.insert(m_jsonKey.startTime, response.taskInfo.startTime);
+				dataObj.insert(m_jsonKey.endTime, response.taskInfo.endTime);
+				dataObj.insert(m_jsonKey.location, response.taskInfo.location);
+				dataObj.insert(m_jsonKey.lon, response.taskInfo.lon);
+				dataObj.insert(m_jsonKey.lat, response.taskInfo.lat);
+				dataObj.insert(m_jsonKey.description, response.taskInfo.description);
+				dataObj.insert(m_jsonKey.detectPlatform, response.taskInfo.detectPlatform);
+				obj.insert(m_jsonKey.data, dataObj);
+			}
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskCreateResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+
+			if (response.m_createResult) {
+				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
+				if (dataObj.isEmpty())
+					return;
+
+				response.taskInfo.id = dataObj.value(m_jsonKey.id).toString();
+				response.taskInfo.taskName = dataObj.value(m_jsonKey.name).toString();
+				response.taskInfo.startTime = dataObj.value(m_jsonKey.startTime).toString();
+				response.taskInfo.endTime = dataObj.value(m_jsonKey.endTime).toString();
+				response.taskInfo.location = dataObj.value(m_jsonKey.location).toString();
+				response.taskInfo.lon = dataObj.value(m_jsonKey.lon).toDouble();
+				response.taskInfo.lat = dataObj.value(m_jsonKey.lat).toDouble();
+				response.taskInfo.description = dataObj.value(m_jsonKey.description).toString();
+				response.taskInfo.detectPlatform = dataObj.value(m_jsonKey.detectPlatform).toString();
+			}
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllTaskRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.taskId, request.taskId);
+			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
+			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllTaskRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
+			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllTaskResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+
+			QJsonArray jarray;
+			for (int i = 0; i < response.m_taskInfos.size(); i++) {
+				const Datastruct::TaskEntityData & dRdata = response.m_taskInfos.at(i);
+
+				QJsonObject dataObj;
+
+				dataObj.insert(m_jsonKey.id,		dRdata.id);
+				dataObj.insert(m_jsonKey.name,		dRdata.taskName);
+				dataObj.insert(m_jsonKey.startTime, dRdata.startTime);
+				dataObj.insert(m_jsonKey.endTime,	dRdata.endTime);
+				dataObj.insert(m_jsonKey.location,	dRdata.location);
+				dataObj.insert(m_jsonKey.lon, dRdata.lon);
+				dataObj.insert(m_jsonKey.lat, dRdata.lat);
+				dataObj.insert(m_jsonKey.description, dRdata.description);
+				dataObj.insert(m_jsonKey.detectPlatform, dRdata.detectPlatform);
+
+				jarray.append(dataObj);
+			}
+			obj.insert(m_jsonKey.totalDataSize, response.m_count);
+			obj.insert(m_jsonKey.data, jarray);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllTaskResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			QJsonArray jarray = jsonObject.value(m_jsonKey.data).toArray();
+			for (int i = 0; i < jarray.size(); i++) {
+				Datastruct::TaskEntityData data;
+
+				QJsonObject dataObj = jarray.at(i).toObject();
+
+				data.id = dataObj.value(m_jsonKey.id).toString();
+				data.taskName = dataObj.value(m_jsonKey.name).toString();
+				data.startTime = dataObj.value(m_jsonKey.startTime).toString();
+				data.endTime = dataObj.value(m_jsonKey.endTime).toString();
+				data.location = dataObj.value(m_jsonKey.location).toString();
+				data.lon	= dataObj.value(m_jsonKey.lon).toDouble();
+				data.lat	= dataObj.value(m_jsonKey.lat).toDouble();
+				data.description = dataObj.value(m_jsonKey.description).toString();
+				data.detectPlatform = dataObj.value(m_jsonKey.detectPlatform).toString();
+
+				response.m_taskInfos.append(data);
+			}
+			response.m_count = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDeleteRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.taskId);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDeleteRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.taskId = jsonObject.value(m_jsonKey.id).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDeleteResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_deleteResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDeleteResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
 		});
 	}
 

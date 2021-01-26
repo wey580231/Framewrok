@@ -28,7 +28,11 @@ namespace Related {
 		void recvUseRegistResponse(const Datastruct::UserRegistResponse & response);
 		void recvQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 		void recvOperateUserResponse(const Datastruct::OperateUserResponse & response);
-
+		//任务有关
+		void recvTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
+		void recvQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void recvTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
+		
 		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
@@ -42,6 +46,10 @@ namespace Related {
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 		void resOperateUserResponse(const Datastruct::OperateUserResponse & response);
+
+		void respTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
+		void respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void respTaskeDleteResponse(const Datastruct::TaskDeleteResponse & response);
 
  		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
