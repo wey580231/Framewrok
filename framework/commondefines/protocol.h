@@ -130,6 +130,47 @@ namespace Datastruct {
 		int m_userCount;		/*!< 用户总条数 */
 		QList<UserEntityData> m_userInfos;		/*!< 当前页面下用户结果集合 */
 	};
+
+	/*!
+ * @brief 用户基础操作类型
+ */
+	enum UserOperateType {
+		UpdateInfo,			/*!< 更新信息 */
+		EditPrivilege,		/*!< 编辑用户权力 */
+		DeleteUser			/*!< 删除用户 */
+	};
+
+	/*!
+	 * @brief 用户基础操作请求
+	 * @details 包括更新权限、删除用户等
+				普通用户可以更新密码；
+				管理员可以更新自己密码，修改普通用户的权限、删除普通用户
+	 */
+	struct OperateUserRequest {
+		OperateUserRequest() :m_manageId(0), m_id(0) {}
+
+		UserOperateType m_operateType;	/*!< 用户操作类型 */
+
+		/*!< 普通用户操作内容 */
+		int m_id;					/*!< 待操作的用户ID */
+		QString m_password;			/*!< 新数据库密码 */
+
+		/*!< 管理员用户操作内容 */
+		int m_privilege;			/*!< 权限 */
+		bool m_isManage;			/*!< 是否为管理员 */
+
+		int m_manageId;				/*!< 管理员Id */
+	};
+
+	/*!
+	 * @brief 用户基础操作响应
+	 */
+	struct OperateUserResponse {
+		UserOperateType m_operateType;
+		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
+		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
+	};
+
 	
 	/*!
 	 * @brief 创建任务请求
@@ -158,6 +199,8 @@ namespace Datastruct {
 		QString id;					/*!< id */
 		QString taskId;				/*!< 任务Id  */
 		QString createTime;			/*!< 创建时间 */
+		QString description;		/*!< 描述 */
+		QString seaCondition;		/*!< 海况信息 */
 	};
 
 	/*!
@@ -227,7 +270,6 @@ namespace Datastruct {
 		double lat;				/*!< 纬度 */
 		QString seaCondition;	/*!< 海况 */
 		QString floatingTime;	/*!< 浮动时间 */
-		QString createTime;		/*!< 记录时间 */
 	};
 
 	/*!
@@ -260,11 +302,11 @@ namespace Datastruct {
 	 */
 	struct LoadAllExperimentRecordsResponse {
 		int m_count;										/*!< 总条数 */
-		QList<ExperimentRecordEntityData> m_listInfos;		/*!< 当前页面下试验记录结果集合 */
+		QList<ExperimentRecordEntityData > m_listInfos;		/*!< 当前页面下试验记录结果集合 */
 	};
 
 	/*!
-	* @brief   值班日志删除请求
+	* @brief   试验记录删除请求
 	 * @details
 	*/
 	struct ExperimentRecordDeleteRequest
@@ -274,7 +316,7 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief  值班日志删除请求结果报文
+	 * @brief  试验记录删除请求结果报文
 	 * @details
 	 */
 	struct ExperimentRecordDeleteResponse
@@ -285,45 +327,7 @@ namespace Datastruct {
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
-	/*!
-	 * @brief 用户基础操作类型
-	 */
-	enum UserOperateType {
-		UpdateInfo,			/*!< 更新信息 */
-		EditPrivilege,		/*!< 编辑用户权力 */
-		DeleteUser			/*!< 删除用户 */
-	};
 
-	/*!
-	 * @brief 用户基础操作请求
-	 * @details 包括更新权限、删除用户等
-				普通用户可以更新密码；
-				管理员可以更新自己密码，修改普通用户的权限、删除普通用户
-	 */
-	struct OperateUserRequest {
-		OperateUserRequest() :m_manageId(0), m_id(0) {}
-
-		UserOperateType m_operateType;	/*!< 用户操作类型 */
-
-		/*!< 普通用户操作内容 */
-		int m_id;					/*!< 待操作的用户ID */
-		QString m_password;			/*!< 新数据库密码 */
-
-		/*!< 管理员用户操作内容 */
-		int m_privilege;			/*!< 权限 */
-		bool m_isManage;			/*!< 是否为管理员 */
-
-		int m_manageId;				/*!< 管理员Id */
-	};
-
-	/*!
-	 * @brief 用户基础操作响应
-	 */
-	struct OperateUserResponse {
-		UserOperateType m_operateType;
-		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
-		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
-	};
 
 } // namespace Datastruct
 

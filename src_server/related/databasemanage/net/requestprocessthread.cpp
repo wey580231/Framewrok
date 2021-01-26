@@ -105,7 +105,14 @@ namespace Related {
 				}
 			}
 				break;
-
+			case Datastruct::P_UserOperate: {
+				Datastruct::OperateUserRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::OperateUserResponse response = m_processCenter.processUserOperate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_UserOperate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -113,7 +120,7 @@ namespace Related {
 					runit->m_resposneData = makePacket(Datastruct::P_CreateDutyRecord, JsonWrapper::instance()->wrap(response));
 				}
 			}
-			  break;  
+				break;  
 			case Datastruct::P_ListDutyRecords:{
 				Datastruct::LoadAllDutyRecordRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -121,18 +128,45 @@ namespace Related {
 					runit->m_resposneData = makePacket(Datastruct::P_ListDutyRecords, JsonWrapper::instance()->wrap(response));
 				}
 			 }
-			  break;
+				break;
 			case Datastruct::P_DeleteDutyRecords:{
-
-			 }
-			  break;
-
-			case Datastruct::P_UserOperate: {
-				Datastruct::OperateUserRequest request;
+				Datastruct::DutyRecordDeleteRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-					Datastruct::OperateUserResponse response = m_processCenter.processUserOperate(unit->m_clientId, request);
-					runit->m_resposneData = makePacket(Datastruct::P_UserOperate, JsonWrapper::instance()->wrap(response));
+					Datastruct::DutyRecordDeleteResponse response = m_processCenter.processDutyRecordDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DeleteDutyRecords, JsonWrapper::instance()->wrap(response));
 				}
+			 }
+				break;
+			case Datastruct::P_ModifyDutyRecord: {
+
+			}
+				break;
+			case Datastruct::P_CreateExperimentRecord: {
+				Datastruct::ExperimentRecordCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::ExperimentRecordCreateResponse response = m_processCenter.processExperimentRecordCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_CreateExperimentRecord, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_ListExperimentRecords: {
+				Datastruct::LoadAllExperimentRecordsRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllExperimentRecordsResponse response = m_processCenter.processExperimentRecordList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_ListExperimentRecords, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DeleteExperimentRecord: {
+				Datastruct::ExperimentRecordDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::ExperimentRecordDeleteResponse response = m_processCenter.processExperimentRecordDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DeleteExperimentRecord, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_ModifyExperimentRecord: {
+
 			}
 				break;
 			default:

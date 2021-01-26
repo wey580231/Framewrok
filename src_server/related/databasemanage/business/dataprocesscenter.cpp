@@ -160,88 +160,6 @@ namespace Related {
 		return response;
 	}
 
-	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
-	{
-		Datastruct::DutyRecordCreateResponse response;
-
-		Table::DutyRecordEntity dutyRecord;
-
-		Base::RSelect rs(dutyRecord.table);
-		rs.select(dutyRecord.table)
-			.createCriteria()
-			.add(Base::Restrictions::eq(dutyRecord.id, request.taskId));
-
-		QSqlQuery query(m_database->sqlDatabase());
-
-		do {
-			if (query.exec(rs.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = false;
-					response.m_errorInfo = QStringLiteral("该记录存在");
-					break;
-				}
-			}
-
-
-			Base::RPersistence rps(dutyRecord.table);
-			rps.insert({
-					{dutyRecord.id,		request.id},
-					{dutyRecord.taskId,		request.taskId},
-					{dutyRecord.createTime, QDateTime::currentDateTime()},
-				});
-
-			qDebug() << "____" <<rps.sql();
-
-			if (query.exec(rps.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = true;
-				}
-			}
-			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
-			}
-
-		} while (0);
-
-		return response;
-	}
-
-	Datastruct::LoadAllDutyRecordResponse DataProcessCenter::processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request)
-	{
-		Datastruct::LoadAllDutyRecordResponse response;
-
-		Table::DutyRecordEntity dutyRecord;
-
-		Base::RSelect rs(dutyRecord.table);
-		rs.select(dutyRecord.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
-
-		QSqlQuery query(m_database->sqlDatabase());
-
-		if (query.exec(rs.sql())) {
-			while (query.next()) {
-
-				Datastruct::DutyRecordEntityData data;
-				data.id = query.value(dutyRecord.id).toString();
-				data.taskId = query.value(dutyRecord.taskId).toString();
-				data.createTime = query.value(dutyRecord.createTime).toDateTime().toString(TIME_FORMAT);
-
-				response.m_dutyRecordInfos.append(data);
-			}
-
-			Base::RSelect rst(dutyRecord.table);
-			rst.count();
-
-			qDebug() << rst.sql();
-
-			if (query.exec(rst.sql())) {
-				if (query.next()) {
-					response.m_dutyRecordCount = query.value(0).toInt();
-				}
-			}
-		}
-		return response;
-	}
 	Datastruct::OperateUserResponse DataProcessCenter::processUserOperate(int clientId, const Datastruct::OperateUserRequest & request)
 	{
 		Datastruct::OperateUserResponse response;
@@ -267,7 +185,7 @@ namespace Related {
 			if (hasManagePrivilege) {
 				if (request.m_operateType == Datastruct::EditPrivilege) {
 					Base::RUpdate rud(user.table);
-					rud.update(user.table, { {user.privilege,request.m_privilege} 
+					rud.update(user.table, { {user.privilege,request.m_privilege}
 						,{user.superManage,request.m_isManage} })
 						.createCriteria()
 						.add(Base::Restrictions::eq(user.id, request.m_id));
@@ -315,6 +233,199 @@ namespace Related {
 				}
 			}
 		}
+
+		return response;
+	}
+
+	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
+	{
+		Datastruct::DutyRecordCreateResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		do {
+			if (query.exec(rs.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = false;
+					response.m_errorInfo = QStringLiteral("该记录存在");
+					break;
+				}
+			}
+
+			Base::RPersistence rps(dutyRecord.table);
+			rps.insert({
+					{dutyRecord.id,		request.id},
+					{dutyRecord.taskId,		request.taskId},
+					{dutyRecord.createTime, QDateTime::currentDateTime()},
+					{dutyRecord.description, request.description},
+					{dutyRecord.seaCondition, request.seaCondition},
+				});
+
+			qDebug() << "____" <<rps.sql();
+
+			if (query.exec(rps.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = true;
+				}
+			}
+			else {
+				response.m_errorInfo = QStringLiteral("保存数据失败.");
+			}
+
+		} while (0);
+
+		return response;
+	}
+
+	Datastruct::LoadAllDutyRecordResponse DataProcessCenter::processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request)
+	{
+		Datastruct::LoadAllDutyRecordResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+
+				Datastruct::DutyRecordEntityData data;
+				data.id = query.value(dutyRecord.id).toString();
+				data.taskId = query.value(dutyRecord.taskId).toString();
+				data.createTime = query.value(dutyRecord.createTime).toDateTime().toString(TIME_FORMAT);
+				data.description = query.value(dutyRecord.description).toString();
+				data.seaCondition = query.value(dutyRecord.seaCondition).toString();
+				response.m_dutyRecordInfos.append(data);
+			}
+
+			Base::RSelect rst(dutyRecord.table);
+			rst.count();
+
+			qDebug() << rst.sql();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_dutyRecordCount = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+	Datastruct::DutyRecordDeleteResponse DataProcessCenter::processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request)
+	{
+		Datastruct::DutyRecordDeleteResponse response;
+
+		return response;
+	}
+	Datastruct::ExperimentRecordCreateResponse DataProcessCenter::processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request)
+	{
+		Datastruct::ExperimentRecordCreateResponse response;
+
+		Table::ExperimentRecordEntity experimentRecord;
+
+		Base::RSelect rs(experimentRecord.table);
+		rs.select(experimentRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		do {
+			if (query.exec(rs.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = false;
+					response.m_errorInfo = QStringLiteral("该记录存在");
+					break;
+				}
+			}
+
+			Base::RPersistence rps(experimentRecord.table);
+			rps.insert({
+					{experimentRecord.id,			request.id},
+					{experimentRecord.taskId,		request.taskId},
+					{experimentRecord.platformId,	request.platformId},
+					{experimentRecord.lon,			QString::number(request.lon) },
+					{experimentRecord.lat,			QString::number(request.lat)},
+					{experimentRecord.seaCondition, request.seaCondition},
+					{experimentRecord.floatingTime, request.floatingTime},
+				});
+
+			qDebug() << rps.sql();
+
+			if (query.exec(rps.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = true;
+				}
+			}
+			else {
+				response.m_errorInfo = QStringLiteral("保存数据失败.");
+			}
+
+		} while (0);
+
+		return response;
+	}
+	Datastruct::LoadAllExperimentRecordsResponse DataProcessCenter::processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request)
+	{
+		Datastruct::LoadAllExperimentRecordsResponse response;
+
+		Table::ExperimentRecordEntity experimentRecord;
+
+		Base::RSelect rs(experimentRecord.table);
+		rs.select(experimentRecord.table)
+			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+
+				Datastruct::ExperimentRecordEntityData data;
+				data.id = query.value(experimentRecord.id).toString();
+				data.taskId = query.value(experimentRecord.taskId).toString();
+				data.platformId = query.value(experimentRecord.platformId).toString();
+				data.lon = query.value(experimentRecord.lon).toDouble();
+				data.lat = query.value(experimentRecord.lat).toDouble();
+				data.seaCondition = query.value(experimentRecord.seaCondition).toString();
+				data.floatingTime = query.value(experimentRecord.floatingTime).toString();
+
+				response.m_listInfos.append(data);
+			}
+
+			Base::RSelect rst(experimentRecord.table);
+			rst.count();
+
+			qDebug() << rst.sql();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_count = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+	Datastruct::ExperimentRecordDeleteResponse DataProcessCenter::processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request)
+	{
+		Datastruct::ExperimentRecordDeleteResponse response;
+
+		Table::ExperimentRecordEntity experimentRecord;
+
+// 		Base::RDelete rs(experimentRecord.table);
+// 		r(experimentRecord.table)
+// 			.limit(request.m_offsetIndex, request.m_limitIndex);
+// 
+// 		QSqlQuery query(m_database->sqlDatabase());
 
 		return response;
 	}

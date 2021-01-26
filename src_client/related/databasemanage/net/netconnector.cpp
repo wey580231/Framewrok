@@ -191,6 +191,12 @@ namespace Related {
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::OperateUserRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_UserOperate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void NetConnector::write(const Datastruct::DutyRecordCreateRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_CreateDutyRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -200,15 +206,33 @@ namespace Related {
 	void NetConnector::write(const Datastruct::LoadAllDutyRecordRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_ListDutyRecords, CommonDefines::JsonWrapper::instance()->wrap(request));
-			sendData(array);
-	}
-	
-	void NetConnector::write(const Datastruct::OperateUserRequest & request)
-	{
-		QByteArray array = makePacket(Datastruct::P_UserOperate, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::DutyRecordDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DeleteDutyRecords, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::ExperimentRecordCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_CreateExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::LoadAllExperimentRecordsRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_ListExperimentRecords, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::ExperimentRecordDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DeleteExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+	
 	QByteArray NetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
 	{
 		static int headLen = sizeof(Datastruct::PacketHead);
@@ -273,24 +297,6 @@ namespace Related {
 				}
 			}
 				break;
-			case  Datastruct::P_CreateDutyRecord: {
-				Datastruct::DutyRecordCreateResponse response;
-				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
-					SignalDispatch::instance()->recvDutyRecordCreateResponse(response);
-				}
-			}
-				break;
-			case  Datastruct::P_ListDutyRecords: {
-				Datastruct::LoadAllDutyRecordResponse response;
-				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
-					SignalDispatch::instance()->recvQueryAllDutyRecordResponse(response);
-				}
-			}
-				break;
-			case  Datastruct::P_DeleteDutyRecords: {
-
-			}
-				break;
 
 			case Datastruct::P_UserOperate: {
 				Datastruct::OperateUserResponse response;
@@ -299,6 +305,54 @@ namespace Related {
 				}
 			}
 				break;
+
+			case  Datastruct::P_CreateDutyRecord: {
+				Datastruct::DutyRecordCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDutyRecordCreateResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_ListDutyRecords: {
+				Datastruct::LoadAllDutyRecordResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllDutyRecordResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DeleteDutyRecords: {
+				Datastruct::DutyRecordDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDutyRecordDeleteResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_CreateExperimentRecord: {
+				Datastruct::ExperimentRecordCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvExperimentRecordCreateResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_ListExperimentRecords: {
+				Datastruct::LoadAllExperimentRecordsResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllExperimentRecordResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_DeleteExperimentRecord: {
+				Datastruct::ExperimentRecordDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvExperimentRecordDeleteResponse(response);
+				}
+			}
+				break;
+
 			default:
 				break;
 		}

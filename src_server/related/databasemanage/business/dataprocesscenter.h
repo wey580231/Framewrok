@@ -35,10 +35,15 @@ namespace Related {
 		Datastruct::LoadAllUserResponse processUserList(int clientId,const Datastruct::LoadAllUserRequest & request);
 		Datastruct::OperateUserResponse processUserOperate(int clientId,const Datastruct::OperateUserRequest & request);
 
-		//[] 
+		//值班日志
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
 		Datastruct::LoadAllDutyRecordResponse processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request);
+		Datastruct::DutyRecordDeleteResponse processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request);
 
+		//试验记录
+		Datastruct::ExperimentRecordCreateResponse  processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request);
+		Datastruct::LoadAllExperimentRecordsResponse  processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request);
+		Datastruct::ExperimentRecordDeleteResponse  processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request);
 	private:
 		Base::Database * m_database;
 
