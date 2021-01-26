@@ -240,6 +240,7 @@ namespace Related {
 				}
 			}
 		}
+		return response;
 	}
 	Datastruct::OperateUserResponse DataProcessCenter::processUserOperate(int clientId, const Datastruct::OperateUserRequest & request)
 	{
