@@ -31,6 +31,11 @@ namespace Related {
 
 		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
+		void recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
+
+		void recvExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
+		void recvQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
+		void recvExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
 
 	signals:
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
@@ -40,7 +45,11 @@ namespace Related {
 
  		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
+		void respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
 
+		void respExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
+		void respQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
+		void respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
 	private:
 		SignalDispatch(QObject *parent = nullptr);
 

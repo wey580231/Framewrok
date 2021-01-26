@@ -49,10 +49,15 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::LoadAllUserResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllUserResponse & response);
 
+		QByteArray wrap(const Datastruct::OperateUserRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserRequest & request);
+
+		QByteArray wrap(const Datastruct::OperateUserResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::OperateUserResponse & response);
+		
+		//TODO 20210125 有关任务
 		QByteArray wrap(const Datastruct::TaskCreateRequest & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskCreateRequest & response);
-
-		//TODO 20210125 有关任务
 
 
 
@@ -69,20 +74,33 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::LoadAllDutyRecordResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllDutyRecordResponse & response);
 
+		QByteArray wrap(const Datastruct::DutyRecordDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::DutyRecordDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordDeleteResponse & response);
+
+		//TODO 20210125 23:15:29 有关试验记录
+
+		QByteArray wrap(const Datastruct::ExperimentRecordCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::ExperimentRecordCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllExperimentRecordsRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllExperimentRecordsRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllExperimentRecordsResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllExperimentRecordsResponse & response);
+
 		QByteArray wrap(const Datastruct::ExperimentRecordDeleteRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteRequest & request);
 
 		QByteArray wrap(const Datastruct::ExperimentRecordDeleteResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteResponse & response);
 
-		//TODO 20210125 23:15:29 有关试验记录
 
-
-		QByteArray wrap(const Datastruct::OperateUserRequest & request);
-		bool unrap(const QByteArray & data, Datastruct::OperateUserRequest & request);
-
-		QByteArray wrap(const Datastruct::OperateUserResponse & response);
-		bool unrap(const QByteArray & data, Datastruct::OperateUserResponse & response);
 
 
 	private:

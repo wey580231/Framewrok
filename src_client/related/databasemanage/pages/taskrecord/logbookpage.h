@@ -7,21 +7,21 @@
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QWidget>
 #include <QComboBox>
+#include <QHBoxLayout>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 #include <base\util\rutil.h>
+#include <commondefines/protocol.h>
 
 #include "../customwidget/pageswitchbar.h"
 
 #include "customwidget/operationtoolspage.h"
 #include "tablemodel/logbookmodel.h"
-
 
 namespace Related {
 
@@ -37,7 +37,7 @@ namespace Related {
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
-
+		void processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
 
 	private:
 		void init();
@@ -47,10 +47,11 @@ namespace Related {
 		void refreshCurrPage();
 
 	private:
+		OperationToolsPage *m_operationToolsPage;			/*!< 操作工具页面 */
 		Base::RTableView * m_tableView;						/*!< 数据表格 */
 		LogbookModel * m_tableModel;						/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */				
-		OperationToolsPage *m_operationToolsPage;			/*!<  */
+
 
 		QString m_taskId;
 	};
