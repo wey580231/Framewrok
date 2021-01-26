@@ -14,7 +14,7 @@
 #include <QWidget>
 #include <qstackedwidget.h>
 
-#include <base\selfwidget\rtabbar.h>
+#include <base\selfwidget\rtabwidget.h>
 #include "../abstractpage.h"
 
 #include "targetdatabasemanagepage.h"
@@ -31,20 +31,11 @@ namespace Related {
 
 		PageType getPageType() const;
 
-		enum TargerTabBarIndex {
-			Tab_target1,
-			Tab_target2,
-		};
-
-	private slots:
-		void respTabChanged(int page);
-
 	private:
 		void init();
 
 	private:
-		Base::RTabBar * m_tabWidget;
-		QStackedWidget * m_stackedWidget;
+		Base::RTabWidget * m_tabWidget;
 
 		TargetDatabaseManagePage *m_targetDatabaseManagePage;
 	};

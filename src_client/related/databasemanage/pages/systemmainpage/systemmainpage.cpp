@@ -189,29 +189,15 @@ namespace Related {
 
 	void SystemMainPage::slotNewTaskClickde()
 	{
-		NewTaskDialog *t_pNewTaskDialog = new NewTaskDialog();
-		connect(t_pNewTaskDialog, SIGNAL(signalCreaateNewTask()), this, SLOT(slotCreaateNewTask()));
-		t_pNewTaskDialog->exec();
+		NewTaskDialog dialog(this);
+		if (QDialog::Accepted == dialog.exec()) {
+			
+		}
 	}
 
 	void SystemMainPage::slotRefreshTaskClicked()
 	{
 
-	}
-
-	/*!
-	 * @brief    用于刷新任务列表界面
-	 * @details 
-	 */
-	void SystemMainPage::slotCreaateNewTask()
-	{
-		for (int i = 0; i < m_taskItems.size();i++) {
-			TaskOverViewItem * item = m_taskItems.at(i);
-			m_taskWindow->layout()->removeWidget(item);
-		}
-
-
-		refreshCurrTask();
 	}
 
 	/*!

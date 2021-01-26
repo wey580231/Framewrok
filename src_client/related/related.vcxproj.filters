@@ -49,9 +49,6 @@
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
-    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\taskpictureuploadwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -151,9 +148,6 @@
     <QtMoc Include="databasemanage\frame\mainwindow.h" />
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
-    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\taskpictureuploadwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>

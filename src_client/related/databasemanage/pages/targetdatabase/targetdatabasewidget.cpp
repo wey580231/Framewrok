@@ -19,35 +19,29 @@ namespace Related {
 		return Page_TargetDatabase;
 	}
 
-	void TargetDatabaseWidget::respTabChanged(int page)
-	{
-		m_stackedWidget->setCurrentIndex(page);
-	}
-
 	void TargetDatabaseWidget::init()
 	{
-		m_tabWidget = new Base::RTabBar();
-		connect(m_tabWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(respTabChanged(int)));
-
-		m_tabWidget->setFixedHeight(60);
-		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
-
-		Base::RTabButton * target1Butt = new Base::RTabButton(QStringLiteral("目标库"));
-		//Base::RTabButton * target2Butt = new Base::RTabButton(QStringLiteral("目标库管理2"));
-
-		m_tabWidget->addTabButton(target1Butt, Tab_target1);
-		//m_tabWidget->addTabButton(target2Butt, Tab_target2);
-		m_tabWidget->setFixedHeight(60);
-
-		m_stackedWidget = new QStackedWidget();
+		m_tabWidget = new Base::RTabWidget();
+		m_tabWidget->setTabBarHeight(60);
 
 		m_targetDatabaseManagePage = new TargetDatabaseManagePage();
 
-		m_stackedWidget->addWidget(m_targetDatabaseManagePage);
+		m_tabWidget->addPage(QStringLiteral("目标库"), m_targetDatabaseManagePage);
+
+		m_tabWidget->setWidgetBringToBottomCallback([&](QWidget * preWidet) {
+			AbstractPage * preparePage = dynamic_cast<AbstractPage *>(preWidet);
+			if (preparePage)
+				preparePage->prepareBringToBottom();
+		});
+
+		m_tabWidget->setWidgetBringToTopCallback([&](QWidget * newWidet) {
+			AbstractPage * nextPage = dynamic_cast<AbstractPage *>(newWidet);
+			if (nextPage)
+				nextPage->prepareBringToTop();
+		});
 
 		QVBoxLayout * layout = new QVBoxLayout();
 		layout->addWidget(m_tabWidget);
-		layout->addWidget(m_stackedWidget);
 		layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(layout);
 	}

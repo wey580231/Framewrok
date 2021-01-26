@@ -19,33 +19,10 @@ namespace Related {
 		return Page_TaskDataAnalyse;
 	}
 
-	void TaskAnalysePage::respTabChanged(int page)
-	{
-		m_stackedWidget->setCurrentIndex(page);
-
-
-	}
-
 	void TaskAnalysePage::init()
 	{
-		m_tabWidget = new Base::RTabBar();
-		connect(m_tabWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(respTabChanged(int)));
-		m_tabWidget->setFixedHeight(60);
-
-		m_tabWidget->setTabAlignment(Base::RTabBar::AlignLeft);
-
-		Base::RTabButton * dataOverviewButt = new Base::RTabButton(QStringLiteral("数据预览"));
-		Base::RTabButton * audioDataButt = new Base::RTabButton(QStringLiteral("音频信息"));
-		Base::RTabButton * ambientNoiseButt = new Base::RTabButton(QStringLiteral("环境噪声"));
-		Base::RTabButton * hxjPlatformButt = new Base::RTabButton(QStringLiteral("HXJ平台信息"));
-
-		m_tabWidget->addTabButton(dataOverviewButt, Tab_dataOverview);
-		m_tabWidget->addTabButton(audioDataButt,	Tab_advInfo);
-		m_tabWidget->addTabButton(ambientNoiseButt, Tab_ambientNoise);
-		m_tabWidget->addTabButton(hxjPlatformButt,  Tab_hxjInfo);
-
-		m_stackedWidget = new QStackedWidget();
-		m_stackedWidget->setStyleSheet("background-color:rgba(0,0,0,0)");
+		m_tabWidget = new Base::RTabWidget();
+		m_tabWidget->setTabBarHeight(60);
 
 		// 业务显示界面
 		{
@@ -57,16 +34,15 @@ namespace Related {
 
 			m_hxjPlatformDataWidget = new HXJPlatformInfoWidget(this);
 
-			m_stackedWidget->addWidget(m_dataOverviewWidget);
-			m_stackedWidget->addWidget(m_audioDataWidget);
-			m_stackedWidget->addWidget(m_ambientNoiseDataWidget);
-			m_stackedWidget->addWidget(m_hxjPlatformDataWidget);
+			m_tabWidget->addPage(QStringLiteral("数据预览"), m_dataOverviewWidget);
+			m_tabWidget->addPage(QStringLiteral("音频信息"), m_audioDataWidget);
+			m_tabWidget->addPage(QStringLiteral("环境噪声"), m_ambientNoiseDataWidget);
+			m_tabWidget->addPage(QStringLiteral("HXJ平台信息"), m_hxjPlatformDataWidget);
 		}
 
 		QVBoxLayout * layout = new QVBoxLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_tabWidget);
-		layout->addWidget(m_stackedWidget);
 		setLayout(layout);
 	}
 

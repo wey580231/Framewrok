@@ -42,6 +42,12 @@ namespace Base {
 		QColor m_disableTextColor;
 	};
 
+	enum TabAlignment {
+		AlignLeft,
+		AlignCenter,
+		AlignRight
+	};
+
 	class BASESHARED_EXPORT RTabBar : public QWidget
 	{
 		Q_OBJECT
@@ -49,15 +55,11 @@ namespace Base {
 		explicit RTabBar(QWidget * parent = nullptr);
 		~RTabBar();
 
-		enum TabAlignment {
-			AlignLeft,
-			AlignCenter,
-			AlignRight
-		};
 		void setTabAlignment(TabAlignment align);
 
 		void addTabButton(RTabButton * butt, int index);
 		void setTabButtonEnabled(int index, bool flag);
+		int tabCount() const { return m_buttList.size(); }
 
 		void setCurrentIndex(int index, bool indexChangeSignal = true);
 		int currentIndex();

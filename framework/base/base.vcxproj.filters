@@ -233,6 +233,9 @@
     <ClCompile Include="macros.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="selfwidget\rtabwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="util\fileutils.h">
@@ -323,6 +326,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selfwidget\rtabwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

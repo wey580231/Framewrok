@@ -175,12 +175,12 @@ namespace Base {
 			m_mainLayout->addWidget(m_tabContainer);
 			m_mainLayout->addStretch(1);
 		}
-		else if (m_tabAlign == AlignRight) {
+		else if (m_tabAlign == AlignCenter) {
 			m_mainLayout->addStretch(1);
 			m_mainLayout->addWidget(m_tabContainer);
 			m_mainLayout->addStretch(1);
 		}
-		else if (m_tabAlign == AlignCenter) {
+		else if (m_tabAlign == AlignRight) {
 			m_mainLayout->addStretch(1);
 			m_mainLayout->addWidget(m_tabContainer);
 		}
