@@ -12,6 +12,7 @@
  #pragma once
 
 #include <QObject>
+#include <QDateTime>
 
 #include <base\util\rringbuffer.h>
 #include <commondefines/protocol.h>
@@ -42,10 +43,24 @@ namespace Related {
 		 */
 		bool isConnected();
 
+		/*!
+		 * @brief   用户有关
+		 */
 		void write(const Datastruct::UserLoginRequest & request);
 		void write(const Datastruct::UserRegistRequest & request);
 		void write(const Datastruct::LoadAllUserRequest & request);
 		void write(const Datastruct::OperateUserRequest & request);
+
+		/*!
+		 * @brief 任务操作有关
+		 */
+
+
+		/*!
+		 * @brief  值班日志有关
+		 */
+		void write(const Datastruct::DutyRecordCreateRequest & request);
+		void write(const Datastruct::LoadAllDutyRecordRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);

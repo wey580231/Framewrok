@@ -1,5 +1,6 @@
 #include "systemmainpage.h"
 
+#include <QDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -13,8 +14,15 @@
 namespace Related {
 
 	SystemMainPage::SystemMainPage(QWidget *parent)
-		: AbstractPage(parent)
+		: AbstractPage(parent),
+		m_taskNumItem(nullptr),
+		m_diskSpaceItem(nullptr),
+		m_platNumItem(nullptr),
+		m_newTaskButt(nullptr),
+		m_refreshTaskButt(nullptr)
 	{
+		m_taskItems.clear();
+
 		init();
 
 		initTaskList();
@@ -28,19 +36,26 @@ namespace Related {
 	{
 		return Page_SystemMainPage;
 	}
+	
+	/*!
+	 * @brief   刷新任务列表信息
+	 * @details 
+	 */
+	void SystemMainPage::updateTaskListInfo() {
+
+	}
 
 	void SystemMainPage::init()
 	{
 		QWidget * mainWidget = new QWidget();
 
-		CustomWidgetContainer * overViewContainer = new CustomWidgetContainer();
-
 		//概览页面
+		CustomWidgetContainer * overViewContainer = new CustomWidgetContainer();
 		{
 			QSize maxSize(415, 170);
 			QSize minSize(345, 170);
 			m_taskNumItem = new OverViewItem();
-			m_taskNumItem->setLabelData(QString::number(12));
+			m_taskNumItem->setLabelData(QString::number(0));
 			m_taskNumItem->setLabelText(QStringLiteral("任务总数"));
 			m_taskNumItem->setLabelBackground(QColor(237, 168, 27));
 			m_taskNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/上传.png"));
@@ -48,7 +63,7 @@ namespace Related {
 			m_taskNumItem->setMinimumSize(minSize);
 
 			m_diskSpaceItem = new OverViewItem();
-			m_diskSpaceItem->setLabelData("120GB");
+			m_diskSpaceItem->setLabelData(QString("%1 GB").arg(QString::number(0)));
 			m_diskSpaceItem->setLabelBackground(QColor(77, 174, 116));
 			m_diskSpaceItem->setLabelText(QStringLiteral("占用空间"));
 			m_diskSpaceItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据库记录.png"));
@@ -56,7 +71,7 @@ namespace Related {
 			m_diskSpaceItem->setMinimumSize(minSize);
 
 			m_platNumItem = new OverViewItem();
-			m_platNumItem->setLabelData(QString::number(8));
+			m_platNumItem->setLabelData(QString::number(0));
 			m_platNumItem->setLabelBackground(QColor(199, 99, 116));
 			m_platNumItem->setLabelText(QStringLiteral("平台数量"));
 			m_platNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/未处理.png"));
@@ -142,7 +157,7 @@ namespace Related {
 
 	void SystemMainPage::initTaskList()
 	{
- 		for (int i = 0; i < 15; i++) {
+ 		for (int i = 0; i < 5; i++) {
 			TaskOverViewItem * item = new TaskOverViewItem();
 			connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
 			connect(item, SIGNAL(deleteTask(QString)), this, SIGNAL(deleteTask(QString)));
@@ -172,16 +187,38 @@ namespace Related {
 		}
 	}
 
-
 	void SystemMainPage::slotNewTaskClickde()
 	{
 		NewTaskDialog *t_pNewTaskDialog = new NewTaskDialog();
+		connect(t_pNewTaskDialog, SIGNAL(signalCreaateNewTask()), this, SLOT(slotCreaateNewTask()));
 		t_pNewTaskDialog->exec();
+	}
+
+	void SystemMainPage::slotRefreshTaskClicked()
+	{
 
 	}
 
-	
-	void SystemMainPage::slotRefreshTaskClicked()
+	/*!
+	 * @brief    用于刷新任务列表界面
+	 * @details 
+	 */
+	void SystemMainPage::slotCreaateNewTask()
+	{
+		for (int i = 0; i < m_taskItems.size();i++) {
+			TaskOverViewItem * item = m_taskItems.at(i);
+			m_taskWindow->layout()->removeWidget(item);
+		}
+
+
+		refreshCurrTask();
+	}
+
+	/*!
+	 * @brief	更新当前任务
+	 * @details 任务创建、任删除等改变时，调用此方法可获得及时刷新
+	 */
+	void SystemMainPage::refreshCurrTask()
 	{
 
 	}

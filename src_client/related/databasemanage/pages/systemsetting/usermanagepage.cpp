@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QItemSelectionModel>
 #include <QDebug>
+#include <QHBoxLayout>
 
 #include <commondefines/protocol.h>
 #include <base/selfwidget/rmessagebox.h>

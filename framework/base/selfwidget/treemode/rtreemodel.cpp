@@ -29,6 +29,11 @@ QVariant RTreeModel::data(const QModelIndex &index, int role) const
                 return item->nodeName;
             }
             break;
+			//TODO 20210125 yzg 增加节点勾选
+		case Qt::CheckStateRole: {
+				return item->nodeChecked ? Qt::Checked : Qt::Unchecked;
+		}
+								 break;
         default:break;
     }
 

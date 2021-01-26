@@ -106,6 +106,27 @@ namespace Related {
 			}
 				break;
 
+			case  Datastruct::P_CreateDutyRecord: {
+				Datastruct::DutyRecordCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DutyRecordCreateResponse response = m_processCenter.processDutyRecordCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_CreateDutyRecord, JsonWrapper::instance()->wrap(response));
+				}
+			}
+			  break;  
+			case Datastruct::P_ListDutyRecords:{
+				Datastruct::LoadAllDutyRecordRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllDutyRecordResponse response = m_processCenter.processDutyRecordList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_ListDutyRecords, JsonWrapper::instance()->wrap(response));
+				}
+			 }
+			  break;
+			case Datastruct::P_DeleteDutyRecords:{
+
+			 }
+			  break;
+
 			case Datastruct::P_UserOperate: {
 				Datastruct::OperateUserRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {

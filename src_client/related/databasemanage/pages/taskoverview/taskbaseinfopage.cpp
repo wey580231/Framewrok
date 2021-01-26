@@ -17,7 +17,7 @@ namespace Related {
 		m_taskBaseInfo = info;
 		//刷新任务信息
 		m_taskname->setText(m_taskBaseInfo.taskName);
-		m_taskTime->setText(m_taskBaseInfo.taskTime);
+		//m_taskTime->setText(m_taskBaseInfo.taskTime);
 		m_taskplace->setText(m_taskBaseInfo.taskplace);
 		m_startTime->setText(m_taskBaseInfo.startTime);
 		m_endTime->setText(m_taskBaseInfo.endTime);

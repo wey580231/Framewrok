@@ -39,4 +39,50 @@ namespace Datastruct {
 		bool isManager;			/*!< 是否为管理员,管理员可以修改普通用户的权限，系统中至少存在一个管理员 */
 	};
 
+	/*!
+	 * @brief  单条任务实体数据结构
+	 * @details 
+	 */
+	struct TaskEntityData
+	{
+		TaskEntityData(){
+		}
+		QString id;					/*!< 数据库Id */
+		QString taskName;		/*!< 任务名称 */
+		QString startTime;		/*!< 起始时间 */
+		QString endTime;		/*!< 结束时间 */
+		QString location;		/*!< 任务地点 */
+
+	};
+
+	/*!
+	 * @brief  单条值班日志实体数据结构
+	 * @details 
+	 */
+	struct DutyRecordEntityData {
+		DutyRecordEntityData() {
+
+		}
+		QString id;				/*!< 数据库ID */
+		QString taskId;			/*!< 任务Id */
+		QString createTime;		/*!< 创建时间 */
+	};
+
+	/*!
+	 * @brief    单条试验记录实体数据结构
+	 * @details
+	 */
+	struct ExperimentRecordEntityData {
+		ExperimentRecordEntityData() :lon(0), lat(0){
+
+		}
+		QString id;				/*!< 数据库ID */
+		QString taskId;			/*!< 任务Id */
+		QString platformId;		/*!< 平台Id */
+		double lon;				/*!< 经度 */
+		double lat;				/*!< 纬度 */
+		QString seaCondition;	/*!< 海况 */
+		QString floatingTime;	/*!< 浮动时间 */
+	};
+
 } //namespace Datastruct 

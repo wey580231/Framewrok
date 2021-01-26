@@ -191,6 +191,18 @@ namespace Related {
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::DutyRecordCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_CreateDutyRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::LoadAllDutyRecordRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_ListDutyRecords, CommonDefines::JsonWrapper::instance()->wrap(request));
+			sendData(array);
+	}
+	
 	void NetConnector::write(const Datastruct::OperateUserRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_UserOperate, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -259,6 +271,24 @@ namespace Related {
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvQueryUserListResponse(response);
 				}
+			}
+				break;
+			case  Datastruct::P_CreateDutyRecord: {
+				Datastruct::DutyRecordCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDutyRecordCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_ListDutyRecords: {
+				Datastruct::LoadAllDutyRecordResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllDutyRecordResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_DeleteDutyRecords: {
+
 			}
 				break;
 

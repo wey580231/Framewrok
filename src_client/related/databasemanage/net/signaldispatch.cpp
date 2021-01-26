@@ -24,6 +24,17 @@ namespace Related {
 		emit respQueryUserListResponse(response);
 	}
 
+
+	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
+	{
+		emit respDutyRecordCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
+	{
+		emit respQueryAllDutyRecordResponse(response);
+
+	}
 	void SignalDispatch::recvOperateUserResponse(const Datastruct::OperateUserResponse & response)
 	{
 		emit resOperateUserResponse(response);

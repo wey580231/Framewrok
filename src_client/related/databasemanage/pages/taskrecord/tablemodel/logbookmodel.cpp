@@ -14,17 +14,10 @@ namespace Related {
 	{
 	}
 
-	void LogbookModel::prepareData()
+	void LogbookModel::prepareData(QList<Datastruct::DutyRecordEntityData> dutyRecordInfos)
 	{
-		for (int i = 0; i < 10; i++) {
-			LogbookData ld;
-			ld.index = i + 1;
-			ld.tsetName = QString("Name_%1").arg(i + 1);
-			ld.edttime = QString("2021-01-10 12:00:0%1").arg(i);
-			ld.number = i + 1;;
-			ld.type = i;
-			m_dataList.append(ld);
-		}
+		m_dataList.clear();
+		m_dataList.append(dutyRecordInfos);
 
 		refresh();
 	}
@@ -38,30 +31,15 @@ namespace Related {
 	{
 		LogbookDataColumnIndex cindex = static_cast<LogbookDataColumnIndex>(columnId);
 		if (dataIndex >= 0 && dataIndex < m_dataList.size()) {
-			LogbookData data = m_dataList.at(dataIndex);
+			Datastruct::DutyRecordEntityData data = m_dataList.at(dataIndex);
 
 			switch (cindex)
 			{
 			case L_Index:
-				return data.index;
-				break;
-			case L_Number:
-				return data.number;
+				return dataIndex;
 				break;
 			case L_CreateTime:
-				return data.edttime;
-				break;
-			case L_TestName:
-				return data.tsetName;
-				break;
-			case L_PlatformName:
-				return data.platformName;
-				break;
-			case L_TimeLength:
-				return data.timeLength;
-				break;
-			case L_Type:
-				return data.type;
+				return data.createTime;
 				break;
 			default:
 				break;

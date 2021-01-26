@@ -14,6 +14,7 @@
 #include <QObject>
 
 #include <base\selfwidget\tablemode\rtablemodel.h>
+#include <commondefines\protocol.h>
 
 #include "../../../datastruct.h"
 
@@ -27,7 +28,7 @@ namespace Related {
 		LogbookModel(QObject *parent = nullptr);
 		~LogbookModel();
 
-		void prepareData();
+		void prepareData(QList<Datastruct::DutyRecordEntityData> dutyRecordInfos);
 
 		int datasSize() const;
 
@@ -35,7 +36,7 @@ namespace Related {
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<LogbookData> m_dataList;
+		QList<Datastruct::DutyRecordEntityData> m_dataList;
 	};
 
 }//namespace Related 

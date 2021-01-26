@@ -23,6 +23,8 @@
 #include <base/selfwidget/treemode/rtreemodel.h>
 #include <base/selfwidget/iconbutton.h>
 
+#include <commondefines/protocol.h>
+
 #include "controlwidget/newtaskinfosetwidget.h"
 
 namespace Related {
@@ -35,6 +37,9 @@ namespace Related {
 		NewTaskDialog(QWidget *parent = nullptr);
 		~NewTaskDialog();
 
+	signals:
+		void signalCreaateNewTask();
+
 	private slots:
 		void slotSeleteFile();
 		void slotTreeItemClicked(QModelIndex index);
@@ -46,18 +51,25 @@ namespace Related {
 		bool FindFile(const QString &path);
 		Base::TreeNode * createTreeNode(Base::TreeNode * parentNode, QString  pasth);
 		void updateModel();
+		bool getFileNode(Base::TreeNode *node);
+
+		void sendTaskBaseInfo();
+		void sendTaskOriginalDataInfo();
 
 	private:
-		NewTaskInfoSetWidget *m_newTaskInfoSetWidget;
+		TaskBaseInfo m_taskBaseInfo;					/*!< 任务基本信息 */
+		NewTaskInfoSetWidget *m_newTaskInfoSetWidget;	/*!< 新建任务设置界面 */
 
 		//文件树
-		Base::RTreeView * m_treeView;
+		Base::RTreeView * m_treeView;					
 		Base::RTreeModel * m_treeModel;
-		Base::TreeNode * m_fileNode;
+		Base::TreeNode * m_fileRootNode;				/*! <文件树根节点> */
 
 		QLineEdit * m_fileLineEdit;
 		Base::RIconButton * m_fileButt;
-		QString m_originalFilePath;
+		QString m_originalFilePath;						/*!< 原始文件路径：绝对路径 */
+
+		QList<OriginalDataFileParameter *> m_taskDataFilePaths;
 	};
 
 }//namespace Related 

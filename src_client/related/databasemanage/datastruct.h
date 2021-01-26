@@ -204,9 +204,10 @@ namespace Related {
 	 */
 	struct  TaskBaseInfo {
 		QString id;					/*!< 任务Id */	
+		QString taskPicture;		/*!< 任务图片 */
 		QString  taskName;			/*!< 任务名称 */
-		QString  taskTime;			/*!< 任务时间 */
 		QString  taskplace;			/*!< 任务地点 */
+		QString  user;				/*!< 试验员 */
 		QString  startTime;			/*!< 起始时间 */
 		QString  endTime;			/*!< 结束时间 */
 		QString  timeLength;		/*!< 时长 */
@@ -217,16 +218,29 @@ namespace Related {
 	};
 
 	/*!
+	 * @brief   原始数据文件参数信息
+	 * @details 
+	 */
+	struct OriginalDataFileParameter
+	{
+		QString name;				/*!< 名称 */
+		QString path;				/*!< 路径: 相对路径 */
+		double size;				/*!< 文件大小 */
+		int startIndex;				/*!< 起始数据帧 */
+		int  endIndex;				/*!< 结束数据帧 */
+		QString createTime;			/*!< 创建时间 */
+		bool isDir;					/*!< 是否为文件夹 */
+	};
+
+
+	/*!
 	* @brief 值班日志表格列索引
 	*/
 	enum  LogbookDataColumnIndex {
 		L_Index,					/*!< 索引 */
-		L_Number,					/*!< 编号 */
 		L_CreateTime,				/*!< 录入时间 */
-		L_TestName,					/*!< 试验名 */
 		L_PlatformName,				/*!< 平台名 */
-		L_TimeLength,				/*!< 数据时长 */
-		L_Type,						/*!< 类型 */
+		L_Type,						/*!< 平台类型 */
 	};
 	
 	/*!
@@ -234,12 +248,9 @@ namespace Related {
 	*/
 	struct LogbookData {
 		int  index;					/*!< 索引 */
-		int number;					/*!< 编号 */
 		QString edttime;			/*!< 录入时间 */
-		QString tsetName;			/*!< 试验名 */
 		int  platformName;			/*!< 平台名 */
-		int timeLength;				/*!< 数据时长 */
-		int type;					/*!< 类型 */
+		int type;					/*!< 平台类型 */
 	};
 
 	/*!
