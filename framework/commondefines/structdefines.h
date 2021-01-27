@@ -45,7 +45,7 @@ namespace Datastruct {
 	 */
 	struct TaskEntityData
 	{
-		TaskEntityData(){
+		TaskEntityData():lon(0), lat(0){
 		}
 		QString id;				/*!< 数据库Id */
 		QString taskName;		/*!< 任务名称 */

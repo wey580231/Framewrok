@@ -14,14 +14,23 @@
 #include <QComboBox>
 #include <QtWidgets/QScrollArea>
 #include <QScrollArea>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QDateTime>
+#include <QListView>
 
 #include <base/selfwidget/iconbutton.h>
+#include <base/util/rutil.h>
+#include <commondefines/protocol.h>
 
+#include "../net/signaldispatch.h"
+#include "../net/netconnector.h"
 
-#include "systemmainpage/overviewitem.h "
-#include "../../customwidget/timerangeedit.h"
 #include "../abstractpage.h"
-#include "../../3rdLibrary/qcustomplot.h"
+#include "systemmainpage/overviewitem.h "
+#include "../../customwidget/customwidgetcontainer.h"
 
 #include "taskbaseinfopage.h"
 #include "taskresultinfopage.h"
@@ -37,11 +46,18 @@ namespace Related {
 		~TaskOverViewPage();
 
 		PageType getPageType() const;
+		void prepareBringToTop();
 
-		void  updateTaskInfo();
+		void setTaskId(QString taskId);
+
+	private slots:
+		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
+
 
 	private:
 		void init();
+		void initConnect();
+		void refreshCurrTaskSimple();
 
 	private:
 		OverViewItem * m_taskPlatformType;
@@ -50,6 +66,9 @@ namespace Related {
 
 		TaskBaseInfoPage   * m_taskBaseInfoPage;			/*!< 任务基本信息 */
 		TaskResultInfoPage * m_taskResultInfoPage;			/*!< 数据结果信息界面 */
+
+		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
+		QString m_taskId;									/*!< 任务Id */
 	};
 
 } //namespace Related 

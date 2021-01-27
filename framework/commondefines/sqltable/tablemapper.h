@@ -49,7 +49,7 @@ namespace Table {
 		QString lon = "lon";
 		QString lat = "lat";
 		QString description = "description";
-		QString detectPlatform = "detect_platform";
+		QString detectPlatform = "detect_platform";	
 	};
 
 	/*!

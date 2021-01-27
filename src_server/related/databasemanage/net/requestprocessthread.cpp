@@ -113,6 +113,50 @@ namespace Related {
 				}
 			}
 				break;
+			case  Datastruct::P_CreateTask: {
+				Datastruct::TaskCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskCreateResponse response = m_processCenter.processTaskCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_CreateTask, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskList: {
+				Datastruct::LoadAllTaskRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllTaskResponse response = m_processCenter.processTaskList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskByCondition: {
+
+			}
+				break;
+			case  Datastruct::P_TaskDelete: {
+				Datastruct::TaskDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDeleteResponse response = m_processCenter.processTaskDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskStaticsInfo: {
+
+			}
+				break;
+			case  Datastruct::P_TaskSimpleInfo: {
+				Datastruct::TaskSimpleRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskSimpleResponse response = m_processCenter.processTaskSimple(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskSimpleInfo, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskFullInfo: {
+
+			}
+				break;
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {

@@ -56,10 +56,29 @@ namespace CommonDefines {
 		bool unrap(const QByteArray & data, Datastruct::OperateUserResponse & response);
 		
 		//TODO 20210125 有关任务
-		QByteArray wrap(const Datastruct::TaskCreateRequest & response);
-		bool unrap(const QByteArray & data, Datastruct::TaskCreateRequest & response);
+		QByteArray wrap(const Datastruct::TaskCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskCreateRequest & request);
 
+		QByteArray wrap(const Datastruct::TaskCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskCreateResponse & response);
 
+		QByteArray wrap(const Datastruct::LoadAllTaskRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllTaskResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskSimpleRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskSimpleRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskSimpleResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskSimpleResponse & response);
 
 		//TODO 20210125 有关值班日志
 		QByteArray wrap(const Datastruct::DutyRecordCreateRequest & request);

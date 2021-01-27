@@ -14,15 +14,10 @@ namespace Related {
 
 	void TaskBaseInfoPage::setTaskBaseInfo(TaskBaseInfo info)
 	{
-		m_taskBaseInfo = info;
-		//刷新任务信息
-		m_taskname->setText(m_taskBaseInfo.taskName);
-		//m_taskTime->setText(m_taskBaseInfo.taskTime);
-		m_taskplace->setText(m_taskBaseInfo.taskplace);
-		m_startTime->setText(m_taskBaseInfo.startTime);
-		m_endTime->setText(m_taskBaseInfo.endTime);
-		m_timeLength->setText(m_taskBaseInfo.timeLength);
-
+		m_taskname->setText(info.taskName);
+		m_taskplace->setText(info.taskLocation);
+		m_startTime->setText(info.startTime);
+		m_endTime->setText(info.endTime);
 	}
 
 	void TaskBaseInfoPage::paintEvent(QPaintEvent * event)

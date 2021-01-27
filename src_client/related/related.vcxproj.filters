@@ -32,7 +32,6 @@
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
@@ -52,9 +51,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\taskreportswidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\taskanalyse\dataoverviewwidget.cpp">
@@ -88,6 +84,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.cpp">
+    <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -130,7 +130,6 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h" />
@@ -150,9 +149,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\taskreportswidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h">
@@ -183,6 +179,10 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h">
+    <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -190,9 +190,6 @@
     <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
-    <QtUic Include="databasemanage\pages\taskrecord\taskreportswidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>

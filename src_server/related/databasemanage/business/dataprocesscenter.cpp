@@ -237,6 +237,151 @@ namespace Related {
 		return response;
 	}
 
+	Datastruct::TaskCreateResponse DataProcessCenter::processTaskCreate(int clientId, const Datastruct::TaskCreateRequest & request)
+	{
+		Datastruct::TaskCreateResponse response;
+
+		Table::TaskEntity task;
+
+		Base::RSelect rs(task.table);
+		rs.select(task.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(task.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		do {
+			if (query.exec(rs.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = false;
+					response.m_errorInfo = QStringLiteral("该记录存在");
+					break;
+				}
+			}
+
+			Base::RPersistence rps(task.table);
+			rps.insert({
+					{task.id,		request.taskId},
+					{task.name,		request.taskName},
+					{task.startTime,request.startTime},
+					{task.endTime,	request.endTime},
+					{task.location, request.location},
+					{task.lon,		request.lon},
+					{task.lat,		request.lat},
+					{task.description, request.description},
+					{task.detectPlatform, request.detectPlatform},
+				});
+
+			if (query.exec(rps.sql())) {
+				if (query.numRowsAffected() > 0) {
+					response.m_createResult = true;
+				}
+			}
+			else {
+				response.m_errorInfo = QStringLiteral("保存数据失败.");
+			}
+
+		} while (0);
+
+		return response;
+	}
+
+	Datastruct::LoadAllTaskResponse DataProcessCenter::processTaskList(int clientId, const Datastruct::LoadAllTaskRequest & request)
+	{
+		Datastruct::LoadAllTaskResponse response;
+
+		Table::TaskEntity task;
+
+		Base::RSelect rs(task.table);
+		rs.select(task.table)
+			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+
+				Datastruct::TaskEntityData data;
+				data.id = query.value(task.id).toString();
+				data.taskName = query.value(task.name).toString();
+				data.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
+				data.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
+				data.location = query.value(task.location).toString();
+				data.lon = query.value(task.lon).toDouble();
+				data.lat = query.value(task.lat).toDouble();
+				data.description = query.value(task.description).toString();
+				data.detectPlatform = query.value(task.detectPlatform).toString();
+
+				response.m_taskInfos.append(data);
+			}
+
+			Base::RSelect rst(task.table);
+			rst.count();
+
+			qDebug() << rst.sql();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_count = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskDeleteResponse DataProcessCenter::processTaskDelete(int clientId, const Datastruct::TaskDeleteRequest & request)
+	{
+		Datastruct::TaskDeleteResponse response;
+		Table::TaskEntity task;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(task.table).arg(task.id).arg(request.taskId);
+		if (query.exec(deleteSql)) {
+			response.m_deleteResult = true;
+		}
+		else
+		{
+			response.m_deleteResult = false;
+			response.m_errorInfo = QStringLiteral("删除失败");
+		};
+		return response;
+	}
+
+	Datastruct::TaskSimpleResponse DataProcessCenter::processTaskSimple(int clientId, const Datastruct::TaskSimpleRequest & request)
+	{
+		Datastruct::TaskSimpleResponse response;
+		Table::TaskEntity task;
+
+		Base::RSelect rs(task.table);
+		rs.select(task.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(task.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql()))
+		{
+			while (query.next()) {
+				response.taskInfo.id = query.value(task.id).toString();
+				response.taskInfo.taskName = query.value(task.name).toString();
+				response.taskInfo.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
+				response.taskInfo.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
+				response.taskInfo.location = query.value(task.location).toString();
+				response.taskInfo.lon = query.value(task.lon).toDouble();
+				response.taskInfo.lat = query.value(task.lat).toDouble();
+				response.taskInfo.description = query.value(task.description).toString();
+				response.taskInfo.detectPlatform = query.value(task.detectPlatform).toString();
+			}
+			response.m_result = true;
+		}
+		else
+		{
+			response.m_result = false;
+			response.m_errorInfo = QStringLiteral("获取单条任务预览信息失败.");
+		}
+		return response;
+	}
+
 	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
 	{
 		Datastruct::DutyRecordCreateResponse response;
@@ -268,8 +413,6 @@ namespace Related {
 					{dutyRecord.seaCondition, request.seaCondition},
 				});
 
-			qDebug() << "____" <<rps.sql();
-
 			if (query.exec(rps.sql())) {
 				if (query.numRowsAffected() > 0) {
 					response.m_createResult = true;
@@ -291,8 +434,11 @@ namespace Related {
 		Table::DutyRecordEntity dutyRecord;
 
 		Base::RSelect rs(dutyRecord.table);
+// 		rs.select(dutyRecord.table)
+// 			.limit(request.m_offsetIndex, request.m_limitIndex);
 		rs.select(dutyRecord.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.taskId, request.taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -382,8 +528,12 @@ namespace Related {
 		Table::ExperimentRecordEntity experimentRecord;
 
 		Base::RSelect rs(experimentRecord.table);
+// 		rs.select(experimentRecord.table)
+// 			.limit(request.m_offsetIndex, request.m_limitIndex);
+
 		rs.select(experimentRecord.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
+			.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.taskId, request.taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 

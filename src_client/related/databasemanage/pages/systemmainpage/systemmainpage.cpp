@@ -1,15 +1,10 @@
 #include "systemmainpage.h"
 
 #include <QDebug>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGridLayout>
-#include <QLabel>
-#include <QDateTime>
-#include <QListView>
 
+#include "../net/signaldispatch.h"
+#include "../net/netconnector.h"
 #include "../../customwidget/customwidgetcontainer.h"
-#include "taskoverviewitem.h"
 
 namespace Related {
 
@@ -19,13 +14,12 @@ namespace Related {
 		m_diskSpaceItem(nullptr),
 		m_platNumItem(nullptr),
 		m_newTaskButt(nullptr),
-		m_refreshTaskButt(nullptr)
+		m_refreshTaskButt(nullptr), 
+		m_firstLoadData(true)
 	{
 		m_taskItems.clear();
-
 		init();
-
-		initTaskList();
+		initConnent();
 	}
 
 	SystemMainPage::~SystemMainPage()
@@ -41,8 +35,11 @@ namespace Related {
 	 * @brief   刷新任务列表信息
 	 * @details 
 	 */
-	void SystemMainPage::updateTaskListInfo() {
-
+	void SystemMainPage::prepareBringToTop() {
+		if (m_firstLoadData) {
+			refreshCurrTask();
+			m_firstLoadData = false;
+		}
 	}
 
 	void SystemMainPage::init()
@@ -155,49 +152,78 @@ namespace Related {
 		setLayout(layout);
 	}
 
-	void SystemMainPage::initTaskList()
+	void SystemMainPage::initConnent()
 	{
- 		for (int i = 0; i < 5; i++) {
-			TaskOverViewItem * item = new TaskOverViewItem();
-			connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
-			connect(item, SIGNAL(deleteTask(QString)), this, SIGNAL(deleteTask(QString)));
-			m_taskItems.append(item);
-		}
-		QGridLayout * glayout = nullptr;
+		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
+			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
 
-		if (m_taskWindow->layout() == nullptr) {
-			glayout = new QGridLayout();
-			glayout->setContentsMargins(4, 4, 4, 4);
-			m_taskWindow->setLayout(glayout);
-		}
-		else {
-			glayout = dynamic_cast<QGridLayout *>(m_taskWindow->layout());
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)),
+			this, SLOT(processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)));
 
-			for (int i = glayout->count(); i >= 0; i--) {
-				if (glayout->itemAt(i)->widget()) {
-					delete glayout->takeAt(i);
-				}
-			}
-		}
-
-		for (int i = 0; i < m_taskItems.size(); i++) {
-			int row = i / 5;
-			int column = i % 5;
-			glayout->addWidget(m_taskItems.at(i), row, column, 1, 1);
-		}
+		connect(SignalDispatch::instance(), SIGNAL(respTaskeDleteResponse(const Datastruct::TaskDeleteResponse &)),
+			this, SLOT(processTaskDeleteResponse(const Datastruct::TaskDeleteResponse &)));
 	}
 
 	void SystemMainPage::slotNewTaskClickde()
 	{
 		NewTaskDialog dialog(this);
-		if (QDialog::Accepted == dialog.exec()) {
-			
-		}
+		dialog.exec();
 	}
 
 	void SystemMainPage::slotRefreshTaskClicked()
 	{
+		refreshCurrTask();
+	}
 
+	void SystemMainPage::slotDeleteTask(QString taskId)
+	{
+		Datastruct::TaskDeleteRequest request;
+		request.taskId = taskId;
+		NetConnector::instance()->write(request);
+	}
+
+	void SystemMainPage::processTaskCreateResponse(const Datastruct::TaskCreateResponse & response)
+	{
+		if (response.m_createResult == true) {
+			refreshCurrTask();
+		}
+	}
+
+	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
+	{
+		if (m_taskItems.size() > 0) {
+			for (int i = 0; i < m_taskItems.size(); i++) {
+				TaskOverViewItem *item = m_taskItems.at(i);
+				if (item != nullptr) {
+					item->hide();
+					delete item;
+					item = nullptr;
+				}
+			}
+			m_taskItems.clear();
+		}
+		if (response.m_taskInfos.size() > 0) {
+			m_taskNumItem->setLabelData(QString::number(response.m_taskInfos.size()));
+
+			//[] 刷新显示窗口
+			for (int i = 0; i < response.m_taskInfos.size(); i++) {
+				Datastruct::TaskEntityData taskData = response.m_taskInfos.at(i);
+
+				TaskOverViewItem * item = new TaskOverViewItem();
+				item->setTaskBaseInfo(taskData);
+				connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
+				connect(item, SIGNAL(deleteTask(QString)), this, SLOT(slotDeleteTask(QString)));
+				m_taskItems.append(item);
+			}
+			UpdateTaskListWidget();
+		}
+	}
+
+	void SystemMainPage::processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response)
+	{
+		if (response.m_deleteResult == true) {
+			refreshCurrTask();
+		}
 	}
 
 	/*!
@@ -206,7 +232,39 @@ namespace Related {
 	 */
 	void SystemMainPage::refreshCurrTask()
 	{
+		Datastruct::LoadAllTaskRequest request;
 
+		NetConnector::instance()->write(request);
+	}
+
+	void SystemMainPage::UpdateTaskListWidget()
+	{
+		QGridLayout * glayout = nullptr;
+
+		if (m_taskWindow->layout() == nullptr) {
+			glayout = new QGridLayout();
+			glayout->setContentsMargins(4, 4, 4, 4);
+			m_taskWindow->setLayout(glayout);
+		}
+		else {
+			//TDOD 20210126 存在内存泄漏问题
+			glayout = dynamic_cast<QGridLayout *>(m_taskWindow->layout());
+// 			for (int i = glayout->count(); i >= 0; i--) {
+// 				if (glayout->itemAt(i)->widget()) {
+// 					delete glayout->takeAt(i);
+// 				}
+// 			}
+			delete m_taskWindow->layout();
+			glayout = new QGridLayout();
+			glayout->setContentsMargins(4, 4, 4, 4);
+			m_taskWindow->setLayout(glayout);
+		}
+
+		for (int i = 0; i < m_taskItems.size(); i++) {
+			int row = i / 5;
+			int column = i % 5;
+			glayout->addWidget(m_taskItems.at(i), row, column, 1, 1);
+		}
 	}
 
 } //namespace Related 

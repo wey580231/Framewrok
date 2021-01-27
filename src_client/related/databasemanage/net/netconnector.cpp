@@ -197,6 +197,30 @@ namespace Related {
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::TaskCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_CreateTask, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::LoadAllTaskRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::TaskDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::TaskSimpleRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskSimpleInfo, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void NetConnector::write(const Datastruct::DutyRecordCreateRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_CreateDutyRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -303,6 +327,52 @@ namespace Related {
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvOperateUserResponse(response);
 				}
+			}
+				break;
+
+			case  Datastruct::P_CreateTask: {
+				Datastruct::TaskCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskCreateResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_TaskList: {
+				Datastruct::LoadAllTaskResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllTaskResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_TaskByCondition: {
+
+			}
+				break;
+
+			case  Datastruct::P_TaskDelete: {
+				Datastruct::TaskDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskDeleteResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskStaticsInfo: {
+
+			}
+				break;
+
+			case  Datastruct::P_TaskSimpleInfo: {
+				Datastruct::TaskSimpleResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskSimpleResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_TaskFullInfo: {
+
 			}
 				break;
 

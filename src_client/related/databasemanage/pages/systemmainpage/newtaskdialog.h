@@ -19,6 +19,8 @@
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base/selfwidget/iconbutton.h>
 #include <base/selfwidget/rtabwidget.h>
+#include <base\selfwidget\rmessagebox.h>
+#include <base/util/rutil.h>
 
 #include <commondefines/protocol.h>
 
@@ -34,9 +36,6 @@ namespace Related {
 	public:
 		NewTaskDialog(QWidget *parent = nullptr);
 		~NewTaskDialog();
-
-	signals:
-		void signalCreaateNewTask();
 
 	private slots:
 		void slotSeleteFile();

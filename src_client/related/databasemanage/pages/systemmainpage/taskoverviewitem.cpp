@@ -24,6 +24,15 @@ namespace Related {
 		delete ui;
 	}
 
+	void TaskOverViewItem::setTaskBaseInfo(Datastruct::TaskEntityData data)
+	{
+		m_taskData = data;
+
+		ui->label_3->setText(data.taskName);
+		ui->label_5->setText(data.startTime + QString("-") + data.endTime);
+		ui->label_7->setText(data.location);
+	}
+
 	bool TaskOverViewItem::eventFilter(QObject *watched, QEvent *event)
 	{
 		if (watched == ui->taskOverItemContainer) {
@@ -88,10 +97,10 @@ namespace Related {
 	{
 		ButtType btype = static_cast<ButtType>(QObject::sender()->property(CustomButtProp).toInt());
 		if (btype == Butt_Open) {
-			emit openTask("");
+			emit openTask(m_taskData.id);
 		}
 		else if (btype == Butt_Delete) {
-			emit deleteTask("");
+			emit deleteTask(m_taskData.id);
 		}
 	}
 

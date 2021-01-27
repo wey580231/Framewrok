@@ -153,7 +153,6 @@
     <QtMoc Include="selfwidget\tablemode\rtableview.h" />
     <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h" />
     <QtMoc Include="selfwidget\rtabwidget.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
