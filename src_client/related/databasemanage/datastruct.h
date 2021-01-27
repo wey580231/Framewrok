@@ -42,7 +42,12 @@ namespace Related {
 
 		/*!< 子页面，按照‘Page_主页面_子页面’格式 */
 		Page_Setting_UserManage,	/*!< 用户管理 */
-		Page_Setting_SystemSetting	/*!< 系统设置 */
+		Page_Setting_SystemSetting,	/*!< 系统设置 */
+
+		/*!<  */
+		Page_TaskRecord_DutyRecord,				/*!< 值班日志 */
+		Page_TaskRecord_ExperimentRecord,		/*!< 试验记录 */
+		Page_TaskRecord_TaskReport				/*!< 任务报告 */
 	};
 
 	/*!
@@ -203,18 +208,16 @@ namespace Related {
 	 * @brief 任务基本信息
 	 */
 	struct  TaskBaseInfo {
-		QString id;					/*!< 任务Id */	
-		QString taskPicture;		/*!< 任务图片 */
-		QString  taskName;			/*!< 任务名称 */
-		QString  taskplace;			/*!< 任务地点 */
-		QString  user;				/*!< 试验员 */
-		QString  startTime;			/*!< 起始时间 */
-		QString  endTime;			/*!< 结束时间 */
-		QString  timeLength;		/*!< 时长 */
-		int datasize;				/*!< 数据大小 */
-		//[] 平台信息
-		int m_platformtype;			/*!< 平台类型 */ 
-		QMap<int, PlatformInfos> mapPlatformInfos;		/*!< 不同平台信息 */
+		TaskBaseInfo() :lon (0), lat(0){
+
+		}
+		QString  taskName;				/*!< 任务名称 */
+		QString  taskLocation;			/*!< 任务地点 */
+		QString  startTime;				/*!< 起始时间 */
+		QString  endTime;				/*!< 结束时间 */
+		double lon;						/*!< 经度 */
+		double lat;						/*!< 纬度 */
+		QString taskDescription;		/*!< 描述 */
 	};
 
 	/*!

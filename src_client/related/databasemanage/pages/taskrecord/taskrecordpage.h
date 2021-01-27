@@ -14,11 +14,12 @@
 #include <QStackedWidget>
 
 #include <base\selfwidget\rtabwidget.h>
+
 #include "../abstractpage.h"
 
-#include "logbookpage.h"
+#include "dutyrecordpage.h"
 #include "trialsheetwidget.h"
-#include "taskreportswidget.h"
+#include "taskreportpage.h"
 
 namespace Related {
 
@@ -31,6 +32,10 @@ namespace Related {
 		~TaskRecordPage();
 
 		PageType getPageType() const;
+		
+		void prepareBringToTop();
+
+		void setTaskId(QString taskId);
 
 	private:
 		void init();
@@ -38,9 +43,9 @@ namespace Related {
 	private:
 		Base::RTabWidget * m_tabWidget;
 
-		LogbookPage *m_logbookPage;						/*!< 值班日志界面 */
+		DutyRecordPage * m_logbookPage;					/*!< 值班日志界面 */
 		TrialSheetWidget * m_trialSheetWidget;			/*!< 试验记录窗口 */
-		TaskReportsWidget * m_taskReportsWidget;		/*!< 任务报告界面 */
+		TaskReportPage * m_taskReportsPage;				/*!< 任务报告界面 */
 	}; 
 
 } //namespace Related 

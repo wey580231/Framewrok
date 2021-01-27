@@ -15,6 +15,8 @@ namespace Ui { class TaskOverViewItem; };
 #include <base\util\widgetanimation.h>
 #include <base/selfwidget/iconbutton.h>
 
+#include <commondefines/structdefines.h>
+
 namespace Related {
 
 	class TaskOverViewItem : public QWidget
@@ -24,6 +26,8 @@ namespace Related {
 	public:
 		TaskOverViewItem(QWidget *parent = Q_NULLPTR);
 		~TaskOverViewItem();
+
+		void setTaskBaseInfo(Datastruct::TaskEntityData data);
 
 	protected:
 		bool eventFilter(QObject *watched, QEvent *event);
@@ -55,6 +59,8 @@ namespace Related {
 		Base::WidgetAnimation m_widgetAnimation;
 		Base::RIconButton * m_openTaskButt;
 		Base::RIconButton * m_deleteTaskButt;
+
+		Datastruct::TaskEntityData m_taskData;
 	};
 
 }//namespace Related 

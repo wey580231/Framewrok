@@ -10,8 +10,7 @@
 #pragma once
 
 #include <QWidget>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QDateTime>
 
 #include "ui_newtaskinfosetwidget.h"
 

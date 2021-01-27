@@ -153,11 +153,11 @@
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\logbookpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\taskreportswidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
@@ -203,7 +203,6 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\logbookpage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h" />
@@ -215,7 +214,6 @@
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\taskreportswidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
@@ -226,6 +224,8 @@
     <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.h" />
     <ClInclude Include="databasemanage\global.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
@@ -244,7 +244,6 @@
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
-    <QtUic Include="databasemanage\pages\taskrecord\taskreportswidget.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

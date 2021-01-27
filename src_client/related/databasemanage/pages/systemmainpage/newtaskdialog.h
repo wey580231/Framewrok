@@ -17,6 +17,7 @@
 #include <QFileDialog>
 #include <QStackedWidget>
 #include <QDir>
+#include <QDateTime>
 
 #include <base/selfwidget/dialogproxy.h>
 #include <base/selfwidget/treemode/rtreeview.h>
@@ -24,6 +25,8 @@
 #include <base/selfwidget/iconbutton.h>
 #include <base/selfwidget/rtabbar.h>
 #include <base/selfwidget/rtabwidget.h>
+#include <base\selfwidget\rmessagebox.h>
+#include <base/util/rutil.h>
 
 #include <commondefines/protocol.h>
 
@@ -38,9 +41,6 @@ namespace Related {
 	public:
 		NewTaskDialog(QWidget *parent = nullptr);
 		~NewTaskDialog();
-
-	signals:
-		void signalCreaateNewTask();
 
 	private slots:
 		void slotSeleteFile();
