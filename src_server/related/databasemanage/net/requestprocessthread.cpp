@@ -146,7 +146,11 @@ namespace Related {
 			}
 				break;
 			case  Datastruct::P_TaskSimpleInfo: {
-
+				Datastruct::TaskSimpleRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskSimpleResponse response = m_processCenter.processTaskSimple(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskSimpleInfo, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case  Datastruct::P_TaskFullInfo: {

@@ -18,6 +18,7 @@
 #include <base\util\rutil.h>
 #include <commondefines/protocol.h>
 
+#include "../abstractpage.h"
 #include "../customwidget/pageswitchbar.h"
 
 #include "customwidget/operationtoolspage.h"
@@ -25,13 +26,19 @@
 
 namespace Related {
 
-	class LogbookPage : public QWidget
+	class DutyRecordPage : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
-		LogbookPage(QWidget *parent = nullptr);
-		~LogbookPage();
+		DutyRecordPage(QWidget *parent = nullptr);
+		~DutyRecordPage();
+
+		PageType getPageType() const;
+
+		void prepareBringToTop();
+
+		void setTaskId(QString taskId);
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
@@ -52,7 +59,8 @@ namespace Related {
 		LogbookModel * m_tableModel;						/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */				
 
-		QString m_taskId;
+		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
+		QString m_taskId;									/*!< 任务Id */
 	};
 
 }//namespace Related

@@ -18,14 +18,14 @@
 #include <base\util\rutil.h>
 #include <commondefines/protocol.h>
 
+#include "../abstractpage.h"
 #include "../customwidget/pageswitchbar.h"
-
 #include "customwidget/operationtoolspage.h"
 #include "tablemodel/trialsheetmodel.h"
 
 namespace Related {
 
-	class TrialSheetWidget : public QWidget
+	class TrialSheetWidget : public AbstractPage
 	{
 		Q_OBJECT
 
@@ -33,13 +33,17 @@ namespace Related {
 		TrialSheetWidget(QWidget *parent  = nullptr);
 		~TrialSheetWidget();
 
+		PageType getPageType() const;
+
+		void prepareBringToTop();
+
+		void setTaskId(QString taskId);
+
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
-
-
 
 	private:
 		void init();
@@ -54,7 +58,8 @@ namespace Related {
 		TrialSheetModel * m_tableModel;						/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */
 
-		QString m_taskId;
+		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
+		QString m_taskId;									/*!< 任务Id */
 	};
 
 } // namespace Related 

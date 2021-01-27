@@ -187,7 +187,7 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief 任务创建请求结果报文
+	 * @brief 任务创建响应
 	 * @details 
 	 */
 	struct TaskCreateResponse {
@@ -213,10 +213,35 @@ namespace Datastruct {
 	};
 
 	/*!
-	* @brief  加载所有任务请求结果报文
+	* @brief  加载所有任务响应
 	* @details
 	*/
 	struct LoadAllTaskResponse {
+		int m_count;									/*!< 任务总条数 */
+		QList<TaskEntityData> m_taskInfos;				/*!< 当前页面下任务结果集合 */
+	};
+
+	/*!
+	 * @brief   按条件查询任务请求
+	 * @details 
+	 */
+	struct TaskByConditionRequest {
+		QString taskId;				/*!< 数据库Id */
+		QString taskName;			/*!< 任务名称 */
+		QString startTime;			/*!< 起始时间 */
+		QString endTime;			/*!< 结束时间 */
+		QString location;			/*!< 任务地点 */
+		double lon;					/*!< 经度 */
+		double lat;					/*!< 纬度 */
+		QString description;		/*!< 描述 */
+		QString detectPlatform;		/*!< 检测平台 */
+	};
+
+	/*!
+	 * @brief   按条件查询任务响应
+	 * @details 
+	 */
+	struct TaskByConditionResponse {
 		int m_count;									/*!< 任务总条数 */
 		QList<TaskEntityData> m_taskInfos;				/*!< 当前页面下任务结果集合 */
 	};
@@ -238,6 +263,59 @@ namespace Datastruct {
 		}
 		bool m_deleteResult;					/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;					/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief  任务统计信息请求
+	 * @details 
+	 */
+	struct  TaskStaticsInfoRequest{
+
+	};
+
+	/*!
+	 * @brief  任务统计信息响应
+	 * @details
+	 */
+	struct  TaskStaticsInfoResponse {
+
+	};
+
+	/*! 
+	 * @brief  单条任务预览信息请求
+	 * @details 
+	 */
+	struct TaskSimpleRequest{
+		QString taskId;				/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  单条任务预览信息响应
+	 * @details
+	 */
+	struct TaskSimpleResponse {
+		TaskSimpleResponse() : m_result(false) {
+		}
+		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
+		QString m_errorInfo;			/*!< 注册失败时说明失败原因 */
+
+		TaskEntityData taskInfo;
+	};
+
+	/*!
+	 * @brief    单个任务详细信息
+	 * @details 
+	 */
+	struct TaskFullInfoRequest {
+
+	};
+
+	/*!
+	 * @brief    单个任务详细信息
+     * @details
+     */
+	struct TaskFullInfoResponse {
+
 	};
 
 	/*!

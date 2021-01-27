@@ -43,8 +43,7 @@ namespace Related {
 		~SystemMainPage();
 
 		PageType getPageType() const;
-
-		void updateTaskListInfo();
+		void prepareBringToTop();
 
 	signals:
 		/*!
@@ -90,6 +89,7 @@ namespace Related {
 		QWidget * m_taskWindow;							/*!< 任务窗口区 */
 
 		QList<TaskOverViewItem *> m_taskItems;			/*!< 任务列表 */	
+		bool m_firstLoadData;	/*!< 第一次加载页面显示 */
 	};
 
 } //namespace Related

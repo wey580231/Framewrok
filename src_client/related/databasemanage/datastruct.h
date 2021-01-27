@@ -42,7 +42,12 @@ namespace Related {
 
 		/*!< 子页面，按照‘Page_主页面_子页面’格式 */
 		Page_Setting_UserManage,	/*!< 用户管理 */
-		Page_Setting_SystemSetting	/*!< 系统设置 */
+		Page_Setting_SystemSetting,	/*!< 系统设置 */
+
+		/*!<  */
+		Page_TaskRecord_DutyRecord,				/*!< 值班日志 */
+		Page_TaskRecord_ExperimentRecord,		/*!< 试验记录 */
+		Page_TaskRecord_TaskReport				/*!< 任务报告 */
 	};
 
 	/*!

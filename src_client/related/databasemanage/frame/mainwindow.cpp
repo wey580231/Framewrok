@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#include <QDebug>
 #include <qboxlayout.h>
 
 #include "leftpanel.h"
@@ -35,6 +36,7 @@ namespace Related {
 
 			//系统主页
 			m_mainPage = new SystemMainPage();
+			m_mainPage->prepareBringToTop();
 
 			//数据管理
 			m_dataMangePage = new DataManageWidget();
@@ -84,7 +86,6 @@ namespace Related {
 	{
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(switchPage(int)));
 		connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));
-
 		connect(m_mainPage, SIGNAL(openTask(QString)), this, SLOT(siwtchToTaskView(QString)));
 	}
 
@@ -115,6 +116,9 @@ namespace Related {
 	 */
 	void MainWindow::siwtchToTaskView(QString taskId)
 	{
+		m_taskOverViewPage->setTaskId(taskId);
+		m_taskRecordPage->setTaskId(taskId);
+
 		m_leftPanel->switchViewModel(TaskView);
 		switchPage(m_leftPanel->getCurrentPage());
 	}

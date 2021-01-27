@@ -44,6 +44,11 @@ namespace Related {
 		emit respTaskeDleteResponse(response);
 	}
 
+	void SignalDispatch::recvTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response)
+	{
+		emit respTaskSimpleResponse(response);
+	}
+
 	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
 		emit respDutyRecordCreateResponse(response);

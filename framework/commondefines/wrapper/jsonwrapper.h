@@ -74,6 +74,12 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::TaskDeleteResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskDeleteResponse & response);
 
+		QByteArray wrap(const Datastruct::TaskSimpleRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskSimpleRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskSimpleResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskSimpleResponse & response);
+
 		//TODO 20210125 有关值班日志
 		QByteArray wrap(const Datastruct::DutyRecordCreateRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::DutyRecordCreateRequest & request);

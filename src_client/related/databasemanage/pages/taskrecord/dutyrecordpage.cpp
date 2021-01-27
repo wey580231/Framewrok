@@ -1,4 +1,4 @@
-#include "logbookpage.h"
+#include "dutyrecordpage.h"
 
 #include <QDebug>
 
@@ -10,19 +10,45 @@
 
 namespace Related {
 
-	LogbookPage::LogbookPage(QWidget *parent)
-		: QWidget(parent)
+	DutyRecordPage::DutyRecordPage(QWidget *parent)
+		: AbstractPage(parent),m_firstLoadData(true)
 	{
-		m_taskId = Base::RUtil::UUID();
 		init();
 		initConnect();
 	}
 
-	LogbookPage::~LogbookPage()
+	DutyRecordPage::~DutyRecordPage()
 	{
 	}
 
-	void LogbookPage::respToolButtPressed(OperationToolsPage::ButtType type)
+	PageType DutyRecordPage::getPageType() const
+	{
+		return Page_TaskRecord_DutyRecord;
+	}
+
+	void DutyRecordPage::prepareBringToTop()
+	{
+		if(m_firstLoadData){
+			refreshCurrPage();
+			m_firstLoadData = false;
+		}
+	}
+
+	void  DutyRecordPage::setTaskId(QString taskId)
+	{
+		if (m_taskId.isEmpty()) {
+			m_taskId = taskId;
+		}
+		else
+		{
+			if (m_taskId != taskId) {
+				m_taskId = taskId;
+				m_firstLoadData = true;
+			}
+		}
+	}
+
+	void DutyRecordPage::respToolButtPressed(OperationToolsPage::ButtType type)
 	{
 		switch (type)
 		{
@@ -47,24 +73,24 @@ namespace Related {
 		}
 	}
 
-	void LogbookPage::processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
+	void DutyRecordPage::processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
 		if (response.m_createResult == true) {
 			refreshCurrPage();
 		}
 	}
 
-	void LogbookPage::processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
+	void DutyRecordPage::processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
 		m_tableModel->prepareData(response.m_dutyRecordInfos);
 		m_pageSwitch->setDataSize(response.m_dutyRecordCount);
 	}
 
-	void LogbookPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
+	void DutyRecordPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
 	}
 
-	void LogbookPage::init()
+	void DutyRecordPage::init()
 	{
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
@@ -108,7 +134,7 @@ namespace Related {
 		setLayout(vlayout);
 	}
 
-	void LogbookPage::initConnect()
+	void DutyRecordPage::initConnect()
 	{
 		// 信号与槽
 		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse &)),
@@ -125,7 +151,7 @@ namespace Related {
 	 * @brief   插入一条记录
 	 * @details 
 	 */
-	void LogbookPage::insertDutyRecord()
+	void DutyRecordPage::insertDutyRecord()
 	{
 		Datastruct::DutyRecordCreateRequest request;
 		request.id = Base::RUtil::UUID();
@@ -137,10 +163,10 @@ namespace Related {
 		NetConnector::instance()->write(request);
 	}
 
-	void LogbookPage::refreshCurrPage()
+	void DutyRecordPage::refreshCurrPage()
 	{
 		Datastruct::LoadAllDutyRecordRequest request;
-		request.taskId = Global::G_UserEntity.name;
+		request.taskId = m_taskId;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
 		NetConnector::instance()->write(request);

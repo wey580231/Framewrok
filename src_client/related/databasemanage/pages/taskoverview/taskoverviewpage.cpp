@@ -1,24 +1,15 @@
 #include "taskoverviewpage.h"
 
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QLabel>
-#include <QDateTime>
-#include <QListView>
-
-#include "../../customwidget/customwidgetcontainer.h"
-
+#include <QDebug>
 
 namespace Related {
 
 	TaskOverViewPage::TaskOverViewPage(QWidget *parent)
-		: AbstractPage(parent)
+		: AbstractPage(parent),
+		m_firstLoadData(true)
 	{
-	
 		init();
-
-		updateTaskInfo();
+		initConnect();
 	}
 
 	TaskOverViewPage::~TaskOverViewPage()
@@ -30,25 +21,41 @@ namespace Related {
 		return Page_TaskOverviewPage;
 	}
 
-	void TaskOverViewPage::updateTaskInfo()
+	void TaskOverViewPage::prepareBringToTop()
 	{
-// 		TaskBaseInfo t_info;
-// 		t_info.id			= QStringLiteral("任务01");					
-// 		t_info.taskName		= QStringLiteral("任务01");			
-// 		//t_info.taskTime		= QStringLiteral("2021-01-05 11:15:12");			
-// 		t_info.taskplace	= QStringLiteral("青岛");			
-// 		t_info.startTime	= QStringLiteral("2021-01-05 11:16:12");			
-// 		t_info.endTime		= QStringLiteral("2021-01-05 19:15:12");			
-// 		t_info.timeLength	= QStringLiteral("1500");	
+		if (m_firstLoadData ) {
+			refreshCurrTaskSimple();
+			m_firstLoadData = false;
+		}
+	}
 
-//		t_info.m_platformtype = 1;
-		//
-	//	m_taskBaseInfoPage->setTaskBaseInfo(t_info);
+	void TaskOverViewPage::setTaskId(QString taskId) 
+	{
+		if (m_taskId.isEmpty()) {
+			m_taskId = taskId;
+		}
+		else
+		{
+			if (m_taskId != taskId) {
+				m_taskId = taskId;
+				m_firstLoadData = true;
+			}
+		}
+	}
 
-		//[] 
-		PlatformInfos  platformInfos;
-
-		m_taskResultInfoPage->setResultInfos(platformInfos);
+	void TaskOverViewPage::processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response)
+	{
+		if (response.m_result == true) {
+			TaskBaseInfo info;
+			info.taskName = response.taskInfo.taskName;
+			info.taskLocation = response.taskInfo.location;
+			info.startTime = response.taskInfo.startTime;
+			info.endTime = response.taskInfo.endTime;
+			info.lon = response.taskInfo.lon;
+			info.lat = response.taskInfo.lat;
+			info.taskDescription = response.taskInfo.description;
+			m_taskBaseInfoPage->setTaskBaseInfo(info);
+		}
 	}
 
 	void TaskOverViewPage::init()
@@ -130,6 +137,20 @@ namespace Related {
 		mainLayout->addWidget(mainwidget);
 		mainLayout->setContentsMargins(4, 4, 4, 4);
 		this->setLayout(mainLayout);
+	}
+
+	void TaskOverViewPage::initConnect()
+	{
+		connect(SignalDispatch::instance(), SIGNAL(respTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)),
+			this, SLOT(processTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)));
+
+	}
+
+	void TaskOverViewPage::refreshCurrTaskSimple()
+	{
+		Datastruct::TaskSimpleRequest request;
+		request.taskId = m_taskId;
+		NetConnector::instance()->write(request);
 	}
 
 } //namespace Related

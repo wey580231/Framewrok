@@ -18,9 +18,9 @@
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 
+#include "../abstractpage.h"
 #include "tablemodel/usermanagemodel.h"
 #include "customwidget/operationtoolspage.h"
-#include "../abstractpage.h"
 
 namespace Related {
 

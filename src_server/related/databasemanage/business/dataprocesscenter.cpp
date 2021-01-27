@@ -348,6 +348,40 @@ namespace Related {
 		return response;
 	}
 
+	Datastruct::TaskSimpleResponse DataProcessCenter::processTaskSimple(int clientId, const Datastruct::TaskSimpleRequest & request)
+	{
+		Datastruct::TaskSimpleResponse response;
+		Table::TaskEntity task;
+
+		Base::RSelect rs(task.table);
+		rs.select(task.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(task.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql()))
+		{
+			while (query.next()) {
+				response.taskInfo.id = query.value(task.id).toString();
+				response.taskInfo.taskName = query.value(task.name).toString();
+				response.taskInfo.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
+				response.taskInfo.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
+				response.taskInfo.location = query.value(task.location).toString();
+				response.taskInfo.lon = query.value(task.lon).toDouble();
+				response.taskInfo.lat = query.value(task.lat).toDouble();
+				response.taskInfo.description = query.value(task.description).toString();
+				response.taskInfo.detectPlatform = query.value(task.detectPlatform).toString();
+			}
+			response.m_result = true;
+		}
+		else
+		{
+			response.m_result = false;
+			response.m_errorInfo = QStringLiteral("获取单条任务预览信息失败.");
+		}
+		return response;
+	}
+
 	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
 	{
 		Datastruct::DutyRecordCreateResponse response;
@@ -400,8 +434,11 @@ namespace Related {
 		Table::DutyRecordEntity dutyRecord;
 
 		Base::RSelect rs(dutyRecord.table);
+// 		rs.select(dutyRecord.table)
+// 			.limit(request.m_offsetIndex, request.m_limitIndex);
 		rs.select(dutyRecord.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.taskId, request.taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -491,8 +528,12 @@ namespace Related {
 		Table::ExperimentRecordEntity experimentRecord;
 
 		Base::RSelect rs(experimentRecord.table);
+// 		rs.select(experimentRecord.table)
+// 			.limit(request.m_offsetIndex, request.m_limitIndex);
+
 		rs.select(experimentRecord.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
+			.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.taskId, request.taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 

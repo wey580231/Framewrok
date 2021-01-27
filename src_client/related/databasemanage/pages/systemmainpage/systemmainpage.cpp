@@ -14,7 +14,8 @@ namespace Related {
 		m_diskSpaceItem(nullptr),
 		m_platNumItem(nullptr),
 		m_newTaskButt(nullptr),
-		m_refreshTaskButt(nullptr)
+		m_refreshTaskButt(nullptr), 
+		m_firstLoadData(true)
 	{
 		m_taskItems.clear();
 		init();
@@ -34,8 +35,11 @@ namespace Related {
 	 * @brief   刷新任务列表信息
 	 * @details 
 	 */
-	void SystemMainPage::updateTaskListInfo() {
-
+	void SystemMainPage::prepareBringToTop() {
+		if (m_firstLoadData) {
+			refreshCurrTask();
+			m_firstLoadData = false;
+		}
 	}
 
 	void SystemMainPage::init()
@@ -150,7 +154,6 @@ namespace Related {
 
 	void SystemMainPage::initConnent()
 	{
-		// 信号与槽
 		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
 			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
 
@@ -159,7 +162,6 @@ namespace Related {
 
 		connect(SignalDispatch::instance(), SIGNAL(respTaskeDleteResponse(const Datastruct::TaskDeleteResponse &)),
 			this, SLOT(processTaskDeleteResponse(const Datastruct::TaskDeleteResponse &)));
-
 	}
 
 	void SystemMainPage::slotNewTaskClickde()
@@ -178,7 +180,6 @@ namespace Related {
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
 		NetConnector::instance()->write(request);
-
 	}
 
 	void SystemMainPage::processTaskCreateResponse(const Datastruct::TaskCreateResponse & response)
@@ -191,6 +192,14 @@ namespace Related {
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
 	{
 		if (m_taskItems.size() > 0) {
+			for (int i = 0; i < m_taskItems.size(); i++) {
+				TaskOverViewItem *item = m_taskItems.at(i);
+				if (item != nullptr) {
+					item->hide();
+					delete item;
+					item = nullptr;
+				}
+			}
 			m_taskItems.clear();
 		}
 		if (response.m_taskInfos.size() > 0) {

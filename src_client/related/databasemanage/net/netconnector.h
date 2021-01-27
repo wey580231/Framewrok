@@ -58,6 +58,7 @@ namespace Related {
 		void write(const Datastruct::LoadAllTaskRequest & request);
 		void write(const Datastruct::TaskDeleteRequest & request);
 
+		void write(const Datastruct::TaskSimpleRequest & request);
 		/*!
 		 * @brief  值班日志有关
 		 */

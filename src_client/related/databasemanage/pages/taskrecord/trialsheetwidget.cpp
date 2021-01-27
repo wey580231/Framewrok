@@ -11,16 +11,41 @@
 namespace Related {
 
 	TrialSheetWidget::TrialSheetWidget(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent), m_firstLoadData(true)
 	{
-		m_taskId = Base::RUtil::UUID();
-
 		init();
 		initConnent();
 	}
 
 	TrialSheetWidget::~TrialSheetWidget()
 	{
+	}
+
+	PageType TrialSheetWidget::getPageType() const
+	{
+		return Page_TaskRecord_ExperimentRecord;
+	}
+
+	void TrialSheetWidget::prepareBringToTop()
+	{
+		if (m_firstLoadData) {
+			refreshCurrPage();
+			m_firstLoadData = false;
+		}
+	}
+
+	void  TrialSheetWidget::setTaskId(QString taskId)
+	{
+		if (m_taskId.isEmpty()) {
+			m_taskId = taskId;
+		}
+		else
+		{
+			if (m_taskId != taskId) {
+				m_taskId = taskId;
+				m_firstLoadData = true;
+			}
+		}
 	}
 
 	void TrialSheetWidget::respToolButtPressed(OperationToolsPage::ButtType type) 
@@ -127,7 +152,6 @@ namespace Related {
 
 		connect(SignalDispatch::instance(), SIGNAL(respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)),
 			this, SLOT(processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)));
-
 	}
 
 	void TrialSheetWidget::insertExperimentRecord()
