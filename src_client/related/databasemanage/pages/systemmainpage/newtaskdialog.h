@@ -11,19 +11,13 @@
 #pragma once
 
 #include <QWidget>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QLineEdit>
-#include <QFileDialog>
-#include <QStackedWidget>
-#include <QDir>
-#include <QDateTime>
+#include <QFileSystemModel>
+#include <QTreeView>
 
 #include <base/selfwidget/dialogproxy.h>
-#include <base/selfwidget/treemode/rtreeview.h>
-#include <base/selfwidget/treemode/rtreemodel.h>
+#include <base\selfwidget\tablemode\rtableview.h>
 #include <base/selfwidget/iconbutton.h>
-#include <base/selfwidget/rtabbar.h>
 #include <base/selfwidget/rtabwidget.h>
 #include <base\selfwidget\rmessagebox.h>
 #include <base/util/rutil.h>
@@ -31,6 +25,7 @@
 #include <commondefines/protocol.h>
 
 #include "controlwidget/newtaskinfosetwidget.h"
+#include "controlwidget/imagemodel.h"
 
 namespace Related {
 
@@ -44,40 +39,31 @@ namespace Related {
 
 	private slots:
 		void slotSeleteFile();
-		void slotTreeItemClicked(QModelIndex index);
 		void respOk();
 		void respCancel();
 
+		void openLocalImage();
+		void clearImage();
+
 	private:
 		void init();
-		bool FindFile(const QString &path);
-		Base::TreeNode * createTreeNode(Base::TreeNode * parentNode, QString  pasth);
-		void updateModel();
-		bool getFileNode(Base::TreeNode *node);
 
 		void sendTaskBaseInfo();
-		void sendTaskOriginalDataInfo();
 
 	private:
-		enum TabIndex {
-			TabBaseInfo,		/*!< 基础信息 */
-			TabImage,			/*!< 图片信息 */
-			TabData				/*!< 数据信息 */
-		};
+		Base::RTabWidget * m_tabWidget;
 
-	private:
 		TaskBaseInfo m_taskBaseInfo;					/*!< 任务基本信息 */
 		NewTaskInfoSetWidget * m_newTaskWidget;			/*!< 新建任务设置界面 */
 
-		//文件树
-		Base::RTreeView * m_treeView;					
-		Base::RTreeModel * m_treeModel;
-		Base::TreeNode * m_fileRootNode;				/*! <文件树根节点> */	
+		Base::RTableView * m_tableView;
+		ImageModel * m_imageTableModel;
 
-		Base::RTabWidget * m_tabWidget;
+		QTreeView * m_treeView;
+		QFileSystemModel * m_treeModel;
 
-		QLineEdit * m_fileLineEdit;
-		Base::RIconButton * m_fileButt;
+		QLineEdit * m_dataFilePath;						/*!< 数据文件路径 */
+
 		QString m_originalFilePath;						/*!< 原始文件路径：绝对路径 */
 
 		QList<OriginalDataFileParameter *> m_taskDataFilePaths;

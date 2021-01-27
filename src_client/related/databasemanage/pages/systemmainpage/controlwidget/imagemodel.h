@@ -1,8 +1,8 @@
 /*!
- * @brief     2级表格数据模型 
+ * @brief     任务图片表格数据模型   
  * @author    wey
  * @version   1.0
- * @date      2021.01.10 13:53:43
+ * @date      2021.01.26 16:02:39
  * @warning
  * @copyright NanJing RenGu.
  * @note
@@ -10,29 +10,31 @@
 #pragma once
 
 #include <QObject>
+#include <QFileInfo>
 
 #include <base\selfwidget\tablemode\rtablemodel.h>
-#include "../../../datastruct.h"
 
 namespace Related {
 
-	class LevelModel2 : public Base::RTableModel
+	class ImageModel : public Base::RTableModel
 	{
 		Q_OBJECT
 
 	public:
-		LevelModel2(QObject *parent = nullptr);
-		~LevelModel2();
+		ImageModel(QObject *parent = nullptr);
+		~ImageModel();
 
-		void prepareData();
+		int rowCount(const QModelIndex &parent = QModelIndex()) const;
+
+		void updateData(QList<QFileInfo> & fileInfos);
+		void clearData();
 		int datasSize() const;
 
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
-		QVariant customProcessRole(int role, int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<Level2Data> m_dataList;
+		QList<QFileInfo> m_dataList;
 	};
 
 } //namespace Related 

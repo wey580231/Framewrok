@@ -19,7 +19,7 @@
 namespace Base {
 
 	class RMessageBoxPrivate;
-	class RButton;
+	class RIconButton;
 
 	class BASESHARED_EXPORT RMessageBox : public DialogProxy
 	{
@@ -95,7 +95,7 @@ namespace Base {
 		void respButtonClicked();
 
 	private:
-		RButton * addButton(RMessageBox::StandardButton butt);
+		RIconButton * addButton(RMessageBox::StandardButton butt);
 		QString standardButtText(RMessageBox::StandardButton butt);
 		static RMessageBox::StandardButton messagebox(QWidget * parent, Icon type, const QString &title, const QString& text, StandardButtons buttons, StandardButton = NoButton);
 

@@ -83,57 +83,14 @@ namespace Related {
 	};
 
 	/*!
-	 * @brief Level1表格列
+	 * @brief 任务图片表格列
 	 */
-	enum Level1ColumnIndex {
-		L1_Id,
-		L1_Num,
-		L1_Name,
-		L1_Timestamp,
-		L1_PlatformName,
-		L1_TimeLength,
-		L1_DataType
-	};
-
-	/*!
-	 * @brief Level1数据结构
-	 */
-	struct Level1Data {
-		int m_id;
-		QString m_num;					/*!< 批号 */
-		QString m_name;
-		QString m_timestamp;
-		QString m_platformName;			/*!< 平台名 */
-		QString m_timeLength;			/*!< 采样时长 */
-		QString m_datatype;				/*!< 文件格式 */
-	};
-
-	/*!
-	 * @brief Level2表格列
-	 */
-	enum Level2ColumnIndex {
-		L2_Id,
-		L2_Num,					/*!< 批号 */
-		L2_Timestamp,			
-		L2_Nation,				/*!< 国籍 */
-		L2_Type,				/*!< 类型 */
-		L2_JyNum,				/*!< 桨叶数 */
-		L2_ZxDegree,			/*!< 置信度 */
-		L2_Location				/*!< 录取地点 */
-	};
-
-	/*!
-	 * @brief Level2数据结构
-	 */
-	struct Level2Data {
-		int m_id;
-		QString m_num;
-		QString m_timestamp;
-		QString m_nation;
-		QString m_type;
-		QString m_jyNum;
-		QString m_zxDegree;
-		QString m_location;
+	enum ImageTableColumn {
+		Img_Id,
+		Img_Name,
+		Img_FileTimeStamp,
+		Img_FileType,
+		Img_FileSize,
 	};
 
 	/*!

@@ -47,12 +47,8 @@ namespace Related {
 		m_stackedWidget->setStyleSheet("background-color:rgba(0,0,0,0)");
 
 		m_pageLevel0 = new Level0Page(this);
-		m_pageLevel1 = new Level1Page(this);
-		m_pageLevel2 = new Level2Page(this);
 
 		m_stackedWidget->addWidget(m_pageLevel0);
-		m_stackedWidget->addWidget(m_pageLevel1);
-		m_stackedWidget->addWidget(m_pageLevel2);
 
 		QVBoxLayout * layout = new QVBoxLayout();
 		layout->setContentsMargins(0, 0, 0, 0);

@@ -1,6 +1,7 @@
 #include "customwidgetcontainer.h"
 
 #include <QHBoxLayout>
+#include <QRadialGradient>
 #include <QPainter>
 
 namespace Related {
@@ -39,13 +40,19 @@ namespace Related {
 		QPainter painter(this);
 
 		QRect innerRect = rect();
+		QPoint center = innerRect.center();
 		innerRect.adjust(1, 1, -1, -1);
 
 		painter.setPen(Qt::NoPen);
-		painter.setBrush(QColor(0, 64, 110, 80));
+
+		QRadialGradient gradient(center.x(), center.y(), innerRect.width() / 2, center.x(), center.y());
+		gradient.setColorAt(0, QColor(16, 65, 179, 40));
+		gradient.setColorAt(1.0, QColor(50, 101, 184, 50));
+		painter.setBrush(QBrush(gradient));
+		//painter.setBrush(QColor(16, 65, 179, 210));
 		painter.drawRect(innerRect);
 
-		painter.setPen(QPen(QColor(118, 121, 124), 1.1));
+		painter.setPen(QPen(QColor(71, 175, 255), 1.1));
 
 		int radius = 8;
 

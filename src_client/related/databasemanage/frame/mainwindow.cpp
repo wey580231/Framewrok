@@ -21,6 +21,7 @@ namespace Related {
 	void MainWindow::init()
 	{
 		m_stackedWidget = new QStackedWidget();
+		m_stackedWidget->setObjectName("Widget_MainWidow");
 
 		//µÇÂ¼Ò³Ãæ
 		m_loginPage = new LoginPage();
@@ -75,7 +76,7 @@ namespace Related {
 
 		m_stackedWidget->addWidget(m_loginPage);
 		m_stackedWidget->addWidget(m_mainWidget);
-		
+
 		QHBoxLayout * layout = new QHBoxLayout();
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_stackedWidget);
@@ -98,13 +99,13 @@ namespace Related {
 	{
 		PageType pt = static_cast<PageType>(pageIndex);
 		if (m_pageMapping.contains(pt)) {
-			
+
 			AbstractPage * prePage = dynamic_cast<AbstractPage *>(m_pageContainer->currentWidget());
 			if (prePage)
 				prePage->prepareBringToBottom();
 
 			AbstractPage * nextPage = m_pageMapping.value(pt);
-			nextPage->prepareBringToTop();	
+			nextPage->prepareBringToTop();
 
 			m_pageContainer->setCurrentWidget(nextPage);
 		}

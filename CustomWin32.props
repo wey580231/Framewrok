@@ -7,7 +7,7 @@
   <PropertyGroup>
     <OutDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\$(ProjectName)\</IntDir>
-    <IncludePath>../;$(FrameWorkDir);$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtXml;$(IncludePath)</IncludePath>
+    <IncludePath>../;$(FrameWorkDir);$(QTDIR)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
