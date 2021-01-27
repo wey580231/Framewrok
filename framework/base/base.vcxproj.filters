@@ -93,6 +93,9 @@
     <ClInclude Include="macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="util\fileutils.cpp">
@@ -147,9 +150,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="selfwidget\iconbutton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="selfwidget\rbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="selfwidget\rinputdialog.cpp">
@@ -269,9 +269,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\iconbutton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="selfwidget\rbutton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rinputdialog.h">

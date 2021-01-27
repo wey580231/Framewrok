@@ -33,8 +33,8 @@ namespace Related {
 	{
 		QSize windowSize = event->size();
 
-		int x = (windowSize.width() - m_container->width()) / 2;
-		int y = (windowSize.height() - m_container->height()) / 2 - 20;
+		int x = windowSize.width() - m_container->width() * 1.5;
+		int y = (windowSize.height() - m_container->height()) / 2 ;
 		m_container->move(x, y);
 
 	}
@@ -192,8 +192,8 @@ namespace Related {
 		QLabel * titleLabel = new QLabel();
 		titleLabel->setObjectName("Label_Login_TitleLabel");
 		titleLabel->setAlignment(Qt::AlignCenter);
-		titleLabel->setFixedHeight(40);
-		titleLabel->setText(QStringLiteral("某水声数据管理软件"));
+		titleLabel->setFixedHeight(30);
+		titleLabel->setText(QStringLiteral("系统账户登录"));
 
 		m_userName = new QLineEdit();
 		m_userName->setMinimumHeight(25);
@@ -340,7 +340,7 @@ namespace Related {
 		}
 
 		m_container = new CustomWidgetContainer(mainWidget);
-		m_container->setFixedSize(380, 460);
+		m_container->setFixedSize(360, 420);
 		m_container->setContent(m_loginWidget);
 		m_container->show();
 

@@ -17,8 +17,6 @@
 
 #include "../abstractpage.h"
 #include "level0page.h"
-#include "level1page.h"
-#include "level2page.h"
 
 namespace Related {
 
@@ -49,8 +47,6 @@ namespace Related {
 		Base::RTabBar * m_tabWidget;
 
 		Level0Page * m_pageLevel0;
-		Level1Page * m_pageLevel1;
-		Level2Page * m_pageLevel2;
 
 		QStackedWidget * m_stackedWidget;
 	};

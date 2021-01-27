@@ -8,7 +8,7 @@
 
 #include <base/util/rsingleton.h>
 #include <core/pluginmanager/plugin/pluginloader.h>
-#include <base/selfwidget/rbutton.h>
+#include <base/selfwidget/iconbutton.h>
 #include <base/selfwidget/rmessagebox.h>
 
 namespace Core{
@@ -26,8 +26,8 @@ public:
     PluginViewDialog * q_ptr;
     QWidget * extandToolWidget;
     QTableView * tableView;
-	Base::RButton * detailButt;
-	Base::RButton * errorDetailButt;
+	Base::RIconButton * detailButt;
+	Base::RIconButton * errorDetailButt;
 };
 
 void PluginViewDialogPrivate::init()
@@ -55,14 +55,14 @@ void PluginViewDialogPrivate::init()
 
     extandToolWidget = new QWidget();
 
-    detailButt = new Base::RButton();
+    detailButt = new Base::RIconButton();
     QObject::connect(tableView,SIGNAL(clicked(QModelIndex)),q_ptr,SLOT(switchPluginDetail(QModelIndex)));
     QObject::connect(detailButt,SIGNAL(clicked()),q_ptr,SLOT(showPluginDetail()));
 
     detailButt->setEnabled(false);
     detailButt->setText(QObject::tr("Detail"));
 
-    errorDetailButt = new Base::RButton();
+    errorDetailButt = new Base::RIconButton();
     QObject::connect(errorDetailButt,SIGNAL(clicked()),q_ptr,SLOT(showErrorInfo()));
     errorDetailButt->setEnabled(false);
     errorDetailButt->setText(QObject::tr("Error info"));

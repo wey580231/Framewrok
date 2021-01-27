@@ -67,6 +67,9 @@ namespace Base {
 		void setTextFont(QFont & font);
 		void setTextVisible(bool visible);
 
+		void setBorderRadius(int radiusX = 0,int radiusY = 0);
+		QPair<int, int> borderRadius() const { return m_borderRadius; }
+
 		/*!
 		 * @brief 设置图标和文本的位置关系
 		 * @param iconLeftToText true:图标在左，文字在右；false:图标在右，文字在左
@@ -85,6 +88,7 @@ namespace Base {
 
 	private:
 		QSize calcMiniumSize() const;
+		QSize calcMiniumContentSize() const;
 
 		void updateColor(ColorChoose choose, QColor color);
 
@@ -110,6 +114,7 @@ namespace Base {
 		QFont m_textFont;				/*!< 文字字体 */
 		bool m_textVixible;				/*!< 文字是否可见 */
 		bool m_iconLeftToText;			/*!< 图标在左、文字在右 */
+		QPair<int, int> m_borderRadius;	/*!< 边框圆角，first:x方向，second:y方向 */
 
 		bool m_mouseEnter;
 		ColorChooses m_colorChoose;      /*!< 各个颜色开关 */

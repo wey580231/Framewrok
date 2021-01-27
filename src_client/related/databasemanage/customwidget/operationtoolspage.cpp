@@ -2,6 +2,8 @@
 
 #include <QVariant>
 
+#include "../utils/util.h"
+
 namespace Related {
 
 #define ButtId "ButtId"
@@ -38,21 +40,10 @@ namespace Related {
 
 	void OperationToolsPage::init()
 	{
-		auto createButt = [](QString icon, QString text) {
-			Base::RIconButton * butt = new Base::RIconButton();
-			butt->setIconSize(Base::RIconButton::ICON_16);
-			butt->setIcon(QIcon(icon));
-			butt->setText(text);
-			butt->setFont(QFont(QStringLiteral("Î¢ÈíÑÅºÚ"), 10));
-			butt->setMinimumSize(60, 30);
-
-			return butt;
-		};
-
-		m_addButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/ÐÂÔö.png"), QStringLiteral("ÐÂÔö"));
-		m_delButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/É¾³ý.png"), QStringLiteral("É¾³ý"));
-		m_editButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/±à¼­.png"), QStringLiteral("±à¼­"));
-		m_refreshButton = createButt(QStringLiteral(":/QYBlue/resource/qyblue/Ë¢ÐÂ.png"), QStringLiteral("Ë¢ÐÂ"));
+		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/ÐÂÔö.png"), QStringLiteral("ÐÂÔö"));
+		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/É¾³ý.png"), QStringLiteral("É¾³ý"));
+		m_editButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/±à¼­.png"), QStringLiteral("±à¼­"));
+		m_refreshButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/Ë¢ÐÂ.png"), QStringLiteral("Ë¢ÐÂ"));
 
 		m_buttMap.insert(Butt_Add, m_addButton);
 		m_buttMap.insert(Butt_Delete, m_delButton);
