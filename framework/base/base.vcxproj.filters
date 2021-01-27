@@ -149,9 +149,6 @@
     <ClCompile Include="selfwidget\iconbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="selfwidget\rbutton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="selfwidget\rinputdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -269,9 +266,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\iconbutton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="selfwidget\rbutton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rinputdialog.h">

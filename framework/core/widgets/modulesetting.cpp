@@ -15,7 +15,6 @@
 #include <QQuickWidget>
 
 #include <base/util/rsingleton.h>
-#include <base/selfwidget/rbutton.h>
 #include <base/actionmanager/actionmanager.h>
 #include <base/actionmanager/action.h>
 #include <base/util/rutil.h>

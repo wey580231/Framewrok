@@ -11,7 +11,7 @@
 #include "../util/rsingleton.h"
 #include "../util/rutil.h"
 #include "../util/imagemanager.h"
-#include "rbutton.h"
+#include "iconbutton.h"
 #include "rlabel.h"
 #include "toolbar.h"
 
@@ -34,7 +34,7 @@ namespace Base {
 
 		~RMessageBoxPrivate()
 		{
-			foreach(RButton * tmp, buttList)
+			foreach(RIconButton * tmp, buttList)
 			{
 				delete tmp;
 			}
@@ -57,8 +57,8 @@ namespace Base {
 
 		RMessageBox::Icon mesType;
 
-		QList<RButton *> buttList;
-		QHash<RButton *, RMessageBox::StandardButton> buttHash;
+		QList<RIconButton *> buttList;
+		QHash<RIconButton *, RMessageBox::StandardButton> buttHash;
 		RMessageBox::StandardButton clickButton;
 	};
 
@@ -98,7 +98,7 @@ namespace Base {
 		contentWidget->setLayout(contentLayout);
 
 		bottomWidget = new QWidget;
-		bottomWidget->setFixedHeight(35);
+		bottomWidget->setFixedHeight(40);
 		bottomWidget->setMinimumSize(100, 30);
 
 		//    mainLayout->addWidget(toolBar);
@@ -254,7 +254,7 @@ namespace Base {
 	void RMessageBox::respButtonClicked()
 	{
 		Q_D(RMessageBox);
-		RButton * button = dynamic_cast<RButton *>(QObject::sender());
+		RIconButton * button = dynamic_cast<RIconButton *>(QObject::sender());
 		if (button)
 		{
 			d->clickButton = d->buttHash.value(button);
@@ -262,10 +262,11 @@ namespace Base {
 		}
 	}
 
-	RButton *RMessageBox::addButton(RMessageBox::StandardButton butt)
+	RIconButton *RMessageBox::addButton(RMessageBox::StandardButton butt)
 	{
 		Q_D(RMessageBox);
-		RButton * button = new RButton(d->bottomWidget);
+		RIconButton * button = new RIconButton(d->bottomWidget);
+		button->setMinimumSize(60, 26);
 		button->setText(standardButtText(butt));
 		connect(button, SIGNAL(clicked()), this, SLOT(respButtonClicked()));
 

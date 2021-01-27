@@ -17,7 +17,7 @@
 #include <QlistView>
 
 #include <base/selfwidget/rmessagebox.h>
-#include <base/selfwidget/rbutton.h>
+#include <base/selfwidget/iconbutton.h>
 #include <base/actionmanager/actionmanager.h>
 #include <base/actionmanager/action.h>
 #include <core/file/programfilepath.h>
@@ -88,9 +88,9 @@ private:
 
     QTreeWidget * treeWidget;
 
-	Base::RButton * resetAllButt;
-	Base::RButton * importButt;
-	Base::RButton * exportButt;
+	Base::RIconButton * resetAllButt;
+	Base::RIconButton * importButt;
+	Base::RIconButton * exportButt;
 
     QComboBox * schemesBox;
 
@@ -98,7 +98,7 @@ private:
     QLabel * keySequenceLabel;
     QLineEdit * targetEdit;
 
-	Base::RButton * resetButt;
+	Base::RIconButton * resetButt;
 
     int key[4];             /*!< 设置快捷键时储存已经按下的键 */
     ushort keyPressCount;   /*!< 一次设置快捷键时，按下键的数量，最多为4次 */
@@ -115,7 +115,7 @@ void ShortcutSettingsPrivate::initView()
 
     QWidget * buttContainer = new QWidget();
 
-    resetAllButt = new Base::RButton(buttContainer);
+    resetAllButt = new Base::RIconButton(buttContainer);
     QObject::connect(resetAllButt,SIGNAL(clicked()),q_ptr,SLOT(resetAllShortcuts()));
 
     schemesBox = new QComboBox(buttContainer);
@@ -142,10 +142,10 @@ void ShortcutSettingsPrivate::initView()
     schemesBox->setCurrentIndex(selectedIndex + 1);
     QObject::connect(schemesBox,SIGNAL(activated(int)),q_ptr,SLOT(switchSchemes(int)));
 
-    importButt = new Base::RButton(buttContainer);
+    importButt = new Base::RIconButton(buttContainer);
     QObject::connect(importButt,SIGNAL(clicked()),q_ptr,SLOT(importShortcuts()));
 
-    exportButt = new Base::RButton(buttContainer);
+    exportButt = new Base::RIconButton(buttContainer);
     QObject::connect(exportButt,SIGNAL(clicked()),q_ptr,SLOT(exportShortcuts()));
 
     QHBoxLayout * buttLayout = new QHBoxLayout;
@@ -164,7 +164,7 @@ void ShortcutSettingsPrivate::initView()
     targetEdit = new QLineEdit(keyGroupBox);
     targetEdit->installEventFilter(q_ptr);
 
-    resetButt = new Base::RButton(keyGroupBox);
+    resetButt = new Base::RIconButton(keyGroupBox);
     QObject::connect(resetButt,SIGNAL(clicked()),q_ptr,SLOT(resetKeySequence()));
 
     QHBoxLayout * boxLayout = new QHBoxLayout;

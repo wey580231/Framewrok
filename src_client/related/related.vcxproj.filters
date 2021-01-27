@@ -13,11 +13,7 @@
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
-    <ClCompile Include="databasemanage\pages\databasemanage\level1page.cpp" />
-    <ClCompile Include="databasemanage\pages\databasemanage\level2page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
-    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.cpp" />
-    <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
@@ -87,6 +83,7 @@
     <ClCompile Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.cpp">
     <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,10 +121,6 @@
     <QtMoc Include="databasemanage\pages\databasemanage\level0page.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\usermanagepage.h" />
-    <QtMoc Include="databasemanage\pages\databasemanage\level1page.h" />
-    <QtMoc Include="databasemanage\pages\databasemanage\level2page.h" />
-    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel1.h" />
-    <QtMoc Include="databasemanage\pages\databasemanage\tablemodel\levelmodel2.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\othersettingpage.h" />
     <QtMoc Include="databasemanage\frame\loginpage.h" />
     <QtMoc Include="databasemanage\pages\systemmainpage\taskoverviewitem.h" />
@@ -185,6 +178,7 @@
     <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h">
     <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>

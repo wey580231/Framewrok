@@ -14,75 +14,14 @@
 #include <QPainter>
 #include <QStyleOptionToolButton>
 
-#include "rbutton.h"
+#include "iconbutton.h"
 
 namespace Base {
-
-	TitleBarButton::TitleBarButton(QWidget *widget) :QAbstractButton(widget)
-	{
-		setFocusPolicy(Qt::NoFocus);
-	}
-
-	QSize TitleBarButton::sizeHint() const
-	{
-		ensurePolished();
-
-		int size = 2 * style()->pixelMetric(QStyle::PM_TitleBarHeight, 0, this);
-		if (!icon().isNull()) {
-			int iconSize = style()->pixelMetric(QStyle::PM_SmallIconSize, 0, this);
-			QSize sz = icon().actualSize(QSize(iconSize, iconSize));
-			size += qMax(sz.width(), sz.height());
-		}
-
-		return QSize(size, size);
-	}
-
-	void TitleBarButton::enterEvent(QEvent *event)
-	{
-		if (isEnabled()) update();
-		QAbstractButton::enterEvent(event);
-	}
-
-	void TitleBarButton::leaveEvent(QEvent *event)
-	{
-		if (isEnabled()) update();
-		QAbstractButton::leaveEvent(event);
-	}
-
-	void TitleBarButton::paintEvent(QPaintEvent *)
-	{
-		QPainter p(this);
-
-		QStyleOptionToolButton opt;
-		opt.init(this);
-		opt.state |= QStyle::State_AutoRaise;
-
-		if (style()->styleHint(QStyle::SH_DockWidget_ButtonsHaveFrame, 0, this))
-		{
-			if (isEnabled() && underMouse() && !isChecked() && !isDown())
-				opt.state |= QStyle::State_Raised;
-			if (isChecked())
-				opt.state |= QStyle::State_On;
-			if (isDown())
-				opt.state |= QStyle::State_Sunken;
-			style()->drawPrimitive(QStyle::PE_PanelButtonTool, &opt, &p, this);
-		}
-
-		opt.icon = icon();
-		opt.subControls = 0;
-		opt.activeSubControls = 0;
-		opt.features = QStyleOptionToolButton::None;
-		opt.arrowType = Qt::NoArrow;
-		int size = style()->pixelMetric(QStyle::PM_SmallIconSize, 0, this);
-		opt.iconSize = QSize(size, size);
-		style()->drawComplexControl(QStyle::CC_ToolButton, &opt, &p, this);
-	}
-
 
 	DialogTitleBar::DialogTitleBar(QWidget *parent)
 	{
 		Q_UNUSED(parent)
-			setFixedHeight(24);
+			setFixedHeight(26);
 
 		titleContent = new QWidget(this);
 
@@ -90,12 +29,17 @@ namespace Base {
 
 		titleLabel = new QLabel(titleContent);
 		titleLabel->setObjectName("titlebar_titlelabel");
-		titleLabel->setStyleSheet("background-color:rgba(53,194,202,210);padding-left:3px;text-aligcn:");
+		titleLabel->setStyleSheet("background-color:rgba(35,113,173,240);padding-left:3px;");
 		titleLabel->installEventFilter(this);
 		layout->addWidget(DialogTitleBar::TitleLabel, titleLabel);
 
-		QAbstractButton *closeButt = new TitleBarButton(titleContent);
-		closeButt->setFixedSize(24, 24);
+		RIconButton * closeButt = new RIconButton(titleContent);
+		closeButt->setBorderRadius();
+		closeButt->disableColors(RIconButton::Color_NormalBorder | RIconButton::Color_HoverBorder);
+		closeButt->enableColors(RIconButton::Color_NormalBackGround, QColor(35, 113, 173, 240));
+		closeButt->enableColors(RIconButton::Color_HoverBackground, Qt::red);
+		closeButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/关闭.png")));
+		closeButt->setFixedSize(26, 26);
 		closeButt->setObjectName(QLatin1String("title_closebutton"));
 		connect(closeButt, SIGNAL(clicked()), this, SIGNAL(widgetClose()));
 		layout->addWidget(DialogTitleBar::CloseButton, closeButt);
@@ -176,9 +120,8 @@ namespace Base {
 
 		bool canClose = true;
 
-		QAbstractButton *button = qobject_cast<QAbstractButton*>(layout->getWidget(DialogTitleBar::CloseButton));
-		button->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton, &option, this));
-		button->setVisible(canClose);
+		//QAbstractButton *button = qobject_cast<QAbstractButton*>(layout->getWidget(DialogTitleBar::CloseButton));
+		//button->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton, &option, this));
 
 		setAttribute(Qt::WA_ContentsPropagated, canClose);
 	}
@@ -210,8 +153,8 @@ namespace Base {
 
 		bool enableToolButton;                  /*!< 是否将buttonContainWidget 加入布局，默认为true */
 
-		QList<RButton *> buttList;
-		QHash<RButton *, DialogProxy::StandardButton> buttHash;
+		QList<RIconButton *> buttList;
+		QHash<RIconButton *, DialogProxy::StandardButton> buttHash;
 	};
 
 	void DialogProxyPrivate::initView()
@@ -227,7 +170,7 @@ namespace Base {
 		contentWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 		buttonContainWidget = new QWidget(contentWidget);
-		buttonContainWidget->setFixedHeight(35);
+		buttonContainWidget->setFixedHeight(40);
 
 		QVBoxLayout * mainLayout = new QVBoxLayout;
 		mainLayout->setContentsMargins(1, 1, 1, 1);
@@ -262,7 +205,7 @@ namespace Base {
 			QWidget *widget = item->widget();
 			bool canDeleted = true;
 			if (widget) {
-				RButton * rbutt = dynamic_cast<RButton *>(widget);
+				RIconButton * rbutt = dynamic_cast<RIconButton *>(widget);
 				if (rbutt) {
 					rbutt->hide();
 				}
@@ -434,7 +377,8 @@ namespace Base {
 	void DialogProxy::addButton(DialogProxy::StandardButton buttType, QObject * reiver, const char * slot)
 	{
 		Q_D(DialogProxy);
-		RButton * button = new RButton(d->buttonContainWidget);
+		RIconButton * button = new RIconButton(d->buttonContainWidget);
+		button->setMinimumSize(60,26);
 		if (reiver && slot)
 			connect(button, SIGNAL(clicked(bool)), reiver, slot);
 		button->setProperty("buttType", buttType);
@@ -454,7 +398,7 @@ namespace Base {
 	 */
 	void DialogProxy::respButtonClicked()
 	{
-		RButton * butt = dynamic_cast<RButton *>(QObject::sender());
+		RIconButton * butt = dynamic_cast<RIconButton *>(QObject::sender());
 		if (butt) {
 			StandardButton but = static_cast<StandardButton>(butt->property("buttType").toInt());
 			respButtClicked(but);

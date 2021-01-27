@@ -135,5 +135,10 @@
         <file>resource/qyblue/记录.png</file>
         <file>resource/qyblue/概览.png</file>
         <file>resource/qyblue/权限.png</file>
+        <file>resource/qyblue/上传_32_32.png</file>
+        <file>resource/qyblue/背景.png</file>
+        <file>resource/qyblue/主窗口背景.png</file>
+        <file>resource/qyblue/关闭.png</file>
+        <file>resource/qyblue/关闭_hover.png</file>
     </qresource>
 </RCC>

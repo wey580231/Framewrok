@@ -140,7 +140,6 @@
     <QtMoc Include="selfwidget\rlabel.h" />
     <QtMoc Include="selfwidget\ripwidget.h" />
     <QtMoc Include="selfwidget\rinputdialog.h" />
-    <QtMoc Include="selfwidget\rbutton.h" />
     <QtMoc Include="selfwidget\iconbutton.h" />
     <QtMoc Include="selfwidget\flowcontrol.h" />
     <QtMoc Include="selfwidget\dialogproxy.h" />
@@ -191,7 +190,6 @@
     <ClCompile Include="selfwidget\iconbutton.cpp" />
     <ClCompile Include="selfwidget\lonlatedit\rlonlatedit.cpp" />
     <ClCompile Include="selfwidget\lonlatedit\rpositionviewlabel.cpp" />
-    <ClCompile Include="selfwidget\rbutton.cpp" />
     <ClCompile Include="selfwidget\rinputdialog.cpp" />
     <ClCompile Include="selfwidget\ripwidget.cpp" />
     <ClCompile Include="selfwidget\rlabel.cpp" />

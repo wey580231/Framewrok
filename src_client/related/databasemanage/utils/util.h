@@ -28,6 +28,8 @@ namespace Related {
 		static Base::RMessageBox::StandardButton showQuestion(QWidget * parent,QString questionContent);
 		static Base::RMessageBox::StandardButton showInformation(QWidget * parent,QString infoContent);
 		static Base::RMessageBox::StandardButton showWarning(QWidget * parent,QString warnContent);
+
+
 	};
 
 } //namespace Related 

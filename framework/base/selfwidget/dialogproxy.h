@@ -39,24 +39,6 @@ namespace Base {
 
 	class TitleLayout;
 
-	class TitleBarButton : public QAbstractButton
-	{
-		Q_OBJECT
-	public:
-		explicit TitleBarButton(QWidget *widget);
-
-	protected:
-		QSize sizeHint() const;
-		inline QSize minimumSizeHint() const
-		{
-			return sizeHint();
-		}
-
-		void enterEvent(QEvent *event);
-		void leaveEvent(QEvent *event);
-		void paintEvent(QPaintEvent *);
-	};
-
 	class DialogTitleBar : public QWidget
 	{
 		Q_OBJECT

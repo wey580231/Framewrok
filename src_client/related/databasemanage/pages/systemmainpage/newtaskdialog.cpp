@@ -1,6 +1,11 @@
 #include "newtaskdialog.h"
 
 #include <QDebug>
+#include <QTableWidget>
+#include <QDir>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFileDialog>
 
 #include "customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
@@ -44,37 +49,73 @@ namespace Related {
 		m_tabWidget->addPage(QStringLiteral("任务图片"), imageWidget);
 		m_tabWidget->addPage(QStringLiteral("任务数据"), fileWidget);
 
+		//图片页面
 		{
-			m_treeView = new Base::RTreeView();
-			m_treeView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
+			Base::RIconButton * chooseImagePath = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/上传_32_32.png"), QStringLiteral("选择图片"));
+			Base::RIconButton * clearImage = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"), QStringLiteral("清空"));
+			connect(chooseImagePath, SIGNAL(clicked()),this,SLOT(openLocalImage()));
+			connect(clearImage, SIGNAL(clicked()),this,SLOT(clearImage()));
+
+			QWidget * toolWidget = new QWidget();
+			QHBoxLayout * toolLayout = new QHBoxLayout();
+			toolLayout->setContentsMargins(0, 0, 0, 0);
+			toolLayout->addWidget(chooseImagePath);
+			toolLayout->addWidget(clearImage);
+			toolLayout->addStretch(1);
+			toolWidget->setLayout(toolLayout);
+
+			m_tableView = new Base::RTableView();
+			m_tableView->setFocusPolicy(Qt::NoFocus);
+			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+
+			m_imageTableModel = new ImageModel();
+			m_tableView->setModel(m_imageTableModel);
+
+			m_tableView->addColumnItem(Base::ColumnItem(Img_Id, QStringLiteral("索引"),70));
+			m_tableView->addColumnItem(Base::ColumnItem(Img_Name, QStringLiteral("文件名"),300));
+			m_tableView->addColumnItem(Base::ColumnItem(Img_FileTimeStamp, QStringLiteral("修改时间"), 180));
+			m_tableView->addColumnItem(Base::ColumnItem(Img_FileType, QStringLiteral("类型"), 80));
+			m_tableView->addColumnItem(Base::ColumnItem(Img_FileSize, QStringLiteral("大小"), 80));
+
+			QVBoxLayout * vlayout = new QVBoxLayout();
+			vlayout->setContentsMargins(4, 4, 4, 4);
+			vlayout->addWidget(toolWidget);
+			vlayout->addWidget(m_tableView);
+			imageWidget->setLayout(vlayout);
+		}
+
+		{
+			Base::RIconButton * chooseDir = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/上传_32_32.png"), QStringLiteral("选择目录"));
+			Base::RIconButton * clearImage = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"), QStringLiteral("清空"));
+			connect(chooseDir, SIGNAL(clicked()), this, SLOT(slotSeleteFile()));
+			connect(clearImage, SIGNAL(clicked()), this, SLOT(clearImage()));
+
+			m_dataFilePath = new QLineEdit();
+			m_dataFilePath->setReadOnly(true);
+			m_dataFilePath->setMinimumWidth(120);
+
+			QWidget * toolWidget = new QWidget();
+			QHBoxLayout * toolLayout = new QHBoxLayout();
+			toolLayout->setContentsMargins(0, 0, 0, 0);
+			toolLayout->addWidget(chooseDir);
+			toolLayout->addWidget(clearImage);
+			toolLayout->addStretch(1);
+			toolLayout->addWidget(m_dataFilePath);
+			toolWidget->setLayout(toolLayout);
+
+			m_treeView = new QTreeView();
 			m_treeView->setObjectName("mainWidget");
-			connect(m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotTreeItemClicked(QModelIndex)));
+			m_treeView->setFocusPolicy(Qt::FocusPolicy::NoFocus);
 
-			m_treeModel = new Base::RTreeModel();
-			QStringList headList;
-			headList << QStringLiteral("文件结构");
-			m_treeModel->setHeaderData(headList);
-
+			m_treeModel = new QFileSystemModel();
 			m_treeView->setModel(m_treeModel);
-			//文件录入
-			m_fileLineEdit = new QLineEdit();
 
-			m_fileButt = new Base::RIconButton();
-			m_fileButt->setText(QStringLiteral("选择文件"));
-			m_fileButt->setMinimumSize(60, 30);
-			connect(m_fileButt, SIGNAL(clicked()), this, SLOT(slotSeleteFile()));
-
-			QWidget *filePathWidget = new QWidget();
-			QHBoxLayout *hLayout = new QHBoxLayout();
-			hLayout->addWidget(m_fileLineEdit);
-			hLayout->addWidget(m_fileButt);
-			filePathWidget->setLayout(hLayout);
-
-			QVBoxLayout *originalFileManageLayout = new QVBoxLayout();
-			originalFileManageLayout->addWidget(m_treeView);
-			originalFileManageLayout->addWidget(filePathWidget);
-			originalFileManageLayout->setContentsMargins(0, 4, 4, 4);
-			fileWidget->setLayout(originalFileManageLayout);
+			QVBoxLayout * vlayout = new QVBoxLayout();
+			vlayout->addWidget(toolWidget);
+			vlayout->addWidget(m_treeView);
+			vlayout->setContentsMargins(4, 4, 4, 4);
+			fileWidget->setLayout(vlayout);
 		}
 
 		QWidget * mainWidget = new QWidget();
@@ -86,104 +127,17 @@ namespace Related {
 		this->setContentWidget(mainWidget);
 	}
 
-	bool NewTaskDialog::FindFile(const QString & path)
-	{
-		QDir dir(path);
-		if (!dir.exists()) {
-			return false;
-		}
-		dir.setFilter(QDir::Dirs | QDir::Files);
-		dir.setSorting(QDir::DirsFirst);
-		QFileInfoList list = dir.entryInfoList();
-		int i = 0;
-
-		bool bIsDir;
-		do {
-			QFileInfo fileInfo = list.at(i);
-			if (fileInfo.fileName() == "." | fileInfo.fileName() == "..") {
-				++i;
-				continue;
-			}
-			bIsDir = fileInfo.isDir();
-			if (bIsDir) {
-				Base::TreeNode *tempNode = createTreeNode(m_fileRootNode, fileInfo.filePath());
-				m_fileRootNode->nodes.append(tempNode);
-				FindFile(fileInfo.filePath());
-			}
-			else {
-				QString filePath = fileInfo.path();
-				QFileInfo t_dirFileInfo(filePath);
-				QString t_dirName = t_dirFileInfo.baseName();
-
-				if (m_fileRootNode->nodes.size() > 0) {
-					for (int i = 0; i < m_fileRootNode->nodes.size(); i++) {
-						Base::TreeNode * tempNode = m_fileRootNode->nodes.at(i);
-						if (tempNode->nodeName == t_dirName) {
-							Base::TreeNode *tempNode2 = createTreeNode(tempNode, fileInfo.filePath());
-							tempNode->nodes.append(tempNode2);
-						}
-					}
-				}
-			}
-			++i;
-		} while (i < list.size());
-
-		return true;
-	}
-
-	/*!
-	 *  @brief 创建树节点
-	 */
-	Base::TreeNode * NewTaskDialog::createTreeNode(Base::TreeNode * parentNode, QString  pasth)
-	{
-		QFileInfo t_fileInfo(pasth);
-
-		Base::TreeNode * node = new Base::TreeNode;
-		node->nodeChecked = false;
-		node->nodeName = t_fileInfo.baseName();
-		node->parentNode = parentNode;
-		// 文件描述信息
-		OriginalDataFileParameter * t_fileParameter = new OriginalDataFileParameter();
-		t_fileParameter->name = t_fileInfo.baseName();
-		t_fileParameter->path = pasth;
-		t_fileParameter->createTime = t_fileInfo.created().toString("yyyy-MM-d hh:mm:ss");
-		t_fileParameter->isDir = t_fileInfo.isDir();
-		node->nodeData = t_fileParameter;
-		return node;
-	}
-
-	/*!
-	 * @brief   刷新模型
-	 * @details
-	 */
-	void NewTaskDialog::updateModel()
-	{
-		m_treeModel->refreshModel();
-		m_treeView->expandAll();
-	}
-
 	void NewTaskDialog::slotSeleteFile()
 	{
-		m_originalFilePath = QFileDialog::getExistingDirectory(this, QStringLiteral("选择目录"),
-			"./", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-		m_fileLineEdit->setText(m_originalFilePath);
+		QString filePath = QFileDialog::getExistingDirectory(this, QStringLiteral("选择目录"),"./", QFileDialog::DontResolveSymlinks);
+		if (filePath.isEmpty())
+			return;
 
-		Base::TreeNode * parentNode = nullptr;
-		m_fileRootNode = createTreeNode(parentNode, m_originalFilePath);
+		m_originalFilePath = filePath;
+		m_dataFilePath->setText(m_originalFilePath);
 
-		FindFile(m_originalFilePath);
+		m_treeModel->setRootPath(filePath);
 
-		m_treeModel->addRootNode(m_fileRootNode);
-
-		this->updateModel();
-	}
-
-	void NewTaskDialog::slotTreeItemClicked(QModelIndex index)
-	{
-		Base::TreeNode * treeNode = static_cast<Base::TreeNode *>(index.internalPointer());
-		OriginalDataFileParameter * t_fileParameter = static_cast<OriginalDataFileParameter *>(treeNode->nodeData);
-
-		this->updateModel();
 	}
 
 	void NewTaskDialog::respOk()
@@ -191,6 +145,7 @@ namespace Related {
 		// 任务基本信息
 		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
 		sendTaskBaseInfo();
+
 // 		//[] 获取文件列表
 // 		m_taskDataFilePaths.clear();
 // 		getFileNode(m_fileRootNode);
@@ -205,40 +160,29 @@ namespace Related {
 		close();
 	}
 
-	bool NewTaskDialog::getFileNode(Base::TreeNode *node)
+	void NewTaskDialog::openLocalImage()
 	{
-		if (node == nullptr) {
-			return false;
+		QStringList imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择任务图片"),"/home", "Images (*.png *.jpg)");
+		if (imageList.isEmpty())
+			return;
+
+		QList<QFileInfo> fileInfos;
+		for (QString fileName : imageList) {
+			QFileInfo fileInfo(fileName);
+			fileInfos.append(fileInfo);
 		}
 
-		if (node->nodes.size() == 0) {
-			return false;
-		}
-
-		for (int i = 0; i < node->nodes.size(); i++)
-		{
-			Base::TreeNode *t_temp = node->nodes.at(i);
-			OriginalDataFileParameter * t_fileParameter = static_cast<OriginalDataFileParameter *>(t_temp->nodeData);
-
-			if (t_temp->nodes.size() > 0) {
-				this->getFileNode(t_temp);
-			}
-			else
-			{
-				//if (t_temp->nodeChecked == true) {
-				qDebug() << t_fileParameter->createTime << t_fileParameter->path << t_fileParameter->name;
-				//	}
-				m_taskDataFilePaths.append(t_fileParameter);
-			}
-		}
-
-		return true;
+		m_imageTableModel->updateData(fileInfos);
 	}
 
-	/*!
-	 * @brief    发送任务的基本信息
-	 * @details
-	 */
+	void NewTaskDialog::clearImage()
+	{
+		Base::RMessageBox::StandardButton result = Util::showQuestion(this, QStringLiteral("是否清空数据表?"));
+		if (result == Base::RMessageBox::Yes) {
+			m_imageTableModel->clearData();
+		}
+	}
+
 	void NewTaskDialog::sendTaskBaseInfo()
 	{
 		QDateTime current_date_time = QDateTime::currentDateTime();
@@ -255,14 +199,6 @@ namespace Related {
 		request.detectPlatform = QStringLiteral("detectPlatform");
 
 		NetConnector::instance()->write(request);
-	}
-
-	/*!
-	 * @brief  发送任务数据文件的基本信息
-	 * @details
-	 */
-	void NewTaskDialog::sendTaskOriginalDataInfo()
-	{
 	}
 
 }//namespace Related 
