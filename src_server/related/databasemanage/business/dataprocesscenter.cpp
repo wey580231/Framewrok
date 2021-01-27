@@ -467,12 +467,28 @@ namespace Related {
 		}
 		return response;
 	}
+	
 	Datastruct::DutyRecordDeleteResponse DataProcessCenter::processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request)
 	{
 		Datastruct::DutyRecordDeleteResponse response;
 
+		Table::DutyRecordEntity dutyRecord;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(dutyRecord.table).arg(dutyRecord.id).arg(request.id);
+		if (query.exec(deleteSql)) {
+			response.m_deleteResult = true;
+		}
+		else
+		{
+			response.m_deleteResult = false;
+			response.m_errorInfo = QStringLiteral("É¾³ýÊ§°Ü");
+		};
+
 		return response;
 	}
+	
 	Datastruct::ExperimentRecordCreateResponse DataProcessCenter::processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request)
 	{
 		Datastruct::ExperimentRecordCreateResponse response;
@@ -521,6 +537,7 @@ namespace Related {
 
 		return response;
 	}
+	
 	Datastruct::LoadAllExperimentRecordsResponse DataProcessCenter::processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request)
 	{
 		Datastruct::LoadAllExperimentRecordsResponse response;
@@ -565,17 +582,23 @@ namespace Related {
 		}
 		return response;
 	}
+
 	Datastruct::ExperimentRecordDeleteResponse DataProcessCenter::processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request)
 	{
 		Datastruct::ExperimentRecordDeleteResponse response;
 
 		Table::ExperimentRecordEntity experimentRecord;
 
-// 		Base::RDelete rs(experimentRecord.table);
-// 		r(experimentRecord.table)
-// 			.limit(request.m_offsetIndex, request.m_limitIndex);
-// 
-// 		QSqlQuery query(m_database->sqlDatabase());
+		QSqlQuery query(m_database->sqlDatabase());
+
+		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(experimentRecord.table).arg(experimentRecord.id).arg(request.id);
+		if (query.exec(deleteSql)) {
+			response.m_deleteResult = true;
+		}
+		else {
+			response.m_deleteResult = false;
+			response.m_errorInfo = QStringLiteral("É¾³ýÊ§°Ü");
+		};
 
 		return response;
 	}

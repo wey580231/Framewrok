@@ -36,7 +36,7 @@ namespace Related {
 			switch (cindex)
 			{
 			case L_Index:
-				return dataIndex;
+				return dataIndex+1;
 				break;
 			case L_CreateTime:
 				return data.createTime;

@@ -12,6 +12,8 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <QItemSelectionModel>
+#include <QAbstractItemModel>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
@@ -46,21 +48,25 @@ namespace Related {
 		void processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
 
+		void slotClickedTable(QModelIndex index);
+
 	private:
 		void init();
 		void initConnect();
 		void insertDutyRecord();
-
+		void deleteDutyRecord(QString id);
 		void refreshCurrPage();
 
 	private:
-		OperationToolsPage *m_operationToolsPage;			/*!< 操作工具页面 */
-		Base::RTableView * m_tableView;						/*!< 数据表格 */
-		LogbookModel * m_tableModel;						/*!< 数据模型 */
-		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */				
+		OperationToolsPage *m_operationToolsPage;				/*!< 操作工具页面 */
+		Base::RTableView * m_tableView;							/*!< 数据表格 */
+		LogbookModel * m_tableModel;							/*!< 数据模型 */
+		PageSwitchBar * m_pageSwitch;							/*!< 切换页 */				
 
-		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
-		QString m_taskId;									/*!< 任务Id */
+		bool m_firstLoadData;									/*!< 第一次加载页面显示 */
+		QString m_taskId;										/*!< 任务Id */
+		Datastruct::LoadAllDutyRecordResponse m_allDutyRecords;	/*!< 全部值班日志信息 */
+		int m_seleteTableRow;									/*!< 选中行数 */
 	};
 
 }//namespace Related

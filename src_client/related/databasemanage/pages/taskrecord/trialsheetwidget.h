@@ -44,12 +44,14 @@ namespace Related {
 		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
+		void slotClickedTable(QModelIndex index);
 
 	private:
 		void init();
 		void initConnent();
 
 		void insertExperimentRecord();
+		void deleteExperimentRecord(QString id);
 		void refreshCurrPage();
 
 	private:
@@ -60,6 +62,8 @@ namespace Related {
 
 		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
 		QString m_taskId;									/*!< 任务Id */
+		Datastruct::LoadAllExperimentRecordsResponse m_allExperimentRecords;    /*!< 全部数据信息 */
+		int m_seleteTableRow;													/*!< 选中行数 */
 	};
 
 } // namespace Related 

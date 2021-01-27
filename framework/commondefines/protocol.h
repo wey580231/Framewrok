@@ -46,14 +46,16 @@ namespace Datastruct {
 		P_TaskSimpleInfo,		/*!< 单个任务概览信息 */
 		P_TaskFullInfo,			/*!< 单个任务详细信息 */
 
-		P_CreateDutyRecord = 20,/*!< 创建值班日志 */
-		P_ListDutyRecords ,		/*!< 查询所有值班日志 */
-		P_DeleteDutyRecords,	/*!< 删除值班日志 */
-		P_ModifyDutyRecord,		/*!< 修改值班日志 */
+		P_CreateDutyRecord = 20,	/*!< 创建值班日志 */
+		P_ListDutyRecords ,			/*!< 查询所有值班日志 */
+		P_DutyRecordByCondition,	/*!< 按条件查询值班日志 */
+		P_DeleteDutyRecords,		/*!< 删除值班日志-单条 */
+		P_ModifyDutyRecord,			/*!< 修改值班日志 */
 
 		P_CreateExperimentRecord = 30,	/*!< 创建试验记录 */
 		P_ListExperimentRecords,		/*!< 查询所有试验记录 */
-		P_DeleteExperimentRecord,		/*!< 删除试验记录 */
+		P_ExperimentRecordByCondition,	/*!< 按条件查询试验记录 */
+		P_DeleteExperimentRecord,		/*!< 删除试验记录 - 单条*/
 		P_ModifyExperimentRecord,		/*!< 修改试验记录 */
 
 	};

@@ -11,7 +11,9 @@
 namespace Related {
 
 	DutyRecordPage::DutyRecordPage(QWidget *parent)
-		: AbstractPage(parent),m_firstLoadData(true)
+		: AbstractPage(parent),
+		m_firstLoadData(true),
+		m_seleteTableRow(99999999)
 	{
 		init();
 		initConnect();
@@ -57,7 +59,11 @@ namespace Related {
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
-
+				if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
+					Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
+					deleteDutyRecord(data.id);
+					m_seleteTableRow = 99999999;
+				}
 		}
 			break;
 		case OperationToolsPage::Butt_Edit: {
@@ -82,12 +88,21 @@ namespace Related {
 
 	void DutyRecordPage::processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
+		m_allDutyRecords = response;
 		m_tableModel->prepareData(response.m_dutyRecordInfos);
 		m_pageSwitch->setDataSize(response.m_dutyRecordCount);
 	}
 
 	void DutyRecordPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
+		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void DutyRecordPage::slotClickedTable(QModelIndex index)
+	{
+		m_seleteTableRow = index.row();
 	}
 
 	void DutyRecordPage::init()
@@ -105,6 +120,8 @@ namespace Related {
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+
+			connect(m_tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotClickedTable(QModelIndex)));
 
 			m_tableModel = new LogbookModel();
 
@@ -160,6 +177,13 @@ namespace Related {
 		request.createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
 		request.description = QStringLiteral("1");
 		request.seaCondition = QStringLiteral("1");
+		NetConnector::instance()->write(request);
+	}
+
+	void DutyRecordPage::deleteDutyRecord(QString id)
+	{
+		Datastruct::DutyRecordDeleteRequest request;
+		request.id = id;
 		NetConnector::instance()->write(request);
 	}
 

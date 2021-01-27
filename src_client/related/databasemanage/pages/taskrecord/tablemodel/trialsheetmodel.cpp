@@ -36,7 +36,7 @@ namespace Related {
 			switch (cindex)
 			{
 			case TS_Index:
-				return dataIndex;
+				return dataIndex + 1;
 				break;
 			case TS_PlatformId:
 				return data.platformId;

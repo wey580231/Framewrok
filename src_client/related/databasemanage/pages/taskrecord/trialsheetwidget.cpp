@@ -11,7 +11,9 @@
 namespace Related {
 
 	TrialSheetWidget::TrialSheetWidget(QWidget *parent)
-		: AbstractPage(parent), m_firstLoadData(true)
+		: AbstractPage(parent),
+		m_firstLoadData(true),
+		m_seleteTableRow(99999999)
 	{
 		init();
 		initConnent();
@@ -58,7 +60,11 @@ namespace Related {
 			break;
 
 		case OperationToolsPage::Butt_Delete: {
-
+			if (m_seleteTableRow < m_allExperimentRecords.m_listInfos.size()) {
+				Datastruct::ExperimentRecordEntityData data = m_allExperimentRecords.m_listInfos.at(m_seleteTableRow);
+				deleteExperimentRecord(data.id);
+				m_seleteTableRow = 99999999;
+			}
 		}
 			break;
 
@@ -86,13 +92,21 @@ namespace Related {
 
 	void TrialSheetWidget::processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response)
 	{
+		m_allExperimentRecords = response;
 		m_tableModel->prepareData(response.m_listInfos);
 		m_pageSwitch->setDataSize(response.m_count);
 	}
 
 	void TrialSheetWidget::processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response)
 	{
+		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
 
+	void TrialSheetWidget::slotClickedTable(QModelIndex index)
+	{
+		m_seleteTableRow = index.row();
 	}
 
 	void TrialSheetWidget::init()
@@ -110,6 +124,7 @@ namespace Related {
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+			connect(m_tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotClickedTable(QModelIndex)));
 
 			m_tableModel = new TrialSheetModel();
 
@@ -166,6 +181,13 @@ namespace Related {
 		QDateTime current_date_time = QDateTime::currentDateTime();
 		request.floatingTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
 
+		NetConnector::instance()->write(request);
+	}
+
+	void TrialSheetWidget::deleteExperimentRecord(QString id)
+	{
+		Datastruct::ExperimentRecordDeleteRequest request;
+		request.id = id;
 		NetConnector::instance()->write(request);
 	}
 
