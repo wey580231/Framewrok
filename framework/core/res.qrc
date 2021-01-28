@@ -138,5 +138,7 @@
         <file>resource/qyblue/主窗口背景.png</file>
         <file>resource/qyblue/关闭.png</file>
         <file>resource/qyblue/关闭_hover.png</file>
+        <file>resource/qyblue/列表.png</file>
+        <file>resource/qyblue/缩略图.png</file>
     </qresource>
 </RCC>

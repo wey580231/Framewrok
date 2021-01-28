@@ -6,6 +6,8 @@ namespace Related {
 
 		Datastruct::UserEntityData G_UserEntity;			/*!< 当前登录的用户 */
 
+		Base::WidgetAnimation G_WidgetAnimation;			/*!< 全局控件动画控制 */
+
 		/*! 
 		 * @brief 检测当前登录用户是否具有某些权限
 		 * @param up 待检测的权限

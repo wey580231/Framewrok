@@ -1,6 +1,7 @@
 #include "imagemodel.h"
 
 #include <QDateTime>
+#include <QDebug>
 
 #include <base/util/rutil.h>
 
@@ -30,7 +31,12 @@ namespace Related {
 
 	void ImageModel::updateData(QList<QFileInfo> & fileInfos)
 	{
-		m_dataList.append(fileInfos);
+		for (QFileInfo & info : fileInfos) {
+			if (!m_dataList.contains(info)) {
+				m_dataList.append(info);
+			}
+		}
+
 		refresh();
 	}
 

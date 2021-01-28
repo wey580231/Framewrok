@@ -124,6 +124,12 @@ namespace Base {
 		}
 	}
 
+	void RIconButton::setHoverIcon(const QIcon & icon)
+	{
+		m_hoverIcon = icon;
+		update();
+	}
+
 	void RIconButton::paintEvent(QPaintEvent *event)
 	{
 		Q_UNUSED(event)
@@ -206,7 +212,10 @@ namespace Base {
 		//[2]绘制图标
 		QIcon qic = icon();
 
-		if ((m_mouseEnter || isChecked()) && !m_checkedIcon.isNull())
+		if ( m_mouseEnter && !m_hoverIcon.isNull())
+			qic = m_hoverIcon;
+		
+		if ((isChecked()) && !m_checkedIcon.isNull())
 			qic = m_checkedIcon;
 
 		if (!qic.isNull()) {
