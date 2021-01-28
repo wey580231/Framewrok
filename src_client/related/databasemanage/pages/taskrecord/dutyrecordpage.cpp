@@ -2,11 +2,11 @@
 
 #include <QDebug>
 
-#include "../utils/util.h"
-#include "../customwidget/customwidgetcontainer.h"
-#include "../net/netconnector.h"
-#include "../net/signaldispatch.h"
-#include "../global.h"
+#include "../../utils/util.h"
+#include "../../customwidget/customwidgetcontainer.h"
+#include "../../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+#include "../../global.h"
 
 namespace Related {
 

@@ -310,55 +310,6 @@ void NetStateControlTool::updateStatusLabel()
 }
 
 /*!
-* @brief 启动网络数据线程
-* @details 启动所有tcp、udp服务端，若激活的网络状态队列为空，则先创建网络，否则控制网络开启
-*/
-void NetStateControlTool::respStartNetwork()
-{
-    int result = Base::RMessageBox::information(MainWindow::instance(),QStringLiteral("提示"),QStringLiteral("开启所有网络连接?"), Base::RMessageBox::Yes| Base::RMessageBox::No);
-    if(result == Base::RMessageBox::Yes){
-        if(RGlobal::G_NetworkState.size() == 0){
-            NetworkMap * networkMap = PluginLoader::instance()->getNetworks();
-            NetworkMap::iterator niter = networkMap->begin();
-            while(niter != networkMap->end()){
-                MainWindow::instance()->createNetwork(niter.value());
-                niter++;
-            }
-            MainWindow::instance()->registPluginToNetworkAndParseThread();
-        }else{
-            QList<Datastruct::NetworkState*> tlist = RGlobal::G_NetworkState.values();
-            std::for_each(tlist.begin(),tlist.end(),[&](Datastruct::NetworkState* state){
-                if(!state->running)
-                    MainWindow::instance()->conrtorlNetworkState(state->netId,true);
-            });
-        }
-
-        m_startButt->setEnabled(false);
-        m_stopButt->setEnabled(true);
-    }
-}
-
-/*!
-* @brief 关闭网络数据线程
-* @details 关闭所有tcp、udp服务端，对于已有的数据则关闭数据连接
-*/
-void NetStateControlTool::respStopNetwork()
-{
-    int result = Base::RMessageBox::information(MainWindow::instance(),QStringLiteral("提示"),QStringLiteral("关闭所有网络连接?"), Base::RMessageBox::Yes| Base::RMessageBox::No);
-    if(result == Base::RMessageBox::Yes){
-        NetworkMap * networkMap = PluginLoader::instance()->getNetworks();
-        NetworkMap::iterator niter = networkMap->begin();
-        while(niter != networkMap->end()){
-            MainWindow::instance()->conrtorlNetworkState(niter.value().id,false);
-            niter++;
-        }
-
-        m_startButt->setEnabled(true);
-        m_stopButt->setEnabled(false);
-    }
-}
-
-/*!
 * @brief 查看网络数据分析
 * @details 1.查看各个协议接收正确解析、错误解析的数量；
 *          2.查看各个网络连接的状态，提供便捷的网络状态查看

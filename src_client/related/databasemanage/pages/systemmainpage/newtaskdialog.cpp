@@ -7,11 +7,11 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 
-#include "customwidget/customwidgetcontainer.h"
-#include "../net/netconnector.h"
-#include "../net/signaldispatch.h"
-#include "../utils/util.h"
-#include "../global.h"
+#include "../../customwidget/customwidgetcontainer.h"
+#include "../../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+#include "../../utils/util.h"
+#include "../../global.h"
 
 namespace Related {
 

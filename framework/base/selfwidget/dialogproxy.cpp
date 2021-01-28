@@ -1,5 +1,9 @@
 ﻿#include "dialogproxy.h"
 
+#include <dwmapi.h>
+#include <windows.h>
+#include <windowsx.h>
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCoreApplication>
@@ -52,6 +56,12 @@ namespace Base {
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(titleContent);
 		this->setLayout(mainLayout);
+
+		//绘制窗口阴影
+		//HWND appwnd = (HWND)winId();
+		//const MARGINS shadow_on = { 1, 1, 1, 1 };
+		//const MARGINS shadow_off = { 0, 0, 0, 0 };
+		//DwmExtendFrameIntoClientArea(appwnd, (false) ? (&shadow_on) : (&shadow_off));
 	}
 
 	DialogTitleBar::~DialogTitleBar()

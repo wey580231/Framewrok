@@ -9,12 +9,12 @@
 #include <commondefines/protocol.h>
 #include <base/selfwidget/rmessagebox.h>
 
-#include "../utils/util.h"
-#include "../customwidget/pageswitchbar.h"
-#include "../customwidget/customwidgetcontainer.h"
-#include "../net/netconnector.h"
-#include "../net/signaldispatch.h"
-#include "../global.h"
+#include "../../utils/util.h"
+#include "../../customwidget/pageswitchbar.h"
+#include "../../customwidget/customwidgetcontainer.h"
+#include "../../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+#include "../../global.h"
 #include "userprivilegeeditwindow.h"
 
 namespace Related {

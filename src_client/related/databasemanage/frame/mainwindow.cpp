@@ -92,6 +92,9 @@ namespace Related {
 
 	void MainWindow::respLoginSuccess()
 	{
+		m_stackedWidget->setStyleSheet("#Widget_MainWidow{border-image:none;background-color: rgba(4,59,100, 235)}");
+		m_stackedWidget->style()->unpolish(m_stackedWidget);
+		m_stackedWidget->style()->polish(m_stackedWidget);
 		m_stackedWidget->setCurrentWidget(m_mainWidget);
 	}
 

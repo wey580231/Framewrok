@@ -8,12 +8,14 @@
     <ClCompile Include="databasemanage\customwidget\timerangeedit.cpp" />
     <ClCompile Include="databasemanage\frame\leftpanel.cpp" />
     <ClCompile Include="databasemanage\frame\loginpage.cpp" />
+    <ClCompile Include="databasemanage\global.cpp" />
     <ClCompile Include="databasemanage\net\netconnector.cpp" />
     <ClCompile Include="databasemanage\net\signaldispatch.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
+    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
@@ -23,16 +25,30 @@
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\dataoverviewwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
@@ -44,55 +60,10 @@
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\dataoverviewwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\global.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.cpp">
-    <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
+    <ClInclude Include="databasemanage\global.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
@@ -101,9 +72,6 @@
     <ClInclude Include="related_global.h" />
     <ClInclude Include="startupcallback.h" />
     <ClInclude Include="topiclist.h" />
-    <ClInclude Include="databasemanage\global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h" />
@@ -138,77 +106,30 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h" />
+    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <QtMoc Include="databasemanage\frame\mainwindow.h" />
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h">
-    <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
-    <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
+    <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
   </ItemGroup>
 </Project>

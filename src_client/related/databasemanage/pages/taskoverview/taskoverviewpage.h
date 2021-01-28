@@ -25,11 +25,11 @@
 #include <base/util/rutil.h>
 #include <commondefines/protocol.h>
 
-#include "../net/signaldispatch.h"
-#include "../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+#include "../../net/netconnector.h"
 
 #include "../abstractpage.h"
-#include "systemmainpage/overviewitem.h "
+#include "../systemmainpage/overviewitem.h "
 #include "../../customwidget/customwidgetcontainer.h"
 
 #include "taskbaseinfopage.h"

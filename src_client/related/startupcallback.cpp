@@ -1,5 +1,7 @@
 ﻿#include "startupcallback.h"
 
+#include <QDebug>
+
 #include <core/widgets/mainwindow.h>
 
 #include "databasemanage\frame\mainwindow.h"
@@ -21,6 +23,7 @@ void AfterStartUpCallback()
 {
 	MainWindow  * window = new MainWindow();
 	Core::MainWindow::instance()->setCentralWidget(window);
+	Core::MainWindow::instance()->setMinimumSize(1600,900);
 }
 
 } //namespace Related

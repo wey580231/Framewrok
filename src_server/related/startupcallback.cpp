@@ -21,6 +21,7 @@ void AfterStartUpCallback()
 {
 	MainWindow  * window = new MainWindow();
 	Core::MainWindow::instance()->setCentralWidget(window);
+	Core::MainWindow::instance()->setMinimumSize(1600, 900);
 }
 
 } //namespace Related

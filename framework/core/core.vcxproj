@@ -48,7 +48,7 @@
       <PreprocessorDefinitions>OFFICAL_DOCK;CORE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>base.lib;network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>base.lib;network.lib;gdi32.lib;dwmapi.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -61,7 +61,7 @@
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
     <QtInstall>msvc2017</QtInstall>
-    <QtModules>core;gui;quickwidgets;serialport;webchannel;webenginewidgets;widgets;xml</QtModules>
+    <QtModules>core;gui;quickwidgets;serialport;webchannel;webenginewidgets;widgets;xml;gui-private;core-private;</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'" Label="QtSettings">
@@ -225,9 +225,6 @@
     <ClCompile Include="widgets\statusbartool\globalstatusinfotool.cpp" />
     <ClCompile Include="widgets\statusbartool\netstatecontroltool.cpp" />
     <ClCompile Include="widgets\titlebar.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="mainwindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="res.qrc" />

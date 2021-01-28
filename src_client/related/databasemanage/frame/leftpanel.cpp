@@ -1,10 +1,10 @@
 #include "leftpanel.h"
 
 #include <qboxlayout.h>
-#include <qdebug.h>
+#include <QDebug>
 
-#include "customwidget\rlistwidget.h"
-#include "datastruct.h"
+#include "../customwidget\rlistwidget.h"
+#include "../datastruct.h"
 
 namespace Related {
 
@@ -115,7 +115,7 @@ namespace Related {
 		
 		QWidget * tmpWidget = new QWidget();
 		tmpWidget->setLayout(tmpLayout);
-		tmpWidget->setFixedHeight(100);
+		tmpWidget->setFixedHeight(80);
 
 		//系统级菜单
 		m_systemListWidget = new RListWidget(this);
