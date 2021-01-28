@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <QtMoc>
       <QtMocDir>$(IntDir)moc\</QtMocDir>
@@ -68,6 +68,9 @@
       <QtUicDir>$(IntDir)uic\</QtUicDir>
     </QtUic>
     <PostBuildEvent />
+    <Link>
+      <AdditionalDependencies>gdi32.lib;dwmapi.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -153,6 +156,7 @@
     <QtMoc Include="selfwidget\tablemode\rtableview.h" />
     <QtMoc Include="selfwidget\tablemode\tablecolumneditwindow.h" />
     <QtMoc Include="selfwidget\rtabwidget.h" />
+    <QtMoc Include="selfwidget\rborderlessmainwindow.h" />
     <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
@@ -190,6 +194,7 @@
     <ClCompile Include="selfwidget\iconbutton.cpp" />
     <ClCompile Include="selfwidget\lonlatedit\rlonlatedit.cpp" />
     <ClCompile Include="selfwidget\lonlatedit\rpositionviewlabel.cpp" />
+    <ClCompile Include="selfwidget\rborderlessmainwindow.cpp" />
     <ClCompile Include="selfwidget\rinputdialog.cpp" />
     <ClCompile Include="selfwidget\ripwidget.cpp" />
     <ClCompile Include="selfwidget\rlabel.cpp" />

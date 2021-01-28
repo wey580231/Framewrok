@@ -20,7 +20,7 @@
 
 #include "../abstractpage.h"
 #include "tablemodel/usermanagemodel.h"
-#include "customwidget/operationtoolspage.h"
+#include "../../customwidget/operationtoolspage.h"
 
 namespace Related {
 

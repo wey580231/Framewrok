@@ -2,9 +2,9 @@
 
 #include <QDebug>
 
-#include "../utils/util.h"
-#include "../customwidget/pageswitchbar.h"
-#include "../customwidget/customwidgetcontainer.h"
+#include "../../utils/util.h"
+#include "../../customwidget/pageswitchbar.h"
+#include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
 

@@ -19,13 +19,13 @@ QLabel#Label_Login_TitleLabel{
 }
 
 /*************************左侧菜单管理区********************************/
-QWidget#Widget_LoginBackGround{
+QWidget#RBorderLess_CentralWidget{
 	border-image: url(:/QYBlue/resource/qyblue/背景.png);
 }
 
 /*************************主窗口区********************************/
 QStackedWidget#Widget_MainWidow{
-	border-image: url(:/QYBlue/resource/qyblue/主窗口背景.png);
+	/*border-image: url(:/QYBlue/resource/qyblue/主窗口背景.png);*/
 }
 
 /*************************左侧菜单管理区********************************/

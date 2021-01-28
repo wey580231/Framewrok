@@ -3,11 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <FrameWorkDir>$(SolutionDir)..\framework</FrameWorkDir>
+    <QtIncludePath>$(QTDIR)\include</QtIncludePath>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\$(SolutionName)_buildout\$(Configuration)_obj\$(ProjectName)\</IntDir>
-    <IncludePath>../;$(FrameWorkDir);$(QTDIR)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(FrameWorkDir);$(QtIncludePath);$(QtIncludePath)\QtCore;$(QtIncludePath)\QtCui;$(QtIncludePath)\QtSql;$(QtIncludePath)\QtNetwork;$(QtIncludePath)\QtWidgets;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -22,11 +23,17 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../;$(FrameWorkDir);$(QTDIR)\include;$(IncludePath)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="FrameWorkDir">
       <Value>$(FrameWorkDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="QtIncludePath">
+      <Value>$(QtIncludePath)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

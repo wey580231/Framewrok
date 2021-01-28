@@ -15,15 +15,15 @@
 
 #include "loginpage.h"
 
-#include "pages\systemmainpage\systemmainpage.h"
-#include "pages\databasemanage\datamanagewidget.h"
-#include "pages\systemsetting\systemsettingwidget.h"
+#include "../pages\systemmainpage\systemmainpage.h"
+#include "../pages\databasemanage\datamanagewidget.h"
+#include "../pages\systemsetting\systemsettingwidget.h"
 
-#include "pages\taskoverview\taskoverviewpage.h"
-#include "pages\taskrecord\taskrecordpage.h"
-#include "pages\taskanalyse\taskanalysepage.h"
+#include "../pages\taskoverview\taskoverviewpage.h"
+#include "../pages\taskrecord\taskrecordpage.h"
+#include "../pages\taskanalyse\taskanalysepage.h"
 
-#include "pages/targetdatabase/targetdatabasewidget.h"
+#include "../pages/targetdatabase/targetdatabasewidget.h"
 
 namespace Related {
 

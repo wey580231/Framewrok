@@ -81,8 +81,6 @@ private:
     void updateStatusLabel();
 
 private slots:
-    void respStartNetwork();
-    void respStopNetwork();
     void respStatic();
     void updateNetState();
     void respAutoStartNetwork(bool flag);

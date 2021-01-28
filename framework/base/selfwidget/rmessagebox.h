@@ -45,7 +45,7 @@ namespace Base {
 		};
 		Q_ENUM(Icon)
 
-			void setIcon(RMessageBox::Icon icon);
+		void setIcon(RMessageBox::Icon icon);
 
 		enum StandardButton
 		{

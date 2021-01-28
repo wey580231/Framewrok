@@ -45,7 +45,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include\;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
@@ -53,7 +53,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\net;.\databasemanage\pages\systemmainpage\controlwidget;.\databasemanage\pages\taskrecord\tablemodel;.\databasemanage\pages\taskanalyse\tablemodel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;commondefines.lib;%(AdditionalDependencies)</AdditionalDependencies>

@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-#include "../net/signaldispatch.h"
-#include "../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+#include "../../net/netconnector.h"
 #include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
@@ -140,7 +140,7 @@ namespace Related {
 		}
 
 		QVBoxLayout * mainLayout = new QVBoxLayout();
-		mainLayout->setContentsMargins(0, 0, 0, 0);
+		mainLayout->setContentsMargins(0, 40, 0, 0);
 		mainLayout->addWidget(overViewContainer);
 		mainLayout->addWidget(taskContainer);
 
