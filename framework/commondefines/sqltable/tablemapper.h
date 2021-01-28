@@ -52,6 +52,44 @@ namespace Table {
 	};
 
 	/*!
+	 * @brief 侦测平台表
+	 */
+	struct DetectPlatformEntity : public AbstractTable {
+		DetectPlatformEntity() :AbstractTable("detect_platform_entity") {}
+
+		QString id = "id";
+		QString name = "name";
+	};
+
+	/*!
+	 * @brief 侦测平台亚型表
+	 */
+	struct DetectPlatformSubtypeEntity : public AbstractTable {
+		DetectPlatformSubtypeEntity() :AbstractTable("detect_platform_subtype_entity") {}
+
+		QString id = "id";
+		QString detectId = "detect_id";
+		QString name = "name";
+	};
+
+	/*!
+	 * @brief 任务侦测平台表
+	 */
+	struct TaskDetectPlatformEntity : public AbstractTable {
+		TaskDetectPlatformEntity() :AbstractTable("task_detect_platform_entity") {}
+
+		QString id = "id";
+		QString taskId = "task_id";
+		QString detectId = "detect_id";
+		QString name = "name";
+		QString sensorType = "sensor_type";
+		QString platformPower = "platform_power";
+		QString startTime = "start_time";
+		QString endTime = "end_time";
+		QString lastTime = "last_time";
+	};
+
+	/*!
 	* @brief 值班日志信息表
 	*/
 	struct DutyRecordEntity : public AbstractTable {
