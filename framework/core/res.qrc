@@ -63,16 +63,17 @@
         <file>resource/icon/start_state.png</file>
         <file>resource/icon/folded.png</file>
         <file>resource/icon/fixed.png</file>
-    </qresource>
-    <qresource prefix="/qml">
-        <file>QML/ModuleDetail.qml</file>
+        <file>resource/icon/Close.png</file>
+        <file>resource/icon/CloseHover.png</file>
+        <file>resource/icon/Maximize.png</file>
+        <file>resource/icon/MaximizeHover.png</file>
+        <file>resource/icon/Minimize.png</file>
+        <file>resource/icon/MinimizeHover.png</file>
+        <file>resource/icon/Restore.png</file>
+        <file>resource/icon/RestoreHover.png</file>
     </qresource>
     <qresource prefix="/welcome">
         <file>resource/welcome/welcome.jpg</file>
-    </qresource>
-    <qresource prefix="/selfwidget">
-        <file>resource/selfwidget/groupbox_content.png</file>
-        <file>resource/selfwidget/groupbox_head.png</file>
     </qresource>
     <qresource prefix="/chart">
         <file>resource/rchart/drag_checked.png</file>
@@ -97,9 +98,6 @@
         <file>resource/rchart/min_normal.png</file>
         <file>resource/rchart/setting_checked.png</file>
         <file>resource/rchart/setting_normal.png</file>
-    </qresource>
-    <qresource prefix="/related">
-        <file>resource/image/radar.png</file>
     </qresource>
     <qresource prefix="/QYBlue">
         <file>resource/qyblue/首页icon.png</file>

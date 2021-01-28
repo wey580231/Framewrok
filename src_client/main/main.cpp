@@ -61,10 +61,8 @@ int main(int argc, char *argv[])
     w.initAll();
 #endif
 
+	w.showMinimized();
     Related::AfterStartUpCallback();
-
-    //若直接show(),则会出现窗口初始为非全屏,需要双击后才能切换至全屏
-    w.showMinimized();
 
     w.displayResize();
 

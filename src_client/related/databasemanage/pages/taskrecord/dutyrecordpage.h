@@ -22,9 +22,9 @@
 #include <commondefines/protocol.h>
 
 #include "../abstractpage.h"
-#include "../customwidget/pageswitchbar.h"
+#include "../../customwidget/pageswitchbar.h"
 
-#include "customwidget/operationtoolspage.h"
+#include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/dutyrecordmodel.h"
 
 namespace Related {

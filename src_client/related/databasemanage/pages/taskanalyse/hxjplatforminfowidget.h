@@ -16,7 +16,7 @@
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 
-#include "customwidget/operationtoolspage.h"
+#include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/hxjplatforminfomodel.h"
 
 namespace Related {

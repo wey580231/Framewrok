@@ -8,7 +8,7 @@
 #include <base\util\rutil.h>
 #include <base\selfwidget\rmessagebox.h>
 
-#include "customwidget/customwidgetcontainer.h"
+#include "../customwidget/customwidgetcontainer.h"
 #include "../net/netconnector.h"
 #include "../net/signaldispatch.h"
 #include "../utils/util.h"

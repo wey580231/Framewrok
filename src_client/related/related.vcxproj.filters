@@ -57,6 +57,7 @@
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
+
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

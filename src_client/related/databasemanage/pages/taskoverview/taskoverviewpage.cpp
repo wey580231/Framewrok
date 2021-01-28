@@ -121,7 +121,7 @@ namespace Related {
 		VLayout->addWidget(taskStatisticsInfoContainer);
 		VLayout->addWidget(taskBaseInfoContainer);
 		VLayout->addWidget(taskResultInfoContainer);
-		VLayout->setContentsMargins(0, 0, 0, 0);
+		VLayout->setContentsMargins(0, 40, 0, 0);
 		mainwidget->setLayout(VLayout);
 		
 		QHBoxLayout *mainLayout = new QHBoxLayout();
