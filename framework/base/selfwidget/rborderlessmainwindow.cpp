@@ -79,10 +79,9 @@ namespace Base {
 		set_borderless(true);
 
 		auto pal = palette();
-		pal.setColor(QPalette::Background, Qt::black);
+		pal.setColor(QPalette::Background, Qt::white);
 		setAutoFillBackground(true);
 		setPalette(pal);
-		setBackgroundRole(QPalette::Dark);
 
 		init();
 		setBorderShadowVisible(true);

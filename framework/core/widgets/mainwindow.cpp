@@ -78,7 +78,7 @@ namespace Core {
 #if BorderLessWindow
 		Base::RBorderLessMainWindow(true,parent),
 #else
-		QMainWidget(parent),
+		QMainWindow(parent),
 #endif
 		titleBar(nullptr), m_statusBar(nullptr), settingBar(nullptr), layoutManager(nullptr)
 	{
