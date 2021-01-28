@@ -1,12 +1,12 @@
 /*!
- * @brief	 值班日志表格数据模型  
+ * @brief	  试验记录数据表格模型     
  * @details
  * @author    yzg
  * @version   1.0
- * @date      2021.01.23 09:45:32
+ * @date      2021.01.23 10:33:46
  * @warning
  * @copyright NanJing RenGu.
- * @note
+ * @note     20210128  完善表字段
  */
 #pragma once
 
@@ -19,23 +19,23 @@
 
 namespace Related {
 
-	class LogbookModel : public Base::RTableModel
+	class ExperimentRecordModel : public  Base::RTableModel
 	{
 		Q_OBJECT
 
 	public:
-		LogbookModel(QObject *parent = nullptr);
-		~LogbookModel();
+		ExperimentRecordModel(QObject *parent = nullptr);
+		~ExperimentRecordModel();
 
-		void prepareData(QList<Datastruct::DutyRecordEntityData> dutyRecordInfos);
-
+		void prepareData(QList<Datastruct::ExperimentRecordEntityData> listInfos);
 		int datasSize() const;
 
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
+
 	private:
-		QList<Datastruct::DutyRecordEntityData> m_dataList;
+		QList<Datastruct::ExperimentRecordEntityData> m_dataList;
 	};
 
 }//namespace Related 

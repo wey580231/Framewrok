@@ -196,7 +196,6 @@ namespace Related {
 		request.lon = m_taskBaseInfo.lon;
 		request.lat = m_taskBaseInfo.lat;
 		request.description = QStringLiteral("description");
-		request.detectPlatform = QStringLiteral("detectPlatform");
 
 		NetConnector::instance()->write(request);
 	}

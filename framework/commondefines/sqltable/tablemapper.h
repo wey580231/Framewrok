@@ -49,7 +49,6 @@ namespace Table {
 		QString lon = "lon";
 		QString lat = "lat";
 		QString description = "description";
-		QString detectPlatform = "detect_platform";	
 	};
 
 	/*!
@@ -63,6 +62,10 @@ namespace Table {
 		QString createTime = "create_time";
 		QString description = "description";
 		QString seaCondition = "sea_condition";
+		QString wind = "wind";
+		QString windSpeed = "wind_speed";
+		QString waveHigh = "wave_high";
+		QString oceanCurrents = "ocean_currents";
 	};
 
 	/*!
@@ -74,10 +77,19 @@ namespace Table {
 		QString id = "id";
 		QString taskId = "task_id";
 		QString platformId = "platform_id";
+		QString floatingTime = "floating_time";
 		QString lon = "lon";
 		QString lat = "lat";
-		QString seaCondition = "sea_condition";
-		QString floatingTime = "floating_time";
+		QString setHeadingDegree = "set_heading_degree";
+		QString actualHeadingDegree = "actual_heading_degree";
+		QString acousticState = "acoustic_state";
+		QString targetNum = "target_num";
+		QString underwaterTargetNum = "underwater_target_num";
+		QString underwaterTargetInfo = "underwater_target_info";
+		QString maxDepth = "max_depth";
+		QString profileIndex = "profile_index";
+		QString profileLength = "profile_length";
+		QString profileDistance = "profile_distance";
 	};
 
 

@@ -64,6 +64,11 @@ namespace Related {
 		emit respDutyRecordDeleteResponse(response);
 	}
 
+	void SignalDispatch::recvDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response)
+	{
+		emit respDutyRecordModifyResponse(response);
+	}
+
 	void SignalDispatch::recvExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response)
 	{
 		emit respExperimentRecordCreateResponse(response);
@@ -77,6 +82,11 @@ namespace Related {
 	void SignalDispatch::recvExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response)
 	{
 		emit respExperimentRecordDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response)
+	{
+		emit respExperimentRecordModifyResponse(response);
 	}
 
 

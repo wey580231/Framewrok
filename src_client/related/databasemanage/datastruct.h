@@ -165,15 +165,15 @@ namespace Related {
 	 * @brief 任务基本信息
 	 */
 	struct  TaskBaseInfo {
-		TaskBaseInfo() :lon (0), lat(0){
+		TaskBaseInfo(){
 
 		}
-		QString  taskName;				/*!< 任务名称 */
-		QString  taskLocation;			/*!< 任务地点 */
-		QString  startTime;				/*!< 起始时间 */
-		QString  endTime;				/*!< 结束时间 */
-		double lon;						/*!< 经度 */
-		double lat;						/*!< 纬度 */
+		QString taskName;				/*!< 任务名称 */
+		QString taskLocation;			/*!< 任务地点 */
+		QString startTime;				/*!< 起始时间 */
+		QString endTime;				/*!< 结束时间 */
+		QString lon;					/*!< 经度 */
+		QString lat;					/*!< 纬度 */
 		QString taskDescription;		/*!< 描述 */
 	};
 
@@ -192,30 +192,41 @@ namespace Related {
 		bool isDir;					/*!< 是否为文件夹 */
 	};
 
-
 	/*!
 	* @brief 值班日志表格列索引
 	*/
-	enum  LogbookDataColumnIndex {
-		L_Index,					/*!< 索引 */
-		L_TaskId,					/*!< 任务Id */
-		L_CreateTime,				/*!< 录入时间 */
-		L_Description,				/*!< 描述 */
-		L_SeaCondition,				/*!< 海况信息 */
+	enum  DutyRecordDataColumnIndex {
+		DR_Index,						/*!< 索引 */
+		DR_TaskId,						/*!< 任务Id */
+		DR_CreateTime,					/*!< 录入时间 */
+		DR_Description,					/*!< 描述 */
+		DR_SeaCondition,				/*!< 海况 */
+		DR_Wind,						/*!< 风向 */
+		DR_WindSpeed,					/*!< 风速 */
+		DR_WaveHigh,					/*!< 浪高 */
+		DR_OceanCurrents,				/*!< 洋流 */
 	};
 	
 	/*!
 	* @brief 试验记录表格列索引
 	*/
-	enum TrialSheetDataColumnIndex
-	{
-		TS_Index,					/*!< 索引 */
-		TS_TaskId,					/*!< 任务Id */
-		TS_PlatformId,				/*!< 平台Id */
-		TS_Lon,						/*!< 经度 */
-		TS_Lat,						/*!< 纬度 */
-		TS_SeaCondition,			/*!< 海况 */
-		TS_FloatingTime,			/*!< 浮动时间 */
+	enum ExperimentRecordDataColumnIndex{
+		ER_Index,						/*!< 索引 */
+		ER_TaskId,						/*!< 任务标识 */
+		ER_PlatformId,					/*!< 平台标识 */
+		ER_FloatingTime,				/*!< 上浮时间 */
+		ER_Lon,							/*!< 上浮经度 */
+		ER_Lat,							/*!< 上浮纬度 */
+		ER_SetHeadingDegree,			/*!< 设置航向角 */
+		ER_ActualHeadingDegree,			/*!< 实际航向角 */
+		ER_AcousticState,				/*!< 声学系统状态 */
+		ER_TargetNum,					/*!< 目标总数 */
+		ER_UnderwaterTargetNum,			/*!< 水下目标数 */
+		ER_UnderwaterTargetInfo,		/*!< 水下目标信息 */
+		ER_MaxDepth,					/*!< 剖面最大深度 */
+		ER_ProfileIndex,				/*!< 剖面序号 */
+		ER_ProfileLength,				/*!< 剖面时长 */
+		ER_ProfileDistance,				/*!< 剖面移动距离 */
 	};
 
 	/*!

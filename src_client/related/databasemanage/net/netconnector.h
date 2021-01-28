@@ -65,7 +65,7 @@ namespace Related {
 		void write(const Datastruct::DutyRecordCreateRequest & request);
 		void write(const Datastruct::LoadAllDutyRecordRequest & request);
 		void write(const Datastruct::DutyRecordDeleteRequest & request);
-
+		void write(const Datastruct::DutyRecordModifyRequest & request);
 		/*!
 		 * @brief   试验记录有关
 		 * @details 
@@ -73,6 +73,7 @@ namespace Related {
 		void write(const Datastruct::ExperimentRecordCreateRequest & request);
 		void write(const Datastruct::LoadAllExperimentRecordsRequest & request);
 		void write(const Datastruct::ExperimentRecordDeleteRequest & request);
+		void write(const Datastruct::ExperimentRecordModifyRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);

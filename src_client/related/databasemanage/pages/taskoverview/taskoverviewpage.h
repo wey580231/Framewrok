@@ -53,7 +53,6 @@ namespace Related {
 	private slots:
 		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
 
-
 	private:
 		void init();
 		void initConnect();

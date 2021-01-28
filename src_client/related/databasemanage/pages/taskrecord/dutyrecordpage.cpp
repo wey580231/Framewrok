@@ -11,7 +11,13 @@
 namespace Related {
 
 	DutyRecordPage::DutyRecordPage(QWidget *parent)
-		: AbstractPage(parent),m_firstLoadData(true)
+		: AbstractPage(parent),
+		m_operationToolsPage(nullptr),
+		m_tableView(nullptr),
+		m_tableModel(nullptr),
+		m_pageSwitch(nullptr),
+		m_firstLoadData(true),
+		m_seleteTableRow(99999999)
 	{
 		init();
 		initConnect();
@@ -57,11 +63,25 @@ namespace Related {
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
-
+				if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
+					Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
+					deleteDutyRecord(data.id);
+					m_seleteTableRow = 99999999;
+				}
 		}
 			break;
 		case OperationToolsPage::Butt_Edit: {
+			if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
+				Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
 
+				data.wind = 55;
+				data.windSpeed = 55;
+				data.waveHigh = 55;
+				data.oceanCurrents = 55;
+
+				modifyDutyRecord(data);
+				m_seleteTableRow = 99999999;
+			}
 		}
 			break;
 		case OperationToolsPage::Butt_Refresh: {
@@ -82,12 +102,28 @@ namespace Related {
 
 	void DutyRecordPage::processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
+		m_allDutyRecords = response;
 		m_tableModel->prepareData(response.m_dutyRecordInfos);
 		m_pageSwitch->setDataSize(response.m_dutyRecordCount);
 	}
 
 	void DutyRecordPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
+		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void DutyRecordPage::processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response)
+	{
+		if (response.m_modifyResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void DutyRecordPage::slotClickedTable(QModelIndex index)
+	{
+		m_seleteTableRow = index.row();
 	}
 
 	void DutyRecordPage::init()
@@ -101,18 +137,24 @@ namespace Related {
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
 		{
+			m_tableModel = new DutyRecordModel();
+
 			m_tableView = new Base::RTableView();
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-			m_tableModel = new LogbookModel();
-
 			m_tableView->setModel(m_tableModel);
-			m_tableView->addColumnItem(Base::ColumnItem(L_Index, QStringLiteral("索引")));
-			m_tableView->addColumnItem(Base::ColumnItem(L_CreateTime, QStringLiteral("录入时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(L_Description, QStringLiteral("描述")));
-			m_tableView->addColumnItem(Base::ColumnItem(L_SeaCondition, QStringLiteral("海况信息")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Index, QStringLiteral("索引")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_CreateTime, QStringLiteral("录入时间"), 180));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Description, QStringLiteral("描述")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_SeaCondition, QStringLiteral("海况")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Wind, QStringLiteral("风向")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_WindSpeed, QStringLiteral("风速")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_WaveHigh, QStringLiteral("浪高")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_OceanCurrents, QStringLiteral("洋流")));
+			
+			connect(m_tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotClickedTable(QModelIndex)));
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
@@ -145,6 +187,9 @@ namespace Related {
 	
 		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)),
 			this, SLOT(processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)),
+			this, SLOT(processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)));
 	}
 
 	/*!
@@ -154,23 +199,50 @@ namespace Related {
 	void DutyRecordPage::insertDutyRecord()
 	{
 		Datastruct::DutyRecordCreateRequest request;
-		request.id = Base::RUtil::UUID();
-		request.taskId = m_taskId;
+		request.m_id = Base::RUtil::UUID();
+		request.m_taskId = m_taskId;
 		QDateTime current_date_time = QDateTime::currentDateTime();
-		request.createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
-		request.description = QStringLiteral("1");
-		request.seaCondition = QStringLiteral("1");
+		request.m_createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");			
+		request.m_description = QStringLiteral("1");
+		request.m_seaCondition; QStringLiteral("1");
+		request.m_wind = 0;						
+		request.m_windSpeed = 0;					
+		request.m_waveHigh = 0;					
+		request.m_oceanCurrents = 0;				
+
+		NetConnector::instance()->write(request);
+	}
+
+	void DutyRecordPage::deleteDutyRecord(QString id)
+	{
+		Datastruct::DutyRecordDeleteRequest request;
+		request.m_id = id;
+		NetConnector::instance()->write(request);
+	}
+
+	void DutyRecordPage::modifyDutyRecord(Datastruct::DutyRecordEntityData info)
+	{
+		Datastruct::DutyRecordModifyRequest request;
+		request.m_id = info.id;
+		request.m_taskId = info.taskId;
+		request.m_createTime = info.createTime;
+		request.m_description = info.description;
+		request.m_seaCondition = info.seaCondition;
+		request.m_wind = info.wind;
+		request.m_windSpeed = info.windSpeed;
+		request.m_waveHigh = info.waveHigh;
+		request.m_oceanCurrents = info.oceanCurrents;
+
 		NetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::refreshCurrPage()
 	{
 		Datastruct::LoadAllDutyRecordRequest request;
-		request.taskId = m_taskId;
+		request.m_taskId = m_taskId;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
 		NetConnector::instance()->write(request);
 	}
-
 
 }//namespace Related

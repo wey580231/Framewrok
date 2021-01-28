@@ -182,7 +182,11 @@ namespace Related {
 			 }
 				break;
 			case Datastruct::P_ModifyDutyRecord: {
-
+				Datastruct::DutyRecordModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DutyRecordModifyResponse response = m_processCenter.processDutyRecordModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_ModifyDutyRecord, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case Datastruct::P_CreateExperimentRecord: {
@@ -210,7 +214,11 @@ namespace Related {
 			}
 				break;
 			case Datastruct::P_ModifyExperimentRecord: {
-
+				Datastruct::ExperimentRecordModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::ExperimentRecordModifyResponse response = m_processCenter.processExperimentRecordModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_ModifyExperimentRecord, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			default:

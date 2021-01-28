@@ -151,11 +151,11 @@
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\experimentrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
@@ -204,9 +204,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
@@ -220,6 +217,9 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />

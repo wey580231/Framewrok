@@ -269,7 +269,6 @@ namespace Related {
 					{task.lon,		request.lon},
 					{task.lat,		request.lat},
 					{task.description, request.description},
-					{task.detectPlatform, request.detectPlatform},
 				});
 
 			if (query.exec(rps.sql())) {
@@ -307,18 +306,15 @@ namespace Related {
 				data.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
 				data.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
 				data.location = query.value(task.location).toString();
-				data.lon = query.value(task.lon).toDouble();
-				data.lat = query.value(task.lat).toDouble();
+				data.lon = query.value(task.lon).toString();
+				data.lat = query.value(task.lat).toString();
 				data.description = query.value(task.description).toString();
-				data.detectPlatform = query.value(task.detectPlatform).toString();
 
 				response.m_taskInfos.append(data);
 			}
 
 			Base::RSelect rst(task.table);
 			rst.count();
-
-			qDebug() << rst.sql();
 
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
@@ -367,10 +363,9 @@ namespace Related {
 				response.taskInfo.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
 				response.taskInfo.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
 				response.taskInfo.location = query.value(task.location).toString();
-				response.taskInfo.lon = query.value(task.lon).toDouble();
-				response.taskInfo.lat = query.value(task.lat).toDouble();
+				response.taskInfo.lon = query.value(task.lon).toString();
+				response.taskInfo.lat = query.value(task.lat).toString();
 				response.taskInfo.description = query.value(task.description).toString();
-				response.taskInfo.detectPlatform = query.value(task.detectPlatform).toString();
 			}
 			response.m_result = true;
 		}
@@ -391,7 +386,7 @@ namespace Related {
 		Base::RSelect rs(dutyRecord.table);
 		rs.select(dutyRecord.table)
 			.createCriteria()
-			.add(Base::Restrictions::eq(dutyRecord.id, request.taskId));
+			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -406,11 +401,15 @@ namespace Related {
 
 			Base::RPersistence rps(dutyRecord.table);
 			rps.insert({
-					{dutyRecord.id,		request.id},
-					{dutyRecord.taskId,		request.taskId},
-					{dutyRecord.createTime, QDateTime::currentDateTime()},
-					{dutyRecord.description, request.description},
-					{dutyRecord.seaCondition, request.seaCondition},
+					{dutyRecord.id,				Base::RUtil::UUID()},
+					{dutyRecord.taskId,			request.m_taskId},
+					{dutyRecord.createTime,		QDateTime::currentDateTime()},
+					{dutyRecord.description,	request.m_description},
+					{dutyRecord.seaCondition,	request.m_seaCondition},
+					{dutyRecord.wind,			request.m_wind},
+					{dutyRecord.windSpeed,		request.m_windSpeed},
+					{dutyRecord.waveHigh,		request.m_waveHigh},
+					{dutyRecord.oceanCurrents,	request.m_oceanCurrents},
 				});
 
 			if (query.exec(rps.sql())) {
@@ -438,7 +437,7 @@ namespace Related {
 // 			.limit(request.m_offsetIndex, request.m_limitIndex);
 		rs.select(dutyRecord.table)
 			.createCriteria()
-			.add(Base::Restrictions::eq(dutyRecord.taskId, request.taskId));
+			.add(Base::Restrictions::eq(dutyRecord.taskId, request.m_taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -451,13 +450,15 @@ namespace Related {
 				data.createTime = query.value(dutyRecord.createTime).toDateTime().toString(TIME_FORMAT);
 				data.description = query.value(dutyRecord.description).toString();
 				data.seaCondition = query.value(dutyRecord.seaCondition).toString();
+				data.wind = query.value(dutyRecord.wind).toDouble();
+				data.windSpeed = query.value(dutyRecord.windSpeed).toDouble();
+				data.waveHigh = query.value(dutyRecord.waveHigh).toDouble();
+				data.oceanCurrents = query.value(dutyRecord.oceanCurrents).toDouble();
 				response.m_dutyRecordInfos.append(data);
 			}
 
 			Base::RSelect rst(dutyRecord.table);
 			rst.count();
-
-			qDebug() << rst.sql();
 
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
@@ -467,12 +468,82 @@ namespace Related {
 		}
 		return response;
 	}
+	
 	Datastruct::DutyRecordDeleteResponse DataProcessCenter::processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request)
 	{
 		Datastruct::DutyRecordDeleteResponse response;
 
+		Table::DutyRecordEntity dutyRecord;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(dutyRecord.table).arg(dutyRecord.id).arg(request.m_id);
+		if (query.exec(deleteSql)) {
+			response.m_deleteResult = true;
+		}
+		else
+		{
+			response.m_deleteResult = false;
+			response.m_errorInfo = QStringLiteral("删除失败");
+		};
+
 		return response;
 	}
+
+	Datastruct::DutyRecordModifyResponse DataProcessCenter::processDutyRecordModify(int clientId, const Datastruct::DutyRecordModifyRequest & request)
+	{
+		Datastruct::DutyRecordModifyResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() <  0) {
+				response.m_modifyResult = false;
+				response.m_errorInfo = QStringLiteral("该记录不存在");
+			}
+			else
+			{
+				Base::RUpdate rud(dutyRecord.table);
+				rud.update(dutyRecord.table, {
+					{dutyRecord.description,	request.m_description},
+					{dutyRecord.seaCondition,	request.m_seaCondition},
+					{dutyRecord.wind,			request.m_wind},
+					{dutyRecord.windSpeed,		request.m_windSpeed},
+					{dutyRecord.waveHigh,		request.m_waveHigh},
+					{dutyRecord.oceanCurrents,	request.m_oceanCurrents},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+				
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_modifyResult = false;
+						response.m_errorInfo = QStringLiteral("修改数据失败.");
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_modifyResult = false;
+			response.m_errorInfo = QStringLiteral("修改数据失败.");
+		}
+
+		return response;
+	}
+	
 	Datastruct::ExperimentRecordCreateResponse DataProcessCenter::processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request)
 	{
 		Datastruct::ExperimentRecordCreateResponse response;
@@ -482,7 +553,7 @@ namespace Related {
 		Base::RSelect rs(experimentRecord.table);
 		rs.select(experimentRecord.table)
 			.createCriteria()
-			.add(Base::Restrictions::eq(experimentRecord.id, request.taskId));
+			.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -497,13 +568,22 @@ namespace Related {
 
 			Base::RPersistence rps(experimentRecord.table);
 			rps.insert({
-					{experimentRecord.id,			request.id},
-					{experimentRecord.taskId,		request.taskId},
-					{experimentRecord.platformId,	request.platformId},
-					{experimentRecord.lon,			QString::number(request.lon) },
-					{experimentRecord.lat,			QString::number(request.lat)},
-					{experimentRecord.seaCondition, request.seaCondition},
-					{experimentRecord.floatingTime, request.floatingTime},
+					{experimentRecord.id,					request.m_id},
+					{experimentRecord.taskId,				request.m_taskId},
+					{experimentRecord.platformId,			request.m_platformId},
+					{experimentRecord.floatingTime,			request.m_floatingTime},
+					{experimentRecord.lon,					request.m_lon},
+					{experimentRecord.lat,					request.m_lat},
+					{experimentRecord.setHeadingDegree,		request.m_setHeadingDegree},
+					{experimentRecord.actualHeadingDegree,	request.m_actualHeadingDegree},
+					{experimentRecord.acousticState,		request.m_acousticState},
+					{experimentRecord.targetNum,			request.m_targetNum},
+					{experimentRecord.underwaterTargetNum,	request.m_underwaterTargetNum},
+					{experimentRecord.underwaterTargetInfo, request.m_underwaterTargetInfo},
+					{experimentRecord.maxDepth,				request.m_maxDepth},
+					{experimentRecord.profileIndex,			request.m_profileIndex},
+					{experimentRecord.profileLength,		request.m_profileLength},
+					{experimentRecord.profileDistance,		request.m_profileDistance},
 				});
 
 			qDebug() << rps.sql();
@@ -521,6 +601,7 @@ namespace Related {
 
 		return response;
 	}
+	
 	Datastruct::LoadAllExperimentRecordsResponse DataProcessCenter::processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request)
 	{
 		Datastruct::LoadAllExperimentRecordsResponse response;
@@ -533,7 +614,7 @@ namespace Related {
 
 		rs.select(experimentRecord.table)
 			.createCriteria()
-			.add(Base::Restrictions::eq(experimentRecord.taskId, request.taskId));
+			.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -544,38 +625,112 @@ namespace Related {
 				data.id = query.value(experimentRecord.id).toString();
 				data.taskId = query.value(experimentRecord.taskId).toString();
 				data.platformId = query.value(experimentRecord.platformId).toString();
+				data.floatingTime = query.value(experimentRecord.floatingTime).toDateTime().toString(TIME_FORMAT);;
 				data.lon = query.value(experimentRecord.lon).toDouble();
 				data.lat = query.value(experimentRecord.lat).toDouble();
-				data.seaCondition = query.value(experimentRecord.seaCondition).toString();
-				data.floatingTime = query.value(experimentRecord.floatingTime).toString();
+				data.setHeadingDegree = query.value(experimentRecord.setHeadingDegree).toDouble();
+				data.actualHeadingDegree = query.value(experimentRecord.actualHeadingDegree).toDouble();
+				data.acousticState = query.value(experimentRecord.acousticState).toInt();
+				data.targetNum = query.value(experimentRecord.targetNum).toInt();
+				data.underwaterTargetNum = query.value(experimentRecord.underwaterTargetNum).toInt();
+				data.underwaterTargetInfo = query.value(experimentRecord.underwaterTargetInfo).toString();
+				data.maxDepth = query.value(experimentRecord.maxDepth).toDouble();
+				data.profileIndex = query.value(experimentRecord.profileIndex).toInt();
+				data.profileLength = query.value(experimentRecord.profileLength).toDouble();
+				data.profileDistance = query.value(experimentRecord.profileDistance).toDouble();
 
-				response.m_listInfos.append(data);
+				response.m_experimentRecordInfos.append(data);
 			}
 
 			Base::RSelect rst(experimentRecord.table);
 			rst.count();
 
-			qDebug() << rst.sql();
-
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
-					response.m_count = query.value(0).toInt();
+					response.m_experimentRecordCount = query.value(0).toInt();
 				}
 			}
 		}
 		return response;
 	}
+
 	Datastruct::ExperimentRecordDeleteResponse DataProcessCenter::processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request)
 	{
 		Datastruct::ExperimentRecordDeleteResponse response;
 
 		Table::ExperimentRecordEntity experimentRecord;
 
-// 		Base::RDelete rs(experimentRecord.table);
-// 		r(experimentRecord.table)
-// 			.limit(request.m_offsetIndex, request.m_limitIndex);
-// 
-// 		QSqlQuery query(m_database->sqlDatabase());
+		QSqlQuery query(m_database->sqlDatabase());
+
+		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(experimentRecord.table).arg(experimentRecord.id).arg(request.m_id);
+		if (query.exec(deleteSql)) {
+			response.m_deleteResult = true;
+		}
+		else {
+			response.m_deleteResult = false;
+			response.m_errorInfo = QStringLiteral("删除失败");
+		};
+
+		return response;
+	}
+
+	Datastruct::ExperimentRecordModifyResponse DataProcessCenter::processExperimentRecordModify(int clientId, const Datastruct::ExperimentRecordModifyRequest & request)
+	{
+		Datastruct::ExperimentRecordModifyResponse response;
+
+		Table::ExperimentRecordEntity experimentRecord;
+
+		Base::RSelect rs(experimentRecord.table);
+		rs.select(experimentRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_modifyResult = false;
+				response.m_errorInfo = QStringLiteral("该记录不存在");
+			}
+			else
+			{
+				Base::RUpdate rud(experimentRecord.table);
+				rud.update(experimentRecord.table, {
+					{experimentRecord.floatingTime,			request.m_floatingTime},
+					{experimentRecord.lon,					request.m_lon},
+					{experimentRecord.lat,					request.m_lat},
+					{experimentRecord.setHeadingDegree,		request.m_setHeadingDegree},
+					{experimentRecord.actualHeadingDegree,	request.m_actualHeadingDegree},
+					{experimentRecord.acousticState,		request.m_acousticState},
+					{experimentRecord.targetNum,			request.m_targetNum},
+					{experimentRecord.underwaterTargetNum,	request.m_underwaterTargetNum},
+					{experimentRecord.underwaterTargetInfo, request.m_underwaterTargetInfo},
+					{experimentRecord.maxDepth,				request.m_maxDepth},
+					{experimentRecord.profileIndex,			request.m_profileIndex},
+					{experimentRecord.profileLength,		request.m_profileLength},
+					{experimentRecord.profileDistance,		request.m_profileDistance},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_modifyResult = false;
+						response.m_errorInfo = QStringLiteral("修改数据失败.");
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_modifyResult = false;
+			response.m_errorInfo = QStringLiteral("修改数据失败.");
+		}
 
 		return response;
 	}
