@@ -1,4 +1,12 @@
-﻿QWidget#mainWidget{
+﻿QWidget{
+	font-family:"微软雅黑";
+    background-clip: border;
+    border: 0px transparent black;
+    /*background-color:rgb(21,50,75,215);*/
+    font-size: 12px;
+}
+
+QWidget#mainWidget{
     color: white;
     background-clip: border;
     border: 1px solid rgba(255,255,255,50);
@@ -49,6 +57,7 @@ QWidget#Widget_RightPanel{
 	background-color: qlineargradient(spread:pad, x1:0.205, y1:0, x2:0.58, y2:1,stop:0 rgba(4,59,100, 225), stop:1 rgba(4,59,100, 255));
 }
 
+
 /*************************主页-概览信息显示条目区********************************/
 
 QWidget#Widget_OverViewItem{
@@ -87,15 +96,6 @@ QWidget#tabWidget_mainWidget{
     background-color: rgba(13,26,42,2);
 }
 
-QWidget{
-    color: white;
-	font-family:"微软雅黑";
-    selection-color: #eff0f1;
-    background-clip: border;
-    border: 0px transparent black;
-    /*background-color:rgb(21,50,75,215);*/
-    font-size: 12px;
-}
 
 QWidget#Container
 {
@@ -371,6 +371,7 @@ QPushButton:disabled {
 
 QComboBox {
     background-color: rgba(13,26,42,150);
+	color:white;
     border-style: solid;
     border: 1px solid #76797C;
     border-radius: 2px;
@@ -459,6 +460,7 @@ QComboBox::down-arrow:focus {
 }
 
 QLabel {
+	color:white;
     border: 0px solid black;
 }
 
@@ -472,6 +474,7 @@ QLineEdit {
 
 QDateTimeEdit{
     padding: 5px;
+	color:white;
 	border-bottom: 1px solid #76797C;
     color: #eff0f1;
 }
@@ -484,10 +487,9 @@ QAbstractItemView QLineEdit {
     padding: 0;
 }
 
-
 QPlainTextEdit {
     background-color: rgba(35,38,41,20);
-    color: #eff0f1;
+    color: white;
     border-radius: 2px;
     border: 1px solid #76797C;
 }
@@ -997,14 +999,6 @@ QProgressBar::chunk {
       background-color: #05B8CC;
       width: 2px;
   }
-
-/**********************************************************/
-#healthManager_sublist,QListView#systemSetting_list{
-    color: white;
-    background-color: rgba(0,0,0,0);
-    border-right:1px solid rgba(0,204,255,150);
-    text-align:right;
-}
 
 QStackedWidget{
     background-color: rgba(13,26,42,0);
