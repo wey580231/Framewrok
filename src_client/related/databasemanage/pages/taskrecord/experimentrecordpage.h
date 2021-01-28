@@ -1,5 +1,6 @@
 /*!
  * @brief     试验记录界面
+ * @details
  * @author    yzg
  * @version   1.0
  * @date      2021.01.23 11:06:46
@@ -21,17 +22,17 @@
 #include "../abstractpage.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/operationtoolspage.h"
-#include "tablemodel/trialsheetmodel.h"
+#include "tablemodel/experimentrecordmodel.h"
 
 namespace Related {
 
-	class TrialSheetWidget : public AbstractPage
+	class ExperimentRecordPage : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
-		TrialSheetWidget(QWidget *parent  = nullptr);
-		~TrialSheetWidget();
+		ExperimentRecordPage(QWidget *parent  = nullptr);
+		~ExperimentRecordPage();
 
 		PageType getPageType() const;
 
@@ -44,22 +45,28 @@ namespace Related {
 		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
+		void processExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
+		void slotClickedTable(QModelIndex index);
 
 	private:
 		void init();
 		void initConnent();
 
 		void insertExperimentRecord();
+		void deleteExperimentRecord(QString id);
+		void modifyExperimentRecord(Datastruct::ExperimentRecordEntityData data);
 		void refreshCurrPage();
 
 	private:
 		OperationToolsPage * m_operationToolsPage;			/*!< 操作工具页面 */
 		Base::RTableView * m_tableView;						/*!< 数据表格 */	
-		TrialSheetModel * m_tableModel;						/*!< 数据模型 */
+		ExperimentRecordModel * m_tableModel;				/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */
 
-		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
-		QString m_taskId;									/*!< 任务Id */
+		bool m_firstLoadData;													/*!< 第一次加载页面显示 */
+		QString m_taskId;														/*!< 任务Id */
+		Datastruct::LoadAllExperimentRecordsResponse m_allExperimentRecords;    /*!< 全部数据信息 */
+		int m_seleteTableRow;													/*!< 选中行数 */
 	};
 
 } // namespace Related 

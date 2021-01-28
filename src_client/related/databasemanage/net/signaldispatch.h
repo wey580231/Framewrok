@@ -34,14 +34,16 @@ namespace Related {
 		void recvTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
 		void recvTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
 		
+		//值班日志
 		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
-
+		void recvDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response);
+		//试验记录
 		void recvExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void recvQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void recvExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
-
+		void recvExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
 	signals:
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
@@ -52,14 +54,18 @@ namespace Related {
 		void respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
 		void respTaskeDleteResponse(const Datastruct::TaskDeleteResponse & response);
 		void respTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
-
+		
+		//值班日志
  		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
+		void respDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response);
 
+		//试验记录
 		void respExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void respQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
+		void respExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
 	private:
 		SignalDispatch(QObject *parent = nullptr);
 

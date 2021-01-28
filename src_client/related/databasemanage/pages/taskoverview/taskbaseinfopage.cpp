@@ -1,5 +1,7 @@
 #include "taskbaseinfopage.h"
 
+#include <QDebug>
+
 namespace Related {
 
 	TaskBaseInfoPage::TaskBaseInfoPage(QWidget *parent)
@@ -12,12 +14,16 @@ namespace Related {
 	{
 	}
 
-	void TaskBaseInfoPage::setTaskBaseInfo(TaskBaseInfo info)
+	void TaskBaseInfoPage::setTaskBaseInfo(Datastruct::TaskEntityData info)
 	{
 		m_taskname->setText(info.taskName);
-		m_taskplace->setText(info.taskLocation);
 		m_startTime->setText(info.startTime);
 		m_endTime->setText(info.endTime);
+
+		m_taskLocation->setText(info.location);
+		m_taskLon->setText(info.lon);
+		m_taskLat->setText(info.lat);
+
 	}
 
 	void TaskBaseInfoPage::paintEvent(QPaintEvent * event)
@@ -49,35 +55,6 @@ namespace Related {
 			m_taskname = new QLabel();
 			m_taskname->setAlignment(Qt::AlignVCenter);
 
-			QLabel *t_taskTime = new QLabel(QStringLiteral("任务时间："));
-			t_taskTime->setAlignment(Qt::AlignCenter);
-			m_taskTime = new QLabel();
-;			m_taskTime->setAlignment(Qt::AlignVCenter);
-
-			QLabel *t_taskplace = new QLabel(QStringLiteral("试验地点："));
-			t_taskplace->setAlignment(Qt::AlignCenter);
-			m_taskplace = new QLabel();
-			m_taskplace->setAlignment(Qt::AlignVCenter);
-
-			QLabel *t_pTestUser = new QLabel(QStringLiteral("试验人员："));
-			t_pTestUser->setAlignment(Qt::AlignCenter);
-			QLabel *m_TestUser = new QLabel();
-			m_TestUser->setAlignment(Qt::AlignVCenter);
-
-			QGridLayout *leftLayout = new QGridLayout();
-			leftLayout->addWidget(t_taskname, 0, 0);
-			leftLayout->addWidget(m_taskname, 0, 1);
-			leftLayout->addWidget(t_taskTime, 1, 0);
-			leftLayout->addWidget(m_taskTime, 1, 1);
-			leftLayout->addWidget(t_taskplace, 2, 0);
-			leftLayout->addWidget(m_taskplace, 2, 1);
-			leftLayout->addWidget(t_pTestUser, 3, 0);
-			leftLayout->addWidget(m_TestUser, 3, 1);
-			leftWidget->setLayout(leftLayout);
-		}
-
-		QWidget * middle1Widget = new QWidget();
-		{
 			QLabel *t_startTime = new QLabel(QStringLiteral("起始时间："));
 			t_startTime->setAlignment(Qt::AlignCenter);
 			m_startTime = new QLabel();
@@ -88,26 +65,41 @@ namespace Related {
 			m_endTime = new QLabel();
 			m_endTime->setAlignment(Qt::AlignVCenter);
 
-			QLabel *t_timeLength = new QLabel(QStringLiteral("时长："));
-			t_timeLength->setAlignment(Qt::AlignCenter);
-			m_timeLength = new QLabel();
-			m_timeLength->setAlignment(Qt::AlignVCenter);
+			QGridLayout *leftLayout = new QGridLayout();
+			leftLayout->addWidget(t_taskname, 0, 0);
+			leftLayout->addWidget(m_taskname, 0, 1);
+			leftLayout->addWidget(t_startTime, 1, 0);
+			leftLayout->addWidget(m_startTime, 1, 1);
+			leftLayout->addWidget(t_endTime, 2, 0);
+			leftLayout->addWidget(m_endTime, 2, 1);
+			leftWidget->setLayout(leftLayout);
+		}
 
-			QLabel * t_dataLength = new QLabel(QStringLiteral("试验数据大小："));
-			t_dataLength->setAlignment(Qt::AlignCenter);
+		QWidget * middle1Widget = new QWidget();
+		{
+			QLabel *t_taskLocation = new QLabel(QStringLiteral("试验地点："));
+			t_taskLocation->setAlignment(Qt::AlignCenter);
+			m_taskLocation = new QLabel();
+			m_taskLocation->setAlignment(Qt::AlignVCenter);
 
-			QLabel * t_datafilesize = new QLabel();
-			t_datafilesize->setAlignment(Qt::AlignVCenter);
+			QLabel *t_taskLon = new QLabel(QStringLiteral("经度："));
+			t_taskLon->setAlignment(Qt::AlignCenter);
+			m_taskLon = new QLabel();
+			m_taskLon->setAlignment(Qt::AlignVCenter);
+
+			QLabel *t_taskLat = new QLabel(QStringLiteral("纬度："));
+			t_taskLat->setAlignment(Qt::AlignCenter);
+			m_taskLat = new QLabel();
+			m_taskLat->setAlignment(Qt::AlignVCenter);
 
 			QGridLayout *middle1Layout = new QGridLayout();
-			middle1Layout->addWidget(t_startTime, 0, 0);
-			middle1Layout->addWidget(m_startTime, 0, 1);
-			middle1Layout->addWidget(t_endTime, 1, 0);
-			middle1Layout->addWidget(m_endTime, 1, 1);
-			middle1Layout->addWidget(t_timeLength, 2, 0);
-			middle1Layout->addWidget(m_timeLength, 2, 1);
-			middle1Layout->addWidget(t_dataLength, 3, 0);
-			middle1Layout->addWidget(t_datafilesize, 3, 1);
+			middle1Layout->addWidget(t_taskLocation, 0, 0);
+			middle1Layout->addWidget(m_taskLocation, 0, 1);
+			middle1Layout->addWidget(t_taskLon, 1, 0);
+			middle1Layout->addWidget(m_taskLon, 1, 1);
+			middle1Layout->addWidget(t_taskLat, 2, 0);
+			middle1Layout->addWidget(m_taskLat, 2, 1);
+
 			middle1Layout->setContentsMargins(0, 0, 0, 0);
 			middle1Widget->setLayout(middle1Layout);
 		}
@@ -130,10 +122,6 @@ namespace Related {
 			m_platforSze = new QLabel();
 			m_platforSze->setAlignment(Qt::AlignVCenter);
 	
-			QLabel *t_pTenp2 = new QLabel(QStringLiteral("平台编号："));
-			t_pTenp2->setAlignment(Qt::AlignCenter);
-			QLabel *m_pTenp3= new QLabel();
-			m_pTenp3->setAlignment(Qt::AlignVCenter);
 
 			QGridLayout *middleLayout = new QGridLayout();
 			middleLayout->addWidget(t_platformtype, 0, 0);
@@ -142,8 +130,7 @@ namespace Related {
 			middleLayout->addWidget(m_platformnunber, 1, 1);
 			middleLayout->addWidget(t_platforSze, 2, 0);
 			middleLayout->addWidget(m_platforSze, 2, 1);
-			middleLayout->addWidget(t_pTenp2, 3, 0);
-			middleLayout->addWidget(m_pTenp3, 3, 1);
+
 
 			middleLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -186,75 +173,6 @@ namespace Related {
 		mainLayout->addWidget(rightWidget,1);
 		mainLayout->setContentsMargins(4, 4, 4, 4);
 		this->setLayout(mainLayout);
-	}
-
-	void TaskBaseInfoPage::createPlatformTypeCartogram()
-	{
-		QPieSlice *slice_1 = new QPieSlice(QStringLiteral("平台1数据"), 0.6);
-		//slice_1->setLabelVisible(true); 
-		slice_1->setBrush(Qt::green);
-		QPieSlice *slice_2 = new QPieSlice(QStringLiteral("平台1数据"), 0.4);
-		//slice_2->setLabelVisible(true);
-		slice_2->setBrush(Qt::blue);
-
-		// 将两个饼状分区加入series
-		QPieSeries *series = new QPieSeries();
-		series->append(slice_1);
-		series->append(slice_2);
-
-		QChart *chart = new QChart();
-		chart->addSeries(series);
-		//chart->setAnimationOptions(QChart::AllAnimations); 
-
-		chart->setTheme(QChart::ChartThemeBlueCerulean);
-
-		chart->setMargins(QMargins(0, 0, 0, 0));
-		chart->setContentsMargins(0, 0, 0, 0);
-		chart->layout()->setContentsMargins(0, 0, 0, 0);//设置外边界全部为0
-		chart->setBackgroundRoundness(0);//设置背景区域无圆角
-
-		platformTypeView = new QChartView();
-		platformTypeView->setChart(chart);
-		platformTypeView->chart()->legend()->hide();
-		platformTypeView->setContentsMargins(0, 0, 0, 0);
-		platformTypeView->setRenderHint(QPainter::Antialiasing);
-	}
-
-	void TaskBaseInfoPage::platformDataCartogram()
-	{
-		QPieSlice *slice_1 = new QPieSlice(QStringLiteral("平台1数据"), 0.6);
-		//slice_1->setLabelVisible(true); 
-		slice_1->setBrush(Qt::green);
-		QPieSlice *slice_2 = new QPieSlice(QStringLiteral("平台1数据"), 0.4);
-		//slice_2->setLabelVisible(true);
-		slice_2->setBrush(Qt::blue);
-
-		// 将两个饼状分区加入series
-		QPieSeries *series = new QPieSeries();
-		series->append(slice_1);
-		series->append(slice_2);
-
-		QChart *chart = new QChart();
-		chart->addSeries(series);
-		//chart->setAnimationOptions(QChart::AllAnimations); 
-
-		chart->setTheme(QChart::ChartThemeBlueCerulean);
-		//chart->setBackgroundVisible(false);  //去背景
-
-// 		QStyle *style = QStyleFactory::create(QString("background-color:rgba(0,77,136, 255);"));
-// 
-// 		chart->setStyle(style);
-		chart->setMargins(QMargins(0, 0, 0, 0));
-		chart->setContentsMargins(0, 0, 0, 0);
-		chart->layout()->setContentsMargins(0, 0, 0, 0);
-		chart->setBackgroundRoundness(0);
-
-		chartview = new QChartView();
-		chartview->setChart(chart);
-		chartview->chart()->legend()->hide();
-		chartview->setContentsMargins(0, 0, 0, 0);
-		chartview->setRenderHint(QPainter::Antialiasing);
-
 	}
 
 }

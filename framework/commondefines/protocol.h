@@ -46,14 +46,16 @@ namespace Datastruct {
 		P_TaskSimpleInfo,		/*!< 单个任务概览信息 */
 		P_TaskFullInfo,			/*!< 单个任务详细信息 */
 
-		P_CreateDutyRecord = 20,/*!< 创建值班日志 */
-		P_ListDutyRecords ,		/*!< 查询所有值班日志 */
-		P_DeleteDutyRecords,	/*!< 删除值班日志 */
-		P_ModifyDutyRecord,		/*!< 修改值班日志 */
+		P_CreateDutyRecord = 20,	/*!< 创建值班日志 */
+		P_ListDutyRecords ,			/*!< 查询所有值班日志 */
+		P_DutyRecordByCondition,	/*!< 按条件查询值班日志 */
+		P_DeleteDutyRecords,		/*!< 删除值班日志-单条 */
+		P_ModifyDutyRecord,			/*!< 修改值班日志 */
 
 		P_CreateExperimentRecord = 30,	/*!< 创建试验记录 */
 		P_ListExperimentRecords,		/*!< 查询所有试验记录 */
-		P_DeleteExperimentRecord,		/*!< 删除试验记录 */
+		P_ExperimentRecordByCondition,	/*!< 按条件查询试验记录 */
+		P_DeleteExperimentRecord,		/*!< 删除试验记录 - 单条*/
 		P_ModifyExperimentRecord,		/*!< 修改试验记录 */
 
 	};
@@ -180,10 +182,9 @@ namespace Datastruct {
 		QString startTime;			/*!< 起始时间 */
 		QString endTime;			/*!< 结束时间 */
 		QString location;			/*!< 任务地点 */
-		double lon;					/*!< 经度 */
-		double lat;					/*!< 纬度 */
+		QString lon;				/*!< 经度 */
+		QString lat;				/*!< 纬度 */
 		QString description;		/*!< 描述 */
-		QString detectPlatform;		/*!< 检测平台 */	
 	};
 
 	/*!
@@ -231,10 +232,9 @@ namespace Datastruct {
 		QString startTime;			/*!< 起始时间 */
 		QString endTime;			/*!< 结束时间 */
 		QString location;			/*!< 任务地点 */
-		double lon;					/*!< 经度 */
-		double lat;					/*!< 纬度 */
+		QString lon;				/*!< 经度 */
+		QString lat;				/*!< 纬度 */
 		QString description;		/*!< 描述 */
-		QString detectPlatform;		/*!< 检测平台 */
 	};
 
 	/*!
@@ -322,11 +322,18 @@ namespace Datastruct {
 	 * @brief 值班日志创建请求报文
 	 */
 	struct DutyRecordCreateRequest {
-		QString id;					/*!< id */
-		QString taskId;				/*!< 任务Id  */
-		QString createTime;			/*!< 创建时间 */
-		QString description;		/*!< 描述 */
-		QString seaCondition;		/*!< 海况信息 */
+		DutyRecordCreateRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),
+			m_oceanCurrents(0){
+		}
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		QString m_createTime;				/*!< 创建时间 */
+		QString m_description;				/*!< 描述信息 */
+		QString m_seaCondition;				/*!< 海况 */
+		double m_wind;						/*!< 风向 */
+		double m_windSpeed;					/*!< 风速 */
+		double m_waveHigh;					/*!< 浪高 */
+		double m_oceanCurrents;				/*!< 洋流 */
 	};
 
 	/*!
@@ -335,21 +342,22 @@ namespace Datastruct {
 	struct DutyRecordCreateResponse	{
 		DutyRecordCreateResponse(): m_createResult(false){
 		}
-		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
-		DutyRecordEntityData dutyRecordInfo;
+		DutyRecordEntityData m_dutyRecordInfo;
 	};
 
 	/*!
 	 * @brief   加载所有值班日志请求
 	 * @details 
 	 */
-	struct  LoadAllDutyRecordRequest
-	{
-		QString taskId;				/*!< 任务Id */
-		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
-		int m_limitIndex;			/*!< 当前页面显示条数 */
+	struct  LoadAllDutyRecordRequest {
+		LoadAllDutyRecordRequest() :m_offsetIndex(0), m_limitIndex(0){
+		}
+		QString m_taskId;					/*!< 任务Id */
+		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;					/*!< 当前页面显示条数 */
 	};
 
 	/*!
@@ -357,6 +365,9 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct LoadAllDutyRecordResponse {
+		LoadAllDutyRecordResponse() :m_dutyRecordCount(0){
+
+		}
 		int m_dutyRecordCount;								/*!< 值班日志总条数 */
 		QList<DutyRecordEntityData> m_dutyRecordInfos;		/*!< 当前页面下值班日志结果集合 */
 	};
@@ -365,60 +376,101 @@ namespace Datastruct {
 	 * @brief   值班日志删除请求
 	 * @details 
 	 */
-	struct DutyRecordDeleteRequest
-	{
-		QString id;					/*!< Id */
-		QString taskId;				/*!< 任务Id */
+	struct DutyRecordDeleteRequest{
+		QString m_id;						/*!< Id */
+		QString m_taskId;					/*!< 任务Id */
 	};
 
 	/*!
 	 * @brief  值班日志删除请求结果报文
 	 * @details 
 	 */
-	struct DutyRecordDeleteResponse
-	{
+	struct DutyRecordDeleteResponse {
 		DutyRecordDeleteResponse() : m_deleteResult(false) {
 		}
-		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief   值班日志修改请求
+	 * @details
+	 */
+	struct DutyRecordModifyRequest {
+		DutyRecordModifyRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),
+			m_oceanCurrents(0) {
+		}
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		QString m_createTime;				/*!< 创建时间 */
+		QString m_description;				/*!< 描述信息 */
+		QString m_seaCondition;				/*!< 海况 */
+		double m_wind;						/*!< 风向 */
+		double m_windSpeed;					/*!< 风速 */
+		double m_waveHigh;					/*!< 浪高 */
+		double m_oceanCurrents;				/*!< 洋流 */
+	};
+
+	/*!
+	 * @brief  值班日志修改请求结果报文
+	 * @details
+	 */
+	struct DutyRecordModifyResponse {
+		DutyRecordModifyResponse() : m_modifyResult(false) {
+		}
+		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
 	 * @brief 试验记录创建请求报文
 	*/
-	struct ExperimentRecordCreateRequest
-	{
-		QString id;				/*!< 数据库ID */
-		QString taskId;			/*!< 任务Id */
-		QString platformId;		/*!< 平台Id */
-		double lon;				/*!< 经度 */
-		double lat;				/*!< 纬度 */
-		QString seaCondition;	/*!< 海况 */
-		QString floatingTime;	/*!< 浮动时间 */
+	struct ExperimentRecordCreateRequest {
+		ExperimentRecordCreateRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
+			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
+			m_maxDepth(0), m_profileIndex(0), m_profileLength(0), m_profileDistance(0) {
+		}
+		QString m_id;							/*!< 唯一标识 */
+		QString m_taskId;						/*!< 任务标识 */
+		QString m_platformId;					/*!< 平台标识 */
+		QString m_floatingTime;					/*!< 上浮时间 */
+		double m_lon;							/*!< 上浮经度 */
+		double m_lat;							/*!< 上浮纬度 */
+		double m_setHeadingDegree;				/*!< 设置航向角 */
+		double m_actualHeadingDegree;			/*!< 实际航向角 */
+		int m_acousticState;					/*!< 声学系统状态 */
+		int m_targetNum;						/*!< 目标总数 */
+		int m_underwaterTargetNum;				/*!< 水下目标数 */
+		QString m_underwaterTargetInfo;			/*!< 水下目标信息 */
+		double m_maxDepth;						/*!< 剖面最大深度 */
+		int m_profileIndex;						/*!< 剖面序号 */
+		double m_profileLength;					/*!< 剖面时长 */
+		double m_profileDistance;				/*!< 剖面移动距离 */
 	};
 
 	/*!
 	* @brief 试验记录创建请求结果报文
 	*/
-	struct ExperimentRecordCreateResponse
-	{
+	struct ExperimentRecordCreateResponse {
 		ExperimentRecordCreateResponse() : m_createResult(false) {
 		}
 		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 
-		ExperimentRecordEntityData dutyRecordInfo;
+		ExperimentRecordEntityData m_experimentRecordInfo;
 	};
 
 	/*!
 	 * @brief   加载所有试验记录请求
 	* @details
 	*/
-	struct  LoadAllExperimentRecordsRequest
-	{
-		QString taskId;				/*!< 任务Id */
-		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
-		int m_limitIndex;			/*!< 当前页面显示条数 */
+	struct  LoadAllExperimentRecordsRequest {
+		LoadAllExperimentRecordsRequest():m_offsetIndex(0), m_limitIndex(0){
+
+		}
+		QString m_taskId;					/*!< 任务Id */
+		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;					/*!< 当前页面显示条数 */
 	};
 
 	/*!
@@ -426,33 +478,69 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct LoadAllExperimentRecordsResponse {
-		int m_count;										/*!< 总条数 */
-		QList<ExperimentRecordEntityData > m_listInfos;		/*!< 当前页面下试验记录结果集合 */
+		LoadAllExperimentRecordsResponse() : m_experimentRecordCount(0){
+		}
+		int m_experimentRecordCount;													/*!< 总条数 */
+		QList<ExperimentRecordEntityData > m_experimentRecordInfos;		/*!< 当前页面下试验记录结果集合 */
 	};
 
 	/*!
 	* @brief   试验记录删除请求
 	 * @details
 	*/
-	struct ExperimentRecordDeleteRequest
-	{
-		QString id;					/*!< Id */
-		QString taskId;				/*!< 任务Id */
+	struct ExperimentRecordDeleteRequest {
+		QString m_id;					/*!< Id */
+		QString m_taskId;				/*!< 任务Id */
 	};
 
 	/*!
 	 * @brief  试验记录删除请求结果报文
 	 * @details
 	 */
-	struct ExperimentRecordDeleteResponse
-	{
+	struct ExperimentRecordDeleteResponse {
 		ExperimentRecordDeleteResponse() : m_deleteResult(false) {
 		}
 		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
+	/*!
+* @brief   试验记录修改请求
+ * @details
+*/
+	struct ExperimentRecordModifyRequest {
+		ExperimentRecordModifyRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
+			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
+			m_maxDepth(0), m_profileIndex(0), m_profileLength(0), m_profileDistance(0) {
+		}
+		QString m_id;							/*!< 唯一标识 */
+		QString m_taskId;						/*!< 任务标识 */
+		QString m_platformId;					/*!< 平台标识 */
+		QString m_floatingTime;					/*!< 上浮时间 */
+		double m_lon;							/*!< 上浮经度 */
+		double m_lat;							/*!< 上浮纬度 */
+		double m_setHeadingDegree;				/*!< 设置航向角 */
+		double m_actualHeadingDegree;			/*!< 实际航向角 */
+		int m_acousticState;					/*!< 声学系统状态 */
+		int m_targetNum;						/*!< 目标总数 */
+		int m_underwaterTargetNum;				/*!< 水下目标数 */
+		QString m_underwaterTargetInfo;			/*!< 水下目标信息 */
+		double m_maxDepth;						/*!< 剖面最大深度 */
+		int m_profileIndex;						/*!< 剖面序号 */
+		double m_profileLength;					/*!< 剖面时长 */
+		double m_profileDistance;				/*!< 剖面移动距离 */
+	};
 
+	/*!
+	 * @brief  试验记录修改请求结果报文
+	 * @details
+	 */
+	struct ExperimentRecordModifyResponse {
+		ExperimentRecordModifyResponse() : m_modifyResult(false) {
+		}
+		bool m_modifyResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+	};
 
 } // namespace Datastruct
 

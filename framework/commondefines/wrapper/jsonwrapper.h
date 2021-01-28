@@ -99,6 +99,12 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::DutyRecordDeleteResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::DutyRecordDeleteResponse & response);
 
+		QByteArray wrap(const Datastruct::DutyRecordModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::DutyRecordModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DutyRecordModifyResponse & response);
+
 		//TODO 20210125 23:15:29 有关试验记录
 
 		QByteArray wrap(const Datastruct::ExperimentRecordCreateRequest & request);
@@ -119,8 +125,11 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::ExperimentRecordDeleteResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteResponse & response);
 
+		QByteArray wrap(const Datastruct::ExperimentRecordModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyRequest & request);
 
-
+		QByteArray wrap(const Datastruct::ExperimentRecordModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);

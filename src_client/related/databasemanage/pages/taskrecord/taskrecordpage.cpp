@@ -40,7 +40,7 @@ namespace Related {
 
 		m_logbookPage = new DutyRecordPage();
 
-		m_trialSheetWidget = new TrialSheetWidget();
+		m_trialSheetWidget = new ExperimentRecordPage();
 
 		m_taskReportsPage = new TaskReportPage();
 

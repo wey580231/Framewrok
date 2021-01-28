@@ -45,17 +45,16 @@ namespace Datastruct {
 	 */
 	struct TaskEntityData
 	{
-		TaskEntityData():lon(0), lat(0){
+		TaskEntityData(){
 		}
 		QString id;				/*!< 数据库Id */
 		QString taskName;		/*!< 任务名称 */
 		QString startTime;		/*!< 起始时间 */
 		QString endTime;		/*!< 结束时间 */
 		QString location;		/*!< 任务地点 */
-		double lon;				/*!< 经度 */
-		double lat;				/*!< 纬度 */
+		QString lon;			/*!< 经度 */
+		QString lat;			/*!< 纬度 */
 		QString description;	/*!< 描述 */
-		QString detectPlatform;	/*!< 检测平台 */
 	};
 
 	/*!
@@ -63,14 +62,19 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct DutyRecordEntityData {
-		DutyRecordEntityData() {
+		DutyRecordEntityData():wind(0), windSpeed(0),
+			waveHigh(0), oceanCurrents(0){
 
 		}
-		QString id;				/*!< 数据库ID */
-		QString taskId;			/*!< 任务Id */
-		QString createTime;		/*!< 创建时间 */
-		QString description;	/*!< 描述 */
-		QString seaCondition;	/*!< 海况信息 */
+		QString id;						/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		QString createTime;				/*!< 创建时间 */
+		QString description;			/*!< 描述信息 */
+		QString seaCondition;			/*!< 海况 */
+		double wind;					/*!< 风向 */
+		double windSpeed;				/*!< 风速 */
+		double waveHigh;				/*!< 浪高 */
+		double oceanCurrents;			/*!< 洋流 */
 	};
 
 	/*!
@@ -78,16 +82,27 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct ExperimentRecordEntityData {
-		ExperimentRecordEntityData() :lon(0), lat(0){
+		ExperimentRecordEntityData() :lon(0), lat(0), setHeadingDegree(0),
+			actualHeadingDegree(0), acousticState(0), targetNum(0), underwaterTargetNum(0),
+			maxDepth(0), profileIndex(0), profileLength(0), profileDistance(0){
 
 		}
-		QString id;				/*!< 数据库ID */
-		QString taskId;			/*!< 任务Id */
-		QString platformId;		/*!< 平台Id */
-		double lon;				/*!< 经度 */
-		double lat;				/*!< 纬度 */
-		QString seaCondition;	/*!< 海况 */
-		QString floatingTime;	/*!< 浮动时间 */
+		QString id;						/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		QString platformId;				/*!< 平台标识 */
+		QString floatingTime;			/*!< 上浮时间 */
+		double lon;						/*!< 上浮经度 */
+		double lat;						/*!< 上浮纬度 */
+		double setHeadingDegree;		/*!< 设置航向角 */
+		double actualHeadingDegree;		/*!< 实际航向角 */
+		int acousticState;				/*!< 声学系统状态 */
+		int targetNum;					/*!< 目标总数 */
+		int underwaterTargetNum;		/*!< 水下目标数 */
+		QString underwaterTargetInfo;	/*!< 水下目标信息 */
+		double maxDepth;				/*!< 剖面最大深度 */
+		int profileIndex;				/*!< 剖面序号 */
+		double profileLength;			/*!< 剖面时长 */
+		double profileDistance;			/*!< 剖面移动距离 */
 	};
 
 } //namespace Datastruct 

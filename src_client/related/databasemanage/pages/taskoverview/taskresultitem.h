@@ -8,7 +8,6 @@
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QWidget>

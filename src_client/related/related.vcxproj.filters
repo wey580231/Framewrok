@@ -44,11 +44,8 @@
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\trialsheetwidget.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
@@ -60,6 +57,16 @@
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
+
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\experimentrecordpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -106,9 +113,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\logbookmodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\trialsheetmodel.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\trialsheetwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
@@ -125,11 +129,32 @@
     <QtMoc Include="databasemanage\frame\mainwindow.h" />
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
 </Project>
