@@ -84,11 +84,12 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct TaskDetectPlatformEntityData {
-		TaskDetectPlatformEntityData() : detectId(0) {}
+		TaskDetectPlatformEntityData() : detectId(0), platformPower (0),
+			lastTime(0){}
 
 		QString id;					/*!< 唯一标识 */
 		QString taskId;				/*!< 任务标识 */
-		int detectId;				/*!< 侦测平台标识 */
+		int detectId;			/*!< 侦测平台标识 */
 		QString name;				/*!< 侦测平台名称 */
 		QString sensorType;			/*!< 侦测平台传感器类型 */
 		int platformPower;			/*!< 平台动力 */

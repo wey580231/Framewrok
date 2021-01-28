@@ -557,28 +557,150 @@ namespace Datastruct {
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
+	/*!
+	 * @brief 侦测平台创建请求报文
+	 */
+	struct DetectPlatformCreateRequest {
+		DetectPlatformCreateRequest() :m_id(0) { }
+		int m_id;						/*!< id */
+		QString m_name;					/*!< 平台名称 */
+	};
+
+	/*!
+	* @brief 侦测平台创建请求结果报文
+	*/
+	struct  DetectPlatformCreateResponse {
+		DetectPlatformCreateResponse() : m_createResult(false) { }
+		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+
+		DetectPlatformEntityData m_dutyRecordInfo;
+	};
+
+	/*!
+	 * @brief   加载所有侦测平台请求
+	 */
+	struct  LoadAllDetectPlatformsRequest {
+		LoadAllDetectPlatformsRequest() {}
+	};
+
+	/*!
+	 * @brief  加载所有侦测平台请求结果报文
+	 */
+	struct LoadAllDetectPlatformsResponse {
+		LoadAllDetectPlatformsResponse() : m_detectPlatformCount(0) { }
+		int m_detectPlatformCount;													/*!< 总条数 */
+		QList<DetectPlatformEntityData > m_detectPlatformInfos;						/*!< 结果集合 */
+	};
+
+	/*!
+	 * @brief  侦测平台删除请求
+	 */
+	struct DetectPlatformDeleteRequest {
+		int m_id;							/*!< Id */
+	};
+
+	/*!
+	 * @brief  侦测平台删除请求结果报文
+	 */
+	struct DetectPlatformDeleteResponse {
+		DetectPlatformDeleteResponse() : m_deleteResult(false) {}
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief   侦测平台修改请求
+	 */
+	struct DetectPlatformModifyRequest {
+		DetectPlatformModifyRequest() :m_id(0) {}
+		int m_id;							/*!< 唯一标识 */
+		QString m_name;						/*!< 平台名称 */
+	};
+
+	/*!
+	 * @brief  侦测平台修改请求结果报文
+	 */
+	struct DetectPlatformModifyResponse {
+		DetectPlatformModifyResponse() : m_modifyResult(false) {}
+		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
 
 // 	/*!
-// 	 * @brief 侦测平台创建请求报文
+// 	 * @brief 侦测平台亚型创建请求报文
 // 	 */
-// 	struct DetectPlatformCreateRequest {
-// 		DetectPlatformCreateRequest() :m_id(0) {
-// 		}
+// 	struct DetectPlatformSubtypeCreateRequest {
+// 		DetectPlatformSubtypeCreateRequest() :m_id(0)，detectId(0) { }
 // 		int m_id;						/*!< id */
-// 		QString m_name;					/*!< 任务标识 */
-// 
+// 		int detectId;					/*!< 侦测平台标识 */
+// 		QString m_name;					/*!< 平台亚型名称 */
 // 	};
 // 
 // 	/*!
-// 	* @brief 值班日志创建请求结果报文
+// 	* @brief 侦测平台亚型创建请求结果报文
 // 	*/
-// 	struct DutyRecordCreateResponse {
-// 		DutyRecordCreateResponse() : m_createResult(false) {
-// 		}
+// 	struct DetectPlatformSubtypeCreateResponse {
+// 		DetectPlatformSubtypeCreateResponse() : m_createResult(false) { }
 // 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 // 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
 // 
-// 		DutyRecordEntityData m_dutyRecordInfo;
+// 		DetectPlatformSubtypeEntityData m_dutyRecordInfo;
+// 	};
+// 
+// 	/*!
+// 	 * @brief   加载所有侦测平台亚型请求
+// 	 */
+// 	struct  LoadAllDetectPlatformSubtypesRequest {
+// 		LoadAllDetectPlatformSubtypesRequest() :detectId(0){}
+// 		int detectId;						/*!< 侦测平台标识 */
+// 	};
+// 
+// 	/*!
+// 	 * @brief  加载所有侦测平台亚型请求结果报文
+// 	 */
+// 	struct LoadAllDetectPlatformSubtypesResponse {
+// 		LoadAllDetectPlatformSubtypesResponse() : m_detectPlatformSubtypeCount(0) { }
+// 		int m_detectPlatformSubtypeCount;													/*!< 总条数 */
+// 		QList<DetectPlatformSubtypeEntityData > m_detectPlatformSubtypeInfos;				/*!< 结果集合 */
+// 	};
+// 
+// 	/*!
+// 	 * @brief  侦测平台亚型删除请求
+// 	 */
+// 	struct DetectPlatformSubtypeDeleteRequest {
+// 		DetectPlatformSubtypeDeleteRequest() :m_id(0), detectId(0){}
+// 		int m_id;							/*!< Id */
+// 		int detectId;						/*!< 侦测平台标识 */
+// 	};
+// 
+// 	/*!
+// 	 * @brief  侦测平台亚型删除请求结果报文
+// 	 */
+// 	struct DetectPlatformSubtypeDeleteResponse {
+// 		DetectPlatformSubtypeDeleteResponse() : m_deleteResult(false) {}
+// 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+// 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+// 	};
+// 
+// 	/*!
+// 	 * @brief   侦测平台亚型修改请求
+// 	 */
+// 	struct DetectPlatformSubtypeModifyRequest {
+// 		DetectPlatformSubtypeModifyRequest() :m_id(0) {}
+// 		int m_id;							/*!< 唯一标识 */
+// 		int detectId;						/*!< 侦测平台标识 */
+// 		QString m_name;						/*!< 平台名称 */
+// 	};
+// 
+// 	/*!
+// 	 * @brief  侦测平台亚型修改请求结果报文
+// 	 */
+// 	struct DetectPlatformSubtypeModifyResponse {
+// 		DetectPlatformSubtypeModifyResponse() : m_modifyResult(false) {}
+// 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+// 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
 // 	};
 
 } // namespace Datastruct
