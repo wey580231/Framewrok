@@ -58,6 +58,21 @@ namespace Datastruct {
 		P_DeleteExperimentRecord,		/*!< 删除试验记录 - 单条*/
 		P_ModifyExperimentRecord,		/*!< 修改试验记录 */
 
+		P_DetectPlatformCreate = 40,		/*!< 创建侦测平台 */
+		P_DetectPlatformList,				/*!< 查询所有侦测平台 */
+		P_DetectPlatformDelete,				/*!< 删除侦测平台 */
+		P_DetectPlatformModify,				/*!< 修改侦测平台 */
+
+		P_DetectPlatformSubtypeCreate = 45,	/*!< 创建侦测平台亚型 */
+		P_DetectPlatformSubtypeList,		/*!< 查询所有侦测平台亚型 */
+		P_DetectPlatformSubtypeDelete,		/*!< 删除侦测平台亚型 */
+		P_DetectPlatformSubtypeModify,		/*!< 修改侦测平台亚型 */
+
+		P_TaskDetectPlatformCreate = 50,	/*!< 创建任务侦测平台 */
+		P_TaskDetectPlatformList,			/*!< 查询所有任务侦测平台 */
+		P_TaskDetectPlatformByCondition,	/*!< 按条件查询任务侦测平台 */
+		P_TaskDetectPlatformDelete,			/*!< 删除任务侦测平台 */
+		P_TaskDetectPlatformModify,			/*!< 修改任务侦测平台 */
 	};
 
 	/*!
@@ -505,9 +520,9 @@ namespace Datastruct {
 	};
 
 	/*!
-* @brief   试验记录修改请求
- * @details
-*/
+	 * @brief   试验记录修改请求
+	 * @details
+	 */
 	struct ExperimentRecordModifyRequest {
 		ExperimentRecordModifyRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
 			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
@@ -541,6 +556,30 @@ namespace Datastruct {
 		bool m_modifyResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
+
+
+// 	/*!
+// 	 * @brief 侦测平台创建请求报文
+// 	 */
+// 	struct DetectPlatformCreateRequest {
+// 		DetectPlatformCreateRequest() :m_id(0) {
+// 		}
+// 		int m_id;						/*!< id */
+// 		QString m_name;					/*!< 任务标识 */
+// 
+// 	};
+// 
+// 	/*!
+// 	* @brief 值班日志创建请求结果报文
+// 	*/
+// 	struct DutyRecordCreateResponse {
+// 		DutyRecordCreateResponse() : m_createResult(false) {
+// 		}
+// 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+// 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+// 
+// 		DutyRecordEntityData m_dutyRecordInfo;
+// 	};
 
 } // namespace Datastruct
 
