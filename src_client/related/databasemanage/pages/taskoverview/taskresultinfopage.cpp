@@ -8,7 +8,6 @@ namespace Related {
 		: QWidget(parent), m_curveIndex(0)
 	{
 		init();
-
 	}
 
 	TaskResultInfoPage::~TaskResultInfoPage()

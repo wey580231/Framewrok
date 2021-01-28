@@ -11,6 +11,8 @@
 
 #include <QObject>
 
+#include <base\util\rutil.h>
+
 #include <commondefines/protocol.h>
 #include <base\common\sql\databasemanager.h>
 

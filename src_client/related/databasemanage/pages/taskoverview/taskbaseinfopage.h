@@ -17,11 +17,8 @@
 #include <QGridLayout>
 #include <QPainter>
 
- //[] 
-#include <QtCharts>
-#include <QtCharts/QPieSeries>
-#include <QtCharts/QPieSlice>
-#include <QChartView>
+#include <base/util/rutil.h>
+#include <commondefines/structdefines.h>
 
 #include "../../datastruct.h"
 
@@ -37,7 +34,7 @@ namespace Related {
 		TaskBaseInfoPage(QWidget *parent = nullptr);
 		~TaskBaseInfoPage();
 
-		void setTaskBaseInfo(TaskBaseInfo info);
+		void setTaskBaseInfo(Datastruct::TaskEntityData info);
 
 
 	protected:
@@ -45,20 +42,17 @@ namespace Related {
 
 	private:
 		void init();
-		void createPlatformTypeCartogram();
-
-		void platformDataCartogram();
 
 	private:
-		QLabel *m_taskname;
-		QLabel *m_taskTime;
-		QLabel *m_taskplace;
+		QLabel * m_taskname;
+		QLabel * m_startTime;
+		QLabel * m_endTime;
 
-		QLabel *m_startTime;
-		QLabel *m_endTime;
-		QLabel *m_timeLength;
-		QLabel *m_datafilesize;
+		QLabel * m_taskLocation;
+		QLabel * m_taskLon;
+		QLabel * m_taskLat;
 
+		QLabel * m_description;
 
 		QLabel *m_platformtype;
 		QLabel *m_platformnunber;
@@ -70,15 +64,6 @@ namespace Related {
 
 		TaskBaseInfo m_taskBaseInfo;
 
-
-
-		QChartView *platformTypeView;
-		QChartView *platformDataView;
-
-		QChartView *chartview;
-
-		StatisticalGraphPage * m_platformTypeItem;				/*!< 平台类型统计 */
-		StatisticalGraphPage * m_platformDataItem;				/*!< 平台数据统计信息 */
 
 	};
 

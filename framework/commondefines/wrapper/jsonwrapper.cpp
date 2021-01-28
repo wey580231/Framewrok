@@ -201,6 +201,18 @@ namespace CommonDefines {
 		});
 	}
 
+	QByteArray JsonWrapper::wrap(const Datastruct::OperateUserRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.type, request.m_operateType);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.password, request.m_password);
+			obj.insert(m_jsonKey.privilege, request.m_privilege);
+			obj.insert(m_jsonKey.manageId, request.m_manageId);
+			obj.insert(m_jsonKey.manager, request.m_isManage);
+		});
+	}
+
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::OperateUserRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
@@ -242,7 +254,6 @@ namespace CommonDefines {
 			obj.insert(m_jsonKey.lon, response.lon);
 			obj.insert(m_jsonKey.lat, response.lat);
 			obj.insert(m_jsonKey.description, response.description);
-			obj.insert(m_jsonKey.detectPlatform, response.detectPlatform);
 		});
 	}
 
@@ -254,10 +265,9 @@ namespace CommonDefines {
 			response.startTime = jsonObject.value(m_jsonKey.startTime).toString();
 			response.endTime = jsonObject.value(m_jsonKey.endTime).toString();
 			response.location = jsonObject.value(m_jsonKey.location).toString();
-			response.lon = jsonObject.value(m_jsonKey.lon).toDouble();
-			response.lat = jsonObject.value(m_jsonKey.lat).toDouble();
+			response.lon = jsonObject.value(m_jsonKey.lon).toString();
+			response.lat = jsonObject.value(m_jsonKey.lat).toString();
 			response.description = jsonObject.value(m_jsonKey.description).toString();
-			response.detectPlatform = jsonObject.value(m_jsonKey.detectPlatform).toString();
 		});
 	}
 
@@ -278,7 +288,6 @@ namespace CommonDefines {
 				dataObj.insert(m_jsonKey.lon, response.taskInfo.lon);
 				dataObj.insert(m_jsonKey.lat, response.taskInfo.lat);
 				dataObj.insert(m_jsonKey.description, response.taskInfo.description);
-				dataObj.insert(m_jsonKey.detectPlatform, response.taskInfo.detectPlatform);
 				obj.insert(m_jsonKey.data, dataObj);
 			}
 		});
@@ -300,10 +309,9 @@ namespace CommonDefines {
 				response.taskInfo.startTime = dataObj.value(m_jsonKey.startTime).toString();
 				response.taskInfo.endTime = dataObj.value(m_jsonKey.endTime).toString();
 				response.taskInfo.location = dataObj.value(m_jsonKey.location).toString();
-				response.taskInfo.lon = dataObj.value(m_jsonKey.lon).toDouble();
-				response.taskInfo.lat = dataObj.value(m_jsonKey.lat).toDouble();
+				response.taskInfo.lon = dataObj.value(m_jsonKey.lon).toString();
+				response.taskInfo.lat = dataObj.value(m_jsonKey.lat).toString();
 				response.taskInfo.description = dataObj.value(m_jsonKey.description).toString();
-				response.taskInfo.detectPlatform = dataObj.value(m_jsonKey.detectPlatform).toString();
 			}
 		});
 	}
@@ -344,8 +352,6 @@ namespace CommonDefines {
 				dataObj.insert(m_jsonKey.lon, dRdata.lon);
 				dataObj.insert(m_jsonKey.lat, dRdata.lat);
 				dataObj.insert(m_jsonKey.description, dRdata.description);
-				dataObj.insert(m_jsonKey.detectPlatform, dRdata.detectPlatform);
-
 				jarray.append(dataObj);
 			}
 			obj.insert(m_jsonKey.totalDataSize, response.m_count);
@@ -367,10 +373,9 @@ namespace CommonDefines {
 				data.startTime = dataObj.value(m_jsonKey.startTime).toString();
 				data.endTime = dataObj.value(m_jsonKey.endTime).toString();
 				data.location = dataObj.value(m_jsonKey.location).toString();
-				data.lon	= dataObj.value(m_jsonKey.lon).toDouble();
-				data.lat	= dataObj.value(m_jsonKey.lat).toDouble();
+				data.lon	= dataObj.value(m_jsonKey.lon).toString();
+				data.lat	= dataObj.value(m_jsonKey.lat).toString();
 				data.description = dataObj.value(m_jsonKey.description).toString();
-				data.detectPlatform = dataObj.value(m_jsonKey.detectPlatform).toString();
 
 				response.m_taskInfos.append(data);
 			}
@@ -439,7 +444,6 @@ namespace CommonDefines {
 				dataObj.insert(m_jsonKey.lon, response.taskInfo.lon);
 				dataObj.insert(m_jsonKey.lat, response.taskInfo.lat);
 				dataObj.insert(m_jsonKey.description, response.taskInfo.description);
-				dataObj.insert(m_jsonKey.detectPlatform, response.taskInfo.detectPlatform);
 				obj.insert(m_jsonKey.data, dataObj);
 			}
 		});
@@ -461,10 +465,9 @@ namespace CommonDefines {
 				response.taskInfo.startTime = dataObj.value(m_jsonKey.startTime).toString();
 				response.taskInfo.endTime = dataObj.value(m_jsonKey.endTime).toString();
 				response.taskInfo.location = dataObj.value(m_jsonKey.location).toString();
-				response.taskInfo.lon = dataObj.value(m_jsonKey.lon).toDouble();
-				response.taskInfo.lat = dataObj.value(m_jsonKey.lat).toDouble();
+				response.taskInfo.lon = dataObj.value(m_jsonKey.lon).toString();
+				response.taskInfo.lat = dataObj.value(m_jsonKey.lat).toString();
 				response.taskInfo.description = dataObj.value(m_jsonKey.description).toString();
-				response.taskInfo.detectPlatform = dataObj.value(m_jsonKey.detectPlatform).toString();
 			}
 		});
 	}
@@ -473,22 +476,30 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::DutyRecordCreateRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.id);
-			obj.insert(m_jsonKey.taskId, request.taskId);
-			obj.insert(m_jsonKey.createTime, request.createTime);
-			obj.insert(m_jsonKey.description, request.description);
-			obj.insert(m_jsonKey.seaCondition, request.seaCondition);
+			obj.insert(m_jsonKey.id,			request.m_id);
+			obj.insert(m_jsonKey.taskId,		request.m_taskId);
+			obj.insert(m_jsonKey.createTime,	request.m_createTime);
+			obj.insert(m_jsonKey.description,	request.m_description);
+			obj.insert(m_jsonKey.seaCondition,	request.m_seaCondition);
+			obj.insert(m_jsonKey.wind,			request.m_wind);
+			obj.insert(m_jsonKey.windSpeed,		request.m_windSpeed);
+			obj.insert(m_jsonKey.waveHigh,		request.m_waveHigh);
+			obj.insert(m_jsonKey.oceanCurrents,	request.m_oceanCurrents);
 		});
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DutyRecordCreateRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.id = jsonObject.value(m_jsonKey.id).toString();
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
-			request.createTime = jsonObject.value(m_jsonKey.createTime).toString();
-			request.description = jsonObject.value(m_jsonKey.description).toString();
-			request.seaCondition = jsonObject.value(m_jsonKey.seaCondition).toString();
+			request.m_id			= jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId		= jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_createTime	= jsonObject.value(m_jsonKey.createTime).toString();
+			request.m_description	= jsonObject.value(m_jsonKey.description).toString();
+			request.m_seaCondition 	= jsonObject.value(m_jsonKey.seaCondition).toString();
+			request.m_wind			= jsonObject.value(m_jsonKey.wind).toDouble();
+			request.m_windSpeed		= jsonObject.value(m_jsonKey.windSpeed).toDouble();
+			request.m_waveHigh		= jsonObject.value(m_jsonKey.waveHigh).toDouble();
+			request.m_oceanCurrents = jsonObject.value(m_jsonKey.oceanCurrents).toDouble();
 		});
 	}
 
@@ -500,12 +511,15 @@ namespace CommonDefines {
 
 			if (response.m_createResult) {
 				QJsonObject dataObj;
-
-				dataObj.insert(m_jsonKey.id, response.dutyRecordInfo.id);
-				dataObj.insert(m_jsonKey.taskId, response.dutyRecordInfo.taskId);
-				dataObj.insert(m_jsonKey.createTime, response.dutyRecordInfo.createTime);
-				dataObj.insert(m_jsonKey.description, response.dutyRecordInfo.description);
-				dataObj.insert(m_jsonKey.seaCondition, response.dutyRecordInfo.seaCondition);
+				dataObj.insert(m_jsonKey.id,			response.m_dutyRecordInfo.id);
+				dataObj.insert(m_jsonKey.taskId,		response.m_dutyRecordInfo.taskId);
+				dataObj.insert(m_jsonKey.createTime,	response.m_dutyRecordInfo.createTime);
+				dataObj.insert(m_jsonKey.description,	response.m_dutyRecordInfo.description);
+				dataObj.insert(m_jsonKey.seaCondition,	response.m_dutyRecordInfo.seaCondition);
+				dataObj.insert(m_jsonKey.wind,			response.m_dutyRecordInfo.wind);
+				dataObj.insert(m_jsonKey.windSpeed,		response.m_dutyRecordInfo.windSpeed);
+				dataObj.insert(m_jsonKey.waveHigh,		response.m_dutyRecordInfo.waveHigh);
+				dataObj.insert(m_jsonKey.oceanCurrents, response.m_dutyRecordInfo.oceanCurrents);
 				obj.insert(m_jsonKey.data, dataObj);
 			}
 		});
@@ -522,11 +536,15 @@ namespace CommonDefines {
 				if (dataObj.isEmpty())
 					return;
 
-				response.dutyRecordInfo.id = dataObj.value(m_jsonKey.id).toString();
-				response.dutyRecordInfo.taskId = dataObj.value(m_jsonKey.taskId).toString();
-				response.dutyRecordInfo.createTime = dataObj.value(m_jsonKey.createTime).toString();
-				response.dutyRecordInfo.description = dataObj.value(m_jsonKey.description).toString();
-				response.dutyRecordInfo.seaCondition = dataObj.value(m_jsonKey.seaCondition).toString();
+				response.m_dutyRecordInfo.id = jsonObject.value(m_jsonKey.id).toString();
+				response.m_dutyRecordInfo.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+				response.m_dutyRecordInfo.createTime = jsonObject.value(m_jsonKey.createTime).toString();
+				response.m_dutyRecordInfo.description = jsonObject.value(m_jsonKey.description).toString();
+				response.m_dutyRecordInfo.seaCondition = jsonObject.value(m_jsonKey.seaCondition).toString();
+				response.m_dutyRecordInfo.wind = jsonObject.value(m_jsonKey.wind).toDouble();
+				response.m_dutyRecordInfo.windSpeed = jsonObject.value(m_jsonKey.windSpeed).toDouble();
+				response.m_dutyRecordInfo.waveHigh = jsonObject.value(m_jsonKey.waveHigh).toDouble();
+				response.m_dutyRecordInfo.oceanCurrents = jsonObject.value(m_jsonKey.oceanCurrents).toDouble();
 			}
 		});
 	}
@@ -534,7 +552,7 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDutyRecordRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.taskId, request.taskId);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
 			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
 			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
 		});
@@ -543,7 +561,7 @@ namespace CommonDefines {
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDutyRecordRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
 			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
 			request.m_limitIndex  = jsonObject.value(m_jsonKey.limitIndex).toInt();
 		});
@@ -558,12 +576,15 @@ namespace CommonDefines {
 				const Datastruct::DutyRecordEntityData & dRdata = response.m_dutyRecordInfos.at(i);
 
 				QJsonObject dataObj;
-
 				dataObj.insert(m_jsonKey.id,			dRdata.id);
 				dataObj.insert(m_jsonKey.taskId,		dRdata.taskId);
 				dataObj.insert(m_jsonKey.createTime,	dRdata.createTime);
 				dataObj.insert(m_jsonKey.description,	dRdata.description);
 				dataObj.insert(m_jsonKey.seaCondition,	dRdata.seaCondition);
+				dataObj.insert(m_jsonKey.wind,			dRdata.wind);
+				dataObj.insert(m_jsonKey.windSpeed,		dRdata.windSpeed);
+				dataObj.insert(m_jsonKey.waveHigh,		dRdata.waveHigh);
+				dataObj.insert(m_jsonKey.oceanCurrents, dRdata.oceanCurrents);
 				jarray.append(dataObj);
 			}
 			obj.insert(m_jsonKey.totalDataSize, response.m_dutyRecordCount);
@@ -580,42 +601,36 @@ namespace CommonDefines {
 
 				QJsonObject dataObj = jarray.at(i).toObject();
 
-				data.id			= dataObj.value(m_jsonKey.id).toString();
-				data.taskId		= dataObj.value(m_jsonKey.taskId).toString();
+				data.id = dataObj.value(m_jsonKey.id).toString();
+				data.taskId = dataObj.value(m_jsonKey.taskId).toString();
 				data.createTime = dataObj.value(m_jsonKey.createTime).toString();
 				data.description = dataObj.value(m_jsonKey.description).toString();
 				data.seaCondition = dataObj.value(m_jsonKey.seaCondition).toString();
+				data.wind = dataObj.value(m_jsonKey.wind).toDouble();
+				data.windSpeed = dataObj.value(m_jsonKey.windSpeed).toDouble();
+				data.waveHigh = dataObj.value(m_jsonKey.waveHigh).toDouble();
+				data.oceanCurrents = dataObj.value(m_jsonKey.oceanCurrents).toDouble();
+
 				response.m_dutyRecordInfos.append(data);
 			}
 			response.m_dutyRecordCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
 		});
 	}
 
-	QByteArray JsonWrapper::wrap(const Datastruct::OperateUserRequest & request)
-	{
-		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.type, request.m_operateType);
-			obj.insert(m_jsonKey.id, request.m_id);
-			obj.insert(m_jsonKey.password, request.m_password);
-			obj.insert(m_jsonKey.privilege, request.m_privilege);
-			obj.insert(m_jsonKey.manageId, request.m_manageId);
-			obj.insert(m_jsonKey.manager, request.m_isManage);
-		});
-	}
 
 	QByteArray JsonWrapper::wrap(const Datastruct::DutyRecordDeleteRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.id);
-			obj.insert(m_jsonKey.taskId, request.taskId);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
 		});
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DutyRecordDeleteRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.id = jsonObject.value(m_jsonKey.id).toString();
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
 		});
 	}
 
@@ -639,26 +654,44 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::ExperimentRecordCreateRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.id);
-			obj.insert(m_jsonKey.taskId, request.taskId);
-			obj.insert(m_jsonKey.platformId, request.platformId);
-			obj.insert(m_jsonKey.lon, request.lon);
-			obj.insert(m_jsonKey.lat, request.lat);
-			obj.insert(m_jsonKey.seaCondition, request.seaCondition);
-			obj.insert(m_jsonKey.floatingTime, request.floatingTime);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
+			obj.insert(m_jsonKey.platformId, request.m_platformId);
+			obj.insert(m_jsonKey.floatingTime, request.m_floatingTime);
+			obj.insert(m_jsonKey.lon, request.m_lon);
+			obj.insert(m_jsonKey.lat, request.m_lat);
+			obj.insert(m_jsonKey.setHeadingDegree, request.m_setHeadingDegree);
+			obj.insert(m_jsonKey.actualHeadingDegree, request.m_actualHeadingDegree);
+			obj.insert(m_jsonKey.acousticState, request.m_acousticState);
+			obj.insert(m_jsonKey.targetNum, request.m_targetNum);
+			obj.insert(m_jsonKey.underwaterTargetNum, request.m_underwaterTargetNum);
+			obj.insert(m_jsonKey.underwaterTargetInfo, request.m_underwaterTargetInfo);
+			obj.insert(m_jsonKey.maxDepth, request.m_maxDepth);
+			obj.insert(m_jsonKey.profileIndex, request.m_profileIndex);
+			obj.insert(m_jsonKey.profileLength, request.m_profileLength);
+			obj.insert(m_jsonKey.profileDistance, request.m_profileDistance);
 		});
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::ExperimentRecordCreateRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.id = jsonObject.value(m_jsonKey.id).toString();
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
-			request.platformId = jsonObject.value(m_jsonKey.platformId).toString();
-			request.lon = jsonObject.value(m_jsonKey.lon).toDouble();
-			request.lat = jsonObject.value(m_jsonKey.lat).toDouble();
-			request.seaCondition = jsonObject.value(m_jsonKey.seaCondition).toString();
-			request.floatingTime = jsonObject.value(m_jsonKey.floatingTime).toString();
+			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_platformId = jsonObject.value(m_jsonKey.platformId).toString();
+			request.m_floatingTime = jsonObject.value(m_jsonKey.floatingTime).toString();
+			request.m_lon = jsonObject.value(m_jsonKey.lon).toDouble();
+			request.m_lat = jsonObject.value(m_jsonKey.lat).toDouble();
+			request.m_setHeadingDegree = jsonObject.value(m_jsonKey.setHeadingDegree).toDouble();
+			request.m_actualHeadingDegree = jsonObject.value(m_jsonKey.actualHeadingDegree).toDouble();
+			request.m_acousticState = jsonObject.value(m_jsonKey.acousticState).toInt();
+			request.m_targetNum = jsonObject.value(m_jsonKey.targetNum).toInt();
+			request.m_underwaterTargetNum = jsonObject.value(m_jsonKey.underwaterTargetNum).toInt();
+			request.m_underwaterTargetInfo = jsonObject.value(m_jsonKey.underwaterTargetInfo).toString();
+			request.m_maxDepth = jsonObject.value(m_jsonKey.maxDepth).toDouble();
+			request.m_profileIndex = jsonObject.value(m_jsonKey.profileIndex).toInt();
+			request.m_profileLength = jsonObject.value(m_jsonKey.profileLength).toDouble();
+			request.m_profileDistance = jsonObject.value(m_jsonKey.profileDistance).toDouble();
 		});
 	}
 
@@ -671,13 +704,23 @@ namespace CommonDefines {
 			if (response.m_createResult) {
 				QJsonObject dataObj;
 
-				dataObj.insert(m_jsonKey.id, response.dutyRecordInfo.id);
-				dataObj.insert(m_jsonKey.taskId, response.dutyRecordInfo.taskId);;
-				dataObj.insert(m_jsonKey.platformId, response.dutyRecordInfo.platformId);
-				dataObj.insert(m_jsonKey.lon, response.dutyRecordInfo.lon);
-				dataObj.insert(m_jsonKey.lat, response.dutyRecordInfo.lat);
-				dataObj.insert(m_jsonKey.seaCondition, response.dutyRecordInfo.seaCondition);
-				dataObj.insert(m_jsonKey.floatingTime, response.dutyRecordInfo.floatingTime);
+				dataObj.insert(m_jsonKey.id, response.m_experimentRecordInfo.id);
+				dataObj.insert(m_jsonKey.taskId, response.m_experimentRecordInfo.taskId);
+				dataObj.insert(m_jsonKey.platformId, response.m_experimentRecordInfo.platformId);
+				dataObj.insert(m_jsonKey.floatingTime, response.m_experimentRecordInfo.floatingTime);
+				dataObj.insert(m_jsonKey.lon, response.m_experimentRecordInfo.lon);
+				dataObj.insert(m_jsonKey.lat, response.m_experimentRecordInfo.lat);
+				dataObj.insert(m_jsonKey.setHeadingDegree, response.m_experimentRecordInfo.setHeadingDegree);
+				dataObj.insert(m_jsonKey.actualHeadingDegree, response.m_experimentRecordInfo.actualHeadingDegree);
+				dataObj.insert(m_jsonKey.acousticState, response.m_experimentRecordInfo.acousticState);
+				dataObj.insert(m_jsonKey.targetNum, response.m_experimentRecordInfo.targetNum);
+				dataObj.insert(m_jsonKey.underwaterTargetNum, response.m_experimentRecordInfo.underwaterTargetNum);
+				dataObj.insert(m_jsonKey.underwaterTargetInfo, response.m_experimentRecordInfo.underwaterTargetInfo);
+				dataObj.insert(m_jsonKey.maxDepth, response.m_experimentRecordInfo.maxDepth);
+				dataObj.insert(m_jsonKey.profileIndex, response.m_experimentRecordInfo.profileIndex);
+				dataObj.insert(m_jsonKey.profileLength, response.m_experimentRecordInfo.profileLength);
+				dataObj.insert(m_jsonKey.profileDistance, response.m_experimentRecordInfo.profileDistance);
+
 				obj.insert(m_jsonKey.data, dataObj);
 			}
 		});
@@ -693,14 +736,22 @@ namespace CommonDefines {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
 				if (dataObj.isEmpty())
 					return;
-
-				response.dutyRecordInfo.id = dataObj.value(m_jsonKey.id).toString();
-				response.dutyRecordInfo.taskId = dataObj.value(m_jsonKey.taskId).toString();
-				response.dutyRecordInfo.platformId = dataObj.value(m_jsonKey.platformId).toString();
-				response.dutyRecordInfo.lon = dataObj.value(m_jsonKey.lon).toDouble();
-				response.dutyRecordInfo.lat = dataObj.value(m_jsonKey.lat).toDouble();
-				response.dutyRecordInfo.seaCondition = dataObj.value(m_jsonKey.seaCondition).toString();
-				response.dutyRecordInfo.floatingTime = dataObj.value(m_jsonKey.floatingTime).toString();
+				response.m_experimentRecordInfo.id = jsonObject.value(m_jsonKey.id).toString();
+				response.m_experimentRecordInfo.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+				response.m_experimentRecordInfo.platformId = jsonObject.value(m_jsonKey.platformId).toString();
+				response.m_experimentRecordInfo.floatingTime = jsonObject.value(m_jsonKey.floatingTime).toString();
+				response.m_experimentRecordInfo.lon = jsonObject.value(m_jsonKey.lon).toDouble();
+				response.m_experimentRecordInfo.lat = jsonObject.value(m_jsonKey.lat).toDouble();
+				response.m_experimentRecordInfo.setHeadingDegree = jsonObject.value(m_jsonKey.setHeadingDegree).toDouble();
+				response.m_experimentRecordInfo.actualHeadingDegree = jsonObject.value(m_jsonKey.actualHeadingDegree).toDouble();
+				response.m_experimentRecordInfo.acousticState = jsonObject.value(m_jsonKey.acousticState).toInt();
+				response.m_experimentRecordInfo.targetNum = jsonObject.value(m_jsonKey.targetNum).toInt();
+				response.m_experimentRecordInfo.underwaterTargetNum = jsonObject.value(m_jsonKey.underwaterTargetNum).toInt();
+				response.m_experimentRecordInfo.underwaterTargetInfo = jsonObject.value(m_jsonKey.underwaterTargetInfo).toString();
+				response.m_experimentRecordInfo.maxDepth = jsonObject.value(m_jsonKey.maxDepth).toDouble();
+				response.m_experimentRecordInfo.profileIndex = jsonObject.value(m_jsonKey.profileIndex).toInt();
+				response.m_experimentRecordInfo.profileLength = jsonObject.value(m_jsonKey.profileLength).toDouble();
+				response.m_experimentRecordInfo.profileDistance = jsonObject.value(m_jsonKey.profileDistance).toDouble();
 			}
 		});
 	}
@@ -708,7 +759,7 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllExperimentRecordsRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.taskId, request.taskId);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
 			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
 			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
 		});
@@ -717,7 +768,7 @@ namespace CommonDefines {
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllExperimentRecordsRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
 			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
 			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
 		});
@@ -728,21 +779,31 @@ namespace CommonDefines {
 		return wrapObject([&](QJsonObject & obj) {
 
 			QJsonArray jarray;
-			for (int i = 0; i < response.m_listInfos.size(); i++) {
-				const Datastruct::ExperimentRecordEntityData & dRdata = response.m_listInfos.at(i);
+			for (int i = 0; i < response.m_experimentRecordInfos.size(); i++) {
+				const Datastruct::ExperimentRecordEntityData & dRdata = response.m_experimentRecordInfos.at(i);
 
 				QJsonObject dataObj;
 
-				dataObj.insert(m_jsonKey.id, dRdata.id);
-				dataObj.insert(m_jsonKey.taskId, dRdata.taskId);
-				dataObj.insert(m_jsonKey.platformId, dRdata.platformId);
-				dataObj.insert(m_jsonKey.lon, dRdata.lon);
-				dataObj.insert(m_jsonKey.lat, dRdata.lat);
-				dataObj.insert(m_jsonKey.seaCondition, dRdata.seaCondition);
-				dataObj.insert(m_jsonKey.floatingTime, dRdata.floatingTime);
+				dataObj.insert(m_jsonKey.id,					dRdata.id);
+				dataObj.insert(m_jsonKey.taskId,				dRdata.taskId);
+				dataObj.insert(m_jsonKey.platformId,			dRdata.platformId);
+				dataObj.insert(m_jsonKey.floatingTime,			dRdata.floatingTime);
+				dataObj.insert(m_jsonKey.lon,					dRdata.lon);
+				dataObj.insert(m_jsonKey.lat,					dRdata.lat);
+				dataObj.insert(m_jsonKey.setHeadingDegree,		dRdata.setHeadingDegree);
+				dataObj.insert(m_jsonKey.actualHeadingDegree,	dRdata.actualHeadingDegree);
+				dataObj.insert(m_jsonKey.acousticState,			dRdata.acousticState);
+				dataObj.insert(m_jsonKey.targetNum,				dRdata.targetNum);
+				dataObj.insert(m_jsonKey.underwaterTargetNum,	dRdata.underwaterTargetNum);
+				dataObj.insert(m_jsonKey.underwaterTargetInfo,	dRdata.underwaterTargetInfo);
+				dataObj.insert(m_jsonKey.maxDepth,				dRdata.maxDepth);
+				dataObj.insert(m_jsonKey.profileIndex,			dRdata.profileIndex);
+				dataObj.insert(m_jsonKey.profileLength,			dRdata.profileLength);
+				dataObj.insert(m_jsonKey.profileDistance,		dRdata.profileDistance);
+
 				jarray.append(dataObj);
 			}
-			obj.insert(m_jsonKey.totalDataSize, response.m_count);
+			obj.insert(m_jsonKey.totalDataSize, response.m_experimentRecordCount);
 			obj.insert(m_jsonKey.data, jarray);
 		});
 	}
@@ -759,31 +820,40 @@ namespace CommonDefines {
 				data.id = dataObj.value(m_jsonKey.id).toString();
 				data.taskId = dataObj.value(m_jsonKey.taskId).toString();
 				data.platformId = dataObj.value(m_jsonKey.platformId).toString();
+				data.floatingTime = dataObj.value(m_jsonKey.floatingTime).toString();
 				data.lon = dataObj.value(m_jsonKey.lon).toDouble();
 				data.lat = dataObj.value(m_jsonKey.lat).toDouble();
-				data.seaCondition = dataObj.value(m_jsonKey.seaCondition).toString();
-				data.floatingTime = dataObj.value(m_jsonKey.floatingTime).toString();
+				data.setHeadingDegree = dataObj.value(m_jsonKey.setHeadingDegree).toDouble();
+				data.actualHeadingDegree = dataObj.value(m_jsonKey.actualHeadingDegree).toDouble();
+				data.acousticState = dataObj.value(m_jsonKey.acousticState).toInt();
+				data.targetNum = dataObj.value(m_jsonKey.targetNum).toInt();
+				data.underwaterTargetNum = dataObj.value(m_jsonKey.underwaterTargetNum).toInt();
+				data.underwaterTargetInfo = dataObj.value(m_jsonKey.underwaterTargetInfo).toString();
+				data.maxDepth = dataObj.value(m_jsonKey.maxDepth).toDouble();
+				data.profileIndex = dataObj.value(m_jsonKey.profileIndex).toInt();
+				data.profileLength = dataObj.value(m_jsonKey.profileLength).toDouble();
+				data.profileDistance = dataObj.value(m_jsonKey.profileDistance).toDouble();
 
-				response.m_listInfos.append(data);
+				response.m_experimentRecordInfos.append(data);
 			}
 
-			response.m_count = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+			response.m_experimentRecordCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
 		});
 	}
 
 	QByteArray JsonWrapper::wrap(const Datastruct::ExperimentRecordDeleteRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.id);
-			obj.insert(m_jsonKey.taskId, request.taskId);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
 		});
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::ExperimentRecordDeleteRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.id = jsonObject.value(m_jsonKey.id).toString();
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
 		});
 	}
 

@@ -5,7 +5,8 @@
 namespace Related {
 
 	TaskReportPage::TaskReportPage(QWidget *parent)
-		: AbstractPage(parent), m_firstLoadData(true)
+		: AbstractPage(parent),
+		m_firstLoadData(true)
 	{
 		init();
 		initConnect();

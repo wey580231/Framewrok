@@ -12,6 +12,10 @@ namespace Related {
 
 	DutyRecordPage::DutyRecordPage(QWidget *parent)
 		: AbstractPage(parent),
+		m_operationToolsPage(nullptr),
+		m_tableView(nullptr),
+		m_tableModel(nullptr),
+		m_pageSwitch(nullptr),
 		m_firstLoadData(true),
 		m_seleteTableRow(99999999)
 	{
@@ -116,20 +120,24 @@ namespace Related {
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
 		{
+			m_tableModel = new DutyRecordModel();
+
 			m_tableView = new Base::RTableView();
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-			connect(m_tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotClickedTable(QModelIndex)));
-
-			m_tableModel = new LogbookModel();
-
 			m_tableView->setModel(m_tableModel);
-			m_tableView->addColumnItem(Base::ColumnItem(L_Index, QStringLiteral("索引")));
-			m_tableView->addColumnItem(Base::ColumnItem(L_CreateTime, QStringLiteral("录入时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(L_Description, QStringLiteral("描述")));
-			m_tableView->addColumnItem(Base::ColumnItem(L_SeaCondition, QStringLiteral("海况信息")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Index, QStringLiteral("索引")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_CreateTime, QStringLiteral("录入时间"), 180));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Description, QStringLiteral("描述")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_SeaCondition, QStringLiteral("海况")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_Wind, QStringLiteral("风向")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_WindSpeed, QStringLiteral("风速")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_WaveHigh, QStringLiteral("浪高")));
+			m_tableView->addColumnItem(Base::ColumnItem(DR_OceanCurrents, QStringLiteral("洋流")));
+			
+			connect(m_tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotClickedTable(QModelIndex)));
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
@@ -171,30 +179,34 @@ namespace Related {
 	void DutyRecordPage::insertDutyRecord()
 	{
 		Datastruct::DutyRecordCreateRequest request;
-		request.id = Base::RUtil::UUID();
-		request.taskId = m_taskId;
+		request.m_id = Base::RUtil::UUID();
+		request.m_taskId = m_taskId;
 		QDateTime current_date_time = QDateTime::currentDateTime();
-		request.createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
-		request.description = QStringLiteral("1");
-		request.seaCondition = QStringLiteral("1");
+		request.m_createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");			
+		request.m_description = QStringLiteral("1");
+		request.m_seaCondition; QStringLiteral("1");
+		request.m_wind = 0;						
+		request.m_windSpeed = 0;					
+		request.m_waveHigh = 0;					
+		request.m_oceanCurrents = 0;				
+
 		NetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::deleteDutyRecord(QString id)
 	{
 		Datastruct::DutyRecordDeleteRequest request;
-		request.id = id;
+		request.m_id = id;
 		NetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::refreshCurrPage()
 	{
 		Datastruct::LoadAllDutyRecordRequest request;
-		request.taskId = m_taskId;
+		request.m_taskId = m_taskId;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
 		NetConnector::instance()->write(request);
 	}
-
 
 }//namespace Related

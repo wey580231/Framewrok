@@ -46,21 +46,12 @@ namespace Related {
 	void TaskOverViewPage::processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response)
 	{
 		if (response.m_result == true) {
-			TaskBaseInfo info;
-			info.taskName = response.taskInfo.taskName;
-			info.taskLocation = response.taskInfo.location;
-			info.startTime = response.taskInfo.startTime;
-			info.endTime = response.taskInfo.endTime;
-			info.lon = response.taskInfo.lon;
-			info.lat = response.taskInfo.lat;
-			info.taskDescription = response.taskInfo.description;
-			m_taskBaseInfoPage->setTaskBaseInfo(info);
+			m_taskBaseInfoPage->setTaskBaseInfo(response.taskInfo);
 		}
 	}
 
 	void TaskOverViewPage::init()
 	{
-		// 任务统计信息
 		CustomWidgetContainer * taskStatisticsInfoContainer = new CustomWidgetContainer();
 		{
 			QSize maxSize(415, 170);

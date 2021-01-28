@@ -18,7 +18,7 @@
 #include "../abstractpage.h"
 
 #include "dutyrecordpage.h"
-#include "trialsheetwidget.h"
+#include "experimentrecordpage.h"
 #include "taskreportpage.h"
 
 namespace Related {
@@ -44,7 +44,7 @@ namespace Related {
 		Base::RTabWidget * m_tabWidget;
 
 		DutyRecordPage * m_logbookPage;					/*!< 值班日志界面 */
-		TrialSheetWidget * m_trialSheetWidget;			/*!< 试验记录窗口 */
+		ExperimentRecordPage * m_trialSheetWidget;		/*!< 试验记录窗口 */
 		TaskReportPage * m_taskReportsPage;				/*!< 任务报告界面 */
 	}; 
 

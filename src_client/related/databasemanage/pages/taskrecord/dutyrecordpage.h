@@ -1,5 +1,6 @@
 /*!
  * @brief     值班日志表  
+ * @details
  * @author    yzg
  * @version   1.0
  * @date      2021.01.20 19:39:23
@@ -24,7 +25,7 @@
 #include "../customwidget/pageswitchbar.h"
 
 #include "customwidget/operationtoolspage.h"
-#include "tablemodel/logbookmodel.h"
+#include "tablemodel/dutyrecordmodel.h"
 
 namespace Related {
 
@@ -58,9 +59,9 @@ namespace Related {
 		void refreshCurrPage();
 
 	private:
-		OperationToolsPage *m_operationToolsPage;				/*!< 操作工具页面 */
+		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */
 		Base::RTableView * m_tableView;							/*!< 数据表格 */
-		LogbookModel * m_tableModel;							/*!< 数据模型 */
+		DutyRecordModel * m_tableModel;							/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;							/*!< 切换页 */				
 
 		bool m_firstLoadData;									/*!< 第一次加载页面显示 */
