@@ -239,6 +239,12 @@ namespace Related {
 		sendData(array);
 	}
 
+	void NetConnector::write(const Datastruct::DutyRecordModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_ModifyDutyRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void NetConnector::write(const Datastruct::ExperimentRecordCreateRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_CreateExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -254,6 +260,12 @@ namespace Related {
 	void NetConnector::write(const Datastruct::ExperimentRecordDeleteRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_DeleteExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::ExperimentRecordModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_ModifyExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 	
@@ -400,6 +412,14 @@ namespace Related {
 			}
 				break;
 
+			case   Datastruct::P_ModifyDutyRecord: {
+				Datastruct::DutyRecordModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDutyRecordModifyResponse(response);
+				}
+			}
+				break;
+
 			case  Datastruct::P_CreateExperimentRecord: {
 				Datastruct::ExperimentRecordCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -422,7 +442,13 @@ namespace Related {
 				}
 			}
 				break;
-
+			case   Datastruct::P_ModifyExperimentRecord: {
+				Datastruct::ExperimentRecordModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvExperimentRecordModifyResponse(response);
+				}
+			}
+				break;
 			default:
 				break;
 		}

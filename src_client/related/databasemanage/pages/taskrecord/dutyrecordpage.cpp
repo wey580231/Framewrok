@@ -71,7 +71,17 @@ namespace Related {
 		}
 			break;
 		case OperationToolsPage::Butt_Edit: {
+			if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
+				Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
 
+				data.wind = 55;
+				data.windSpeed = 55;
+				data.waveHigh = 55;
+				data.oceanCurrents = 55;
+
+				modifyDutyRecord(data);
+				m_seleteTableRow = 99999999;
+			}
 		}
 			break;
 		case OperationToolsPage::Butt_Refresh: {
@@ -100,6 +110,13 @@ namespace Related {
 	void DutyRecordPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
 		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void DutyRecordPage::processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response)
+	{
+		if (response.m_modifyResult) {
 			refreshCurrPage();
 		}
 	}
@@ -170,6 +187,9 @@ namespace Related {
 	
 		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)),
 			this, SLOT(processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)),
+			this, SLOT(processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)));
 	}
 
 	/*!
@@ -197,6 +217,22 @@ namespace Related {
 	{
 		Datastruct::DutyRecordDeleteRequest request;
 		request.m_id = id;
+		NetConnector::instance()->write(request);
+	}
+
+	void DutyRecordPage::modifyDutyRecord(Datastruct::DutyRecordEntityData info)
+	{
+		Datastruct::DutyRecordModifyRequest request;
+		request.m_id = info.id;
+		request.m_taskId = info.taskId;
+		request.m_createTime = info.createTime;
+		request.m_description = info.description;
+		request.m_seaCondition = info.seaCondition;
+		request.m_wind = info.wind;
+		request.m_windSpeed = info.windSpeed;
+		request.m_waveHigh = info.waveHigh;
+		request.m_oceanCurrents = info.oceanCurrents;
+
 		NetConnector::instance()->write(request);
 	}
 

@@ -46,6 +46,7 @@ namespace Related {
 		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
+		void processExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
 		void slotClickedTable(QModelIndex index);
 
 	private:
@@ -54,6 +55,7 @@ namespace Related {
 
 		void insertExperimentRecord();
 		void deleteExperimentRecord(QString id);
+		void modifyExperimentRecord(Datastruct::ExperimentRecordEntityData data);
 		void refreshCurrPage();
 
 	private:

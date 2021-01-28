@@ -393,6 +393,36 @@ namespace Datastruct {
 	};
 
 	/*!
+	 * @brief   值班日志修改请求
+	 * @details
+	 */
+	struct DutyRecordModifyRequest {
+		DutyRecordModifyRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),
+			m_oceanCurrents(0) {
+		}
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		QString m_createTime;				/*!< 创建时间 */
+		QString m_description;				/*!< 描述信息 */
+		QString m_seaCondition;				/*!< 海况 */
+		double m_wind;						/*!< 风向 */
+		double m_windSpeed;					/*!< 风速 */
+		double m_waveHigh;					/*!< 浪高 */
+		double m_oceanCurrents;				/*!< 洋流 */
+	};
+
+	/*!
+	 * @brief  值班日志修改请求结果报文
+	 * @details
+	 */
+	struct DutyRecordModifyResponse {
+		DutyRecordModifyResponse() : m_modifyResult(false) {
+		}
+		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
 	 * @brief 试验记录创建请求报文
 	*/
 	struct ExperimentRecordCreateRequest {
@@ -471,6 +501,44 @@ namespace Datastruct {
 		ExperimentRecordDeleteResponse() : m_deleteResult(false) {
 		}
 		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+* @brief   试验记录修改请求
+ * @details
+*/
+	struct ExperimentRecordModifyRequest {
+		ExperimentRecordModifyRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
+			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
+			m_maxDepth(0), m_profileIndex(0), m_profileLength(0), m_profileDistance(0) {
+		}
+		QString m_id;							/*!< 唯一标识 */
+		QString m_taskId;						/*!< 任务标识 */
+		QString m_platformId;					/*!< 平台标识 */
+		QString m_floatingTime;					/*!< 上浮时间 */
+		double m_lon;							/*!< 上浮经度 */
+		double m_lat;							/*!< 上浮纬度 */
+		double m_setHeadingDegree;				/*!< 设置航向角 */
+		double m_actualHeadingDegree;			/*!< 实际航向角 */
+		int m_acousticState;					/*!< 声学系统状态 */
+		int m_targetNum;						/*!< 目标总数 */
+		int m_underwaterTargetNum;				/*!< 水下目标数 */
+		QString m_underwaterTargetInfo;			/*!< 水下目标信息 */
+		double m_maxDepth;						/*!< 剖面最大深度 */
+		int m_profileIndex;						/*!< 剖面序号 */
+		double m_profileLength;					/*!< 剖面时长 */
+		double m_profileDistance;				/*!< 剖面移动距离 */
+	};
+
+	/*!
+	 * @brief  试验记录修改请求结果报文
+	 * @details
+	 */
+	struct ExperimentRecordModifyResponse {
+		ExperimentRecordModifyResponse() : m_modifyResult(false) {
+		}
+		bool m_modifyResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 

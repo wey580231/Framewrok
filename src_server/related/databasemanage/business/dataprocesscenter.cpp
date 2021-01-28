@@ -489,6 +489,60 @@ namespace Related {
 
 		return response;
 	}
+
+	Datastruct::DutyRecordModifyResponse DataProcessCenter::processDutyRecordModify(int clientId, const Datastruct::DutyRecordModifyRequest & request)
+	{
+		Datastruct::DutyRecordModifyResponse response;
+
+		Table::DutyRecordEntity dutyRecord;
+
+		Base::RSelect rs(dutyRecord.table);
+		rs.select(dutyRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() <  0) {
+				response.m_modifyResult = false;
+				response.m_errorInfo = QStringLiteral("该记录不存在");
+			}
+			else
+			{
+				Base::RUpdate rud(dutyRecord.table);
+				rud.update(dutyRecord.table, {
+					{dutyRecord.description,	request.m_description},
+					{dutyRecord.seaCondition,	request.m_seaCondition},
+					{dutyRecord.wind,			request.m_wind},
+					{dutyRecord.windSpeed,		request.m_windSpeed},
+					{dutyRecord.waveHigh,		request.m_waveHigh},
+					{dutyRecord.oceanCurrents,	request.m_oceanCurrents},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+				
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_modifyResult = false;
+						response.m_errorInfo = QStringLiteral("修改数据失败.");
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_modifyResult = false;
+			response.m_errorInfo = QStringLiteral("修改数据失败.");
+		}
+
+		return response;
+	}
 	
 	Datastruct::ExperimentRecordCreateResponse DataProcessCenter::processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request)
 	{
@@ -616,6 +670,67 @@ namespace Related {
 			response.m_deleteResult = false;
 			response.m_errorInfo = QStringLiteral("删除失败");
 		};
+
+		return response;
+	}
+
+	Datastruct::ExperimentRecordModifyResponse DataProcessCenter::processExperimentRecordModify(int clientId, const Datastruct::ExperimentRecordModifyRequest & request)
+	{
+		Datastruct::ExperimentRecordModifyResponse response;
+
+		Table::ExperimentRecordEntity experimentRecord;
+
+		Base::RSelect rs(experimentRecord.table);
+		rs.select(experimentRecord.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_modifyResult = false;
+				response.m_errorInfo = QStringLiteral("该记录不存在");
+			}
+			else
+			{
+				Base::RUpdate rud(experimentRecord.table);
+				rud.update(experimentRecord.table, {
+					{experimentRecord.floatingTime,			request.m_floatingTime},
+					{experimentRecord.lon,					request.m_lon},
+					{experimentRecord.lat,					request.m_lat},
+					{experimentRecord.setHeadingDegree,		request.m_setHeadingDegree},
+					{experimentRecord.actualHeadingDegree,	request.m_actualHeadingDegree},
+					{experimentRecord.acousticState,		request.m_acousticState},
+					{experimentRecord.targetNum,			request.m_targetNum},
+					{experimentRecord.underwaterTargetNum,	request.m_underwaterTargetNum},
+					{experimentRecord.underwaterTargetInfo, request.m_underwaterTargetInfo},
+					{experimentRecord.maxDepth,				request.m_maxDepth},
+					{experimentRecord.profileIndex,			request.m_profileIndex},
+					{experimentRecord.profileLength,		request.m_profileLength},
+					{experimentRecord.profileDistance,		request.m_profileDistance},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_modifyResult = false;
+						response.m_errorInfo = QStringLiteral("修改数据失败.");
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_modifyResult = false;
+			response.m_errorInfo = QStringLiteral("修改数据失败.");
+		}
 
 		return response;
 	}

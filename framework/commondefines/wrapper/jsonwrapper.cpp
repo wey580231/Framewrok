@@ -650,6 +650,52 @@ namespace CommonDefines {
 		});
 	}
 
+	QByteArray JsonWrapper::wrap(const Datastruct::DutyRecordModifyRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
+			obj.insert(m_jsonKey.createTime, request.m_createTime);
+			obj.insert(m_jsonKey.description, request.m_description);
+			obj.insert(m_jsonKey.seaCondition, request.m_seaCondition);
+			obj.insert(m_jsonKey.wind, request.m_wind);
+			obj.insert(m_jsonKey.windSpeed, request.m_windSpeed);
+			obj.insert(m_jsonKey.waveHigh, request.m_waveHigh);
+			obj.insert(m_jsonKey.oceanCurrents, request.m_oceanCurrents);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DutyRecordModifyRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_createTime = jsonObject.value(m_jsonKey.createTime).toString();
+			request.m_description = jsonObject.value(m_jsonKey.description).toString();
+			request.m_seaCondition = jsonObject.value(m_jsonKey.seaCondition).toString();
+			request.m_wind = jsonObject.value(m_jsonKey.wind).toDouble();
+			request.m_windSpeed = jsonObject.value(m_jsonKey.windSpeed).toDouble();
+			request.m_waveHigh = jsonObject.value(m_jsonKey.waveHigh).toDouble();
+			request.m_oceanCurrents = jsonObject.value(m_jsonKey.oceanCurrents).toDouble();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DutyRecordModifyResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_modifyResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DutyRecordModifyResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
 	/********************************  ÊÔÑé¼ÇÂ¼  ********************************/
 	QByteArray JsonWrapper::wrap(const Datastruct::ExperimentRecordCreateRequest & request)
 	{
@@ -873,5 +919,64 @@ namespace CommonDefines {
 		});
 	}
 
+	QByteArray JsonWrapper::wrap(const Datastruct::ExperimentRecordModifyRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
+			obj.insert(m_jsonKey.platformId, request.m_platformId);
+			obj.insert(m_jsonKey.floatingTime, request.m_floatingTime);
+			obj.insert(m_jsonKey.lon, request.m_lon);
+			obj.insert(m_jsonKey.lat, request.m_lat);
+			obj.insert(m_jsonKey.setHeadingDegree, request.m_setHeadingDegree);
+			obj.insert(m_jsonKey.actualHeadingDegree, request.m_actualHeadingDegree);
+			obj.insert(m_jsonKey.acousticState, request.m_acousticState);
+			obj.insert(m_jsonKey.targetNum, request.m_targetNum);
+			obj.insert(m_jsonKey.underwaterTargetNum, request.m_underwaterTargetNum);
+			obj.insert(m_jsonKey.underwaterTargetInfo, request.m_underwaterTargetInfo);
+			obj.insert(m_jsonKey.maxDepth, request.m_maxDepth);
+			obj.insert(m_jsonKey.profileIndex, request.m_profileIndex);
+			obj.insert(m_jsonKey.profileLength, request.m_profileLength);
+			obj.insert(m_jsonKey.profileDistance, request.m_profileDistance);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_platformId = jsonObject.value(m_jsonKey.platformId).toString();
+			request.m_floatingTime = jsonObject.value(m_jsonKey.floatingTime).toString();
+			request.m_lon = jsonObject.value(m_jsonKey.lon).toDouble();
+			request.m_lat = jsonObject.value(m_jsonKey.lat).toDouble();
+			request.m_setHeadingDegree = jsonObject.value(m_jsonKey.setHeadingDegree).toDouble();
+			request.m_actualHeadingDegree = jsonObject.value(m_jsonKey.actualHeadingDegree).toDouble();
+			request.m_acousticState = jsonObject.value(m_jsonKey.acousticState).toInt();
+			request.m_targetNum = jsonObject.value(m_jsonKey.targetNum).toInt();
+			request.m_underwaterTargetNum = jsonObject.value(m_jsonKey.underwaterTargetNum).toInt();
+			request.m_underwaterTargetInfo = jsonObject.value(m_jsonKey.underwaterTargetInfo).toString();
+			request.m_maxDepth = jsonObject.value(m_jsonKey.maxDepth).toDouble();
+			request.m_profileIndex = jsonObject.value(m_jsonKey.profileIndex).toInt();
+			request.m_profileLength = jsonObject.value(m_jsonKey.profileLength).toDouble();
+			request.m_profileDistance = jsonObject.value(m_jsonKey.profileDistance).toDouble();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::ExperimentRecordModifyResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_modifyResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
 
 } //namespace CommonDefines 

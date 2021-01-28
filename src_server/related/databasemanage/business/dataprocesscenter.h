@@ -46,11 +46,14 @@ namespace Related {
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
 		Datastruct::LoadAllDutyRecordResponse processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request);
 		Datastruct::DutyRecordDeleteResponse processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request);
+		Datastruct::DutyRecordModifyResponse processDutyRecordModify(int clientId, const Datastruct::DutyRecordModifyRequest & request);
 
 		//ÊÔÑé¼ÇÂ¼
 		Datastruct::ExperimentRecordCreateResponse  processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request);
-		Datastruct::LoadAllExperimentRecordsResponse  processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request);
+		Datastruct::LoadAllExperimentRecordsResponse processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request);
 		Datastruct::ExperimentRecordDeleteResponse  processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request);
+		Datastruct::ExperimentRecordModifyResponse processExperimentRecordModify(int clientId, const Datastruct::ExperimentRecordModifyRequest & request);
+
 	private:
 		Base::Database * m_database;
 

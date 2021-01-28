@@ -48,6 +48,7 @@ namespace Related {
 		void processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
+		void processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response);
 
 		void slotClickedTable(QModelIndex index);
 
@@ -56,6 +57,7 @@ namespace Related {
 		void initConnect();
 		void insertDutyRecord();
 		void deleteDutyRecord(QString id);
+		void modifyDutyRecord(Datastruct::DutyRecordEntityData info);
 		void refreshCurrPage();
 
 	private:
