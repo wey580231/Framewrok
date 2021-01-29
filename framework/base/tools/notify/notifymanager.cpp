@@ -4,6 +4,7 @@
 #include <QPropertyAnimation>
 #include <QApplication>
 #include <QTimer>
+#include <QDebug>
 
 #include "notify.h"
 
@@ -20,7 +21,7 @@ namespace Base {
 	NotifyManager::NotifyManager(QObject *parent)
 		: QObject(parent),
 		m_maxCount(6),
-		m_displayTime(4 * 1000)
+		m_displayTime(4 * 1000), m_notifyAppeartion(Appear_Bottom)
 	{
 	}
 
@@ -30,18 +31,23 @@ namespace Base {
 
 	void NotifyManager::information(QString content)
 	{
-		notify(QStringLiteral("提示"),":/icon/resource/icon/alert_info.png",content);
+		notify(QStringLiteral("提示"), ":/icon/resource/icon/alert_info.png", content);
 	}
 
 	void NotifyManager::warning(QString content)
 	{
-		notify(QStringLiteral("警告"),":/icon/resource/icon/alert_warning.png",content);
+		notify(QStringLiteral("警告"), ":/icon/resource/icon/alert_warning.png", content);
 	}
 
 	void NotifyManager::notify(const QString &title, const QString &icon, const QString &content)
 	{
 		m_dataQueue.enqueue(NotifyData(icon, title, content));
 		showNext();
+	}
+
+	void NotifyManager::setAppearPosition(NotifyApperPosition pos)
+	{
+		m_notifyAppeartion = pos;
 	}
 
 	void NotifyManager::setMaxCount(ushort count)
@@ -56,15 +62,24 @@ namespace Base {
 
 	void NotifyManager::reArrange()
 	{
-		QPoint bottomRignt = QApplication::desktop()->availableGeometry().bottomRight();
+		QRect screenRect = QApplication::desktop()->availableGeometry();
 
-		QList<Notify*>::iterator i;
-		for (i = m_notifyList.begin(); i != m_notifyList.end(); ++i) {
-			int index = m_notifyList.indexOf((*i));
+		int totalCount = m_notifyList.size();
+		QPoint bottomRignt = screenRect.bottomRight();
 
-			QPoint pos = bottomRignt - QPoint(NOTIFY_WIDTH + MARGIN_RIGHT, (NOTIFY_HEIGHT + NOTIFY_SPACE) * (index + 1) - NOTIFY_SPACE + MARGIN_BOTTOM);
-			QPropertyAnimation *animation = new QPropertyAnimation((*i), "pos", this);
-			animation->setStartValue((*i)->pos());
+		for (int i = 0; i < m_notifyList.size(); i++) {
+			int offset = totalCount - i;
+
+			QPoint pos;
+			if (m_notifyAppeartion == Appear_Top) {
+				pos = QPoint(screenRect.width() - NOTIFY_WIDTH - MARGIN_RIGHT, (NOTIFY_HEIGHT + NOTIFY_SPACE) * (offset)+MARGIN_BOTTOM + NOTIFY_SPACE);
+			}
+			else if (m_notifyAppeartion == Appear_Bottom) {
+				pos = bottomRignt - QPoint(NOTIFY_WIDTH + MARGIN_RIGHT, (NOTIFY_HEIGHT + NOTIFY_SPACE) * (i + 1) - NOTIFY_SPACE + MARGIN_BOTTOM);
+			}
+
+			QPropertyAnimation *animation = new QPropertyAnimation(m_notifyList.at(i), "pos", this);
+			animation->setStartValue(m_notifyList.at(i)->pos());
 			animation->setEndValue(pos);
 			animation->setDuration(300);
 			animation->start();
@@ -82,6 +97,7 @@ namespace Base {
 		}
 
 		NotifyData data = m_dataQueue.dequeue();
+
 		Notify * notify = new Notify(m_displayTime);
 		notify->setIcon(data.icon);
 		notify->setTitle(data.title);
@@ -92,17 +108,27 @@ namespace Base {
 		QDesktopWidget * desktop = QApplication::desktop();
 		QRect desktopRect = desktop->availableGeometry();
 
-		// 计算提醒框的位置
-		QPoint bottomRignt = desktopRect.bottomRight();
-		QPoint pos = bottomRignt - QPoint(notify->width() + MARGIN_RIGHT, (NOTIFY_HEIGHT + NOTIFY_SPACE) * (m_notifyList.size() + 1) - NOTIFY_SPACE + MARGIN_BOTTOM);
+		if (m_notifyAppeartion == Appear_Top) {
+			reArrange();
 
-		notify->move(pos);
+			QPoint pos = QPoint(desktopRect.width() - notify->width() - MARGIN_RIGHT, MARGIN_BOTTOM + NOTIFY_SPACE);
+			notify->move(pos);
+		}
+		else if (m_notifyAppeartion == Appear_Bottom) {
+			QPoint bottomRignt = desktopRect.bottomRight();
+			QPoint pos = bottomRignt - QPoint(notify->width() + MARGIN_RIGHT, (NOTIFY_HEIGHT + NOTIFY_SPACE) * (m_notifyList.size() + 1) - NOTIFY_SPACE + MARGIN_BOTTOM);
+
+			notify->move(pos);
+		}
+
 		notify->showGriant();
 		m_notifyList.append(notify);
 
 		connect(notify, &Notify::disappeared, this, [notify, this]() {
 			m_notifyList.removeAll(notify);
-			this->reArrange();
+			if (m_notifyAppeartion == Appear_Bottom) {
+				this->reArrange();
+			}
 
 			// 如果列表是满的，重排完成后显示
 			if (m_notifyList.size() == this->m_maxCount - 1) {
