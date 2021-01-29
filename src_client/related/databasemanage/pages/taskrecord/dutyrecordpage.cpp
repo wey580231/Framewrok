@@ -17,7 +17,7 @@ namespace Related {
 		m_tableModel(nullptr),
 		m_pageSwitch(nullptr),
 		m_firstLoadData(true),
-		m_seleteTableRow(99999999)
+		m_seleteTableRow(DUTY_RECORD_SELET_MAX_INDEX)
 	{
 		init();
 		initConnect();
@@ -63,24 +63,27 @@ namespace Related {
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
-				if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
-					Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
-					deleteDutyRecord(data.id);
-					m_seleteTableRow = 99999999;
+			if (m_seleteTableRow  < m_allDutyRecords.m_dutyRecordInfos.size() && m_seleteTableRow > DUTY_RECORD_SELET_MAX_INDEX) {
+				int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("是否删除数据?"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+				if (result != Base::RMessageBox::Yes) {
+					return;
 				}
+
+				Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
+				deleteDutyRecord(data.id);
+				m_seleteTableRow = DUTY_RECORD_SELET_MAX_INDEX;
+			}
 		}
 			break;
 		case OperationToolsPage::Butt_Edit: {
-			if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size()) {
+			if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size() && m_seleteTableRow > DUTY_RECORD_SELET_MAX_INDEX) {
 				Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
-
-				data.wind = 55;
-				data.windSpeed = 55;
-				data.waveHigh = 55;
-				data.oceanCurrents = 55;
-
-				modifyDutyRecord(data);
-				m_seleteTableRow = 99999999;
+				DutyRecordEditDialog editDialog(this);
+				editDialog.setDutyRecordEntityData(data);
+				if (QDialog::Accepted ==  editDialog.exec()) {
+					refreshCurrPage();
+					m_seleteTableRow = DUTY_RECORD_SELET_MAX_INDEX;
+				}
 			}
 		}
 			break;
@@ -91,6 +94,16 @@ namespace Related {
 		default:
 			break;
 		}
+	}
+
+	void DutyRecordPage::setPageNum(int page)
+	{
+		refreshCurrPage();
+	}
+
+	void DutyRecordPage::setFixedPageRowCount(int pageItemCount)
+	{
+		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
 	void DutyRecordPage::processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
@@ -110,13 +123,6 @@ namespace Related {
 	void DutyRecordPage::processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
 		if (response.m_deleteResult) {
-			refreshCurrPage();
-		}
-	}
-
-	void DutyRecordPage::processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response)
-	{
-		if (response.m_modifyResult) {
 			refreshCurrPage();
 		}
 	}
@@ -158,6 +164,8 @@ namespace Related {
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
+			connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
+			connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 			QWidget * twidget = new QWidget();
 			QVBoxLayout * cvlayout = new QVBoxLayout();
@@ -187,9 +195,6 @@ namespace Related {
 	
 		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)),
 			this, SLOT(processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)));
-
-		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)),
-			this, SLOT(processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse &)));
 	}
 
 	/*!
@@ -202,7 +207,7 @@ namespace Related {
 		request.m_id = Base::RUtil::UUID();
 		request.m_taskId = m_taskId;
 		QDateTime current_date_time = QDateTime::currentDateTime();
-		request.m_createTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");			
+		request.m_createTime = current_date_time.toString(TIME_FORMAT);
 		request.m_description = QStringLiteral("1");
 		request.m_seaCondition; QStringLiteral("1");
 		request.m_wind = 0;						
@@ -217,22 +222,6 @@ namespace Related {
 	{
 		Datastruct::DutyRecordDeleteRequest request;
 		request.m_id = id;
-		NetConnector::instance()->write(request);
-	}
-
-	void DutyRecordPage::modifyDutyRecord(Datastruct::DutyRecordEntityData info)
-	{
-		Datastruct::DutyRecordModifyRequest request;
-		request.m_id = info.id;
-		request.m_taskId = info.taskId;
-		request.m_createTime = info.createTime;
-		request.m_description = info.description;
-		request.m_seaCondition = info.seaCondition;
-		request.m_wind = info.wind;
-		request.m_windSpeed = info.windSpeed;
-		request.m_waveHigh = info.waveHigh;
-		request.m_oceanCurrents = info.oceanCurrents;
-
 		NetConnector::instance()->write(request);
 	}
 

@@ -44,6 +44,19 @@ namespace Related {
 		void recvQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void recvExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
 		void recvExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
+
+		//侦测平台
+		void recvDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response);
+		void recvQueryAllDetectPlatformsResponse(const Datastruct::LoadAllDetectPlatformsResponse & response);
+		void recvDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response);
+		void recvDetectPlatformModifyResponse(const Datastruct::DetectPlatformModifyResponse & response);
+
+		//侦测平台
+		void recvDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
+		void recvQueryAllDetectPlatformSubtypesResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
+		void recvDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
+		void recvDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
+
 	signals:
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
@@ -66,6 +79,19 @@ namespace Related {
 		void respQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
 		void respExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
+
+		//侦测平台
+		void respDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response);
+		void respQueryAllDetectPlatformsResponse(const Datastruct::LoadAllDetectPlatformsResponse & response);
+		void respDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response);
+		void respDetectPlatformModifyResponse(const Datastruct::DetectPlatformModifyResponse & response);
+
+		//侦测平台
+		void respDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
+		void respQueryAllDetectPlatformSubtypesResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
+		void respDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
+		void respDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
+
 	private:
 		SignalDispatch(QObject *parent = nullptr);
 

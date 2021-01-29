@@ -40,14 +40,13 @@ namespace Related {
 
 	private slots:
 		void respOk();
-		void respCancel();
-
-		void openLocalFile();
 		void respClearFile();
+		void openLocalFile();
 		void switchViewModel(bool isChecked);
-
+		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 	private:
 		void init();
+		void initConnect();
 
 		void sendTaskBaseInfo();
 

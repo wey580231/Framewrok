@@ -22,8 +22,9 @@ namespace Datastruct {
 				return QStringLiteral("无操作权限!");
 				break;
 
-
-
+			case Datastruct::NO_FINDDATA:
+				return QStringLiteral("未找到指定数据!");
+				break;
 
 			case Datastruct::SQL_EXECUTE_ERROR:
 				return QStringLiteral("数据访问失败!");

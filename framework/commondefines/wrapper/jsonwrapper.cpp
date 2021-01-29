@@ -319,7 +319,6 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllTaskRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.taskId, request.taskId);
 			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
 			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
 		});
@@ -328,7 +327,6 @@ namespace CommonDefines {
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllTaskRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.taskId = jsonObject.value(m_jsonKey.taskId).toString();
 			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
 			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
 		});
@@ -972,6 +970,322 @@ namespace CommonDefines {
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformCreateRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.name, request.m_name);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformCreateRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformCreateResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_createResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+
+			if (response.m_createResult) {
+				QJsonObject dataObj;
+				dataObj.insert(m_jsonKey.id, response.m_detectPlatformInfo.id);
+				dataObj.insert(m_jsonKey.name, response.m_detectPlatformInfo.name);
+				obj.insert(m_jsonKey.data, dataObj);
+			}
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformCreateResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+
+			if (response.m_createResult) {
+				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
+				if (dataObj.isEmpty())
+					return;
+				response.m_detectPlatformInfo.id = jsonObject.value(m_jsonKey.id).toInt();
+				response.m_detectPlatformInfo.name = jsonObject.value(m_jsonKey.name).toString();
+			}
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDetectPlatformsRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformsRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDetectPlatformsResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			QJsonArray jarray;
+			for (int i = 0; i < response.m_detectPlatformInfos.size(); i++) {
+				const Datastruct::DetectPlatformEntityData & dRdata = response.m_detectPlatformInfos.at(i);
+
+				QJsonObject dataObj;
+				dataObj.insert(m_jsonKey.id, dRdata.id);
+				dataObj.insert(m_jsonKey.name, dRdata.name);
+				jarray.append(dataObj);
+			}
+			obj.insert(m_jsonKey.totalDataSize, response.m_detectPlatformCount);
+			obj.insert(m_jsonKey.data, jarray);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformsResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			QJsonArray jarray = jsonObject.value(m_jsonKey.data).toArray();
+			for (int i = 0; i < jarray.size(); i++) {
+				Datastruct::DetectPlatformEntityData data;
+				QJsonObject dataObj = jarray.at(i).toObject();
+				data.id = dataObj.value(m_jsonKey.id).toInt();
+				data.name = dataObj.value(m_jsonKey.name).toString();
+				response.m_detectPlatformInfos.append(data);
+			}
+			response.m_detectPlatformCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformDeleteRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformDeleteRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformDeleteResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_deleteResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformDeleteResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformModifyRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.name, request.m_name);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformModifyRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformModifyResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_modifyResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformModifyResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeCreateRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.detectId, request.m_detectId);
+			obj.insert(m_jsonKey.name, request.m_name);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeCreateRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_detectId = jsonObject.value(m_jsonKey.detectId).toInt();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeCreateResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_createResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+
+			if (response.m_createResult) {
+				QJsonObject dataObj;
+				dataObj.insert(m_jsonKey.id, response.m_dutyRecordInfo.id);
+				dataObj.insert(m_jsonKey.detectId, response.m_dutyRecordInfo.detectId);
+				dataObj.insert(m_jsonKey.name, response.m_dutyRecordInfo.name);
+				obj.insert(m_jsonKey.data, dataObj);
+			}
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeCreateResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+
+			if (response.m_createResult) {
+				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
+				if (dataObj.isEmpty())
+					return;
+				response.m_dutyRecordInfo.id = jsonObject.value(m_jsonKey.id).toInt();
+				response.m_dutyRecordInfo.detectId = jsonObject.value(m_jsonKey.detectId).toInt();
+				response.m_dutyRecordInfo.name = jsonObject.value(m_jsonKey.name).toString();
+			}
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.detectId, request.m_detectId);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformSubtypesRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_detectId = jsonObject.value(m_jsonKey.detectId).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			QJsonArray jarray;
+			for (int i = 0; i < response.m_detectPlatformSubtypeInfos.size(); i++) {
+				const Datastruct::DetectPlatformSubtypeEntityData & dRdata = response.m_detectPlatformSubtypeInfos.at(i);
+
+				QJsonObject dataObj;
+				dataObj.insert(m_jsonKey.id, dRdata.id);
+				dataObj.insert(m_jsonKey.detectId, dRdata.detectId);
+				dataObj.insert(m_jsonKey.name, dRdata.name);
+				jarray.append(dataObj);
+			}
+			obj.insert(m_jsonKey.totalDataSize, response.m_detectPlatformSubtypeCount);
+			obj.insert(m_jsonKey.data, jarray);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformSubtypesResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			QJsonArray jarray = jsonObject.value(m_jsonKey.data).toArray();
+			for (int i = 0; i < jarray.size(); i++) {
+				Datastruct::DetectPlatformSubtypeEntityData data;
+				QJsonObject dataObj = jarray.at(i).toObject();
+				data.id = dataObj.value(m_jsonKey.id).toInt();
+				data.detectId = dataObj.value(m_jsonKey.detectId).toInt();
+				data.name = dataObj.value(m_jsonKey.name).toString();
+				response.m_detectPlatformSubtypeInfos.append(data);
+			}
+			response.m_detectPlatformSubtypeCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeDeleteRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeDeleteRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeDeleteResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_deleteResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeDeleteResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeModifyRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.detectId, request.m_detectId);
+			obj.insert(m_jsonKey.name, request.m_name);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeModifyRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_detectId = jsonObject.value(m_jsonKey.detectId).toInt();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::DetectPlatformSubtypeModifyResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_modifyResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeModifyResponse & response)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();

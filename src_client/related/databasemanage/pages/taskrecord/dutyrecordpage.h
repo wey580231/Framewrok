@@ -18,14 +18,17 @@
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
+#include <base/selfwidget/rmessagebox.h>
 #include <base\util\rutil.h>
 #include <commondefines/protocol.h>
 
 #include "../abstractpage.h"
 #include "../../customwidget/pageswitchbar.h"
-
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/dutyrecordmodel.h"
+#include "dialog/dutyrecordeditdialog.h"
+
+#define  DUTY_RECORD_SELET_MAX_INDEX             -1
 
 namespace Related {
 
@@ -45,10 +48,12 @@ namespace Related {
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void setPageNum(int page);
+		void setFixedPageRowCount(int pageItemCount);
 		void processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
-		void processDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response);
+
 
 		void slotClickedTable(QModelIndex index);
 
@@ -57,7 +62,6 @@ namespace Related {
 		void initConnect();
 		void insertDutyRecord();
 		void deleteDutyRecord(QString id);
-		void modifyDutyRecord(Datastruct::DutyRecordEntityData info);
 		void refreshCurrPage();
 
 	private:

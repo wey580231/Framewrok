@@ -17,7 +17,7 @@ namespace Related {
 		m_tableModel(nullptr),
 		m_pageSwitch(nullptr),
 		m_firstLoadData(true),
-		m_seleteTableRow(99999999)
+		m_seleteTableRow(EXPERIMENT_RECORD_SELET_MAX_INDEX)
 	{
 		init();
 		initConnent();
@@ -64,28 +64,34 @@ namespace Related {
 			break;
 
 		case OperationToolsPage::Butt_Delete: {
-			if (m_seleteTableRow < m_allExperimentRecords.m_experimentRecordInfos.size()) {
+
+			if (m_seleteTableRow <  m_allExperimentRecords.m_experimentRecordInfos.size()
+				&& m_seleteTableRow > EXPERIMENT_RECORD_SELET_MAX_INDEX) {
+
+				int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("是否删除数据?"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+				if (result != Base::RMessageBox::Yes) {
+					return;
+				}
+
 				Datastruct::ExperimentRecordEntityData data = m_allExperimentRecords.m_experimentRecordInfos.at(m_seleteTableRow);
 				deleteExperimentRecord(data.id);
-				m_seleteTableRow = 99999999;
+				m_seleteTableRow = EXPERIMENT_RECORD_SELET_MAX_INDEX;
 			}
 		}
 			break;
 
 		case OperationToolsPage::Butt_Edit: {
 
-			if (m_seleteTableRow < m_allExperimentRecords.m_experimentRecordInfos.size()) {
+			if (m_seleteTableRow < m_allExperimentRecords.m_experimentRecordInfos.size() 
+				&& m_seleteTableRow > EXPERIMENT_RECORD_SELET_MAX_INDEX) {
 				Datastruct::ExperimentRecordEntityData data = m_allExperimentRecords.m_experimentRecordInfos.at(m_seleteTableRow);
 				
-				data.lon = 100;
-				data.lat = 100;
-				data.setHeadingDegree = 100;
-				data.maxDepth = 100;
-				data.profileIndex = 100;
-				data.profileLength = 100;
-				
-				modifyExperimentRecord(data);
-				m_seleteTableRow = 99999999;
+				ExperimentRecordEditDialog editDialog(this);
+				editDialog.setExperimentRecordEntityData(data);
+				if (QDialog::Accepted == editDialog.exec()) {
+					refreshCurrPage();
+					m_seleteTableRow = EXPERIMENT_RECORD_SELET_MAX_INDEX;
+				}
 			}
 		}
 			break;
@@ -98,6 +104,16 @@ namespace Related {
 		default:
 			break;
 		}
+	}
+
+	void ExperimentRecordPage::setPageNum(int page)
+	{
+		refreshCurrPage();
+	}
+
+	void ExperimentRecordPage::setFixedPageRowCount(int pageItemCount)
+	{
+		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
 	void ExperimentRecordPage::processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response)
@@ -117,13 +133,6 @@ namespace Related {
 	void ExperimentRecordPage::processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response)
 	{
 		if (response.m_deleteResult) {
-			refreshCurrPage();
-		}
-	}
-
-	void ExperimentRecordPage::processExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response)
-	{
-		if (response.m_modifyResult) {
 			refreshCurrPage();
 		}
 	}
@@ -173,6 +182,8 @@ namespace Related {
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
+			connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
+			connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 			QWidget * twidget = new QWidget();
 			QVBoxLayout * cvlayout = new QVBoxLayout();
@@ -201,10 +212,6 @@ namespace Related {
 
 		connect(SignalDispatch::instance(), SIGNAL(respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)),
 			this, SLOT(processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)));
-		
-		connect(SignalDispatch::instance(), SIGNAL(respExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse &)),
-			this, SLOT(processExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse &)));
-
 	}
 
 	void ExperimentRecordPage::insertExperimentRecord()
@@ -215,7 +222,7 @@ namespace Related {
 		request.m_id = Base::RUtil::UUID();						
 		request.m_taskId = m_taskId;						
 		request.m_platformId = QStringLiteral("platform01");
-		request.m_floatingTime = current_date_time.toString("yyyy.MM.dd hh:mm:ss.zzz");
+		request.m_floatingTime = current_date_time.toString(TIME_FORMAT);
 		request.m_lon = 0;							
 		request.m_lat = 0;							
 		request.m_setHeadingDegree = 0;				
@@ -236,29 +243,6 @@ namespace Related {
 	{
 		Datastruct::ExperimentRecordDeleteRequest request;
 		request.m_id = id;
-		NetConnector::instance()->write(request);
-	}
-
-	void ExperimentRecordPage::modifyExperimentRecord(Datastruct::ExperimentRecordEntityData data)
-	{
-		Datastruct::ExperimentRecordModifyRequest request;
-		request.m_id = data.id;
-		request.m_taskId = data.taskId;
-		request.m_platformId = data.platformId;
-		request.m_floatingTime = data.floatingTime;
-		request.m_lon = data.lon;
-		request.m_lat = data.lat;
-		request.m_setHeadingDegree = data.setHeadingDegree;
-		request.m_actualHeadingDegree = data.actualHeadingDegree;
-		request.m_acousticState = data.acousticState;
-		request.m_targetNum = data.targetNum;
-		request.m_underwaterTargetNum = data.underwaterTargetNum;
-		request.m_underwaterTargetInfo = data.underwaterTargetInfo;
-		request.m_maxDepth = data.maxDepth;
-		request.m_profileIndex = data.profileIndex;
-		request.m_profileLength = data.profileLength;
-		request.m_profileDistance = data.profileDistance;
-
 		NetConnector::instance()->write(request);
 	}
 
