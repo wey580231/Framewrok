@@ -15,7 +15,7 @@ namespace Network {
 		m_bIsReconnecting(false), m_fixedRingBuffer(), m_bForceClosed(false), m_connectedState(R_CLOSED),
 		m_connectedCallback(nullptr), m_recvCallback(nullptr),
 		m_writeCallback(nullptr), m_closeCallback(nullptr),
-		m_bExit(false), m_bindLocalPort(0)
+		m_bExit(false), m_bindLocalPort(0), m_bIsClosed(true)
 	{
 		m_handle = allocateHandle(this);
 		int ret = uv_mutex_init(&m_writeBuffMutex);

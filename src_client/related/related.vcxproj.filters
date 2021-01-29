@@ -75,6 +75,9 @@
     <ClCompile Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -153,6 +156,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\customwidget\loadingdialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
