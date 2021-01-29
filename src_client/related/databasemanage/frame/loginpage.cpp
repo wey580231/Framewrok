@@ -17,11 +17,14 @@
 namespace Related {
 
 	LoginPage::LoginPage(QWidget *parent)
-		: QWidget(parent), m_loginModel(true)
+		: QWidget(parent), m_loginModel(true), m_isLoginState(true), m_isReconnecting(false)
 	{
 		init();
 		initConnect();
 		loadNetConfig();
+
+		//NOTE 默认提供自动重连机制，用户也可以手动连接
+		NetConnector::instance()->setAutoReconnect(true);
 	}
 
 	LoginPage::~LoginPage()
@@ -36,7 +39,6 @@ namespace Related {
 		int x = windowSize.width() - m_container->width() * 1.5;
 		int y = (windowSize.height() - m_container->height()) / 2 ;
 		m_container->move(x, y);
-
 	}
 
 	bool LoginPage::eventFilter(QObject *watched, QEvent *event)
@@ -55,16 +57,33 @@ namespace Related {
 	 */
 	void LoginPage::connectToServer()
 	{
+		START_WAIT
 		if (!NetConnector::instance()->isConnected()) {
 			if (NetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_portWidget->text().toInt())) {
 
 			}
 			else {
+				END_WAIT
 				Util::showWarning(this, QStringLiteral("连接服务器失败，请检查网络配置."));
 			}
 		}
 		else {
 			respNetConnected(true);
+		}
+	}
+
+	/*! 
+	 * @brief 响应用户点击重新连接网络
+	 * @detials 避免用户多次点击
+	 */
+	void LoginPage::reConnectServer()
+	{
+		if (!NetConnector::instance()->isConnected()) {
+			
+			if (!m_isReconnecting) {
+				m_isReconnecting = true;
+				connectToServer();
+			}
 		}
 	}
 
@@ -74,23 +93,34 @@ namespace Related {
 	 */
 	void LoginPage::respNetConnected(bool connected)
 	{
-		if (connected) {
-			if (m_loginModel) {
-				Datastruct::UserLoginRequest request;
-				request.m_name = m_userName->text();
-				request.m_password = Base::RUtil::MD5(m_password->text());
+		m_isReconnecting = false;
 
-				NetConnector::instance()->write(request);
+		if (connected) {
+			if (m_isLoginState) {
+				if (m_loginModel) {
+					Datastruct::UserLoginRequest request;
+					request.m_name = m_userName->text();
+					request.m_password = Base::RUtil::MD5(m_password->text());
+
+					NetConnector::instance()->write(request);
+				}
+				else {
+					Datastruct::UserRegistRequest request;
+					request.m_name = m_registUserName->text();
+					request.m_password = Base::RUtil::MD5(m_registPassword1->text());
+
+					NetConnector::instance()->write(request);
+				}			
 			}
 			else {
-				Datastruct::UserRegistRequest request;
-				request.m_name = m_registUserName->text();
-				request.m_password =Base::RUtil::MD5(m_registPassword1->text());
-
-				NetConnector::instance()->write(request);
+				END_WAIT
 			}
+
+			emit netStateChanged(true);
 		}
 		else {
+			END_WAIT
+			emit netStateChanged(false);
 			Util::showWarning(this, QStringLiteral("连接服务器失败，请检查网络配置."));
 		}
 	}
@@ -102,6 +132,7 @@ namespace Related {
 	void LoginPage::processUserLoginResponse(const Datastruct::UserLoginResponse & response)
 	{
 		if (response.m_loginResult) {
+			m_isLoginState = false;
 			emit switchToMainPage();
 			Global::G_UserEntity = response.m_userInfo;
 		}
@@ -208,7 +239,7 @@ namespace Related {
 
 		m_loginButt = new Base::RIconButton();
 		m_loginButt->setIconSize(Base::RIconButton::ICON_24);
-		m_loginButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/登录.png")));
+		m_loginButt->setIcon(QIcon(WRAP_RESOURCE(登录)));
 		m_loginButt->setText(QStringLiteral("登录"));
 		connect(m_loginButt, SIGNAL(clicked()), this, SLOT(connectToServer()));
 

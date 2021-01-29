@@ -138,5 +138,20 @@
         <file>resource/qyblue/主窗口背景.png</file>
         <file>resource/qyblue/关闭.png</file>
         <file>resource/qyblue/关闭_hover.png</file>
+        <file>resource/qyblue/列表.png</file>
+        <file>resource/qyblue/缩略图.png</file>
+        <file>resource/qyblue/loading/1.png</file>
+        <file>resource/qyblue/loading/2.png</file>
+        <file>resource/qyblue/loading/3.png</file>
+        <file>resource/qyblue/loading/4.png</file>
+        <file>resource/qyblue/loading/5.png</file>
+        <file>resource/qyblue/loading/6.png</file>
+        <file>resource/qyblue/loading/7.png</file>
+        <file>resource/qyblue/loading/8.png</file>
+        <file>resource/qyblue/loading/9.png</file>
+        <file>resource/qyblue/loading/10.png</file>
+        <file>resource/qyblue/loading/11.png</file>
+        <file>resource/qyblue/断开.png</file>
+        <file>resource/qyblue/连接.png</file>
     </qresource>
 </RCC>

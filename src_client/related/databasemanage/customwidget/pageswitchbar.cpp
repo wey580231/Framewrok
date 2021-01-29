@@ -6,6 +6,7 @@
 #include <QLineEdit>
 
 #include "../utils/util.h"
+#include "../global.h"
 
 #define BUTT_ID "CUSTOM_BUTT_ID"
 
@@ -82,10 +83,10 @@ namespace Related {
 		QHBoxLayout * pageLayout = new QHBoxLayout();
 		pageLayout->setContentsMargins(4, 4, 4, 4);
 
-		m_firstButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/到首页.png"), QStringLiteral("首页"));
-		m_prePageButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/小于号.png"), QStringLiteral("上页"));
-		m_nextPageButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/大于号.png"), QStringLiteral("下页"));
-		m_lastButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/到尾页.png"), QStringLiteral("尾页"));
+		m_firstButton = Util::createButt(WRAP_RESOURCE(到首页), QStringLiteral("首页"));
+		m_prePageButton = Util::createButt(WRAP_RESOURCE(小于号), QStringLiteral("上页"));
+		m_nextPageButton = Util::createButt(WRAP_RESOURCE(大于号), QStringLiteral("下页"));
+		m_lastButton = Util::createButt(WRAP_RESOURCE(到尾页), QStringLiteral("尾页"));
 
 		m_nextPageButton->setIconTextDirection(false);
 		m_lastButton->setIconTextDirection(false);

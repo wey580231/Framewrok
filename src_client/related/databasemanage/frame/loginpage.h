@@ -35,9 +35,12 @@ namespace Related {
 
 	signals:
 		void switchToMainPage();
+		void netStateChanged(bool isConnected);
 
 	private slots:
 		void connectToServer();
+		void reConnectServer();
+
 		void respNetConnected(bool connected);
 		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void processUserRegistResponse(const Datastruct::UserRegistResponse & response);
@@ -86,6 +89,9 @@ namespace Related {
 
 		Base::WidgetAnimation m_animation;
 
+		bool m_isReconnecting;		/*!< 是否处于重连状态中 */
+
+		bool m_isLoginState;	/*!< 是否为登录状态(包括注册) */
 		bool m_loginModel;		/*!< true:登录模式；false:注册模式 */
 	};
 

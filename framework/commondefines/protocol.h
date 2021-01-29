@@ -566,6 +566,7 @@ namespace Datastruct {
 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
 		DetectPlatformEntityData m_detectPlatformInfo;
+
 	};
 
 	/*!

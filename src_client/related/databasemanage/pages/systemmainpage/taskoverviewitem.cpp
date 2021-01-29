@@ -3,6 +3,9 @@
 
 #include <QRect>
 #include <QHBoxLayout>
+#include <QDebug>
+
+#include "../../global.h"
 
 using namespace Base;
 
@@ -61,8 +64,8 @@ namespace Related {
 		m_openTaskButt->disableColors(RIconButton::Color_All);
 		m_openTaskButt->setToolTip(QStringLiteral("打开任务"));
 		m_openTaskButt->setIconSize(Base::RIconButton::ICON_48);
-		m_openTaskButt->setCheckedIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/打开_48_hover.png")));
-		m_openTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/打开_48.png")));
+		m_openTaskButt->setHoverIcon(QIcon(WRAP_RESOURCE(打开_48_hover)));
+		m_openTaskButt->setIcon(QIcon(WRAP_RESOURCE(打开_48)));
 		m_openTaskButt->setProperty(CustomButtProp, Butt_Open);
 		connect(m_openTaskButt, SIGNAL(clicked()),this,SLOT(respButtPressed()));
 
@@ -70,8 +73,8 @@ namespace Related {
 		m_deleteTaskButt->disableColors(RIconButton::Color_All);
 		m_deleteTaskButt->setToolTip(QStringLiteral("删除任务"));
 		m_deleteTaskButt->setIconSize(Base::RIconButton::ICON_48);
-		m_deleteTaskButt->setCheckedIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/删除_48.png")));
-		m_deleteTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/删除_48_hover.png")));
+		m_deleteTaskButt->setHoverIcon(QIcon(WRAP_RESOURCE(删除_48)));
+		m_deleteTaskButt->setIcon(QIcon(WRAP_RESOURCE(删除_48_hover)));
 		m_deleteTaskButt->setProperty(CustomButtProp, Butt_Delete);
 		connect(m_deleteTaskButt, SIGNAL(clicked()),this,SLOT(respButtPressed()));
 

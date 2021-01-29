@@ -48,6 +48,8 @@ namespace Base {
 			Color_CheckedText = 0x0080,
 			Color_HoverText = 0x0100,
 
+			Color_Borer = Color_NormalBorder | Color_HoverBorder | Color_CheckedBorder,
+			Color_BackGround = Color_NormalBackGround | Color_CheckedBackGround | Color_HoverBackground,
 			Color_All = Color_NormalBackGround | Color_CheckedBackGround | Color_HoverBackground | Color_NormalBorder | Color_CheckedBorder |
 			Color_HoverBorder | Color_NormalText | Color_CheckedText | Color_HoverText
 		};
@@ -60,6 +62,7 @@ namespace Base {
 		void disableColor(ColorChoose choose);
 		void disableColors(ColorChooses chooses);
 
+		void setHoverIcon(const QIcon & icon);
 		void setCheckedIcon(const QIcon & icon);
 		void setIconSize(IconSize type, QSize size = QSize());
 		void setIconTextSpacing(int spacing = 5) { m_spacing = spacing; }
@@ -110,6 +113,7 @@ namespace Base {
 		QSize m_iconSize;               /*!< 图标和文字之间的间隔 */
 		int m_spacing;
 
+		QIcon m_hoverIcon;				/*!< 鼠标悬浮状态下图标 */
 		QIcon m_checkedIcon;            /*!< 选中状态下图标 */
 		QFont m_textFont;				/*!< 文字字体 */
 		bool m_textVixible;				/*!< 文字是否可见 */

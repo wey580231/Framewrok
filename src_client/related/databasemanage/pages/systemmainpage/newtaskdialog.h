@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QFileSystemModel>
+#include <QScrollArea>
 #include <QTreeView>
 
 #include <base/selfwidget/dialogproxy.h>
@@ -38,9 +39,7 @@ namespace Related {
 		~NewTaskDialog();
 
 	private slots:
-		void slotSeleteFile();
 		void respOk();
-
 		void openLocalImage();
 		void clearImage();
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
@@ -58,9 +57,14 @@ namespace Related {
 
 		Base::RTableView * m_tableView;
 		ImageModel * m_imageTableModel;
+		Base::RIconButton * m_viewModelSwitch;
 
-		QTreeView * m_treeView;
-		QFileSystemModel * m_treeModel;
+		QScrollArea * m_cardModel;
+
+		QStackedWidget * m_imageStack;
+
+		Base::RTableView * m_fileTableView;
+		ImageModel * m_fileTableModel;
 
 		QLineEdit * m_dataFilePath;						/*!< 数据文件路径 */
 

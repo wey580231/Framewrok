@@ -505,16 +505,16 @@ namespace Base {
 		m_closeButton = createButt("RBorderLess_CloseButton", QStringLiteral("关闭"), SLOT(slot_closed()));
 
 		m_minButton->setIcon(QIcon(QStringLiteral(":/icon/resource/icon/Minimize.png")));
-		m_minButton->setCheckedIcon(QIcon(QStringLiteral(":/icon/resource/icon/MinimizeHover.png")));
+		m_minButton->setHoverIcon(QIcon(QStringLiteral(":/icon/resource/icon/MinimizeHover.png")));
 
 		m_maxButton->setIcon(QIcon(QStringLiteral(":/icon/resource/icon/Maximize.png")));
-		m_maxButton->setCheckedIcon(QIcon(QStringLiteral(":/icon/resource/icon/MaximizeHover.png")));
+		m_maxButton->setHoverIcon(QIcon(QStringLiteral(":/icon/resource/icon/MaximizeHover.png")));
 
 		m_restoreButton->setIcon(QIcon(QStringLiteral(":/icon/resource/icon/Restore.png")));
-		m_restoreButton->setCheckedIcon(QIcon(QStringLiteral(":/icon/resource/icon/RestoreHover.png")));
+		m_restoreButton->setHoverIcon(QIcon(QStringLiteral(":/icon/resource/icon/RestoreHover.png")));
 
 		m_closeButton->setIcon(QIcon(QStringLiteral(":/icon/resource/icon/Close.png")));
-		m_closeButton->setCheckedIcon(QIcon(QStringLiteral(":/icon/resource/icon/CloseHover.png")));
+		m_closeButton->setHoverIcon(QIcon(QStringLiteral(":/icon/resource/icon/CloseHover.png")));
 
 		m_restoreButton->setVisible(false);
 

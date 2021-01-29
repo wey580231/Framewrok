@@ -163,6 +163,11 @@ namespace Related {
 	{
 	}
 
+	void NetConnector::setAutoReconnect(bool isAutoReconnect)
+	{
+		m_dataTcpClient->setAutoReconnect(isAutoReconnect);
+	}
+
 	bool NetConnector::connectTo(QString remoteIp, ushort remotePort)
 	{
 		return m_dataTcpClient->connect(remoteIp.toStdString(), remotePort);
