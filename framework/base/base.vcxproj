@@ -138,7 +138,6 @@
     <ClInclude Include="macros.h" />
     <ClInclude Include="messagetype.h" />
     <QtMoc Include="selfwidget\toolbar.h" />
-    <QtMoc Include="selfwidget\rwidget.h" />
     <QtMoc Include="selfwidget\rmessagebox.h" />
     <QtMoc Include="selfwidget\rlabel.h" />
     <QtMoc Include="selfwidget\ripwidget.h" />
@@ -150,7 +149,6 @@
     <QtMoc Include="selfwidget\treemode\rtreemodel.h" />
     <QtMoc Include="selfwidget\lonlatedit\rpositionviewlabel.h" />
     <QtMoc Include="selfwidget\lonlatedit\rlonlatedit.h" />
-    <QtMoc Include="selfwidget\switchpage.h" />
     <QtMoc Include="selfwidget\rtabbar.h" />
     <QtMoc Include="selfwidget\tablemode\rtablemodel.h" />
     <QtMoc Include="selfwidget\tablemode\rtableview.h" />
@@ -203,8 +201,6 @@
     <ClCompile Include="selfwidget\rmessagebox.cpp" />
     <ClCompile Include="selfwidget\rtabbar.cpp" />
     <ClCompile Include="selfwidget\rtabwidget.cpp" />
-    <ClCompile Include="selfwidget\rwidget.cpp" />
-    <ClCompile Include="selfwidget\switchpage.cpp" />
     <ClCompile Include="selfwidget\tablemode\rtablemodel.cpp" />
     <ClCompile Include="selfwidget\tablemode\rtableview.cpp" />
     <ClCompile Include="selfwidget\tablemode\tablecolumneditwindow.cpp" />
