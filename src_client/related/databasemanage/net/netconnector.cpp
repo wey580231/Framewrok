@@ -273,6 +273,54 @@ namespace Related {
 		QByteArray array = makePacket(Datastruct::P_ModifyExperimentRecord, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::LoadAllDetectPlatformsRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformSubtypeCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformSubtypeCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformSubtypeList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformSubtypeDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformSubtypeDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void NetConnector::write(const Datastruct::DetectPlatformSubtypeModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_DetectPlatformSubtypeModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
 	
 	QByteArray NetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
 	{
@@ -440,6 +488,7 @@ namespace Related {
 				}
 			}
 				break;
+
 			case  Datastruct::P_DeleteExperimentRecord: {
 				Datastruct::ExperimentRecordDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -447,6 +496,7 @@ namespace Related {
 				}
 			}
 				break;
+
 			case   Datastruct::P_ModifyExperimentRecord: {
 				Datastruct::ExperimentRecordModifyResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -454,6 +504,70 @@ namespace Related {
 				}
 			}
 				break;
+
+			case  Datastruct::P_DetectPlatformCreate: {
+				Datastruct::DetectPlatformCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_DetectPlatformList: {
+				Datastruct::LoadAllDetectPlatformsResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllDetectPlatformsResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformDelete: {
+				Datastruct::DetectPlatformDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformDeleteResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformModify: {
+				Datastruct::DetectPlatformModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformModifyResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformSubtypeCreate: {
+				Datastruct::DetectPlatformSubtypeCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformSubtypeCreateResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformSubtypeList: {
+				Datastruct::LoadAllDetectPlatformSubtypesResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllDetectPlatformSubtypesResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformSubtypeDelete: {
+				Datastruct::DetectPlatformSubtypeDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformSubtypeDeleteResponse(response);
+				}
+			}
+				break;
+
+			case  Datastruct::P_DetectPlatformSubtypeModify: {
+				Datastruct::DetectPlatformSubtypeModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvDetectPlatformSubtypeModifyResponse(response);
+				}
+			}
+				break;
+
 			default:
 				break;
 		}

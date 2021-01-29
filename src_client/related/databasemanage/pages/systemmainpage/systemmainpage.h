@@ -22,6 +22,7 @@
 #include <QListView>
 
 #include <base/selfwidget/iconbutton.h>
+#include <base/selfwidget/rmessagebox.h>
 #include <commondefines/protocol.h>
 
 #include "overviewitem.h"
@@ -62,7 +63,8 @@ namespace Related {
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
 		void slotDeleteTask(QString taskId);
-		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
+
+
 		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
 		void processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
 
@@ -71,7 +73,7 @@ namespace Related {
 		void initConnent();
 
 		void refreshCurrTask();
-		void UpdateTaskListWidget();
+		void updateTaskListWidget();
 
 	private:
 		OverViewItem * m_taskNumItem;

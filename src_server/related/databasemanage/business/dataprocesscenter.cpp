@@ -243,45 +243,28 @@ namespace Related {
 
 		Table::TaskEntity task;
 
-		Base::RSelect rs(task.table);
-		rs.select(task.table)
-			.createCriteria()
-			.add(Base::Restrictions::eq(task.id, request.taskId));
+		Base::RPersistence rps(task.table);
+		rps.insert({
+				{task.id,		Base::RUtil::UUID()},
+				{task.name,		request.taskName},
+				{task.startTime,QDateTime::fromString(request.startTime, TIME_FORMAT)},
+				{task.endTime,	QDateTime::fromString(request.endTime, TIME_FORMAT)},
+				{task.location, request.location},
+				{task.lon,		request.lon},
+				{task.lat,		request.lat},
+				{task.description, request.description},
+			});
 
 		QSqlQuery query(m_database->sqlDatabase());
 
-		do {
-			if (query.exec(rs.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = false;
-					response.m_errorInfo = QStringLiteral("该记录存在");
-					break;
-				}
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
 			}
-
-			Base::RPersistence rps(task.table);
-			rps.insert({
-					{task.id,		request.taskId},
-					{task.name,		request.taskName},
-					{task.startTime,request.startTime},
-					{task.endTime,	request.endTime},
-					{task.location, request.location},
-					{task.lon,		request.lon},
-					{task.lat,		request.lat},
-					{task.description, request.description},
-				});
-
-			if (query.exec(rps.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = true;
-				}
-			}
-			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
-			}
-
-		} while (0);
-
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
 		return response;
 	}
 
@@ -290,16 +273,14 @@ namespace Related {
 		Datastruct::LoadAllTaskResponse response;
 
 		Table::TaskEntity task;
-
 		Base::RSelect rs(task.table);
-		rs.select(task.table)
-			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC);
 
 		QSqlQuery query(m_database->sqlDatabase());
 
 		if (query.exec(rs.sql())) {
 			while (query.next()) {
-
 				Datastruct::TaskEntityData data;
 				data.id = query.value(task.id).toString();
 				data.taskName = query.value(task.name).toString();
@@ -309,7 +290,6 @@ namespace Related {
 				data.lon = query.value(task.lon).toString();
 				data.lat = query.value(task.lat).toString();
 				data.description = query.value(task.description).toString();
-
 				response.m_taskInfos.append(data);
 			}
 
@@ -330,17 +310,20 @@ namespace Related {
 		Datastruct::TaskDeleteResponse response;
 		Table::TaskEntity task;
 
+		Base::RDelete rde(task.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(task.id, request.taskId));
+
 		QSqlQuery query(m_database->sqlDatabase());
 
-		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(task.table).arg(task.id).arg(request.taskId);
-		if (query.exec(deleteSql)) {
-			response.m_deleteResult = true;
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
 		}
-		else
-		{
-			response.m_deleteResult = false;
-			response.m_errorInfo = QStringLiteral("删除失败");
-		};
 		return response;
 	}
 
@@ -355,8 +338,7 @@ namespace Related {
 			.add(Base::Restrictions::eq(task.id, request.taskId));
 
 		QSqlQuery query(m_database->sqlDatabase());
-		if (query.exec(rs.sql()))
-		{
+		if (query.exec(rs.sql())) {
 			while (query.next()) {
 				response.taskInfo.id = query.value(task.id).toString();
 				response.taskInfo.taskName = query.value(task.name).toString();
@@ -371,8 +353,7 @@ namespace Related {
 		}
 		else
 		{
-			response.m_result = false;
-			response.m_errorInfo = QStringLiteral("获取单条任务预览信息失败.");
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		}
 		return response;
 	}
@@ -383,45 +364,29 @@ namespace Related {
 
 		Table::DutyRecordEntity dutyRecord;
 
-		Base::RSelect rs(dutyRecord.table);
-		rs.select(dutyRecord.table)
-			.createCriteria()
-			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+		Base::RPersistence rps(dutyRecord.table);
+		rps.insert({
+				{dutyRecord.id,				Base::RUtil::UUID()},
+				{dutyRecord.taskId,			request.m_taskId},
+				{dutyRecord.createTime,		QDateTime::currentDateTime()},
+				{dutyRecord.description,	request.m_description},
+				{dutyRecord.seaCondition,	request.m_seaCondition},
+				{dutyRecord.wind,			request.m_wind},
+				{dutyRecord.windSpeed,		request.m_windSpeed},
+				{dutyRecord.waveHigh,		request.m_waveHigh},
+				{dutyRecord.oceanCurrents,	request.m_oceanCurrents},
+			});
 
 		QSqlQuery query(m_database->sqlDatabase());
 
-		do {
-			if (query.exec(rs.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = false;
-					response.m_errorInfo = QStringLiteral("该记录存在");
-					break;
-				}
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
 			}
-
-			Base::RPersistence rps(dutyRecord.table);
-			rps.insert({
-					{dutyRecord.id,				Base::RUtil::UUID()},
-					{dutyRecord.taskId,			request.m_taskId},
-					{dutyRecord.createTime,		QDateTime::currentDateTime()},
-					{dutyRecord.description,	request.m_description},
-					{dutyRecord.seaCondition,	request.m_seaCondition},
-					{dutyRecord.wind,			request.m_wind},
-					{dutyRecord.windSpeed,		request.m_windSpeed},
-					{dutyRecord.waveHigh,		request.m_waveHigh},
-					{dutyRecord.oceanCurrents,	request.m_oceanCurrents},
-				});
-
-			if (query.exec(rps.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = true;
-				}
-			}
-			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
-			}
-
-		} while (0);
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
 
 		return response;
 	}
@@ -433,17 +398,14 @@ namespace Related {
 		Table::DutyRecordEntity dutyRecord;
 
 		Base::RSelect rs(dutyRecord.table);
-// 		rs.select(dutyRecord.table)
-// 			.limit(request.m_offsetIndex, request.m_limitIndex);
-		rs.select(dutyRecord.table)
+
+		rs.orderBy(dutyRecord.table, dutyRecord.createTime, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(dutyRecord.taskId, request.m_taskId));
-
 		QSqlQuery query(m_database->sqlDatabase());
 
 		if (query.exec(rs.sql())) {
 			while (query.next()) {
-
 				Datastruct::DutyRecordEntityData data;
 				data.id = query.value(dutyRecord.id).toString();
 				data.taskId = query.value(dutyRecord.taskId).toString();
@@ -457,14 +419,7 @@ namespace Related {
 				response.m_dutyRecordInfos.append(data);
 			}
 
-			Base::RSelect rst(dutyRecord.table);
-			rst.count();
-
-			if (query.exec(rst.sql())) {
-				if (query.next()) {
-					response.m_dutyRecordCount = query.value(0).toInt();
-				}
-			}
+			response.m_dutyRecordCount = response.m_dutyRecordInfos.size();
 		}
 		return response;
 	}
@@ -475,16 +430,16 @@ namespace Related {
 
 		Table::DutyRecordEntity dutyRecord;
 
+		Base::RDelete rde(dutyRecord.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
+
 		QSqlQuery query(m_database->sqlDatabase());
 
-		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(dutyRecord.table).arg(dutyRecord.id).arg(request.m_id);
-		if (query.exec(deleteSql)) {
+		if (query.exec(rde.sql())) {
 			response.m_deleteResult = true;
-		}
-		else
-		{
-			response.m_deleteResult = false;
-			response.m_errorInfo = QStringLiteral("删除失败");
+		} else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		};
 
 		return response;
@@ -505,8 +460,7 @@ namespace Related {
 
 		if (query.exec(rs.sql())) {
 			if (query.numRowsAffected() <  0) {
-				response.m_modifyResult = false;
-				response.m_errorInfo = QStringLiteral("该记录不存在");
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
 			}
 			else
 			{
@@ -529,16 +483,14 @@ namespace Related {
 						response.m_modifyResult = true;
 					}
 					else {
-						response.m_modifyResult = false;
-						response.m_errorInfo = QStringLiteral("修改数据失败.");
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 					}
 				}
 			}
 		}
 		else
 		{
-			response.m_modifyResult = false;
-			response.m_errorInfo = QStringLiteral("修改数据失败.");
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		}
 
 		return response;
@@ -550,54 +502,36 @@ namespace Related {
 
 		Table::ExperimentRecordEntity experimentRecord;
 
-		Base::RSelect rs(experimentRecord.table);
-		rs.select(experimentRecord.table)
-			.createCriteria()
-			.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+		Base::RPersistence rps(experimentRecord.table);
+		rps.insert({
+				{experimentRecord.id,					request.m_id},
+				{experimentRecord.taskId,				request.m_taskId},
+				{experimentRecord.platformId,			request.m_platformId},
+				{experimentRecord.floatingTime,			QDateTime::fromString(request.m_floatingTime,TIME_FORMAT)},
+				{experimentRecord.lon,					request.m_lon},
+				{experimentRecord.lat,					request.m_lat},
+				{experimentRecord.setHeadingDegree,		request.m_setHeadingDegree},
+				{experimentRecord.actualHeadingDegree,	request.m_actualHeadingDegree},
+				{experimentRecord.acousticState,		request.m_acousticState},
+				{experimentRecord.targetNum,			request.m_targetNum},
+				{experimentRecord.underwaterTargetNum,	request.m_underwaterTargetNum},
+				{experimentRecord.underwaterTargetInfo, request.m_underwaterTargetInfo},
+				{experimentRecord.maxDepth,				request.m_maxDepth},
+				{experimentRecord.profileIndex,			request.m_profileIndex},
+				{experimentRecord.profileLength,		request.m_profileLength},
+				{experimentRecord.profileDistance,		request.m_profileDistance},
+			});
 
 		QSqlQuery query(m_database->sqlDatabase());
 
-		do {
-			if (query.exec(rs.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = false;
-					response.m_errorInfo = QStringLiteral("该记录存在");
-					break;
-				}
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
 			}
-
-			Base::RPersistence rps(experimentRecord.table);
-			rps.insert({
-					{experimentRecord.id,					request.m_id},
-					{experimentRecord.taskId,				request.m_taskId},
-					{experimentRecord.platformId,			request.m_platformId},
-					{experimentRecord.floatingTime,			request.m_floatingTime},
-					{experimentRecord.lon,					request.m_lon},
-					{experimentRecord.lat,					request.m_lat},
-					{experimentRecord.setHeadingDegree,		request.m_setHeadingDegree},
-					{experimentRecord.actualHeadingDegree,	request.m_actualHeadingDegree},
-					{experimentRecord.acousticState,		request.m_acousticState},
-					{experimentRecord.targetNum,			request.m_targetNum},
-					{experimentRecord.underwaterTargetNum,	request.m_underwaterTargetNum},
-					{experimentRecord.underwaterTargetInfo, request.m_underwaterTargetInfo},
-					{experimentRecord.maxDepth,				request.m_maxDepth},
-					{experimentRecord.profileIndex,			request.m_profileIndex},
-					{experimentRecord.profileLength,		request.m_profileLength},
-					{experimentRecord.profileDistance,		request.m_profileDistance},
-				});
-
-			qDebug() << rps.sql();
-
-			if (query.exec(rps.sql())) {
-				if (query.numRowsAffected() > 0) {
-					response.m_createResult = true;
-				}
-			}
-			else {
-				response.m_errorInfo = QStringLiteral("保存数据失败.");
-			}
-
-		} while (0);
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
 
 		return response;
 	}
@@ -609,10 +543,10 @@ namespace Related {
 		Table::ExperimentRecordEntity experimentRecord;
 
 		Base::RSelect rs(experimentRecord.table);
-// 		rs.select(experimentRecord.table)
-// 			.limit(request.m_offsetIndex, request.m_limitIndex);
+//  		rs.select(experimentRecord.table)
+//  			.limit(request.m_offsetIndex, request.m_limitIndex);
 
-		rs.select(experimentRecord.table)
+		rs.orderBy(experimentRecord.table, experimentRecord.floatingTime, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
 
@@ -642,14 +576,7 @@ namespace Related {
 				response.m_experimentRecordInfos.append(data);
 			}
 
-			Base::RSelect rst(experimentRecord.table);
-			rst.count();
-
-			if (query.exec(rst.sql())) {
-				if (query.next()) {
-					response.m_experimentRecordCount = query.value(0).toInt();
-				}
-			}
+			response.m_experimentRecordCount = response.m_experimentRecordInfos.size();
 		}
 		return response;
 	}
@@ -660,15 +587,17 @@ namespace Related {
 
 		Table::ExperimentRecordEntity experimentRecord;
 
+		Base::RDelete rde(experimentRecord.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(experimentRecord.id, request.m_id));
+
 		QSqlQuery query(m_database->sqlDatabase());
 
-		QString deleteSql = QString("DELETE FROM %1 WHERE %2 = '%3'").arg(experimentRecord.table).arg(experimentRecord.id).arg(request.m_id);
-		if (query.exec(deleteSql)) {
+		if (query.exec(rde.sql())) {
 			response.m_deleteResult = true;
 		}
 		else {
-			response.m_deleteResult = false;
-			response.m_errorInfo = QStringLiteral("删除失败");
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		};
 
 		return response;
@@ -689,8 +618,7 @@ namespace Related {
 
 		if (query.exec(rs.sql())) {
 			if (query.numRowsAffected() < 0) {
-				response.m_modifyResult = false;
-				response.m_errorInfo = QStringLiteral("该记录不存在");
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 			}
 			else
 			{
@@ -720,21 +648,249 @@ namespace Related {
 						response.m_modifyResult = true;
 					}
 					else {
-						response.m_modifyResult = false;
-						response.m_errorInfo = QStringLiteral("修改数据失败.");
+						response.m_errorInfo = Datastruct::NO_FINDDATA;
 					}
 				}
 			}
 		}
 		else
 		{
-			response.m_modifyResult = false;
-			response.m_errorInfo = QStringLiteral("修改数据失败.");
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		}
 
 		return response;
 	}
 
+	Datastruct::DetectPlatformCreateResponse DataProcessCenter::processDetectPlatformCreate(int clientId, const Datastruct::DetectPlatformCreateRequest & request)
+	{
+		Datastruct::DetectPlatformCreateResponse  response;
 
+		Table::DetectPlatformEntity detectPlatform;
+
+		Base::RPersistence rps(detectPlatform.table);
+		rps.insert({
+				{detectPlatform.id,				request.m_id},
+				{detectPlatform.name,			request.m_name},
+			});
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		} else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+
+		return response;
+	}
+
+	Datastruct::LoadAllDetectPlatformsResponse DataProcessCenter::processDetectPlatformList(int clientId, const Datastruct::LoadAllDetectPlatformsRequest & request)
+	{
+		Datastruct::LoadAllDetectPlatformsResponse  response;
+		Table::DetectPlatformEntity detectPlatform;
+
+		Base::RSelect rs(detectPlatform.table);
+		rs.select(detectPlatform.table);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::DetectPlatformEntityData data;
+				data.id = query.value(detectPlatform.id).toInt();
+				data.name = query.value(detectPlatform.name).toString();
+				response.m_detectPlatformInfos.append(data);
+			}
+
+			Base::RSelect rst(detectPlatform.table);
+			rst.count();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_detectPlatformCount = query.value(0).toInt();
+				}
+			}
+		} 
+		return response;
+	}
+
+	Datastruct::DetectPlatformDeleteResponse DataProcessCenter::processDetectPlatformDelete(int clientId, const Datastruct::DetectPlatformDeleteRequest & request)
+	{
+		Datastruct::DetectPlatformDeleteResponse response;
+		Table::DetectPlatformEntity detectPlatform;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		Base::RDelete rde(detectPlatform.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(detectPlatform.id, request.m_id));
+
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::DetectPlatformModifyResponse DataProcessCenter::processDetectPlatformModify(int clientId, const Datastruct::DetectPlatformModifyRequest & request)
+	{
+		Datastruct::DetectPlatformModifyResponse response;
+		Table::DetectPlatformEntity detectPlatform;
+
+		Base::RSelect rs(detectPlatform.table);
+		rs.select(detectPlatform.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(detectPlatform.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}
+			else{
+				Base::RUpdate rud(detectPlatform.table);
+				rud.update(detectPlatform.table, {
+					{detectPlatform.name,	request.m_name},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(detectPlatform.id, request.m_id));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+				}
+			}
+		} else{
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::DetectPlatformSubtypeCreateResponse DataProcessCenter::processDetectPlatformSubtypeCreate(int clientId, const Datastruct::DetectPlatformSubtypeCreateRequest & request)
+	{
+		Datastruct::DetectPlatformSubtypeCreateResponse response;
+		Table::DetectPlatformSubtypeEntity detectPlatformSubtype;
+
+		Base::RPersistence rps(detectPlatformSubtype.table);
+		rps.insert({
+				{detectPlatformSubtype.id,			request.m_id},
+				{detectPlatformSubtype.detectId,	request.m_detectId},
+				{detectPlatformSubtype.name,		request.m_name},
+			});
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::LoadAllDetectPlatformSubtypesResponse DataProcessCenter::processDetectPlatformSubtypeList(int clientId, const Datastruct::LoadAllDetectPlatformSubtypesRequest & request)
+	{
+		Datastruct::LoadAllDetectPlatformSubtypesResponse response;
+		Table::DetectPlatformSubtypeEntity detectPlatformSubtype;
+
+		Base::RSelect rs(detectPlatformSubtype.table);
+		rs.select(detectPlatformSubtype.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(detectPlatformSubtype.detectId, request.m_detectId));
+
+		QString tempSql = rs.sql() + QString(" order by %1  desc").arg(detectPlatformSubtype.id);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(tempSql)) {
+			while (query.next()) {
+				Datastruct::DetectPlatformSubtypeEntityData data;
+				data.id = query.value(detectPlatformSubtype.id).toInt();
+				data.detectId = query.value(detectPlatformSubtype.detectId).toInt();
+				data.name = query.value(detectPlatformSubtype.name).toString();
+				response.m_detectPlatformSubtypeInfos.append(data);
+			}
+			response.m_detectPlatformSubtypeCount = response.m_detectPlatformSubtypeInfos.size();
+		}
+		return response;
+	}
+
+	Datastruct::DetectPlatformSubtypeDeleteResponse DataProcessCenter::processDetectPlatformSubtypeDelete(int clientId, const Datastruct::DetectPlatformSubtypeDeleteRequest & request)
+	{
+		Datastruct::DetectPlatformSubtypeDeleteResponse response;
+		Table::DetectPlatformSubtypeEntity detectPlatformSubtype;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		Base::RDelete rde(detectPlatformSubtype.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(detectPlatformSubtype.id, request.m_id));
+
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::DetectPlatformSubtypeModifyResponse DataProcessCenter::processDetectPlatformSubtypeModify(int clientId, const Datastruct::DetectPlatformSubtypeModifyRequest & request)
+	{
+		Datastruct::DetectPlatformSubtypeModifyResponse response;
+		Table::DetectPlatformSubtypeEntity detectPlatformSubtype;
+		Base::RSelect rs(detectPlatformSubtype.table);
+		rs.select(detectPlatformSubtype.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(detectPlatformSubtype.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}
+			else {
+				Base::RUpdate rud(detectPlatformSubtype.table);
+				rud.update(detectPlatformSubtype.table, {
+					{detectPlatformSubtype.detectId,	request.m_detectId},
+					{detectPlatformSubtype.name,		request.m_name},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(detectPlatformSubtype.id, request.m_id));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+				}
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
 
 } //namespace Related 

@@ -59,8 +59,8 @@ namespace Related {
 		void write(const Datastruct::TaskCreateRequest & request);
 		void write(const Datastruct::LoadAllTaskRequest & request);
 		void write(const Datastruct::TaskDeleteRequest & request);
-
 		void write(const Datastruct::TaskSimpleRequest & request);
+		
 		/*!
 		 * @brief  值班日志有关
 		 */
@@ -68,14 +68,30 @@ namespace Related {
 		void write(const Datastruct::LoadAllDutyRecordRequest & request);
 		void write(const Datastruct::DutyRecordDeleteRequest & request);
 		void write(const Datastruct::DutyRecordModifyRequest & request);
+		
 		/*!
 		 * @brief   试验记录有关
-		 * @details 
 		 */
 		void write(const Datastruct::ExperimentRecordCreateRequest & request);
 		void write(const Datastruct::LoadAllExperimentRecordsRequest & request);
 		void write(const Datastruct::ExperimentRecordDeleteRequest & request);
 		void write(const Datastruct::ExperimentRecordModifyRequest & request);
+		
+		/*!
+		 * @brief   侦测平台有关
+		 */
+		void write(const Datastruct::DetectPlatformCreateRequest & request);
+		void write(const Datastruct::LoadAllDetectPlatformsRequest & request);
+		void write(const Datastruct::DetectPlatformDeleteRequest & request);
+		void write(const Datastruct::DetectPlatformModifyRequest & request);
+
+		/*!
+		 * @brief   侦测平台亚型有关
+		 */
+		void write(const Datastruct::DetectPlatformSubtypeCreateRequest & request);
+		void write(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
+		void write(const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
+		void write(const Datastruct::DetectPlatformSubtypeModifyRequest & request);
 
 	signals:
 		void netConnected(bool isConnected);

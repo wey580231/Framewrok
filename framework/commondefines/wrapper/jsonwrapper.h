@@ -131,6 +131,57 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::ExperimentRecordModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordModifyResponse & response);
 
+		// 有关侦测平台
+		QByteArray wrap(const Datastruct::DetectPlatformCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllDetectPlatformsRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformsRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllDetectPlatformsResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformsResponse & response);
+
+		QByteArray wrap(const Datastruct::DetectPlatformDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::DetectPlatformModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformModifyResponse & response);
+
+
+		// 有关侦测平台亚型
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
+
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeModifyResponse & response);
+
 	private:
 		JsonWrapper(QObject *parent = nullptr);
 

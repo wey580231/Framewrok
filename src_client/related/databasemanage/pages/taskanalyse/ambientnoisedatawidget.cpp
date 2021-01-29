@@ -5,7 +5,6 @@
 #include <QHBoxLayout>
 
 #include "../../utils/util.h"
-#include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
@@ -17,6 +16,20 @@ namespace Related {
 	}
 
 	AmbientNoiseDataWidget::~AmbientNoiseDataWidget()
+	{
+	}
+
+	void AmbientNoiseDataWidget::respToolButtPressed(OperationToolsPage::ButtType type)
+	{
+
+	}
+
+	void AmbientNoiseDataWidget::setPageNum(int page)
+	{
+
+	}
+
+	void AmbientNoiseDataWidget::setFixedPageRowCount(int pageItemCount)
 	{
 	}
 
@@ -42,10 +55,11 @@ namespace Related {
 		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("起始索引")));
 		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("结束索引")));
 
-		PageSwitchBar * pageSwitch = new PageSwitchBar();
-		pageSwitch->setDataSize(m_tableModel->datasSize());
-		//connect(pageSwitch, SIGNAL(perPageNumsChanged(int)), m_tableModel, SLOT(setFixedPageRowCount(int)));
-		//connect(pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
+		m_pageSwitch = new PageSwitchBar();
+		m_pageSwitch->setDataSize(m_tableModel->datasSize());
+		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
+		connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
+
 
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		cwidget->setContent(m_operationToolsPage);
@@ -54,7 +68,7 @@ namespace Related {
 		QVBoxLayout * cvlayout = new QVBoxLayout();
 		cvlayout->setContentsMargins(0, 0, 0, 0);
 		cvlayout->addWidget(m_tableView);
-		cvlayout->addWidget(pageSwitch);
+		cvlayout->addWidget(m_pageSwitch);
 		twidget->setLayout(cvlayout);
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
@@ -65,6 +79,10 @@ namespace Related {
 		vlayout->addWidget(cwidget);
 		vlayout->addWidget(ctableView);
 		setLayout(vlayout);
+	}
+
+	void AmbientNoiseDataWidget::initConnect()
+	{
 	}
 
 }//namespace Related 

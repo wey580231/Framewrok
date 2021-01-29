@@ -42,6 +42,7 @@ namespace Related {
 		Datastruct::LoadAllTaskResponse processTaskList(int clientId, const Datastruct::LoadAllTaskRequest & request);
 		Datastruct::TaskDeleteResponse processTaskDelete(int clientId, const Datastruct::TaskDeleteRequest & request);
 		Datastruct::TaskSimpleResponse processTaskSimple(int clientId, const Datastruct::TaskSimpleRequest & request);
+
 		//值班日志
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
 		Datastruct::LoadAllDutyRecordResponse processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request);
@@ -53,6 +54,18 @@ namespace Related {
 		Datastruct::LoadAllExperimentRecordsResponse processExperimentRecordList(int clientId, const Datastruct::LoadAllExperimentRecordsRequest & request);
 		Datastruct::ExperimentRecordDeleteResponse  processExperimentRecordDelete(int clientId, const Datastruct::ExperimentRecordDeleteRequest & request);
 		Datastruct::ExperimentRecordModifyResponse processExperimentRecordModify(int clientId, const Datastruct::ExperimentRecordModifyRequest & request);
+
+		//平台信息
+		Datastruct::DetectPlatformCreateResponse  processDetectPlatformCreate(int clientId, const Datastruct::DetectPlatformCreateRequest & request);
+		Datastruct::LoadAllDetectPlatformsResponse processDetectPlatformList(int clientId, const Datastruct::LoadAllDetectPlatformsRequest & request);
+		Datastruct::DetectPlatformDeleteResponse  processDetectPlatformDelete(int clientId, const Datastruct::DetectPlatformDeleteRequest & request);
+		Datastruct::DetectPlatformModifyResponse processDetectPlatformModify(int clientId, const Datastruct::DetectPlatformModifyRequest & request);
+
+		//平台亚型信息
+		Datastruct::DetectPlatformSubtypeCreateResponse  processDetectPlatformSubtypeCreate(int clientId, const Datastruct::DetectPlatformSubtypeCreateRequest & request);
+		Datastruct::LoadAllDetectPlatformSubtypesResponse processDetectPlatformSubtypeList(int clientId, const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
+		Datastruct::DetectPlatformSubtypeDeleteResponse  processDetectPlatformSubtypeDelete(int clientId, const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
+		Datastruct::DetectPlatformSubtypeModifyResponse processDetectPlatformSubtypeModify(int clientId, const Datastruct::DetectPlatformSubtypeModifyRequest & request);
 
 	private:
 		Base::Database * m_database;

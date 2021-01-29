@@ -89,6 +89,45 @@ namespace Related {
 		emit respExperimentRecordModifyResponse(response);
 	}
 
+	void SignalDispatch::recvDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response)
+	{
+		emit respDetectPlatformCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllDetectPlatformsResponse(const Datastruct::LoadAllDetectPlatformsResponse & response)
+	{
+		emit respQueryAllDetectPlatformsResponse(response);
+	}
+
+	void SignalDispatch::recvDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response)
+	{
+		emit respDetectPlatformDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvDetectPlatformModifyResponse(const Datastruct::DetectPlatformModifyResponse & response)
+	{
+		emit respDetectPlatformModifyResponse(response);
+	}
+
+	void SignalDispatch::recvDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response)
+	{
+		emit respDetectPlatformSubtypeCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllDetectPlatformSubtypesResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response)
+	{
+		emit respQueryAllDetectPlatformSubtypesResponse(response);
+	}
+
+	void SignalDispatch::recvDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response)
+	{
+		emit respDetectPlatformSubtypeDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response)
+	{
+		emit respDetectPlatformSubtypeModifyResponse(response);
+	}
 
 	SignalDispatch * SignalDispatch::instance()
 	{

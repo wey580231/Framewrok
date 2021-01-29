@@ -62,7 +62,7 @@ namespace Table {
 	};
 
 	/*!
-	 * @brief 侦测平台亚型表
+	 * @brief 侦测平台表
 	 */
 	struct DetectPlatformSubtypeEntity : public AbstractTable {
 		DetectPlatformSubtypeEntity() :AbstractTable("detect_platform_subtype_entity") {}
@@ -73,7 +73,7 @@ namespace Table {
 	};
 
 	/*!
-	 * @brief 任务侦测平台表
+	 * @brief 任务侦测平台亚型表
 	 */
 	struct TaskDetectPlatformEntity : public AbstractTable {
 		TaskDetectPlatformEntity() :AbstractTable("task_detect_platform_entity") {}

@@ -55,7 +55,6 @@ namespace Related {
 
 	private:
 		QList<Datastruct::UserEntityData> m_dataList;
-
 	};
 
 }//namespace Related 
