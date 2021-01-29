@@ -221,6 +221,70 @@ namespace Related {
 				}
 			}
 				break;
+			case Datastruct::P_DetectPlatformCreate: {
+				Datastruct::DetectPlatformCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformCreateResponse response = m_processCenter.processDetectPlatformCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformList: {
+				Datastruct::LoadAllDetectPlatformsRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllDetectPlatformsResponse response = m_processCenter.processDetectPlatformList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformDelete: {
+				Datastruct::DetectPlatformDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformDeleteResponse response = m_processCenter.processDetectPlatformDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformModify: {
+				Datastruct::DetectPlatformModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformModifyResponse response = m_processCenter.processDetectPlatformModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformSubtypeCreate: {
+				Datastruct::DetectPlatformSubtypeCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformSubtypeCreateResponse response = m_processCenter.processDetectPlatformSubtypeCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformSubtypeCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformSubtypeList: {
+				Datastruct::LoadAllDetectPlatformSubtypesRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllDetectPlatformSubtypesResponse response = m_processCenter.processDetectPlatformSubtypeList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformSubtypeList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformSubtypeDelete: {
+				Datastruct::DetectPlatformSubtypeDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformSubtypeDeleteResponse response = m_processCenter.processDetectPlatformSubtypeDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformSubtypeDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case Datastruct::P_DetectPlatformSubtypeModify: {
+				Datastruct::DetectPlatformSubtypeModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::DetectPlatformSubtypeModifyResponse response = m_processCenter.processDetectPlatformSubtypeModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_DetectPlatformSubtypeModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
 			default:
 				break;
 		}

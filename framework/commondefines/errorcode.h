@@ -27,7 +27,8 @@ namespace Datastruct {
 		NO_USER,
 		NO_PRIVILEGE,
 
-
+		
+		NO_FINDDATA,
 		//数据库访问相关
 		SQL_EXECUTE_ERROR = 100,
 	};

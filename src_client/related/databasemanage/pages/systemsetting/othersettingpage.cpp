@@ -1,6 +1,11 @@
 #include "othersettingpage.h"
 
-#include <QHBoxLayout>
+#include <QDebug>
+
+#include "../../net/netconnector.h"
+#include "../../net/signaldispatch.h"
+
+#include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
 
@@ -8,6 +13,7 @@ namespace Related {
 		: AbstractPage(parent)
 	{
 		init();
+		initConnect();
 	}
 
 	OtherSettingPage::~OtherSettingPage()
@@ -19,9 +25,41 @@ namespace Related {
 		return Page_Setting_SystemSetting;
 	}
 
+
+	void OtherSettingPage::processQueryAllDetectPlatformResponse(Datastruct::LoadAllDetectPlatformsResponse response )
+	{
+	}
+
+	void OtherSettingPage::processQueryAllDetectPlatformSubtypeResponse(Datastruct::LoadAllDetectPlatformSubtypesResponse response)
+	{
+	}
+
 	void OtherSettingPage::init()
 	{
 
+	}
+
+	void OtherSettingPage::initConnect()
+	{
+		
+		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
+		{
+			m_comboBox = new QComboBox();
+
+		}
+
+	}
+
+	void OtherSettingPage::refreshCurrDetectPlatform()
+	{
+		Datastruct::LoadAllDetectPlatformsRequest request;
+		NetConnector::instance()->write(request);
+	}
+
+	void OtherSettingPage::refreshCurrDetectPlatformSubtype(int detectId)
+	{
+		Datastruct::LoadAllDetectPlatformsRequest request;
+		NetConnector::instance()->write(request);
 	}
 
 } //namespace Related 

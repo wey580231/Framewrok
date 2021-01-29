@@ -15,6 +15,8 @@
 
 #include "../related_global.h"
 
+#define TIME_FORMAT "yyyy-MM-dd hh:mm:ss"
+
 namespace Related {
 
 	/*!
@@ -47,7 +49,10 @@ namespace Related {
 		/*!<  */
 		Page_TaskRecord_DutyRecord,				/*!< 值班日志 */
 		Page_TaskRecord_ExperimentRecord,		/*!< 试验记录 */
-		Page_TaskRecord_TaskReport				/*!< 任务报告 */
+		Page_TaskRecord_TaskReport,				/*!< 任务报告 */
+
+		Page_TaskAnalyse_DataOverview			/*!< 数据预览 */
+
 	};
 
 	/*!
@@ -227,6 +232,10 @@ namespace Related {
 		ER_ProfileIndex,				/*!< 剖面序号 */
 		ER_ProfileLength,				/*!< 剖面时长 */
 		ER_ProfileDistance,				/*!< 剖面移动距离 */
+	};
+
+	enum DetectPlatformSubtypeIndex {
+		DPS_Index,
 	};
 
 	/*!

@@ -3,20 +3,47 @@
 #include <QDebug>
 
 #include "../../utils/util.h"
-#include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
 
 	DataOverviewWidget::DataOverviewWidget(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent)
 	{
 		init();
+		initConnect();
 	}
 
 	DataOverviewWidget::~DataOverviewWidget()
 	{
 
+	}
+
+	PageType DataOverviewWidget::getPageType() const
+	{
+		return Page_TaskAnalyse_DataOverview;
+	}
+
+	void DataOverviewWidget::prepareBringToTop()
+	{
+	}
+
+	void DataOverviewWidget::setTaskId(QString taskId)
+	{
+	}
+
+	void DataOverviewWidget::respToolButtPressed(OperationToolsPage::ButtType type)
+	{
+
+	}
+
+	void DataOverviewWidget::setPageNum(int page)
+	{
+	}
+
+	void DataOverviewWidget::setFixedPageRowCount(int pageItemCount)
+	{
+		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
 	void DataOverviewWidget::init()
@@ -65,16 +92,16 @@ namespace Related {
 		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("数据时长")));
 		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("类型")));
 
-		PageSwitchBar * pageSwitch = new PageSwitchBar();
-		pageSwitch->setDataSize(m_tableModel->datasSize());
-
-
+		m_pageSwitch = new PageSwitchBar();
+		m_pageSwitch->setDataSize(m_tableModel->datasSize());
+		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
+		connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
 
 		QWidget * twidget = new QWidget();
 		QVBoxLayout * cvlayout = new QVBoxLayout();
 		cvlayout->setContentsMargins(0, 0, 0, 0);
 		cvlayout->addWidget(m_tableView);
-		cvlayout->addWidget(pageSwitch);
+		cvlayout->addWidget(m_pageSwitch);
 		twidget->setLayout(cvlayout);
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
@@ -85,6 +112,10 @@ namespace Related {
 		vlayout->addWidget(cwidget);
 		vlayout->addWidget(ctableView);
 		setLayout(vlayout);
+	}
+
+	void DataOverviewWidget::initConnect()
+	{
 	}
 
 }//namespace Related 

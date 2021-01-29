@@ -16,6 +16,7 @@
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
+#include <base/selfwidget/rmessagebox.h>
 #include <base\util\rutil.h>
 #include <commondefines/protocol.h>
 
@@ -23,6 +24,9 @@
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/experimentrecordmodel.h"
+#include "dialog/experimentrecordeditdialog.h"
+
+#define  EXPERIMENT_RECORD_SELET_MAX_INDEX             -1
 
 namespace Related {
 
@@ -42,10 +46,11 @@ namespace Related {
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void setPageNum(int page);
+		void setFixedPageRowCount(int pageItemCount);
 		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
-		void processExperimentRecordModifyResponse(const Datastruct::ExperimentRecordModifyResponse & response);
 		void slotClickedTable(QModelIndex index);
 
 	private:
@@ -54,7 +59,6 @@ namespace Related {
 
 		void insertExperimentRecord();
 		void deleteExperimentRecord(QString id);
-		void modifyExperimentRecord(Datastruct::ExperimentRecordEntityData data);
 		void refreshCurrPage();
 
 	private:

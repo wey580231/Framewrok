@@ -19,13 +19,13 @@ namespace Related {
 		: Base::DialogProxy(parent)
 	{
 		init();
+		initConnect();
 
 		setTitle(QStringLiteral("新建任务"));
+		setMinimumSize(900, 650);
 
 		setButton(DialogProxy::Ok, this, SLOT(respOk()));
 		setButton(DialogProxy::Cancel, this, SLOT(reject()));
-
-		setMinimumSize(900, 650);
 	}
 
 	NewTaskDialog::~NewTaskDialog()
@@ -127,6 +127,12 @@ namespace Related {
 		this->setContentWidget(mainWidget);
 	}
 
+	void NewTaskDialog::initConnect()
+	{
+		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
+			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
+	}
+
 	void NewTaskDialog::slotSeleteFile()
 	{
 		QString filePath = QFileDialog::getExistingDirectory(this, QStringLiteral("选择目录"),"./", QFileDialog::DontResolveSymlinks);
@@ -137,27 +143,12 @@ namespace Related {
 		m_dataFilePath->setText(m_originalFilePath);
 
 		m_treeModel->setRootPath(filePath);
-
 	}
 
 	void NewTaskDialog::respOk()
 	{
-		// 任务基本信息
 		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
 		sendTaskBaseInfo();
-
-// 		//[] 获取文件列表
-// 		m_taskDataFilePaths.clear();
-// 		getFileNode(m_fileRootNode);
-// 		sendTaskOriginalDataInfo();
-// 		emit signalCreaateNewTask();
-
-		respCancel();
-	}
-
-	void NewTaskDialog::respCancel()
-	{
-		close();
 	}
 
 	void NewTaskDialog::openLocalImage()
@@ -183,10 +174,22 @@ namespace Related {
 		}
 	}
 
+	void NewTaskDialog::processTaskCreateResponse(const Datastruct::TaskCreateResponse & response)
+	{
+		if(response.m_createResult){
+			this->accept();
+		}
+		else
+		{
+			int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("创建任务失败，请从新填写信息。"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+			if (result != Base::RMessageBox::Yes) {
+				this->reject();
+			}
+		}
+	}
+
 	void NewTaskDialog::sendTaskBaseInfo()
 	{
-		QDateTime current_date_time = QDateTime::currentDateTime();
-
 		Datastruct::TaskCreateRequest request;
 		request.taskId = Base::RUtil::UUID();
 		request.taskName = m_taskBaseInfo.taskName;

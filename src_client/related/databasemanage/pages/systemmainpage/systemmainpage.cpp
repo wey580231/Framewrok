@@ -126,7 +126,6 @@ namespace Related {
 
 			m_taskWindow = new QWidget();
 			m_taskWindow->setStyleSheet("background-color:rgba(0,0,0,0)");
-			//m_taskWindow->setObjectName("widgetContainer");
 			m_taskSrollArea->setWidget(m_taskWindow);
 
 			QWidget * tmpWidget = new QWidget();
@@ -154,12 +153,8 @@ namespace Related {
 
 	void SystemMainPage::initConnent()
 	{
-		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
-			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
-
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)),
 			this, SLOT(processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)));
-
 		connect(SignalDispatch::instance(), SIGNAL(respTaskeDleteResponse(const Datastruct::TaskDeleteResponse &)),
 			this, SLOT(processTaskDeleteResponse(const Datastruct::TaskDeleteResponse &)));
 	}
@@ -167,7 +162,9 @@ namespace Related {
 	void SystemMainPage::slotNewTaskClickde()
 	{
 		NewTaskDialog dialog(this);
-		dialog.exec();
+		if (QDialog::Accepted == dialog.exec()) {
+			refreshCurrTask();
+		}
 	}
 
 	void SystemMainPage::slotRefreshTaskClicked()
@@ -177,16 +174,14 @@ namespace Related {
 
 	void SystemMainPage::slotDeleteTask(QString taskId)
 	{
+		int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("是否删除该任务?"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+		if (result != Base::RMessageBox::Yes) {
+			return;
+		}
+
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
 		NetConnector::instance()->write(request);
-	}
-
-	void SystemMainPage::processTaskCreateResponse(const Datastruct::TaskCreateResponse & response)
-	{
-		if (response.m_createResult == true) {
-			refreshCurrTask();
-		}
 	}
 
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
@@ -215,7 +210,7 @@ namespace Related {
 				connect(item, SIGNAL(deleteTask(QString)), this, SLOT(slotDeleteTask(QString)));
 				m_taskItems.append(item);
 			}
-			UpdateTaskListWidget();
+			updateTaskListWidget();
 		}
 	}
 
@@ -233,11 +228,10 @@ namespace Related {
 	void SystemMainPage::refreshCurrTask()
 	{
 		Datastruct::LoadAllTaskRequest request;
-
 		NetConnector::instance()->write(request);
 	}
 
-	void SystemMainPage::UpdateTaskListWidget()
+	void SystemMainPage::updateTaskListWidget()
 	{
 		QGridLayout * glayout = nullptr;
 

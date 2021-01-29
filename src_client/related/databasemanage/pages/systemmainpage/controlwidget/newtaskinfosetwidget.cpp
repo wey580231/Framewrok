@@ -1,5 +1,9 @@
 #include "newtaskinfosetwidget.h"
 
+#include <QDebug>
+#include <QDateTime>
+
+
 namespace Related {
 
 	NewTaskInfoSetWidget::NewTaskInfoSetWidget(QWidget *parent)
@@ -21,13 +25,18 @@ namespace Related {
 		m_taskBaseInfo.lon = ui.lineEdit_local_2->text();
 		m_taskBaseInfo.lat = ui.lineEdit_local_3->text();
 
-		m_taskBaseInfo.startTime = ui.dateTimeEdit_startTime->dateTime().toString("yyyy.MM.dd hh:mm:ss.zzz");
-		m_taskBaseInfo.endTime = ui.dateTimeEdit_endTime->dateTime().toString("yyyy.MM.dd hh:mm:ss.zzz");
+		m_taskBaseInfo.startTime = ui.dateTimeEdit_startTime->dateTime().toString("yyyy-MM-dd hh:mm:ss");
+		m_taskBaseInfo.endTime = ui.dateTimeEdit_endTime->dateTime().toString("yyyy-MM-dd hh:mm:ss");
 		return m_taskBaseInfo;
 	}
 
 	void NewTaskInfoSetWidget::init()
 	{
+		QDateTime dateTime = QDateTime::currentDateTime();
+		ui.dateTimeEdit_startTime->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+		ui.dateTimeEdit_startTime->setDateTime(dateTime);
+		ui.dateTimeEdit_endTime->setDisplayFormat("yyyy-MM-dd hh:mm:ss");
+		ui.dateTimeEdit_endTime->setDateTime(dateTime);
 
 	}
 

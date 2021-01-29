@@ -62,6 +62,7 @@ namespace CommonDefines {
 		const QString profileIndex = "profileIndex";
 		const QString profileLength = "profileLength";
 		const QString profileDistance = "profileDistance";
+		const QString detectId = "detectId";
 	};
 
 } //namespace CommonDefines 

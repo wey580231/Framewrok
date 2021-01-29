@@ -40,13 +40,13 @@ namespace Related {
 	private slots:
 		void slotSeleteFile();
 		void respOk();
-		void respCancel();
 
 		void openLocalImage();
 		void clearImage();
-
+		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 	private:
 		void init();
+		void initConnect();
 
 		void sendTaskBaseInfo();
 

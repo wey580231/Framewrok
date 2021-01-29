@@ -57,48 +57,6 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief 单个侦测平台数据结构
-	 * @details
-	 */
-	struct DetectPlatformEntityData {
-		DetectPlatformEntityData() : id(0) {}
-
-		int id;					/*!< 唯一标识ID */
-		QString name;			/*!< 平台名称 */
-	};
-
-	/*!
-	 * @brief 单个侦测平台亚型数据结构
-	 * @details
-	 */
-	struct DetectPlatformSubtypeEntityData {
-		DetectPlatformSubtypeEntityData() : id(0), detectId(0){}
-
-		int id;					/*!< 唯一标识ID */
-		int detectId;			/*!< 侦测平台标识 */
-		QString name;			/*!< 平台亚型名称 */
-	};
-
-	/*!
-	 * @brief 单个任务侦测平台表数据结构
-	 * @details
-	 */
-	struct TaskDetectPlatformEntityData {
-		TaskDetectPlatformEntityData() : detectId(0), platformPower (0),
-			lastTime(0){}
-
-		QString id;					/*!< 唯一标识 */
-		QString taskId;				/*!< 任务标识 */
-		int detectId;			/*!< 侦测平台标识 */
-		QString name;				/*!< 侦测平台名称 */
-		QString sensorType;			/*!< 侦测平台传感器类型 */
-		int platformPower;			/*!< 平台动力 */
-		QString startTime;			/*!< 开始任务时间 */
-		QString endTime;			/*!< 结束任务时间 */
-		int lastTime;				/*!< 时长 */
-	};
-
-	/*!
 	 * @brief  单条值班日志实体数据结构
 	 * @details 
 	 */
@@ -144,6 +102,48 @@ namespace Datastruct {
 		int profileIndex;				/*!< 剖面序号 */
 		double profileLength;			/*!< 剖面时长 */
 		double profileDistance;			/*!< 剖面移动距离 */
+	};
+
+	/*!
+ * @brief 单个侦测平台数据结构
+ * @details
+ */
+	struct DetectPlatformEntityData {
+		DetectPlatformEntityData() : id(0) {}
+
+		int id;					/*!< 唯一标识ID */
+		QString name;			/*!< 平台名称 */
+	};
+
+	/*!
+	 * @brief 单个侦测平台亚型数据结构
+	 * @details
+	 */
+	struct DetectPlatformSubtypeEntityData {
+		DetectPlatformSubtypeEntityData() : id(0), detectId(0) {}
+
+		int id;					/*!< 唯一标识ID */
+		int detectId;			/*!< 侦测平台标识 */
+		QString name;			/*!< 平台亚型名称 */
+	};
+
+	/*!
+	 * @brief 单个任务侦测平台表数据结构
+	 * @details
+	 */
+	struct TaskDetectPlatformEntityData {
+		TaskDetectPlatformEntityData() : detectId(0), platformPower(0),
+			lastTime(0) {}
+
+		QString id;					/*!< 唯一标识 */
+		QString taskId;				/*!< 任务标识 */
+		int detectId;			/*!< 侦测平台标识 */
+		QString name;				/*!< 侦测平台名称 */
+		QString sensorType;			/*!< 侦测平台传感器类型 */
+		int platformPower;			/*!< 平台动力 */
+		QString startTime;			/*!< 开始任务时间 */
+		QString endTime;			/*!< 结束任务时间 */
+		int lastTime;				/*!< 时长 */
 	};
 
 } //namespace Datastruct 

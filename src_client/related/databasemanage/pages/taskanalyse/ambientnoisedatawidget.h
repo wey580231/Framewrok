@@ -18,7 +18,7 @@
 
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/ambientnoisemodel.h"
-
+#include "../../customwidget/pageswitchbar.h"
 namespace Related {
 
 	class AmbientNoiseDataWidget : public QWidget
@@ -29,13 +29,20 @@ namespace Related {
 		AmbientNoiseDataWidget(QWidget *parent);
 		~AmbientNoiseDataWidget();
 
+	private slots:
+		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void setPageNum(int page);
+		void setFixedPageRowCount(int pageItemCount);
+
 	private:
 		void init();
+		void initConnect();
 
 	private:
 		Base::RTableView * m_tableView;
 		AmbientNoiseModel *m_tableModel;
 		OperationToolsPage *m_operationToolsPage;
+		PageSwitchBar * m_pageSwitch;
 	};
 
 }//namespace Related
