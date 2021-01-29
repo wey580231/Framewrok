@@ -573,7 +573,7 @@ namespace Datastruct {
 		DetectPlatformCreateResponse() : m_createResult(false) { }
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
-
+		 
 		DetectPlatformEntityData m_dutyRecordInfo;
 	};
 

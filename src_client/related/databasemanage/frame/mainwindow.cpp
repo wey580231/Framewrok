@@ -38,7 +38,6 @@ namespace Related {
 
 			//系统主页
 			m_mainPage = new SystemMainPage();
-			m_mainPage->prepareBringToTop();
 
 			//数据管理
 			m_dataMangePage = new DataManageWidget();
@@ -82,6 +81,9 @@ namespace Related {
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_stackedWidget);
 		setLayout(layout);
+
+		Global::G_LoadingDialog = new LoadingDialog();
+		Global::G_LoadingDialog->hideMe();
 	}
 
 	void MainWindow::initConnect()
@@ -98,6 +100,7 @@ namespace Related {
 		m_stackedWidget->style()->polish(m_stackedWidget);
 
 		m_stackedWidget->setCurrentWidget(m_mainWidget);
+		m_mainPage->prepareBringToTop();
 	}
 
 	void MainWindow::switchPage(int pageIndex)

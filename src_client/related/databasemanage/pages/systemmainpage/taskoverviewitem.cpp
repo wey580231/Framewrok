@@ -3,6 +3,7 @@
 
 #include <QRect>
 #include <QHBoxLayout>
+#include <QDebug>
 
 using namespace Base;
 

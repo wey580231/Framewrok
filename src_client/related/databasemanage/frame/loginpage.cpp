@@ -55,11 +55,14 @@ namespace Related {
 	 */
 	void LoginPage::connectToServer()
 	{
+		START_WAIT
 		if (!NetConnector::instance()->isConnected()) {
 			if (NetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_portWidget->text().toInt())) {
 
 			}
 			else {
+				Global::G_LoadingDialog->hide();
+				END_WAIT
 				Util::showWarning(this, QStringLiteral("连接服务器失败，请检查网络配置."));
 			}
 		}

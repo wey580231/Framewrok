@@ -5,6 +5,7 @@
 #include "../../net/signaldispatch.h"
 #include "../../net/netconnector.h"
 #include "../../customwidget/customwidgetcontainer.h"
+#include "../../global.h"
 
 namespace Related {
 
@@ -33,7 +34,6 @@ namespace Related {
 	
 	/*!
 	 * @brief   刷新任务列表信息
-	 * @details 
 	 */
 	void SystemMainPage::prepareBringToTop() {
 		if (m_firstLoadData) {
@@ -192,16 +192,14 @@ namespace Related {
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
 	{
 		if (m_taskItems.size() > 0) {
-			for (int i = 0; i < m_taskItems.size(); i++) {
-				TaskOverViewItem *item = m_taskItems.at(i);
-				if (item != nullptr) {
-					item->hide();
-					delete item;
-					item = nullptr;
-				}
-			}
+
+			std::for_each(m_taskItems.begin(), m_taskItems.end(), [](TaskOverViewItem * item) {
+				delete item;
+			});
+
 			m_taskItems.clear();
 		}
+
 		if (response.m_taskInfos.size() > 0) {
 			m_taskNumItem->setLabelData(QString::number(response.m_taskInfos.size()));
 
@@ -215,8 +213,11 @@ namespace Related {
 				connect(item, SIGNAL(deleteTask(QString)), this, SLOT(slotDeleteTask(QString)));
 				m_taskItems.append(item);
 			}
+
 			UpdateTaskListWidget();
 		}
+
+		END_WAIT
 	}
 
 	void SystemMainPage::processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response)
@@ -232,8 +233,9 @@ namespace Related {
 	 */
 	void SystemMainPage::refreshCurrTask()
 	{
-		Datastruct::LoadAllTaskRequest request;
+		START_WAIT
 
+		Datastruct::LoadAllTaskRequest request;
 		NetConnector::instance()->write(request);
 	}
 
@@ -247,17 +249,12 @@ namespace Related {
 			m_taskWindow->setLayout(glayout);
 		}
 		else {
-			//TDOD 20210126 存在内存泄漏问题
 			glayout = dynamic_cast<QGridLayout *>(m_taskWindow->layout());
-// 			for (int i = glayout->count(); i >= 0; i--) {
-// 				if (glayout->itemAt(i)->widget()) {
-// 					delete glayout->takeAt(i);
-// 				}
-// 			}
-			delete m_taskWindow->layout();
-			glayout = new QGridLayout();
-			glayout->setContentsMargins(4, 4, 4, 4);
-			m_taskWindow->setLayout(glayout);
+			for (int i = glayout->count() - 1; i >= 0; i--) {
+				if (glayout->itemAt(i)->widget()) {
+					delete glayout->takeAt(i);
+				}
+			}
 		}
 
 		for (int i = 0; i < m_taskItems.size(); i++) {

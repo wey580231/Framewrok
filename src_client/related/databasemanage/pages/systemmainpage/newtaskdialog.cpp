@@ -23,7 +23,7 @@ namespace Related {
 		setTitle(QStringLiteral("新建任务"));
 
 		setButton(DialogProxy::Ok, this, SLOT(respOk()));
-		setButton(DialogProxy::Cancel, this, SLOT(reject()));
+		setButton(DialogProxy::Cancel, this, SLOT(respCancel()));
 
 		setMinimumSize(900, 650);
 	}
@@ -161,21 +161,19 @@ namespace Related {
 
 	void NewTaskDialog::respOk()
 	{
+		START_WAIT_ON(this)
+
 		// 任务基本信息
 		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
-		sendTaskBaseInfo();
 
-// 		//[] 获取文件列表
-// 		m_taskDataFilePaths.clear();
-// 		getFileNode(m_fileRootNode);
-// 		sendTaskOriginalDataInfo();
-// 		emit signalCreaateNewTask();
+		sendTaskBaseInfo();
 
 		respCancel();
 	}
 
 	void NewTaskDialog::respCancel()
 	{
+		END_WAIT
 		close();
 	}
 
