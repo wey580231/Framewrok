@@ -82,8 +82,12 @@ namespace Related {
 		layout->addWidget(m_stackedWidget);
 		setLayout(layout);
 
+		//等待窗口
 		Global::G_LoadingDialog = new LoadingDialog();
 		Global::G_LoadingDialog->hideMe();
+
+		//全局消息通知
+		Global::G_Notify = new Base::NotifyManager();
 	}
 
 	void MainWindow::initConnect()

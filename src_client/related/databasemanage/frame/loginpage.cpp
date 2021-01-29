@@ -116,6 +116,8 @@ namespace Related {
 				END_WAIT
 			}
 
+			Global::G_Notify->information(QStringLiteral("ÍøÂçÒÑÁ¬½Ó!"));
+
 			emit netStateChanged(true);
 		}
 		else {
