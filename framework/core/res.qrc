@@ -151,5 +151,7 @@
         <file>resource/qyblue/loading/9.png</file>
         <file>resource/qyblue/loading/10.png</file>
         <file>resource/qyblue/loading/11.png</file>
+        <file>resource/qyblue/断开.png</file>
+        <file>resource/qyblue/连接.png</file>
     </qresource>
 </RCC>

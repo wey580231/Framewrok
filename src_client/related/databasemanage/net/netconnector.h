@@ -28,6 +28,8 @@ namespace Related {
 		static NetConnector * instance();
 		~NetConnector();
 
+		void setAutoReconnect(bool isAutoReconnect);
+
 		/*! 
 		 * @brief 主动向指定的ip和端口号发起连接
 		 * @attention 调用此方法后，需要等待接收netConnected信号，并判断对应的参数，才可以确定网络是否连接成功

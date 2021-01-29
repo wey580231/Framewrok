@@ -26,7 +26,6 @@ namespace Related {
 
 		//µÇÂ¼Ò³Ãæ
 		m_loginPage = new LoginPage();
-		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
 
 		m_mainWidget = new QWidget();
 
@@ -74,6 +73,7 @@ namespace Related {
 			m_mainWidget->setLayout(mainLayout);
 		}
 
+
 		m_stackedWidget->addWidget(m_loginPage);
 		m_stackedWidget->addWidget(m_mainWidget);
 
@@ -88,8 +88,13 @@ namespace Related {
 
 	void MainWindow::initConnect()
 	{
+		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
+		connect(m_loginPage, SIGNAL(netStateChanged(bool)), m_leftPanel,SLOT(respNetStateChanged(bool)));
+
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(switchPage(int)));
 		connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));
+		connect(m_leftPanel, SIGNAL(reConnectToServer()), m_loginPage, SLOT(reConnectServer()));
+
 		connect(m_mainPage, SIGNAL(openTask(QString)), this, SLOT(siwtchToTaskView(QString)));
 	}
 

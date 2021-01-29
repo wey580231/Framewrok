@@ -43,8 +43,10 @@ namespace Related {
 	signals:
 		void currentIndexChanged(int);
 		void switchToSystemView();
+		void reConnectToServer();
 
 	private slots:
+		void respNetStateChanged(bool isConnectToServer);
 		void respLeftPanelExpand(bool checked);
 		void backToSystemView();
 
@@ -66,6 +68,7 @@ namespace Related {
 		int m_contractionWidth;		//收缩状态下宽度
 
 		Base::RIconButton * m_notifyButt;		/*!< 通知 */
+		Base::RIconButton * m_netStateButt;		/*!< 网络状态通知 */
 		Base::RIconButton * m_backToSystemViewButt;		/*!< 返回系统视图 */
 	};
 

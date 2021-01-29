@@ -46,12 +46,29 @@ namespace Related {
 		}
 	}
 
+	/*! 
+	 * @brief 网络连接状态改变，同步改变网络按钮的状态
+	 * @param isConnectToServer true:连接至服务器，false:断开和服务器连接
+	 */
+	void LeftPanel::respNetStateChanged(bool isConnectToServer)
+	{
+		if (isConnectToServer) {
+			m_netStateButt->setText(QStringLiteral("联网"));
+			m_netStateButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/连接.png")));
+		}
+		else {
+			m_netStateButt->setText(QStringLiteral("断网"));
+			m_netStateButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/断开.png")));
+		}
+	}
+
 	void LeftPanel::respLeftPanelExpand(bool checked)
 	{
 		m_systemListWidget->setExpanded(checked);
 		m_taskListWidget->setExpanded(checked);
 
 		m_notifyButt->setTextVisible(checked);
+		m_netStateButt->setTextVisible(checked);
 		m_backToSystemViewButt->setTextVisible(checked);
 
 		if (checked) {
@@ -140,22 +157,26 @@ namespace Related {
 
 		QSize iconSize(40, 40);
 		QFont iconFont(QStringLiteral("微软雅黑"),11);
-		Base::RIconButton::ColorChooses disableColors = Base::RIconButton::Color_NormalBorder | Base::RIconButton::Color_CheckedBorder
-			| Base::RIconButton::Color_CheckedBorder | Base::RIconButton::Color_HoverBackground | Base::RIconButton::Color_HoverBorder;
+		Base::RIconButton::ColorChooses disableColors = Base::RIconButton::Color_Borer | Base::RIconButton::Color_BackGround;
 
 		auto setButtonProop = [&](Base::RIconButton * butt,QString text,QString pixmap) {
 			butt->setIconTextSpacing(15);
+			butt->setToolTip(text);
+			butt->setText(text);
 			butt->setTextFont(iconFont);
 			butt->setIconSize(Base::RIconButton::ICON_24);
 			butt->disableColors(disableColors);
-			butt->enableColor(Base::RIconButton::Color_NormalText, QColor(255, 255, 255, 120));
+			butt->enableColor(Base::RIconButton::Color_NormalText, QColor(255, 255, 255, 140));
 			butt->enableColor(Base::RIconButton::Color_HoverText, QColor(255, 255, 255));
-			butt->setText(text);
 			butt->setIcon(QIcon(pixmap));
 		};
 
 		m_notifyButt = new Base::RIconButton();
 		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));	
+
+		m_netStateButt = new Base::RIconButton();
+		connect(m_netStateButt, SIGNAL(clicked()),this,SIGNAL(reConnectToServer()));
+		setButtonProop(m_netStateButt, QStringLiteral("联网"), QStringLiteral(":/QYBlue/resource/qyblue/连接.png"));
 		
 		m_backToSystemViewButt = new Base::RIconButton();
 		m_backToSystemViewButt->setToolTip(QStringLiteral("返回任务概览页面"));
@@ -168,6 +189,7 @@ namespace Related {
 		bottomLayout->setContentsMargins(9, 9, 9, 15);
 		bottomLayout->addWidget(m_backToSystemViewButt);
 		bottomLayout->addWidget(m_notifyButt);
+		bottomLayout->addWidget(m_netStateButt);
 		bottomWidget->setLayout(bottomLayout);
 		bottomWidget->setFixedHeight(iconSize.height() * bottomLayout->count() + (bottomLayout->count() - 1) * bottomLayout->spacing());
 
