@@ -8,6 +8,15 @@
 
 #include "customwidget\loadingdialog.h"
 
+/*!< 开启动画窗口 */
+#define START_WAIT Global::G_LoadingDialog->showMe();
+#define START_WAIT_ON(parent) Global::G_LoadingDialog->showMe(parent);
+
+#define END_WAIT Global::G_LoadingDialog->hideMe();
+
+/*!< 获取资源信息 */
+#define WRAP_RESOURCE(name) QStringLiteral(":/QYBlue/resource/qyblue/"#name".png")
+
 namespace Related {
 
 	namespace Global {
@@ -20,11 +29,5 @@ namespace Related {
 		extern Base::WidgetAnimation G_WidgetAnimation;			/*!< 全局控件动画控制 */
 
 	}	//namespace Global 
-
-
-	#define START_WAIT Global::G_LoadingDialog->showMe();
-	#define START_WAIT_ON(parent) Global::G_LoadingDialog->showMe(parent);
-
-	#define END_WAIT Global::G_LoadingDialog->hideMe();
 
 } //namespace Related 

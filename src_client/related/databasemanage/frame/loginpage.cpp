@@ -239,7 +239,7 @@ namespace Related {
 
 		m_loginButt = new Base::RIconButton();
 		m_loginButt->setIconSize(Base::RIconButton::ICON_24);
-		m_loginButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/µÇÂ¼.png")));
+		m_loginButt->setIcon(QIcon(WRAP_RESOURCE(µÇÂ¼)));
 		m_loginButt->setText(QStringLiteral("µÇÂ¼"));
 		connect(m_loginButt, SIGNAL(clicked()), this, SLOT(connectToServer()));
 

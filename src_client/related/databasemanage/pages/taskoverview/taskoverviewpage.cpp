@@ -60,7 +60,7 @@ namespace Related {
 			m_taskPlatformType->setLabelData(QString::number(12));
 			m_taskPlatformType->setLabelText(QStringLiteral("平台类型"));
 			m_taskPlatformType->setLabelBackground(QColor(237, 168, 27));
-			m_taskPlatformType->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/上传.png"));
+			m_taskPlatformType->setLabelIcon(WRAP_RESOURCE(上传));
 			m_taskPlatformType->setFixedSize(maxSize);
 			m_taskPlatformType->setMinimumSize(minSize);
 
@@ -68,7 +68,7 @@ namespace Related {
 			m_platformdataSize->setLabelData("120GB");
 			m_platformdataSize->setLabelBackground(QColor(77, 174, 116));
 			m_platformdataSize->setLabelText(QStringLiteral("平台占用空间"));
-			m_platformdataSize->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据库记录.png"));
+			m_platformdataSize->setLabelIcon(WRAP_RESOURCE(数据库记录));
 			m_platformdataSize->setMaximumSize(maxSize);
 			m_platformdataSize->setMinimumSize(minSize);
 
@@ -76,7 +76,7 @@ namespace Related {
 			m_advSize->setLabelData(QString::number(8));
 			m_advSize->setLabelBackground(QColor(199, 99, 116));
 			m_advSize->setLabelText(QStringLiteral("音频数据占用空间"));
-			m_advSize->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/未处理.png"));
+			m_advSize->setLabelIcon(WRAP_RESOURCE(未处理));
 			m_advSize->setMaximumSize(maxSize);
 			m_advSize->setMinimumSize(minSize);
 

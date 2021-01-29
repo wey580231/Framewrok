@@ -55,7 +55,7 @@ namespace Related {
 			m_taskNumItem->setLabelData(QString::number(0));
 			m_taskNumItem->setLabelText(QStringLiteral("任务总数"));
 			m_taskNumItem->setLabelBackground(QColor(237, 168, 27));
-			m_taskNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/上传.png"));
+			m_taskNumItem->setLabelIcon(WRAP_RESOURCE(上传.));
 			m_taskNumItem->setFixedSize(maxSize);
 			m_taskNumItem->setMinimumSize(minSize);
 
@@ -63,7 +63,7 @@ namespace Related {
 			m_diskSpaceItem->setLabelData(QString("%1 GB").arg(QString::number(0)));
 			m_diskSpaceItem->setLabelBackground(QColor(77, 174, 116));
 			m_diskSpaceItem->setLabelText(QStringLiteral("占用空间"));
-			m_diskSpaceItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据库记录.png"));
+			m_diskSpaceItem->setLabelIcon(WRAP_RESOURCE(数据库记录));
 			m_diskSpaceItem->setMaximumSize(maxSize);
 			m_diskSpaceItem->setMinimumSize(minSize);
 
@@ -71,7 +71,7 @@ namespace Related {
 			m_platNumItem->setLabelData(QString::number(0));
 			m_platNumItem->setLabelBackground(QColor(199, 99, 116));
 			m_platNumItem->setLabelText(QStringLiteral("平台数量"));
-			m_platNumItem->setLabelIcon(QStringLiteral(":/QYBlue/resource/qyblue/未处理.png"));
+			m_platNumItem->setLabelIcon(WRAP_RESOURCE(未处理));
 			m_platNumItem->setMaximumSize(maxSize);
 			m_platNumItem->setMinimumSize(minSize);
 
@@ -93,12 +93,12 @@ namespace Related {
 			m_newTaskButt = new Base::RIconButton();
 			m_newTaskButt->setText(QStringLiteral("新建任务"));
 			m_newTaskButt->setMinimumSize(60,30);
-			m_newTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/新增.png")));		
+			m_newTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));		
 			connect(m_newTaskButt, SIGNAL(clicked()), this, SLOT(slotNewTaskClickde()));
 			m_refreshTaskButt = new Base::RIconButton();
 			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
 			m_refreshTaskButt->setMinimumSize(60, 30);
-			m_refreshTaskButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/刷新.png")));
+			m_refreshTaskButt->setIcon(QIcon(WRAP_RESOURCE(刷新)));
 			connect(m_refreshTaskButt, SIGNAL(clicked()), this, SLOT(slotRefreshTaskClicked()));
 
 			m_timeRange = new TimeRangeEdit();

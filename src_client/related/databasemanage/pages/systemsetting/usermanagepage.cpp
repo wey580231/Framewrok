@@ -236,7 +236,7 @@ namespace Related {
 		{
 			QLabel * iconLabel = new QLabel();
 			iconLabel->setAlignment(Qt::AlignCenter);
-			iconLabel->setPixmap(QPixmap(QStringLiteral(":/QYBlue/resource/qyblue/权限.png")));
+			iconLabel->setPixmap(QPixmap(WRAP_RESOURCE(权限)));
 
 			QLabel * textLabel = new QLabel();
 			textLabel->setText(QStringLiteral("无访问权限!"));

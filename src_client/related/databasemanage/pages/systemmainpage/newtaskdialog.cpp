@@ -51,18 +51,18 @@ namespace Related {
 
 		//图片页面
 		{
-			Base::RIconButton * chooseImagePath = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/上传_32_32.png"), QStringLiteral("选择图片"));
+			Base::RIconButton * chooseImagePath = Util::createButt(WRAP_RESOURCE(上传_32_32), QStringLiteral("选择图片"));
 			chooseImagePath->setObjectName("image_choose");
 
-			Base::RIconButton * clearImage = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"), QStringLiteral("清空"));
+			Base::RIconButton * clearImage = Util::createButt(WRAP_RESOURCE(删除), QStringLiteral("清空"));
 			clearImage->setObjectName("image_clear");
 
 			connect(chooseImagePath, SIGNAL(clicked()), this, SLOT(openLocalFile()));
 			connect(clearImage, SIGNAL(clicked()), this, SLOT(respClearFile()));
 			
-			m_viewModelSwitch = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/缩略图.png"), QStringLiteral(""));
+			m_viewModelSwitch = Util::createButt(WRAP_RESOURCE(缩略图), QStringLiteral(""));
 			m_viewModelSwitch->disableColors(Base::RIconButton::Color_BackGround | Base::RIconButton::Color_Borer);
-			m_viewModelSwitch->setCheckedIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/列表.png")));
+			m_viewModelSwitch->setCheckedIcon(QIcon(WRAP_RESOURCE(列表)));
 			m_viewModelSwitch->setCheckable(true);
 			m_viewModelSwitch->setFixedWidth(32);
 			connect(m_viewModelSwitch, SIGNAL(clicked(bool)),this,SLOT(switchViewModel(bool)));
@@ -107,10 +107,10 @@ namespace Related {
 		}
 
 		{
-			Base::RIconButton * chooseDir = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/上传_32_32.png"), QStringLiteral("选择目录"));
+			Base::RIconButton * chooseDir = Util::createButt(WRAP_RESOURCE(上传_32_32), QStringLiteral("选择目录"));
 			chooseDir->setObjectName("file_choose");
 
-			Base::RIconButton * clearImage = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"), QStringLiteral("清空"));
+			Base::RIconButton * clearImage = Util::createButt(WRAP_RESOURCE(删除), QStringLiteral("清空"));
 			clearImage->setObjectName("file_clear");
 
 			connect(chooseDir, SIGNAL(clicked()), this, SLOT(openLocalFile()));
