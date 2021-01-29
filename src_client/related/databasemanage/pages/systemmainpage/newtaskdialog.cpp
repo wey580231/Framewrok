@@ -166,18 +166,6 @@ namespace Related {
 			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
 	}
 
-	void NewTaskDialog::slotSeleteFile()
-	{
-		QString filePath = QFileDialog::getExistingDirectory(this, QStringLiteral("Ñ¡ÔñÄ¿Â¼"),"./", QFileDialog::DontResolveSymlinks);
-		if (filePath.isEmpty())
-			return;
-
-		m_originalFilePath = filePath;
-		m_dataFilePath->setText(m_originalFilePath);
-
-		m_treeModel->setRootPath(filePath);
-	}
-
 	void NewTaskDialog::respOk()
 	{
 		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();

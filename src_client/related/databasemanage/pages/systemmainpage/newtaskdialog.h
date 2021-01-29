@@ -40,8 +40,9 @@ namespace Related {
 
 	private slots:
 		void respOk();
-		void openLocalImage();
-		void clearImage();
+		void respClearFile();
+		void openLocalFile();
+		void switchViewModel(bool isChecked);
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 	private:
 		void init();

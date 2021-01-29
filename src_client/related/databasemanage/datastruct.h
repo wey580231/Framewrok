@@ -14,7 +14,7 @@
 #include <QMap>
 
 #include "../related_global.h"
-#include "../global.h"
+#include "global.h"
 
 #define TIME_FORMAT "yyyy-MM-dd hh:mm:ss"
 
