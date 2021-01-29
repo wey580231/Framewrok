@@ -236,6 +236,12 @@
     <ClCompile Include="selfwidget\rborderlessmainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tools\notify\notifymanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\notify\notify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="util\fileutils.h">
@@ -329,6 +335,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rborderlessmainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="tools\notify\notifymanager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="tools\notify\notify.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

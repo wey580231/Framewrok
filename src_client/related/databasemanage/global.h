@@ -5,6 +5,7 @@
 #include <commondefines\protocol.h>
 #include <commondefines\structdefines.h>
 #include <base\util\widgetanimation.h>
+#include <base\tools\notify\notifymanager.h>
 
 #include "customwidget\loadingdialog.h"
 
@@ -23,6 +24,7 @@ namespace Related {
 
 		extern Datastruct::UserEntityData G_UserEntity;			/*!< 当前登录的用户 */
 		extern LoadingDialog * G_LoadingDialog;					/*!< 等待窗口 */
+		extern Base::NotifyManager * G_Notify;					/*!< 全局通知消息 */
 
 		extern bool G_HasPrivilege(Datastruct::UserPrivilege up);	/*!< 查看自身是否具有某种权限 */
 

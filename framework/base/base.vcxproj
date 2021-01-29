@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget;.\tools\notify;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <QtMoc>
       <QtMocDir>$(IntDir)moc\</QtMocDir>
@@ -75,7 +75,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>BASE_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;.\selfwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\selfwidget\tablemode;.\;.\selfwidget;.\tools\notify;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -158,6 +158,8 @@
     <QtMoc Include="selfwidget\rtabwidget.h" />
     <QtMoc Include="selfwidget\rborderlessmainwindow.h" />
     <ClInclude Include="selfwidget\tablemode\tablestruct.h" />
+    <QtMoc Include="tools\notify\notifymanager.h" />
+    <QtMoc Include="tools\notify\notify.h" />
     <ClInclude Include="util\rblockingqueue.h" />
     <ClInclude Include="util\rbuffer.h" />
     <ClInclude Include="util\regexp.h" />
@@ -209,6 +211,8 @@
     <ClCompile Include="selfwidget\toolbar.cpp" />
     <ClCompile Include="selfwidget\treemode\rtreemodel.cpp" />
     <ClCompile Include="selfwidget\treemode\rtreeview.cpp" />
+    <ClCompile Include="tools\notify\notify.cpp" />
+    <ClCompile Include="tools\notify\notifymanager.cpp" />
     <ClCompile Include="util\fileutils.cpp" />
     <ClCompile Include="util\imagemanager.cpp" />
     <ClCompile Include="util\rbuffer.cpp" />

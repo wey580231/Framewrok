@@ -6,6 +6,7 @@ namespace Related {
 
 		Datastruct::UserEntityData G_UserEntity;			/*!< 当前登录的用户 */
 		LoadingDialog * G_LoadingDialog;					/*!< 等待窗口 */
+		Base::NotifyManager * G_Notify;						/*!< 全局通知消息 */
 
 		Base::WidgetAnimation G_WidgetAnimation;			/*!< 全局控件动画控制 */
 
