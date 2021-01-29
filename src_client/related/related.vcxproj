@@ -53,6 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\databasemanage\customwidget;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;commondefines.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -108,6 +109,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp" />
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
@@ -178,6 +180,7 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\customwidget\timerangeedit.h" />
+    <QtMoc Include="databasemanage\customwidget\loadingdialog.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\pages\abstractpage.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />

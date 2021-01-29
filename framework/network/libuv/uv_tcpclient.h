@@ -32,8 +32,18 @@ namespace Network {
 		Uv_TcpClient(uv_loop_t * loop);
 		~Uv_TcpClient();
 
+		/*! 
+		 * @brief 设置是否自动重连
+		 * @param flag true 自动重连
+		 */
 		void setAutoReconnect(bool flag = true);
 		bool isAutoReconnect() const;
+
+		/*! 
+		 * @brief 获取当前重连时间周期
+		 * @return 重连时间周期，单位ms
+		 */
+		int  reconnectInterval() const;
 
 		/*!
 		 * @brief 主动发起连接远程服务器

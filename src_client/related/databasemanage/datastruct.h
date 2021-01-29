@@ -14,6 +14,7 @@
 #include <QMap>
 
 #include "../related_global.h"
+#include "../global.h"
 
 namespace Related {
 

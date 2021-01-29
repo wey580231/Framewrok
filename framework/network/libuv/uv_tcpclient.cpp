@@ -128,6 +128,11 @@ namespace Network {
 		return m_bAutoReconnect;
 	}
 
+	int Uv_TcpClient::reconnectInterval() const
+	{
+		return m_repeatConnTime;
+	}
+
 	string Uv_TcpClient::errorInfo() const
 	{
 		return m_errorMsg;
@@ -430,6 +435,7 @@ namespace Network {
 			tcpClient->m_bIsReconnecting = true;
 
 			return;
+
 		} while (0);
 
 		uv_timer_stop(handle);

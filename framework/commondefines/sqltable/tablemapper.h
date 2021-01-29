@@ -32,7 +32,7 @@ namespace Table {
 		QString regitstTime = "regist_time";
 		QString lastLoadTime = "last_load_time";
 		QString privilege = "privilege";
-		QString superManage = "super_manage";
+		QString superManage = "super_manager";
 	};
 
 	/*!

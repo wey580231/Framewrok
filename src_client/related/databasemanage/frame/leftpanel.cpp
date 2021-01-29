@@ -46,22 +46,39 @@ namespace Related {
 		}
 	}
 
+	/*! 
+	 * @brief 网络连接状态改变，同步改变网络按钮的状态
+	 * @param isConnectToServer true:连接至服务器，false:断开和服务器连接
+	 */
+	void LeftPanel::respNetStateChanged(bool isConnectToServer)
+	{
+		if (isConnectToServer) {
+			m_netStateButt->setText(QStringLiteral("联网"));
+			m_netStateButt->setIcon(QIcon(WRAP_RESOURCE(连接)));
+		}
+		else {
+			m_netStateButt->setText(QStringLiteral("断网"));
+			m_netStateButt->setIcon(QIcon(WRAP_RESOURCE(断开)));
+		}
+	}
+
 	void LeftPanel::respLeftPanelExpand(bool checked)
 	{
 		m_systemListWidget->setExpanded(checked);
 		m_taskListWidget->setExpanded(checked);
 
 		m_notifyButt->setTextVisible(checked);
+		m_netStateButt->setTextVisible(checked);
 		m_backToSystemViewButt->setTextVisible(checked);
 
 		if (checked) {
 			m_prgoramIcon->setText(QStringLiteral("数据管理系统软件"));
-			m_expandButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/导航收缩.png")));
+			m_expandButt->setIcon(QIcon(WRAP_RESOURCE(导航收缩)));
 			m_expandButt->setToolTip(QStringLiteral("折叠"));
 		}
 		else {
 			m_prgoramIcon->setText(QStringLiteral("QT"));
-			m_expandButt->setIcon(QIcon(QStringLiteral(":/QYBlue/resource/qyblue/导航展开.png")));
+			m_expandButt->setIcon(QIcon(WRAP_RESOURCE(导航展开)));
 			m_expandButt->setToolTip(QStringLiteral("展开"));
 		}
 	}
@@ -121,17 +138,17 @@ namespace Related {
 		m_systemListWidget = new RListWidget(this);
 		connect(m_systemListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
 
-		m_systemListWidget->addItem(Page_SystemMainPage,QStringLiteral("任务统计"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/首页icon.png")));
-		m_systemListWidget->addItem(Page_TargetDatabase,QStringLiteral("目标库"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据管理icon.png")));
-		m_systemListWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/系统设置icon.png")));
+		m_systemListWidget->addItem(Page_SystemMainPage,QStringLiteral("任务统计"), QIcon(WRAP_RESOURCE(首页icon)));
+		m_systemListWidget->addItem(Page_TargetDatabase,QStringLiteral("目标库"), QIcon(WRAP_RESOURCE(数据管理icon)));
+		m_systemListWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(WRAP_RESOURCE(系统设置icon)));
 		m_systemListWidget->setCurrentIndex(0);
 
 		//任务级菜单
 		m_taskListWidget = new RListWidget(this);
 		connect(m_taskListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
-		m_taskListWidget->addItem(Page_TaskOverviewPage, QStringLiteral("任务概览"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/概览.png")));
-		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/记录.png")));
-		m_taskListWidget->addItem(Page_TaskDataAnalyse, QStringLiteral("任务分析"), QIcon(QStringLiteral(":/QYBlue/resource/qyblue/数据分析icon.png")));
+		m_taskListWidget->addItem(Page_TaskOverviewPage, QStringLiteral("任务概览"), QIcon(WRAP_RESOURCE(概览)));
+		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(WRAP_RESOURCE(记录)));
+		m_taskListWidget->addItem(Page_TaskDataAnalyse, QStringLiteral("任务分析"), QIcon(WRAP_RESOURCE(数据分析icon)));
 		m_taskListWidget->setCurrentIndex(0);
 
 		m_leftMenuContainer = new QStackedWidget();
@@ -140,27 +157,31 @@ namespace Related {
 
 		QSize iconSize(40, 40);
 		QFont iconFont(QStringLiteral("微软雅黑"),11);
-		Base::RIconButton::ColorChooses disableColors = Base::RIconButton::Color_NormalBorder | Base::RIconButton::Color_CheckedBorder
-			| Base::RIconButton::Color_CheckedBorder | Base::RIconButton::Color_HoverBackground | Base::RIconButton::Color_HoverBorder;
+		Base::RIconButton::ColorChooses disableColors = Base::RIconButton::Color_Borer | Base::RIconButton::Color_BackGround;
 
 		auto setButtonProop = [&](Base::RIconButton * butt,QString text,QString pixmap) {
 			butt->setIconTextSpacing(15);
+			butt->setToolTip(text);
+			butt->setText(text);
 			butt->setTextFont(iconFont);
 			butt->setIconSize(Base::RIconButton::ICON_24);
 			butt->disableColors(disableColors);
-			butt->enableColor(Base::RIconButton::Color_NormalText, QColor(255, 255, 255, 120));
+			butt->enableColor(Base::RIconButton::Color_NormalText, QColor(255, 255, 255, 140));
 			butt->enableColor(Base::RIconButton::Color_HoverText, QColor(255, 255, 255));
-			butt->setText(text);
 			butt->setIcon(QIcon(pixmap));
 		};
 
 		m_notifyButt = new Base::RIconButton();
-		setButtonProop(m_notifyButt, QStringLiteral("通知"), QStringLiteral(":/QYBlue/resource/qyblue/通知.png"));	
+		setButtonProop(m_notifyButt, QStringLiteral("通知"), WRAP_RESOURCE(通知));	
+
+		m_netStateButt = new Base::RIconButton();
+		connect(m_netStateButt, SIGNAL(clicked()),this,SIGNAL(reConnectToServer()));
+		setButtonProop(m_netStateButt, QStringLiteral("联网"), WRAP_RESOURCE(连接));
 		
 		m_backToSystemViewButt = new Base::RIconButton();
 		m_backToSystemViewButt->setToolTip(QStringLiteral("返回任务概览页面"));
 		connect(m_backToSystemViewButt, SIGNAL(clicked()), this, SLOT(backToSystemView()));
-		setButtonProop(m_backToSystemViewButt, QStringLiteral("返回"), QStringLiteral(":/QYBlue/resource/qyblue/后退.png"));
+		setButtonProop(m_backToSystemViewButt, QStringLiteral("返回"), WRAP_RESOURCE(后退));
 
 		QWidget * bottomWidget = new QWidget();
 		QVBoxLayout * bottomLayout = new QVBoxLayout();
@@ -168,6 +189,7 @@ namespace Related {
 		bottomLayout->setContentsMargins(9, 9, 9, 15);
 		bottomLayout->addWidget(m_backToSystemViewButt);
 		bottomLayout->addWidget(m_notifyButt);
+		bottomLayout->addWidget(m_netStateButt);
 		bottomWidget->setLayout(bottomLayout);
 		bottomWidget->setFixedHeight(iconSize.height() * bottomLayout->count() + (bottomLayout->count() - 1) * bottomLayout->spacing());
 

@@ -4,6 +4,7 @@
 #include <qboxlayout.h>
 
 #include "leftpanel.h"
+#include "../global.h"
 
 namespace Related {
 
@@ -25,7 +26,6 @@ namespace Related {
 
 		//登录页面
 		m_loginPage = new LoginPage();
-		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
 
 		m_mainWidget = new QWidget();
 
@@ -37,7 +37,6 @@ namespace Related {
 
 			//系统主页
 			m_mainPage = new SystemMainPage();
-			m_mainPage->prepareBringToTop();
 
 			//数据管理
 			m_dataMangePage = new DataManageWidget();
@@ -74,6 +73,7 @@ namespace Related {
 			m_mainWidget->setLayout(mainLayout);
 		}
 
+
 		m_stackedWidget->addWidget(m_loginPage);
 		m_stackedWidget->addWidget(m_mainWidget);
 
@@ -81,12 +81,20 @@ namespace Related {
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->addWidget(m_stackedWidget);
 		setLayout(layout);
+
+		Global::G_LoadingDialog = new LoadingDialog();
+		Global::G_LoadingDialog->hideMe();
 	}
 
 	void MainWindow::initConnect()
 	{
+		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
+		connect(m_loginPage, SIGNAL(netStateChanged(bool)), m_leftPanel,SLOT(respNetStateChanged(bool)));
+
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(switchPage(int)));
 		connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));
+		connect(m_leftPanel, SIGNAL(reConnectToServer()), m_loginPage, SLOT(reConnectServer()));
+
 		connect(m_mainPage, SIGNAL(openTask(QString)), this, SLOT(siwtchToTaskView(QString)));
 	}
 
@@ -95,7 +103,9 @@ namespace Related {
 		m_stackedWidget->setStyleSheet("#Widget_MainWidow{border-image:none;background-color: rgba(4,59,100, 235)}");
 		m_stackedWidget->style()->unpolish(m_stackedWidget);
 		m_stackedWidget->style()->polish(m_stackedWidget);
+
 		m_stackedWidget->setCurrentWidget(m_mainWidget);
+		m_mainPage->prepareBringToTop();
 	}
 
 	void MainWindow::switchPage(int pageIndex)

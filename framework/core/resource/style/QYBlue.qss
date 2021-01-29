@@ -4,6 +4,7 @@
     border: 0px transparent black;
     /*background-color:rgb(21,50,75,215);*/
     font-size: 12px;
+	color:white;
 }
 
 QWidget#mainWidget{

@@ -7,6 +7,7 @@
 #include <QDebug>
 
 #include "../../utils/util.h"
+#include "../../global.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
 
@@ -52,10 +53,10 @@ namespace Related {
 		m_tableView->addColumnItem(Base::ColumnItem(L0_DataType, QStringLiteral("数据类型")));
 		m_tableView->addColumnItem(Base::ColumnItem(L0_DataSource, QStringLiteral("数据来源")));
 
-		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/新增.png"),QStringLiteral("新增"));
-		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"),QStringLiteral("删除"));
-		m_editButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/编辑.png"),QStringLiteral("编辑"));
-		m_refreshButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/刷新.png"),QStringLiteral("刷新"));
+		m_addButton = Util::createButt(WRAP_RESOURCE(新增),QStringLiteral("新增"));
+		m_delButton = Util::createButt(WRAP_RESOURCE(删除),QStringLiteral("删除"));
+		m_editButton = Util::createButt(WRAP_RESOURCE(编辑),QStringLiteral("编辑"));
+		m_refreshButton = Util::createButt(WRAP_RESOURCE(刷新),QStringLiteral("刷新"));
 
 		//时间筛选
 		QWidget * timeRangeSelect = new QWidget();
@@ -80,9 +81,9 @@ namespace Related {
 
 		timeRangeSelect->setLayout(timeLayout);
 
-		m_searchButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/搜索.png"), QStringLiteral("搜索"));
-		m_advanceSearchButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/高级搜索.png"), QStringLiteral("高级搜索"));
-		m_moreButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/更多.png"), QStringLiteral("更多"));
+		m_searchButton = Util::createButt(WRAP_RESOURCE(搜索), QStringLiteral("搜索"));
+		m_advanceSearchButton = Util::createButt(WRAP_RESOURCE(高级搜索), QStringLiteral("高级搜索"));
+		m_moreButton = Util::createButt(WRAP_RESOURCE(更多), QStringLiteral("更多"));
 
 		QWidget * toolWidget = new QWidget();
 		QHBoxLayout * toolLayout = new QHBoxLayout();

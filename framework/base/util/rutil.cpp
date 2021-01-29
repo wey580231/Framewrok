@@ -129,10 +129,7 @@ namespace Base {
 	void RUtil::setGlobalSettings(QSettings *settings)
 	{
 		if (gSettings)
-		{
 			delete gSettings;
-		}
-
 		gSettings = settings;
 	}
 
@@ -199,18 +196,6 @@ namespace Base {
 		QString uuid = QUuid::createUuid().toString();
 		uuid.replace(QRegExp("\\W+"), "");
 		return uuid;
-	}
-
-	/*!
-	 * @brief 在windows exploer中打开并选中文件
-	 * @param[in]   filepath 待打开文件全路径
-	 */
-	void RUtil::openFileInExplorer(QString filepath)
-	{
-		QProcess process;
-		filepath.replace("/", "\\");
-		QString cmd = QString("explorer.exe /select,\"%1\"").arg(filepath);
-		process.startDetached(cmd);
 	}
 
 	/*!
@@ -380,6 +365,11 @@ namespace Base {
 		return t_grayImage;
 	}
 
+	QPoint RUtil::placeAInBCenter(QSize a, QSize b)
+	{
+		return QPoint((b.width() - a.width()) /2, (b.height() - a.height()) / 2);
+	}
+
 	/*!
 	* @brief 将经纬度转换成时分秒形式
 	* @param[in] lonlatVal 经纬度值，需在[-180,180]之间
@@ -404,79 +394,6 @@ namespace Base {
 			t_ret.prepend("-");
 
 		return t_ret;
-	}
-
-	/*!
-	 * @brief 将字符串转换为可显示的HTML源码
-	 * @param targetHtml 需要转义处理的字符串
-	 */
-	void RUtil::StringToHtml(QString &targetHtml)
-	{
-		escapeSingleQuote(targetHtml);
-		escapeBracketsQuote(targetHtml);
-		escapeLFQuote(targetHtml);
-	}
-
-	/*!
-	 * @brief RUtil::escapeQuote 将Html内容中的双引号、单引号进行转义
-	 * @param targetHtml 需要转义处理的Html内容
-	 */
-	void RUtil::escapeSingleQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("\\", "\\\\");
-		targetHtml = targetHtml.replace("\'", "&qpos");
-	}
-
-	/*!
-	 * @brief 转换尖括号为HTML可显示字符
-	 * @param targetHtml 源字符串
-	 */
-	void RUtil::escapeBracketsQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("<", "&lt;");
-		targetHtml = targetHtml.replace("<=", "&le;");
-		targetHtml = targetHtml.replace(">", "&gt;");
-		targetHtml = targetHtml.replace(">=", "&ge;");
-	}
-
-	/*!
-	 * @brief 转换回车符号为HTML可显示字符
-	 * @param targetHtml 源字符串
-	 */
-	void RUtil::escapeLFQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("\n", "</br>");
-		targetHtml = targetHtml.replace(" ", "&nbsp;");
-	}
-
-	/*!
-	 * @brief RUtil::removeEccapeQuote 移除Html内容中双引号的转义符号
-	 * @param targetHtml 需要移除转义处理的Html内容
-	 */
-	void RUtil::removeEccapeSingleQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("\\\'", "\'");
-		targetHtml = targetHtml.replace("\n", "");
-	}
-
-	/*!
-	 * @brief RUtil::escapeDoubleQuote
-	 * @param targetHtml
-	 */
-	void RUtil::escapeDoubleQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("\"", "\\\"");
-		targetHtml = targetHtml.replace("\n", "");
-	}
-
-	/*!
-	 * @brief RUtil::removeEccapeDoubleQuote
-	 * @param targetHtml
-	 */
-	void RUtil::removeEccapeDoubleQuote(QString &targetHtml)
-	{
-		targetHtml = targetHtml.replace("\\\"", "\"");
-		targetHtml = targetHtml.replace("\n", "");
 	}
 
 	/*!
@@ -520,34 +437,8 @@ namespace Base {
 		if (!QFileInfo(pathIn).isDir())
 			param += QLatin1String("/select,");
 		param += QDir::toNativeSeparators(pathIn);
+
 		QProcess::startDetached(explorerPath, param);
-
-	}
-
-	/*!
-	 * @brief 格式化显示文件大小
-	 * @param byteSize 文件大小，单位字节
-	 * @return 显示的文件大小
-	 */
-	QString RUtil::formatFileSize(int byteSize)
-	{
-		QString t_fileSize = QString();
-		if (byteSize < 1024)
-		{
-			QString t_showSize = QString::number(byteSize, 'f', 2);
-			t_fileSize = QString("(%1B)").arg(t_showSize);
-		}
-		else if (byteSize >= 1024 && byteSize < 1024 * 1024)
-		{
-			QString t_showSize = QString::number(byteSize / 1024, 'f', 2);
-			t_fileSize = QString("(%1KB)").arg(t_showSize);
-		}
-		else if (byteSize >= 1024 * 1024)
-		{
-			QString t_showSize = QString::number(byteSize / (1024 * 1024), 'f', 2);
-			t_fileSize = QString("(%1MB)").arg(t_showSize);
-		}
-		return t_fileSize;
 	}
 
 } //namespace Base

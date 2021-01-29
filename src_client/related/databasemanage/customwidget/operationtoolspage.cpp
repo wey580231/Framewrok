@@ -1,8 +1,10 @@
 #include "operationtoolspage.h"
 
 #include <QVariant>
+#include <QDebug>
 
 #include "../utils/util.h"
+#include "../global.h"
 
 namespace Related {
 
@@ -40,10 +42,10 @@ namespace Related {
 
 	void OperationToolsPage::init()
 	{
-		m_addButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/新增.png"), QStringLiteral("新增"));
-		m_delButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/删除.png"), QStringLiteral("删除"));
-		m_editButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/编辑.png"), QStringLiteral("编辑"));
-		m_refreshButton = Util::createButt(QStringLiteral(":/QYBlue/resource/qyblue/刷新.png"), QStringLiteral("刷新"));
+		m_addButton = Util::createButt(WRAP_RESOURCE(新增), QStringLiteral("新增"));
+		m_delButton = Util::createButt(WRAP_RESOURCE(删除), QStringLiteral("删除"));
+		m_editButton = Util::createButt(WRAP_RESOURCE(编辑), QStringLiteral("编辑"));
+		m_refreshButton = Util::createButt(WRAP_RESOURCE(刷新), QStringLiteral("刷新"));
 
 		m_buttMap.insert(Butt_Add, m_addButton);
 		m_buttMap.insert(Butt_Delete, m_delButton);
