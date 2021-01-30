@@ -141,7 +141,7 @@ namespace Related {
 	{
 		Datastruct::TaskSimpleRequest request;
 		request.taskId = m_taskId;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 } //namespace Related

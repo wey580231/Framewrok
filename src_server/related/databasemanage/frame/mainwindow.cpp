@@ -11,6 +11,8 @@
 #include "../msgserver/requestprocessthread.h"
 #include "../msgserver/msgserver.h"
 
+#include "../fileserver/fileserver.h"
+
 namespace Related {
 
 	MainWindow::MainWindow(QWidget *parent)
@@ -84,10 +86,13 @@ namespace Related {
 	void MainWindow::initNetwork()
 	{
 		ConfigKey ckey;
-		QString localDataIp = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, "127.0.0.1").toString();
-		ushort localDataPort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, 9999).toInt();	
+		QString localDataIp = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localDataServerIp, "127.0.0.1").toString();
+
+		ushort localDataPort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localDataPort, 8888).toInt();	
+		ushort localFilePort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localFilePort, 9999).toInt();
 		
 		MsgServer::instance()->start(localDataIp, localDataPort);
+		FileServer::instance()->start(localDataIp, localFilePort);
 	}
 
 	void MainWindow::processResponse(ResponseUnit * unit)

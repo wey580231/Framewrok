@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include "../../net/signaldispatch.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../customwidget/customwidgetcontainer.h"
 #include "../../global.h"
 
@@ -181,7 +181,7 @@ namespace Related {
 
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
@@ -228,7 +228,7 @@ namespace Related {
 	void SystemMainPage::refreshCurrTask()
 	{
 		Datastruct::LoadAllTaskRequest request;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void SystemMainPage::updateTaskListWidget()

@@ -4,7 +4,7 @@
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 #include "../../global.h"
 
@@ -215,14 +215,14 @@ namespace Related {
 		request.m_waveHigh = 0;					
 		request.m_oceanCurrents = 0;				
 
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::deleteDutyRecord(QString id)
 	{
 		Datastruct::DutyRecordDeleteRequest request;
 		request.m_id = id;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::refreshCurrPage()
@@ -231,7 +231,7 @@ namespace Related {
 		request.m_taskId = m_taskId;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 }//namespace Related

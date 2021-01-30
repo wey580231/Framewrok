@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 
 #include "../../customwidget/customwidgetcontainer.h"
@@ -53,13 +53,13 @@ namespace Related {
 	void OtherSettingPage::refreshCurrDetectPlatform()
 	{
 		Datastruct::LoadAllDetectPlatformsRequest request;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void OtherSettingPage::refreshCurrDetectPlatformSubtype(int detectId)
 	{
 		Datastruct::LoadAllDetectPlatformsRequest request;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 } //namespace Related 

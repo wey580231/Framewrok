@@ -78,6 +78,9 @@
     <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\net\datanetconnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -159,6 +162,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\customwidget\loadingdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\datanetconnector.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
