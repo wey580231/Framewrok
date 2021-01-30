@@ -1,53 +1,46 @@
-/*!
- * @brief     网络连接接收器
- * @details   用于创建tcp服务器，接收客户端连接
- * @author    wey
- * @version   1.0
- * @date      2021.01.22 14:45:06
- * @warning
- * @copyright NanJing RenGu.
- * @note
- */
- #pragma once
+#pragma once
 
 #include <QObject>
+#include <QSharedPointer>
+#include <QMutex>
 
 #include <commondefines/protocol.h>
 #include <network/libuv/uv_eventloop.h>
 #include <network/libuv/uv_tcpserver.h>
 
+#include "filesession.h"
 #include "../datastruct.h"
 
 namespace Related {
 
-	class NetAcceptor : public QObject
+	typedef QSharedPointer<FileSession> FileSessionPtr;
+
+	class FileServer : public QObject
 	{
 		Q_OBJECT
 
 	public:
-		static NetAcceptor * instance();
-		~NetAcceptor();
+		static FileServer * instance();
+		~FileServer();
 
-		void start(QString localIp,ushort localPort);
+		void start(QString localIp, ushort localPort);
 
 		void processResponseUnit(ResponseUnit * unit);
 
 	private:
-		NetAcceptor(QObject *parent = nullptr);
+		FileServer(QObject *parent = nullptr);
 
 		void newTcpConnectionCallback(Network::AcceptTcpClient * remoteClient);
 		void newMessageCallback(Network::AcceptTcpClient * remoteClient, const char* data, int dataLen);
 
-		bool searchNextPackHead(Base::RFixedRingBuffer & ringBuffer);
-
 	private:
-		static NetAcceptor * m_instance;
+		static FileServer * m_instance;
 
-		QMap<int, RemoteClientInfo * > m_clients;		/*!< key:连接编号，value:客户端连接句柄 */
+		QMap<int, FileSessionPtr> m_clients;			/*!< key:连接编号，value:客户端连接句柄 */
 
 		Network::Uv_EventLoop * m_dataEventLoop;		/*!< 数据模块事件循环 */
 		Network::Uv_TcpServer * m_dataTcpServer;		/*!< 数据模块Tcp服务器 */
-
+		QMutex m_clientMutex;
 	};
 
 } //namespace Related 

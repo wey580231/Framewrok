@@ -9,7 +9,7 @@
 #include <base\selfwidget\rmessagebox.h>
 
 #include "../customwidget/customwidgetcontainer.h"
-#include "../net/netconnector.h"
+#include "../net/datanetconnector.h"
 #include "../net/signaldispatch.h"
 #include "../utils/util.h"
 #include "../global.h"
@@ -24,7 +24,7 @@ namespace Related {
 		loadNetConfig();
 
 		//NOTE 默认提供自动重连机制，用户也可以手动连接
-		NetConnector::instance()->setAutoReconnect(true);
+		DataNetConnector::instance()->setAutoReconnect(true);
 	}
 
 	LoginPage::~LoginPage()
@@ -53,13 +53,14 @@ namespace Related {
 	}
 
 	/*!
-	 * @brief 尝试连接至远程服务器
+	 * @brief 尝试连接至远程数据、文件服务器
 	 */
 	void LoginPage::connectToServer()
 	{
 		START_WAIT
-		if (!NetConnector::instance()->isConnected()) {
-			if (NetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_portWidget->text().toInt())) {
+
+		if (!DataNetConnector::instance()->isConnected()) {
+			if (DataNetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_dataPortWidget->text().toInt())) {
 
 			}
 			else {
@@ -78,7 +79,7 @@ namespace Related {
 	 */
 	void LoginPage::reConnectServer()
 	{
-		if (!NetConnector::instance()->isConnected()) {
+		if (!DataNetConnector::instance()->isConnected()) {
 			
 			if (!m_isReconnecting) {
 				m_isReconnecting = true;
@@ -102,14 +103,14 @@ namespace Related {
 					request.m_name = m_userName->text();
 					request.m_password = Base::RUtil::MD5(m_password->text());
 
-					NetConnector::instance()->write(request);
+					DataNetConnector::instance()->write(request);
 				}
 				else {
 					Datastruct::UserRegistRequest request;
 					request.m_name = m_registUserName->text();
 					request.m_password = Base::RUtil::MD5(m_registPassword1->text());
 
-					NetConnector::instance()->write(request);
+					DataNetConnector::instance()->write(request);
 				}			
 			}
 			else {
@@ -167,7 +168,8 @@ namespace Related {
 	{
 		ConfigKey ckey;
 		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, m_ipWidget->getIPString());
-		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, m_portWidget->text());
+		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, m_dataPortWidget->text());
+		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerFilePort, m_filePortWidget->text());
 
 		respCancel();
 	}
@@ -295,7 +297,8 @@ namespace Related {
 			QLabel * remotePort = createLabel(QStringLiteral("端口号:"));
 
 			m_ipWidget = new Base::RIPWidget();
-			m_portWidget = new QLineEdit();
+			m_dataPortWidget = new QLineEdit();
+			m_filePortWidget = new QLineEdit();
 
 			Base::RIconButton * saveButt = createButton(QStringLiteral("更新"), SLOT(respSave()));
 			Base::RIconButton * cancelButt = createButton(QStringLiteral("取消"), SLOT(respCancel()));
@@ -316,10 +319,11 @@ namespace Related {
 			slayout->addWidget(remoteIp, 1, 0, 1, 1);
 			slayout->addWidget(m_ipWidget, 1, 1, 1, 1);
 			slayout->addWidget(remotePort, 2, 0, 1, 1);
-			slayout->addWidget(m_portWidget, 2, 1, 1, 1);
-			slayout->setRowStretch(3, 1);
+			slayout->addWidget(m_dataPortWidget, 2, 1, 1, 1);
+			slayout->addWidget(m_filePortWidget, 3, 1, 1, 1);
+			slayout->setRowStretch(4, 1);
 
-			slayout->addWidget(toolContainer, 4, 0, 1, 2);
+			slayout->addWidget(toolContainer, 5, 0, 1, 2);
 
 			m_systemWidget->setLayout(slayout);
 			m_systemWidget->hide();
@@ -385,7 +389,7 @@ namespace Related {
 
 	void LoginPage::initConnect()
 	{
-		connect(NetConnector::instance(), SIGNAL(netConnected(bool)), this, SLOT(respNetConnected(bool)));
+		connect(DataNetConnector::instance(), SIGNAL(netConnected(bool)), this, SLOT(respNetConnected(bool)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const Datastruct::UserLoginResponse &)), this, SLOT(processUserLoginResponse(const Datastruct::UserLoginResponse &)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserRegistResponse(const Datastruct::UserRegistResponse &)), this, SLOT(processUserRegistResponse(const Datastruct::UserRegistResponse &)));
 	}
@@ -395,7 +399,8 @@ namespace Related {
 		ConfigKey ckey;
 
 		m_ipWidget->setIP(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, "127.0.0.1").toString());
-		m_portWidget->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, "8080").toString());
+		m_dataPortWidget->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, "8888").toString());
+		m_filePortWidget->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerFilePort, "9999").toString());
 	}
 
 	void LoginPage::clearRegistInput()

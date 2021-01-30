@@ -8,7 +8,7 @@
 #include <QFileDialog>
 
 #include "../../customwidget/customwidgetcontainer.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 #include "../../utils/util.h"
 #include "../../global.h"
@@ -251,7 +251,7 @@ namespace Related {
 		request.lat = m_taskBaseInfo.lat;
 		request.description = QStringLiteral("description");
 
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 }//namespace Related 

@@ -12,7 +12,7 @@
 #include "../../utils/util.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 #include "../../global.h"
 #include "userprivilegeeditwindow.h"
@@ -142,7 +142,7 @@ namespace Related {
 							request.m_id = dbIndex;
 							request.m_manageId = Global::G_UserEntity.id;
 
-							NetConnector::instance()->write(request);
+							DataNetConnector::instance()->write(request);
 						}
 					}
 					else if (type == OperationToolsPage::Butt_Edit) {
@@ -163,7 +163,7 @@ namespace Related {
 							request.m_isManage = editWindow.getUserManage();
 							request.m_manageId = Global::G_UserEntity.id;
 
-							NetConnector::instance()->write(request);
+							DataNetConnector::instance()->write(request);
 						}
 					}					
 				}
@@ -277,7 +277,7 @@ namespace Related {
 		request.m_name = Global::G_UserEntity.name;
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 }//namespace Related 

@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;commondefines.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -62,7 +62,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;commondefines.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -113,9 +113,13 @@
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
+    <ClCompile Include="databasemanage\fileserver\fileserver.cpp" />
+    <ClCompile Include="databasemanage\fileserver\filesession.cpp" />
     <ClCompile Include="databasemanage\global.cpp" />
-    <ClCompile Include="databasemanage\net\netacceptor.cpp" />
-    <ClCompile Include="databasemanage\net\requestprocessthread.cpp" />
+    <ClCompile Include="databasemanage\msgserver\clientsession.cpp" />
+    <ClCompile Include="databasemanage\msgserver\msgserver.cpp" />
+    <ClCompile Include="databasemanage\msgserver\requestprocessthread.cpp" />
+    <ClCompile Include="databasemanage\net\tcpsession.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
@@ -136,9 +140,13 @@
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
+    <QtMoc Include="databasemanage\fileserver\fileserver.h" />
+    <ClInclude Include="databasemanage\fileserver\filesession.h" />
     <ClInclude Include="databasemanage\global.h" />
-    <QtMoc Include="databasemanage\net\netacceptor.h" />
-    <QtMoc Include="databasemanage\net\requestprocessthread.h" />
+    <QtMoc Include="databasemanage\msgserver\msgserver.h" />
+    <QtMoc Include="databasemanage\msgserver\requestprocessthread.h" />
+    <ClInclude Include="databasemanage\msgserver\clientsession.h" />
+    <ClInclude Include="databasemanage\net\tcpsession.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />
