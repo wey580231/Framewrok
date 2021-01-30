@@ -297,7 +297,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_createResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -407,7 +407,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -451,7 +451,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_result = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_result) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -527,7 +527,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_createResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -644,7 +644,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -690,7 +690,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -774,7 +774,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_createResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -913,7 +913,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -973,7 +973,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -1012,7 +1012,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_createResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -1027,12 +1027,16 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllDetectPlatformsRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
+			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
 		});
 	}
 
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::LoadAllDetectPlatformsRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
+			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
 		});
 	}
 
@@ -1094,7 +1098,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -1126,7 +1130,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -1168,7 +1172,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 
 			if (response.m_createResult) {
 				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
@@ -1208,6 +1212,7 @@ namespace CommonDefines {
 				dataObj.insert(m_jsonKey.name, dRdata.name);
 				jarray.append(dataObj);
 			}
+			obj.insert(m_jsonKey.detectId, response.m_detectId);
 			obj.insert(m_jsonKey.totalDataSize, response.m_detectPlatformSubtypeCount);
 			obj.insert(m_jsonKey.data, jarray);
 		});
@@ -1226,6 +1231,7 @@ namespace CommonDefines {
 				response.m_detectPlatformSubtypeInfos.append(data);
 			}
 			response.m_detectPlatformSubtypeCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+			response.m_detectId = jsonObject.value(m_jsonKey.detectId).toInt();
 		});
 	}
 
@@ -1255,7 +1261,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 
@@ -1289,7 +1295,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = jsonObject.value(m_jsonKey.errorInfo).toString();
+			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
 

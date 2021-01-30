@@ -11,23 +11,31 @@
 #pragma once
 
 #include <QWidget>
-#include <QComboBox>
+#include <QHBoxLayout>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 
+#include "../abstractpage.h"
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/ambientnoisemodel.h"
 #include "../../customwidget/pageswitchbar.h"
+
 namespace Related {
 
-	class AmbientNoiseDataWidget : public QWidget
+	class AmbientNoiseDataWidget : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
 		AmbientNoiseDataWidget(QWidget *parent);
 		~AmbientNoiseDataWidget();
+
+		PageType getPageType() const;
+
+		void prepareBringToTop();
+
+		void setTaskId(QString taskId);
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);

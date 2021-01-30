@@ -54,7 +54,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage\pages\systemsetting\tablemodel;.\databasemanage\pages\taskrecord\dialog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage\pages\systemsetting\tablemodel;.\databasemanage\pages\taskrecord\dialog;.\databasemanage\pages\systemsetting;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;commondefines.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -130,9 +130,9 @@
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
-    <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\detectplatformsubtypemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\usermanagepage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.cpp" />
@@ -141,7 +141,7 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\dataoverviewwidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\datapreviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp" />
@@ -210,7 +210,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h" />
@@ -226,9 +225,10 @@
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h" />
-    <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\detectplatformsubtypemodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\detectplatformpage.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\datapreviewpage.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />

@@ -31,7 +31,6 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\dataoverviewwidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp" />
@@ -66,9 +65,6 @@
     <ClCompile Include="databasemanage\pages\taskrecord\experimentrecordpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\detectplatformsubtypemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,6 +72,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\datapreviewpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -124,7 +126,6 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\dataoverviewwidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h" />
@@ -149,9 +150,6 @@
     <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemsetting\tablemodel\detectplatformsubtypemodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -159,6 +157,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\customwidget\loadingdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemsetting\detectplatformpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\datapreviewpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

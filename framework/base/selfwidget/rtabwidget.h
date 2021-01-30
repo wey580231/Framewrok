@@ -57,6 +57,8 @@ namespace Base {
 		 */
 		void setWidgetBringToTopCallback(WidgetCallback callback);
 
+		void setSwitchWidget(QWidget * widget);
+
 	private slots:
 		void prepareSwitchWidget(int index);
 

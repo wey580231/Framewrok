@@ -11,23 +11,30 @@
 #pragma once
 
 #include <QWidget>
-#include <QComboBox>
+#include <QHBoxLayout>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
 
+#include "../abstractpage.h"
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/hxjplatforminfomodel.h"
 
 namespace Related {
 
-	class HXJPlatformInfoWidget : public QWidget
+	class HXJPlatformInfoWidget : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
 		HXJPlatformInfoWidget(QWidget *parent);
 		~HXJPlatformInfoWidget();
+
+		PageType getPageType() const;
+
+		void prepareBringToTop();
+
+		void setTaskId(QString taskId);
 
 	private:
 		void init();

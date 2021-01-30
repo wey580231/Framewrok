@@ -30,9 +30,15 @@ namespace Related {
 	void TaskOverViewItem::setTaskBaseInfo(Datastruct::TaskEntityData data)
 	{
 		m_taskData = data;
+		//
+		QDateTime startTime = QDateTime::fromString(data.startTime, "yyyy-MM-dd hh:mm:ss");
+		QString t_tempStartTime = startTime.toString("yyyy-MM-dd hh:mm");
+
+		QDateTime endTime = QDateTime::fromString(data.endTime, "yyyy-MM-dd hh:mm:ss");
+		QString t_tempEndTime = endTime.toString("yyyy-MM-dd hh:mm");
 
 		ui->label_3->setText(data.taskName);
-		ui->label_5->setText(data.startTime + QString("-") + data.endTime);
+		ui->label_5->setText(t_tempStartTime + QStringLiteral(" жа ") + t_tempEndTime);
 		ui->label_7->setText(data.location);
 	}
 
