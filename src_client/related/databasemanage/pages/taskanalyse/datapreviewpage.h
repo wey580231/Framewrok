@@ -26,21 +26,26 @@
 
 namespace Related {
 
-	class DataOverviewWidget : public AbstractPage
+	class DataPreviewPage : public AbstractPage
 	{
 		Q_OBJECT
 
 	public:
-		DataOverviewWidget(QWidget *parent = nullptr);
-		~DataOverviewWidget();
+		DataPreviewPage(QWidget *parent = nullptr);
+		~DataPreviewPage();
 
 		PageType getPageType() const;
+
 		void prepareBringToTop();
 
 		void setTaskId(QString taskId);
 
+	signals:
+		void signalOpenAudioDataPage(QString dataId);
+
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void slotTableDoubleClicked(QModelIndex index);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
 
@@ -53,6 +58,10 @@ namespace Related {
 		Base::RTableView * m_tableView;
 		DataOverviewMolel *m_tableModel;
 		PageSwitchBar * m_pageSwitch;
+
+		bool m_firstLoadData;									/*!< 第一次加载页面显示 */
+		QString m_taskId;										/*!< 任务Id */
+		int m_seleteTableRow;									/*!< 选中行数 */
 	};
 
 }//namespace Related 

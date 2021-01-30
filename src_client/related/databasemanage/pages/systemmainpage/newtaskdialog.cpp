@@ -186,7 +186,6 @@ namespace Related {
 		if (imageList.isEmpty())
 			return;
 
-
 		QList<QFileInfo> fileInfos;
 		for (QString fileName : imageList) {
 			QFileInfo fileInfo(fileName);

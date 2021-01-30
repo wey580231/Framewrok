@@ -808,15 +808,13 @@ namespace Related {
 		Table::DetectPlatformSubtypeEntity detectPlatformSubtype;
 
 		Base::RSelect rs(detectPlatformSubtype.table);
-		rs.select(detectPlatformSubtype.table)
+		rs.orderBy(detectPlatformSubtype.table, detectPlatformSubtype.id, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(detectPlatformSubtype.detectId, request.m_detectId));
 
-		QString tempSql = rs.sql() + QString(" order by %1  desc").arg(detectPlatformSubtype.id);
-
 		QSqlQuery query(m_database->sqlDatabase());
 
-		if (query.exec(tempSql)) {
+		if (query.exec(rs.sql())) {
 			while (query.next()) {
 				Datastruct::DetectPlatformSubtypeEntityData data;
 				data.id = query.value(detectPlatformSubtype.id).toInt();
@@ -824,6 +822,7 @@ namespace Related {
 				data.name = query.value(detectPlatformSubtype.name).toString();
 				response.m_detectPlatformSubtypeInfos.append(data);
 			}
+			response.m_detectId = request.m_detectId;
 			response.m_detectPlatformSubtypeCount = response.m_detectPlatformSubtypeInfos.size();
 		}
 		return response;

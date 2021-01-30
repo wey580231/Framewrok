@@ -1,7 +1,6 @@
 #include "hxjplatforminfowidget.h"
 
 #include <QDebug>
-#include <QHBoxLayout>
 
 #include "../../utils/util.h"
 #include "../../customwidget/pageswitchbar.h"
@@ -10,7 +9,7 @@
 namespace Related {
 
 	HXJPlatformInfoWidget::HXJPlatformInfoWidget(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent)
 	{
 		init();
 	}
@@ -18,6 +17,19 @@ namespace Related {
 	HXJPlatformInfoWidget::~HXJPlatformInfoWidget()
 	{
 
+	}
+
+	PageType HXJPlatformInfoWidget::getPageType() const
+	{
+		return PageType();
+	}
+
+	void HXJPlatformInfoWidget::prepareBringToTop()
+	{
+	}
+
+	void HXJPlatformInfoWidget::setTaskId(QString taskId)
+	{
 	}
 
 	void HXJPlatformInfoWidget::init()

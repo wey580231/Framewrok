@@ -13,7 +13,6 @@ namespace Related {
 		: AbstractPage(parent)
 	{
 		init();
-		initConnect();
 	}
 
 	OtherSettingPage::~OtherSettingPage()
@@ -25,41 +24,24 @@ namespace Related {
 		return Page_Setting_SystemSetting;
 	}
 
-
-	void OtherSettingPage::processQueryAllDetectPlatformResponse(Datastruct::LoadAllDetectPlatformsResponse response )
+	void OtherSettingPage::prepareBringToTop()
 	{
-	}
-
-	void OtherSettingPage::processQueryAllDetectPlatformSubtypeResponse(Datastruct::LoadAllDetectPlatformSubtypesResponse response)
-	{
+		m_detectPlatformPage->prepareBringToTop();
 	}
 
 	void OtherSettingPage::init()
 	{
+		m_detectPlatformPage = new DetectPlatformPage();
+		m_detectPlatformPage->setMaximumHeight(400);
+		m_detectPlatformPage->setMaximumWidth(250);
 
-	}
 
-	void OtherSettingPage::initConnect()
-	{
-		
-		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
-		{
-			m_comboBox = new QComboBox();
+		QVBoxLayout * mainLayout = new QVBoxLayout();
+		mainLayout->addWidget(m_detectPlatformPage);
+		mainLayout->addStretch();
 
-		}
-
-	}
-
-	void OtherSettingPage::refreshCurrDetectPlatform()
-	{
-		Datastruct::LoadAllDetectPlatformsRequest request;
-		NetConnector::instance()->write(request);
-	}
-
-	void OtherSettingPage::refreshCurrDetectPlatformSubtype(int detectId)
-	{
-		Datastruct::LoadAllDetectPlatformsRequest request;
-		NetConnector::instance()->write(request);
+		mainLayout->setContentsMargins(4,4,4,4);
+		this->setLayout(mainLayout);
 	}
 
 } //namespace Related 

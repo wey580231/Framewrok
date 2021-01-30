@@ -1,8 +1,7 @@
 #include "ambientnoisedatawidget.h"
 
-
 #include <QDebug>
-#include <QHBoxLayout>
+
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
@@ -10,12 +9,25 @@
 namespace Related {
 
 	AmbientNoiseDataWidget::AmbientNoiseDataWidget(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent)
 	{
 		init();
 	}
 
 	AmbientNoiseDataWidget::~AmbientNoiseDataWidget()
+	{
+	}
+
+	PageType AmbientNoiseDataWidget::getPageType() const
+	{
+		return PageType();
+	}
+
+	void AmbientNoiseDataWidget::prepareBringToTop()
+	{
+	}
+
+	void AmbientNoiseDataWidget::setTaskId(QString taskId)
 	{
 	}
 
