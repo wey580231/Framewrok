@@ -32,6 +32,16 @@ namespace Base {
 		void notify(const QString &title, const QString &icon, const QString &content);
 
 		/*! 
+		 * @brief 新消息出现的位置
+		 */
+		enum NotifyApperPosition {
+			Appear_Top,		/*!< 从窗口右上角出现 */
+			Appear_Bottom		/*!< 从窗口右下角出现 */
+		};
+		
+		void setAppearPosition(NotifyApperPosition pos);
+
+		/*! 
 		 * @brief 设置通知最大显示数量
 		 * @details 不建议通知数量超过6个
 		 * @param count >0
@@ -57,6 +67,9 @@ namespace Base {
 
 		void reArrange();
 		void showNext();
+
+	private:
+		NotifyApperPosition m_notifyAppeartion;
 
 		QQueue<NotifyData> m_dataQueue;
 		QList<Notify*> m_notifyList;	/*!< 当前通知列表 */
