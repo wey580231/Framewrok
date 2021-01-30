@@ -106,7 +106,6 @@ namespace CommonDefines {
 		bool unrap(const QByteArray & data, Datastruct::DutyRecordModifyResponse & response);
 
 		//TODO 20210125 23:15:29 有关试验记录
-
 		QByteArray wrap(const Datastruct::ExperimentRecordCreateRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::ExperimentRecordCreateRequest & request);
 

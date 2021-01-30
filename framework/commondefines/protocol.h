@@ -208,7 +208,7 @@ namespace Datastruct {
 	struct TaskCreateResponse {
 		TaskCreateResponse() : m_createResult(false) { }
 		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
-		QString m_errorInfo;		/*!< 注册失败时说明失败原因 */
+		ErrorCode m_errorInfo;		/*!< 注册失败时说明失败原因 */
 
 		TaskEntityData taskInfo;
 	};
@@ -268,7 +268,7 @@ namespace Datastruct {
 		TaskDeleteResponse() : m_deleteResult(false) {
 		}
 		bool m_deleteResult;					/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;					/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;					/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -303,7 +303,7 @@ namespace Datastruct {
 		TaskSimpleResponse() : m_result(false) {
 		}
 		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
-		QString m_errorInfo;			/*!< 注册失败时说明失败原因 */
+		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
 
 		TaskEntityData taskInfo;
 	};
@@ -349,7 +349,7 @@ namespace Datastruct {
 		DutyRecordCreateResponse(): m_createResult(false){
 		}
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
 		DutyRecordEntityData m_dutyRecordInfo;
 	};
@@ -395,7 +395,7 @@ namespace Datastruct {
 		DutyRecordDeleteResponse() : m_deleteResult(false) {
 		}
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -425,7 +425,7 @@ namespace Datastruct {
 		DutyRecordModifyResponse() : m_modifyResult(false) {
 		}
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -461,7 +461,7 @@ namespace Datastruct {
 		ExperimentRecordCreateResponse() : m_createResult(false) {
 		}
 		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
 
 		ExperimentRecordEntityData m_experimentRecordInfo;
 	};
@@ -507,7 +507,7 @@ namespace Datastruct {
 		ExperimentRecordDeleteResponse() : m_deleteResult(false) {
 		}
 		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -545,7 +545,7 @@ namespace Datastruct {
 		ExperimentRecordModifyResponse() : m_modifyResult(false) {
 		}
 		bool m_modifyResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;		/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -563,7 +563,7 @@ namespace Datastruct {
 	struct  DetectPlatformCreateResponse {
 		DetectPlatformCreateResponse() : m_createResult(false) { }
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
 		DetectPlatformEntityData m_detectPlatformInfo;
 
@@ -573,7 +573,10 @@ namespace Datastruct {
 	 * @brief   加载所有侦测平台请求
 	 */
 	struct  LoadAllDetectPlatformsRequest {
-		LoadAllDetectPlatformsRequest() {}
+		LoadAllDetectPlatformsRequest():m_offsetIndex(0), m_limitIndex(0){}
+		int m_offsetIndex;						/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;						/*!< 当前页面显示条数 */
+
 	};
 
 	/*!
@@ -598,7 +601,7 @@ namespace Datastruct {
 	struct DetectPlatformDeleteResponse {
 		DetectPlatformDeleteResponse() : m_deleteResult(false) {}
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -616,7 +619,7 @@ namespace Datastruct {
 	struct DetectPlatformModifyResponse {
 		DetectPlatformModifyResponse() : m_modifyResult(false) {}
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -635,7 +638,7 @@ namespace Datastruct {
 	struct DetectPlatformSubtypeCreateResponse {
 		DetectPlatformSubtypeCreateResponse() : m_createResult(false) { }
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
 		DetectPlatformSubtypeEntityData m_dutyRecordInfo;
 	};
@@ -653,6 +656,7 @@ namespace Datastruct {
 	 */
 	struct LoadAllDetectPlatformSubtypesResponse {
 		LoadAllDetectPlatformSubtypesResponse() : m_detectPlatformSubtypeCount(0) { }
+		int m_detectId;
 		int m_detectPlatformSubtypeCount;													/*!< 总条数 */
 		QList<DetectPlatformSubtypeEntityData > m_detectPlatformSubtypeInfos;				/*!< 结果集合 */
 	};
@@ -672,7 +676,7 @@ namespace Datastruct {
 	struct DetectPlatformSubtypeDeleteResponse {
 		DetectPlatformSubtypeDeleteResponse() : m_deleteResult(false) {}
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 	/*!
@@ -691,7 +695,7 @@ namespace Datastruct {
 	struct DetectPlatformSubtypeModifyResponse {
 		DetectPlatformSubtypeModifyResponse() : m_modifyResult(false) {}
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
-		QString m_errorInfo;				/*!< 创建失败时说明失败原因 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
 } // namespace Datastruct

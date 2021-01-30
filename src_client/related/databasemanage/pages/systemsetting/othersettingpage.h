@@ -10,19 +10,15 @@
 #pragma once
 
 #include <QWidget>
-#include <QComboBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
 
-#include <base/selfwidget/tablemode/rtableview.h>
 #include <base/selfwidget/rmessagebox.h>
 
 #include "../abstractpage.h"
-#include "../../customwidget/pageswitchbar.h"
-#include "../../customwidget/operationtoolspage.h"
 
-#include "tablemodel/detectplatformsubtypemodel.h"
+#include "detectplatformpage.h"
 
 namespace Related {
 
@@ -36,22 +32,15 @@ namespace Related {
 
 		PageType getPageType() const;
 
+		void prepareBringToTop();
+
 	private slots:
-		void processQueryAllDetectPlatformResponse(Datastruct::LoadAllDetectPlatformsResponse response);
-		void processQueryAllDetectPlatformSubtypeResponse(Datastruct::LoadAllDetectPlatformSubtypesResponse response);
+
 	private:
 		void init();
-		void initConnect();
-
-		void refreshCurrDetectPlatform();
-		void refreshCurrDetectPlatformSubtype(int detectId);
 
 	private:
-		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */
-		QComboBox * m_comboBox;
-		Base::RTableView * m_detectPlatformSubtypeTableView;
-		PageSwitchBar * m_pageSwitch;								/*!< 切换页 */
-		DetectPlatformSubtypeModel * m_detectPlatformSubtypeTableModel;
+		DetectPlatformPage * m_detectPlatformPage;						/*!< 侦测平台 */
 
 	};
 

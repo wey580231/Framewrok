@@ -44,16 +44,18 @@ namespace Related {
 		Page_TaskDataAnalyse,	/*!< 任务数据分析 */	
 
 		/*!< 子页面，按照‘Page_主页面_子页面’格式 */
-		Page_Setting_UserManage,	/*!< 用户管理 */
-		Page_Setting_SystemSetting,	/*!< 系统设置 */
-
+		Page_Setting_UserManage,				/*!< 用户管理 */
+		Page_Setting_SystemSetting,				/*!< 系统设置 */
+		Page_Setting_DetectPlatformPage,		/*!< 侦测平台 */	
 		/*!<  */
 		Page_TaskRecord_DutyRecord,				/*!< 值班日志 */
 		Page_TaskRecord_ExperimentRecord,		/*!< 试验记录 */
 		Page_TaskRecord_TaskReport,				/*!< 任务报告 */
 
-		Page_TaskAnalyse_DataOverview			/*!< 数据预览 */
-
+		Page_TaskAnalyse_DataOverview,			/*!< 数据预览 */
+		Page_TaskAnalyse_WavData,				/*!< 音频信息 */
+		//Page_TaskAnalyse_WavData,				/*!< 音频信息 */
+		//Page_TaskAnalyse_WavData				/*!< 音频信息 */
 	};
 
 	/*!

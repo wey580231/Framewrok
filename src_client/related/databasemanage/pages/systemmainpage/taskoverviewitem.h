@@ -10,6 +10,7 @@
  #pragma once
 
 #include <QWidget>
+#include <QDateTime>
 namespace Ui { class TaskOverViewItem; };
 
 #include <base\util\widgetanimation.h>

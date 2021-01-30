@@ -78,6 +78,20 @@ namespace Base {
 		m_bringToTopCallback = callback;
 	}
 
+	void  RTabWidget::setSwitchWidget(QWidget * widget)
+	{
+		int t_index = 0;
+		int t_count = m_widgetContainer->count();
+		for (int i = 0; i < t_count; i ++) {
+			QWidget * t_tempWidget = m_widgetContainer->widget(i);
+			if (t_tempWidget == widget) {
+				t_index = i;
+			}
+		}
+		m_tabBar->setCurrentIndex(t_index);
+		prepareSwitchWidget(t_index);
+	}
+
 	void RTabWidget::prepareSwitchWidget(int index)
 	{
 		QWidget * preWidget = m_widgetContainer->currentWidget();
