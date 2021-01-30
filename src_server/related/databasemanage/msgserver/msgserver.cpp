@@ -1,42 +1,42 @@
-#include "netacceptor.h"
+#include "msgserver.h"
 
 #include <QDebug>
 #include "../global.h"
 
 namespace Related {
 
-	NetAcceptor * NetAcceptor::m_instance = nullptr;
+	MsgServer * MsgServer::m_instance = nullptr;
 
-	NetAcceptor::NetAcceptor(QObject *parent)
+	MsgServer::MsgServer(QObject *parent)
 		: QObject(parent)
 	{
 	}
 
-	NetAcceptor * NetAcceptor::instance()
+	MsgServer * MsgServer::instance()
 	{
 		if (m_instance == nullptr)
-			m_instance = new NetAcceptor();
+			m_instance = new MsgServer();
 
 		return m_instance;
 	}
 
-	NetAcceptor::~NetAcceptor()
+	MsgServer::~MsgServer()
 	{
 	}
 
-	void NetAcceptor::start(QString localIp, ushort localPort)
+	void MsgServer::start(QString localIp, ushort localPort)
 	{
 		m_dataEventLoop = new Network::Uv_EventLoop();
 
 		m_dataTcpServer = new Network::Uv_TcpServer(m_dataEventLoop->eventLoop());
-		m_dataTcpServer->setNewConnectionCallBack(std::bind(&NetAcceptor::newTcpConnectionCallback, this, std::placeholders::_1));
-		m_dataTcpServer->setMessageRecvCallback(std::bind(&NetAcceptor::newMessageCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+		m_dataTcpServer->setNewConnectionCallBack(std::bind(&MsgServer::newTcpConnectionCallback, this, std::placeholders::_1));
+		m_dataTcpServer->setMessageRecvCallback(std::bind(&MsgServer::newMessageCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
 		m_dataTcpServer->start(localIp.toStdString(), localPort);
 		m_dataEventLoop->startLoop();
 	}
 
-	void NetAcceptor::processResponseUnit(ResponseUnit * unit)
+	void MsgServer::processResponseUnit(ResponseUnit * unit)
 	{
 		{
 			QMutexLocker locker(&m_clientMutex);
@@ -54,7 +54,7 @@ namespace Related {
 	 * @brief 接收新客户端连接请求
 	 * @param remoteClient 客户端连接
 	 */
-	void NetAcceptor::newTcpConnectionCallback(Network::AcceptTcpClient * remoteClient)
+	void MsgServer::newTcpConnectionCallback(Network::AcceptTcpClient * remoteClient)
 	{
 		RemoteClientInfoPtr ptr(new RemoteClientInfo());
 		ptr->m_tcpClient = remoteClient;
@@ -71,7 +71,7 @@ namespace Related {
 	 * @param data 数据区起始地址
 	 * @param dataLen 接收数据的长度
 	 */
-	void NetAcceptor::newMessageCallback(Network::AcceptTcpClient * remoteClient, const char* data, int dataLen)
+	void MsgServer::newMessageCallback(Network::AcceptTcpClient * remoteClient, const char* data, int dataLen)
 	{
 		RemoteClientInfoPtr clientInfo;
 		{
@@ -148,7 +148,7 @@ namespace Related {
 		}
 	}
 
-	bool NetAcceptor::searchNextPackHead(Base::RFixedRingBuffer & ringBuffer)
+	bool MsgServer::searchNextPackHead(Base::RFixedRingBuffer & ringBuffer)
 	{
 		qint64 t_iHasSearchLen = 1;
 		int t_iPackHeadLen = sizeof(Datastruct::PacketHead);

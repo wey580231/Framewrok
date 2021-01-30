@@ -8,8 +8,8 @@
 #include <base/util/rsingleton.h>
 #include <base/common/sql/databasemanager.h>
 
-#include "../net/requestprocessthread.h"
-#include "../net/netacceptor.h"
+#include "../msgserver/requestprocessthread.h"
+#include "../msgserver/msgserver.h"
 
 namespace Related {
 
@@ -87,12 +87,12 @@ namespace Related {
 		QString localDataIp = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, "127.0.0.1").toString();
 		ushort localDataPort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, 9999).toInt();	
 		
-		NetAcceptor::instance()->start(localDataIp, localDataPort);
+		MsgServer::instance()->start(localDataIp, localDataPort);
 	}
 
 	void MainWindow::processResponse(ResponseUnit * unit)
 	{
-		NetAcceptor::instance()->processResponseUnit(unit);
+		MsgServer::instance()->processResponseUnit(unit);
 	}
 
 } //namespace Related 

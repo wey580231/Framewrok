@@ -114,8 +114,8 @@
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
     <ClCompile Include="databasemanage\global.cpp" />
-    <ClCompile Include="databasemanage\net\netacceptor.cpp" />
-    <ClCompile Include="databasemanage\net\requestprocessthread.cpp" />
+    <ClCompile Include="databasemanage\msgserver\msgserver.cpp" />
+    <ClCompile Include="databasemanage\msgserver\requestprocessthread.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
     <ClCompile Include="forwardcontroller\dataforwardclient.cpp" />
@@ -137,8 +137,8 @@
     <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <ClInclude Include="databasemanage\global.h" />
-    <QtMoc Include="databasemanage\net\netacceptor.h" />
-    <QtMoc Include="databasemanage\net\requestprocessthread.h" />
+    <QtMoc Include="databasemanage\msgserver\msgserver.h" />
+    <QtMoc Include="databasemanage\msgserver\requestprocessthread.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />
     <ClInclude Include="forwardcontroller\dataforwardserver.h" />

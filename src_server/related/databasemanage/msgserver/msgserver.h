@@ -24,20 +24,20 @@ namespace Related {
 
 	typedef QSharedPointer<RemoteClientInfo> RemoteClientInfoPtr;
 
-	class NetAcceptor : public QObject
+	class MsgServer : public QObject
 	{
 		Q_OBJECT
 
 	public:
-		static NetAcceptor * instance();
-		~NetAcceptor();
+		static MsgServer * instance();
+		~MsgServer();
 
 		void start(QString localIp,ushort localPort);
 
 		void processResponseUnit(ResponseUnit * unit);
 
 	private:
-		NetAcceptor(QObject *parent = nullptr);
+		MsgServer(QObject *parent = nullptr);
 
 		void newTcpConnectionCallback(Network::AcceptTcpClient * remoteClient);
 		void newMessageCallback(Network::AcceptTcpClient * remoteClient, const char* data, int dataLen);
@@ -45,7 +45,7 @@ namespace Related {
 		bool searchNextPackHead(Base::RFixedRingBuffer & ringBuffer);
 
 	private:
-		static NetAcceptor * m_instance;
+		static MsgServer * m_instance;
 
 		QMap<int, RemoteClientInfoPtr> m_clients;		/*!< key:连接编号，value:客户端连接句柄 */
 
