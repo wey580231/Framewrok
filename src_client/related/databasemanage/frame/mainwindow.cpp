@@ -88,6 +88,7 @@ namespace Related {
 
 		//全局消息通知
 		Global::G_Notify = new Base::NotifyManager();
+		//Global::G_Notify->setAppearPosition(Base::NotifyManager::Appear_Top);
 	}
 
 	void MainWindow::initConnect()

@@ -38,7 +38,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\CustomWin32.props" />
+    <Import Project="..\..\CustomWin32.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
@@ -49,6 +49,7 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">
+    <IncludePath>$(SolutionDir)..\3rdPartyLib\libuv1_40\include\;$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -65,7 +66,7 @@
       <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\pages\taskoverview\statisticalgraph;.\databasemanage\pages\systemmainpage\controlpage;.\databasemanage\pages\systemmainpage;.\databasemanage\pages\systemmainpage\controlwidget;.\databasemanage\pages\taskrecord\tablemodel;.\databasemanage\pages\taskanalyse\tablemodel;.\databasemanage\pages\systemsetting\tablemodel;.\databasemanage\pages\taskrecord\dialog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>base.lib;network.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>base.lib;network.lib;core.lib;commondefines.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="QtSettings">
@@ -98,13 +99,13 @@
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DebugInformationFormat>None</DebugInformationFormat>
-      <Optimization>MaxSpeed</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

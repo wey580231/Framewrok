@@ -22,9 +22,11 @@ copy "$(TargetDir)$(ProjectName).dll"  "$(SolutionDir)..\..\$(SolutionName)_buil
     </PreBuildEvent>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>../;$(FrameWorkDir);$(QTDIR)\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -161,9 +161,6 @@
     <ClCompile Include="selfwidget\rmessagebox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="selfwidget\rwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="selfwidget\toolbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -210,9 +207,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\sql\sqliteutil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="selfwidget\switchpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="selfwidget\rtabbar.cpp">
@@ -289,9 +283,6 @@
     <QtMoc Include="selfwidget\rmessagebox.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="selfwidget\rwidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="selfwidget\toolbar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -314,9 +305,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="common\stylemanager.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="selfwidget\switchpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="selfwidget\rtabbar.h">
