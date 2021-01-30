@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "../../../net/netconnector.h"
+#include "../../../net/datanetconnector.h"
 #include "../../../net/signaldispatch.h"
 
 namespace Related {
@@ -118,6 +118,6 @@ namespace Related {
 		request.m_profileLength = data.profileLength;
 		request.m_profileDistance = data.profileDistance;
 
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 }//namespace Related 

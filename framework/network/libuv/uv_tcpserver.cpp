@@ -339,7 +339,12 @@ namespace Network {
 	{
 		m_connHandle->acceptClient = this;
 
-		int ret = uv_async_init(m_eventLoop, &m_async, asyncCB);
+		int ret = uv_mutex_init(&m_writeBuffMutex);
+		if (ret != 0) {
+			getLastUvError(ret);
+		}
+
+		ret = uv_async_init(m_eventLoop, &m_async, asyncCB);
 		if (ret == 0) {
 			m_async.data = this;
 		}
@@ -374,22 +379,10 @@ namespace Network {
 	{
 		Check_Return(data == nullptr || len <= 0, 0);
 
-		uv_async_send(&m_async);
+		uv_mutex_lock(&m_writeBuffMutex);
+		int t_writeToBuff = m_fixedRingBuffer.append(data, len);
+		uv_mutex_unlock(&m_writeBuffMutex);
 
-		int t_writeToBuff = 0;
-		while (!m_bForceQuit) {
-			uv_mutex_lock(&m_writeBuffMutex);
-			t_writeToBuff += m_fixedRingBuffer.append(data, len);
-			uv_mutex_unlock(&m_writeBuffMutex);
-
-			if (t_writeToBuff < len) {
-				//TODO 考虑等会再重试
-				continue;
-			}
-			else {
-				break;
-			}
-		}
 		uv_async_send(&m_async);
 
 		return t_writeToBuff;
@@ -452,7 +445,6 @@ namespace Network {
 
 			if (iret) {
 				m_sendList.push_back(seg);
-				//RLOG_ERROR("client send error:%s", RUtil::getLastUvError(iret).data());
 				fprintf(stdout, "send error. %s-%s\n", uv_err_name(iret), uv_strerror(iret));
 			}
 		}

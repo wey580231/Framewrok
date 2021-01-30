@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include "../../customwidget/customwidgetcontainer.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 
 namespace Related {
@@ -195,7 +195,7 @@ namespace Related {
 	void DetectPlatformPage::refreshCurrDetectPlatform()
 	{
 		Datastruct::LoadAllDetectPlatformsRequest request;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::insertDetectPlatform(int id, QString name)
@@ -203,14 +203,14 @@ namespace Related {
 		Datastruct::DetectPlatformCreateRequest request;
 		request.m_id = id;
 		request.m_name = name;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::deleteDetectPlatform(int id)
 	{
 		Datastruct::DetectPlatformDeleteRequest request;
 		request.m_id = id;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::modifyDetectPlatform(Datastruct::DetectPlatformEntityData data)
@@ -218,14 +218,14 @@ namespace Related {
 		Datastruct::DetectPlatformModifyRequest request;
 		request.m_id = data.id;
 		request.m_name = data.name;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::refreshCurrDetectPlatformSubtype(int detectId)
 	{
 		Datastruct::LoadAllDetectPlatformSubtypesRequest request;
 		request.m_detectId = detectId;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::insertDetectPlatformSubtype(int detectId,  int id, QString name)
@@ -234,7 +234,7 @@ namespace Related {
 		request.m_detectId = id;
 		request.m_id = id;
 		request.m_name = name;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::deleteDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data)
@@ -242,7 +242,7 @@ namespace Related {
 		Datastruct::DetectPlatformSubtypeModifyRequest request;
 		request.m_id = data.id;
 		request.m_detectId = data.detectId;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 	void DetectPlatformPage::modifyDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data)
@@ -251,7 +251,7 @@ namespace Related {
 		request.m_id = data.id;
 		request.m_detectId = data.detectId;
 		request.m_name = data.name;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 }//namespace Related 

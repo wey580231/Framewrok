@@ -9,7 +9,7 @@
  * @copyright NanJing RenGu.
  * @note
  */
- #pragma once
+#pragma once
 
 #include <QObject>
 #include <QDateTime>
@@ -25,84 +25,33 @@ namespace Related {
 	{
 		Q_OBJECT
 	public:
-		static NetConnector * instance();
+		NetConnector(QObject *parent = nullptr);
 		~NetConnector();
 
 		void setAutoReconnect(bool isAutoReconnect);
 
-		/*! 
+		/*!
 		 * @brief 主动向指定的ip和端口号发起连接
 		 * @attention 调用此方法后，需要等待接收netConnected信号，并判断对应的参数，才可以确定网络是否连接成功
 		 * @param remoteIp 远程服务器IP
 		 * @param remotePort 远程服务器端口号
 		 * @return true:调用成功，不不代表网络连接成功；false:调用失败
 		 */
-		bool connectTo(QString remoteIp,ushort remotePort);
+		bool connectTo(QString remoteIp, ushort remotePort);
 
-		/*! 
+		/*!
 		 * @brief 与服务器的网络连接是否建立
 		 * @return true:已建立网络连接；false:未建立网络连接
 		 */
 		bool isConnected();
 
-		/*!
-		 * @brief   用户有关
-		 */
-		void write(const Datastruct::UserLoginRequest & request);
-		void write(const Datastruct::UserRegistRequest & request);
-		void write(const Datastruct::LoadAllUserRequest & request);
-		void write(const Datastruct::OperateUserRequest & request);
-
-		/*!
-		 * @brief 任务操作有关
-		 */
-		void write(const Datastruct::TaskCreateRequest & request);
-		void write(const Datastruct::LoadAllTaskRequest & request);
-		void write(const Datastruct::TaskDeleteRequest & request);
-		void write(const Datastruct::TaskSimpleRequest & request);
-		
-		/*!
-		 * @brief  值班日志有关
-		 */
-		void write(const Datastruct::DutyRecordCreateRequest & request);
-		void write(const Datastruct::LoadAllDutyRecordRequest & request);
-		void write(const Datastruct::DutyRecordDeleteRequest & request);
-		void write(const Datastruct::DutyRecordModifyRequest & request);
-		
-		/*!
-		 * @brief   试验记录有关
-		 */
-		void write(const Datastruct::ExperimentRecordCreateRequest & request);
-		void write(const Datastruct::LoadAllExperimentRecordsRequest & request);
-		void write(const Datastruct::ExperimentRecordDeleteRequest & request);
-		void write(const Datastruct::ExperimentRecordModifyRequest & request);
-		
-		/*!
-		 * @brief   侦测平台有关
-		 */
-		void write(const Datastruct::DetectPlatformCreateRequest & request);
-		void write(const Datastruct::LoadAllDetectPlatformsRequest & request);
-		void write(const Datastruct::DetectPlatformDeleteRequest & request);
-		void write(const Datastruct::DetectPlatformModifyRequest & request);
-
-		/*!
-		 * @brief   侦测平台亚型有关
-		 */
-		void write(const Datastruct::DetectPlatformSubtypeCreateRequest & request);
-		void write(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
-		void write(const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
-		void write(const Datastruct::DetectPlatformSubtypeModifyRequest & request);
-
 	signals:
 		void netConnected(bool isConnected);
-		void netRecvData(QByteArray array);
 
-	private slots:
-		void respRectNetData(QByteArray array);
-
-	private:
-		NetConnector(QObject *parent = nullptr);
+	protected:
 		void initNetwork();
+
+		virtual void processNetData(QByteArray & data) = 0;
 
 		void connectCallBack(Network::Uv_TcpClient * client);
 		void closeCallBack(Network::Uv_TcpClient * client);
@@ -110,12 +59,9 @@ namespace Related {
 
 		bool searchNextPackHead();
 
-		QByteArray makePacket(Datastruct::PacketType type,QByteArray & body);
 		void sendData(const QByteArray & data);
 
-	private:
-		static NetConnector * m_instance;
-
+	protected:
 		Network::Uv_EventLoop * m_eventLoop;		/*!< 事件循环线程 */
 		Network::Uv_TcpClient * m_dataTcpClient;	/*!< 普通数据连接 */
 

@@ -39,7 +39,6 @@ namespace Related {
 	private:
 		void init();
 
-
 	private:
 		DetectPlatformPage * m_detectPlatformPage;						/*!< Õì²âÆ½Ì¨ */
 

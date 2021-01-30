@@ -72,27 +72,12 @@ namespace Network {
 
 	int Uv_TcpClient::send(const char *data, int len)
 	{
-		if (!data || len <= 0) {
-			m_errorMsg = "send data is null or len less than zero!";
-			return 0;
-		}
+		Check_Return(data == nullptr || len <= 0, 0);
 
-		uv_async_send(&m_aysnc);
+		uv_mutex_lock(&m_writeBuffMutex);
+		int t_writeToBuff = m_fixedRingBuffer.append(data, len);
+		uv_mutex_unlock(&m_writeBuffMutex);
 
-		int t_writeToBuff = 0;
-		while (!m_bForceClosed) {
-			uv_mutex_lock(&m_writeBuffMutex);
-			t_writeToBuff += m_fixedRingBuffer.append(data, len);
-			uv_mutex_unlock(&m_writeBuffMutex);
-
-			if (t_writeToBuff < len) {
-				//TODO 考虑等会再重试
-				continue;
-			}
-			else {
-				break;
-			}
-		}
 		uv_async_send(&m_aysnc);
 
 		return t_writeToBuff;

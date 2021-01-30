@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 #include "../../net/signaldispatch.h"
 
 #include "../../customwidget/customwidgetcontainer.h"
@@ -39,9 +39,6 @@ namespace Related {
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 		mainLayout->addWidget(m_detectPlatformPage);
 		mainLayout->addStretch();
-
-		mainLayout->setContentsMargins(4,4,4,4);
-		this->setLayout(mainLayout);
 	}
 
 } //namespace Related 

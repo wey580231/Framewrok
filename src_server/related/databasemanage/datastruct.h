@@ -23,9 +23,11 @@ namespace Related {
 	 * @brief INI配置文件key
 	 */
 	struct ConfigKey {
-		QString m_netGroupId = "RemoteServer";
-		QString m_remoteServerIp = "ServerIp";
-		QString m_remoteServerDataPort = "ServerDataPort";
+		QString m_netGroupId = "LocalServer";
+
+		QString m_localDataServerIp = "DataServerIp";
+		QString m_localDataPort = "DataServerPort";
+		QString m_localFilePort = "FileServerPort";
 
 		QString m_dbGroupId = "Database";
 		QString m_dbType = "DatabaseType";

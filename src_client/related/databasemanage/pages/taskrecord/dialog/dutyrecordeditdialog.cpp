@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "../../../net/netconnector.h"
+#include "../../../net/datanetconnector.h"
 #include "../../../net/signaldispatch.h"
 
 namespace Related {
@@ -108,7 +108,7 @@ namespace Related {
 		request.m_windSpeed = info.windSpeed;
 		request.m_waveHigh = info.waveHigh;
 		request.m_oceanCurrents = info.oceanCurrents;
-		NetConnector::instance()->write(request);
+		DataNetConnector::instance()->write(request);
 	}
 
 }//namespace Related 

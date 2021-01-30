@@ -63,8 +63,10 @@ namespace Related {
 	private:
 		struct ConfigKey {
 			QString m_netGroupId = "RemoteServer";
+
 			QString m_remoteServerIp = "ServerIp";
-			QString m_remoteServerDataPort = "ServerDataPort";
+			QString m_remoteServerDataPort = "DataServerPort";
+			QString m_remoteServerFilePort = "FileServerPort";
 		};
 	
 	private:
@@ -78,7 +80,8 @@ namespace Related {
 		QWidget * m_systemWidget;
 
 		Base::RIPWidget * m_ipWidget;
-		QLineEdit * m_portWidget;
+		QLineEdit * m_dataPortWidget;
+		QLineEdit * m_filePortWidget;
 
 		Base::RIconButton * m_userRegistSetting;	/*!< ÓÃ»§×¢²á°´Å¥ */
 		QWidget * m_registWidget;

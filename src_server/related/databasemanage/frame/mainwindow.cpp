@@ -8,8 +8,10 @@
 #include <base/util/rsingleton.h>
 #include <base/common/sql/databasemanager.h>
 
-#include "../net/requestprocessthread.h"
-#include "../net/netacceptor.h"
+#include "../msgserver/requestprocessthread.h"
+#include "../msgserver/msgserver.h"
+
+#include "../fileserver/fileserver.h"
 
 namespace Related {
 
@@ -84,15 +86,18 @@ namespace Related {
 	void MainWindow::initNetwork()
 	{
 		ConfigKey ckey;
-		QString localDataIp = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, "127.0.0.1").toString();
-		ushort localDataPort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, 9999).toInt();	
+		QString localDataIp = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localDataServerIp, "127.0.0.1").toString();
+
+		ushort localDataPort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localDataPort, 8888).toInt();	
+		ushort localFilePort = Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_localFilePort, 9999).toInt();
 		
-		NetAcceptor::instance()->start(localDataIp, localDataPort);
+		MsgServer::instance()->start(localDataIp, localDataPort);
+		FileServer::instance()->start(localDataIp, localFilePort);
 	}
 
 	void MainWindow::processResponse(ResponseUnit * unit)
 	{
-		NetAcceptor::instance()->processResponseUnit(unit);
+		MsgServer::instance()->processResponseUnit(unit);
 	}
 
 } //namespace Related 

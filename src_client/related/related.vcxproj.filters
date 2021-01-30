@@ -74,6 +74,7 @@
     <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\net\datanetconnector.cpp">
     <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,6 +160,7 @@
     <QtMoc Include="databasemanage\customwidget\loadingdialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="databasemanage\net\datanetconnector.h">
     <QtMoc Include="databasemanage\pages\systemsetting\detectplatformpage.h">
       <Filter>Header Files</Filter>
     </QtMoc>

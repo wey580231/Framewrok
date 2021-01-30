@@ -26,7 +26,7 @@
 #include <commondefines/protocol.h>
 
 #include "../../net/signaldispatch.h"
-#include "../../net/netconnector.h"
+#include "../../net/datanetconnector.h"
 
 #include "../abstractpage.h"
 #include "../systemmainpage/overviewitem.h "
