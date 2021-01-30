@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include "../../customwidget/customwidgetcontainer.h"
+
 namespace Related {
 
 	TaskReportPage::TaskReportPage(QWidget *parent)
@@ -50,6 +52,15 @@ namespace Related {
 
 	void  TaskReportPage::initConnect()
 	{
+		CustomWidgetContainer * operationToolsWidget = new CustomWidgetContainer();
+		{
+
+		}
+
+		CustomWidgetContainer * editWidget = new CustomWidgetContainer();
+		{
+
+		}
 
 	}
 

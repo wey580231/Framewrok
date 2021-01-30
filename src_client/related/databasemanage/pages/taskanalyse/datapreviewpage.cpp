@@ -88,12 +88,12 @@ namespace Related {
 			QLabel * label = new QLabel();
 			label->setText(QStringLiteral("Õì²éÆ½Ì¨:"));
 			label->setFont(QFont(QStringLiteral("Î¢ÈíÑÅºÚ"), 15));
-			label->setMinimumSize(60, 35);
-			label->setMaximumSize(60, 35);
+// 			label->setMinimumSize(60, 35);
+// 			label->setMaximumSize(60, 35);
 
 			QComboBox * comboBox = new QComboBox();
-			comboBox->setMinimumSize(60, 35);
-			comboBox->setMaximumSize(60, 35);
+// 			comboBox->setMinimumSize(60, 35);
+// 			comboBox->setMaximumSize(60, 35);
 
 			QStringList list;
 			list << QStringLiteral("HXJ01") << QStringLiteral("HXJ02") << QStringLiteral("HXJ03");

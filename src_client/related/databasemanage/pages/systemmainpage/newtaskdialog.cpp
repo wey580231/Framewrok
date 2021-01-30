@@ -232,7 +232,7 @@ namespace Related {
 		}
 		else
 		{
-			int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("创建任务失败，请从新填写信息。"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+			int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("创建任务失败，请从新填写信息。"), Base::RMessageBox::Yes);
 			if (result != Base::RMessageBox::Yes) {
 				this->reject();
 			}

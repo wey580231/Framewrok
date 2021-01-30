@@ -12,6 +12,11 @@
 
 #include <QWidget>
 
+#include <base\selfwidget\iconbutton.h>
+#include <base/selfwidget/rmessagebox.h>
+#include <base\util\rutil.h>
+#include <commondefines/protocol.h>
+
 #include "../abstractpage.h"
 
 namespace Related {
