@@ -11,6 +11,8 @@
  #pragma once
 
 #include <QObject>
+#include <QSharedPointer>
+#include <QMutex>
 
 #include <commondefines/protocol.h>
 #include <network/libuv/uv_eventloop.h>
@@ -19,6 +21,8 @@
 #include "../datastruct.h"
 
 namespace Related {
+
+	typedef QSharedPointer<RemoteClientInfo> RemoteClientInfoPtr;
 
 	class NetAcceptor : public QObject
 	{
@@ -43,11 +47,11 @@ namespace Related {
 	private:
 		static NetAcceptor * m_instance;
 
-		QMap<int, RemoteClientInfo * > m_clients;		/*!< key:连接编号，value:客户端连接句柄 */
+		QMap<int, RemoteClientInfoPtr> m_clients;		/*!< key:连接编号，value:客户端连接句柄 */
 
 		Network::Uv_EventLoop * m_dataEventLoop;		/*!< 数据模块事件循环 */
 		Network::Uv_TcpServer * m_dataTcpServer;		/*!< 数据模块Tcp服务器 */
-
+		QMutex m_clientMutex;
 	};
 
 } //namespace Related 

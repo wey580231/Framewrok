@@ -38,10 +38,13 @@ namespace Related {
 
 	void NetAcceptor::processResponseUnit(ResponseUnit * unit)
 	{
-		//NOTE 20210122 未枷锁临时测试
-		if (m_clients.contains(unit->m_clientId)) {
-			RemoteClientInfo * client = m_clients.value(unit->m_clientId);
-			client->m_tcpClient->send(unit->m_resposneData.data(), unit->m_resposneData.size());
+		{
+			QMutexLocker locker(&m_clientMutex);
+
+			if (m_clients.contains(unit->m_clientId)) {
+				RemoteClientInfoPtr client = m_clients.value(unit->m_clientId);
+				client->m_tcpClient->send(unit->m_resposneData.data(), unit->m_resposneData.size());
+			}
 		}
 
 		delete unit;
@@ -53,10 +56,13 @@ namespace Related {
 	 */
 	void NetAcceptor::newTcpConnectionCallback(Network::AcceptTcpClient * remoteClient)
 	{
-		RemoteClientInfo * clientInfo = new RemoteClientInfo();
-		clientInfo->m_tcpClient = remoteClient;
+		RemoteClientInfoPtr ptr(new RemoteClientInfo());
+		ptr->m_tcpClient = remoteClient;
 
-		m_clients.insert(remoteClient->id(), clientInfo);
+		{
+			QMutexLocker locker(&m_clientMutex);
+			m_clients.insert(remoteClient->id(), ptr);
+		}
 	}
 
 	/*!
@@ -67,72 +73,78 @@ namespace Related {
 	 */
 	void NetAcceptor::newMessageCallback(Network::AcceptTcpClient * remoteClient, const char* data, int dataLen)
 	{
-		if (m_clients.contains(remoteClient->id())) {
+		RemoteClientInfoPtr clientInfo;
+		{
+			QMutexLocker locker(&m_clientMutex);
+			if (!m_clients.contains(remoteClient->id())) {
+				return;
+			}
 
-			RemoteClientInfo * clientInfo = m_clients.value(remoteClient->id());
-			clientInfo->m_recvRingBuffer.append(data, dataLen);
+			clientInfo = m_clients.value(remoteClient->id());
+		}
 
-			Datastruct::PacketHead packHead;
-			int packHeadLen = sizeof(Datastruct::PacketHead);
+		clientInfo->m_recvRingBuffer.append(data, dataLen);
 
-			if (clientInfo->m_recvRingBuffer.dataSize() > packHeadLen)
+		Datastruct::PacketHead packHead;
+		int packHeadLen = sizeof(Datastruct::PacketHead);
+
+		if (clientInfo->m_recvRingBuffer.dataSize() > packHeadLen)
+		{
+			do
 			{
-				do
+				clientInfo->m_recvRingBuffer.preRead((char *)&packHead, packHeadLen);
+
+				if (packHead.m_magicHead == PACK_HEAD)
 				{
-					clientInfo->m_recvRingBuffer.preRead((char *)&packHead, packHeadLen);
-
-					if (packHead.m_magicHead == PACK_HEAD)
+					//[1]至少存在多余一个完整数据包
+					if (packHead.m_dataLen <= clientInfo->m_recvRingBuffer.dataSize())
 					{
-						//[1]至少存在多余一个完整数据包
-						if (packHead.m_dataLen <= clientInfo->m_recvRingBuffer.dataSize())
-						{
-							int endCode = 0;
-							//NOTE 20190711 接收到数据长度为0时，需重新寻找下一个数据头
-							int t_offsetRead = packHead.m_dataLen - sizeof(Datastruct::PacketTail);
-							if (t_offsetRead > 0) {
-								clientInfo->m_recvRingBuffer.preRead(t_offsetRead, (char *)&endCode, sizeof(int));
-							}
-							else {
-								if (searchNextPackHead(clientInfo->m_recvRingBuffer))
-									continue;
-							}
-
-							//NOTE 20190710 在没有找到尾标志时，应该从当前位置开始去搜索下一个起始标识，避免网络数据一直堆积
-							if (endCode != PACK_TAIL) {
-								qDebug() << "start search next frame:" << packHead.m_packetType << packHead.m_dataLen << clientInfo->m_recvRingBuffer.dataSize();
-								if (searchNextPackHead(clientInfo->m_recvRingBuffer))
-									continue;
-								else
-									return;
-							}
-
-							//封装数据请求，加入处理队列，进行统一处理
-							RequestUnit * unit = new RequestUnit();
-							unit->m_clientId = remoteClient->id();
-							unit->m_requestData.resize(packHead.m_dataLen);
-							clientInfo->m_recvRingBuffer.read(unit->m_requestData.data(), packHead.m_dataLen);
-
-							G_RequestQuque.put(unit);
-
-							if (clientInfo->m_recvRingBuffer.dataSize() <= 0)
-								break;
-
-							if (clientInfo->m_recvRingBuffer.dataSize() >= packHeadLen)
-								continue;
+						int endCode = 0;
+						//NOTE 20190711 接收到数据长度为0时，需重新寻找下一个数据头
+						int t_offsetRead = packHead.m_dataLen - sizeof(Datastruct::PacketTail);
+						if (t_offsetRead > 0) {
+							clientInfo->m_recvRingBuffer.preRead(t_offsetRead, (char *)&endCode, sizeof(int));
 						}
 						else {
-							break;
+							if (searchNextPackHead(clientInfo->m_recvRingBuffer))
+								continue;
 						}
-					}
-					else
-					{
-						if (searchNextPackHead(clientInfo->m_recvRingBuffer))
+
+						//NOTE 20190710 在没有找到尾标志时，应该从当前位置开始去搜索下一个起始标识，避免网络数据一直堆积
+						if (endCode != PACK_TAIL) {
+							qDebug() << "start search next frame:" << packHead.m_packetType << packHead.m_dataLen << clientInfo->m_recvRingBuffer.dataSize();
+							if (searchNextPackHead(clientInfo->m_recvRingBuffer))
+								continue;
+							else
+								return;
+						}
+
+						//封装数据请求，加入处理队列，进行统一处理
+						RequestUnit * unit = new RequestUnit();
+						unit->m_clientId = remoteClient->id();
+						unit->m_requestData.resize(packHead.m_dataLen);
+						clientInfo->m_recvRingBuffer.read(unit->m_requestData.data(), packHead.m_dataLen);
+
+						G_RequestQuque.put(unit);
+
+						if (clientInfo->m_recvRingBuffer.dataSize() <= 0)
+							break;
+
+						if (clientInfo->m_recvRingBuffer.dataSize() >= packHeadLen)
 							continue;
-						else
-							return;
 					}
-				} while (clientInfo->m_recvRingBuffer.dataSize() > 0);
-			}
+					else {
+						break;
+					}
+				}
+				else
+				{
+					if (searchNextPackHead(clientInfo->m_recvRingBuffer))
+						continue;
+					else
+						return;
+				}
+			} while (clientInfo->m_recvRingBuffer.dataSize() > 0);
 		}
 	}
 
