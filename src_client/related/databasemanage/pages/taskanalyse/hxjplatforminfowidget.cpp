@@ -1,9 +1,11 @@
 #include "hxjplatforminfowidget.h"
 
 #include <QDebug>
+#include <QCheckBox>
+#include <QHBoxLayout>
+#include <QLabel>
 
 #include "../../utils/util.h"
-#include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
 
 namespace Related {
@@ -28,52 +30,67 @@ namespace Related {
 	{
 	}
 
-	void HXJPlatformInfoWidget::setTaskId(QString taskId)
-	{
-	}
-
 	void HXJPlatformInfoWidget::init()
 	{
-		m_operationToolsPage = new OperationToolsPage();
+		auto createCheckBox = [](QString boxName,int fixedWidth = 60) {
+			QCheckBox * box = new QCheckBox;
+			box->setFixedWidth(fixedWidth);
+			box->setText(boxName);
+			return box;
+		};
 
-		m_tableView = new Base::RTableView();
-		m_tableView->setFocusPolicy(Qt::NoFocus);
-		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+		CustomWidgetContainer * typeContainer = new CustomWidgetContainer();
+		{
+			QWidget * dataTypeWidget = new QWidget();
+			//dataTypeWidget->setFixedHeight(50);
+			QLabel * typeLabel = new QLabel();
+			typeLabel->setText(QStringLiteral("数据类型:"));
 
-		m_tableModel = new HXJPlatformInfoModel();
-		m_tableModel->prepareData();
+			QHBoxLayout * dataTypeLayout = new QHBoxLayout();
+			dataTypeLayout->addWidget(typeLabel);
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("温度")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("压力")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("深度")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("航向角")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("俯仰角")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("横滚角")));
+			dataTypeLayout->addStretch(1);
 
-		m_tableView->setModel(m_tableModel);
+			dataTypeWidget->setLayout(dataTypeLayout);
 
-		m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("平台名称"), 140));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("数据帧索引"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("录入时间"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("航向角")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("俯仰角")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("横滚角")));
+			typeContainer->setContent(dataTypeWidget);
+		}
 
-		PageSwitchBar * pageSwitch = new PageSwitchBar();
-		pageSwitch->setDataSize(m_tableModel->datasSize());
+		CustomWidgetContainer * workContainer = new CustomWidgetContainer();
+		{
+			QWidget * workStateWidget = new QWidget();
+			//workStateWidget->setFixedHeight(40);
 
-		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
-		cwidget->setContent(m_operationToolsPage);
+			QLabel * typeLabel = new QLabel();
+			typeLabel->setText(QStringLiteral("工作状态:"));
 
-		QWidget * twidget = new QWidget();
-		QVBoxLayout * cvlayout = new QVBoxLayout();
-		cvlayout->setContentsMargins(0, 0, 0, 0);
-		cvlayout->addWidget(m_tableView);
-		cvlayout->addWidget(pageSwitch);
-		twidget->setLayout(cvlayout);
+			QHBoxLayout * workLayout = new QHBoxLayout();
+			workLayout->addWidget(typeLabel);
+			workLayout->addWidget(createCheckBox(QStringLiteral("上浮状态"),90));
+			workLayout->addWidget(createCheckBox(QStringLiteral("下潜状态"), 90));
+			workLayout->addWidget(createCheckBox(QStringLiteral("水下航行状态"), 110));
+			workLayout->addStretch(1);
 
-		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
-		ctableView->setContent(twidget);
+			workStateWidget->setLayout(workLayout);
+			workContainer->setContent(workStateWidget);
+		}
+
+		CustomWidgetContainer * container = new CustomWidgetContainer();
+		container->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		{
+			
+		}
 
 		QVBoxLayout * vlayout = new QVBoxLayout();
 		vlayout->setContentsMargins(4, 4, 4, 4);
-		vlayout->addWidget(cwidget);
-		vlayout->addWidget(ctableView);
+		vlayout->addWidget(typeContainer);
+		vlayout->addWidget(workContainer);
+		vlayout->addWidget(container);
 		setLayout(vlayout);
 	}
 

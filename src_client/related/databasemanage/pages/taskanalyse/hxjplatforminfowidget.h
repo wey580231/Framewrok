@@ -18,7 +18,6 @@
 
 #include "../abstractpage.h"
 #include "../../customwidget/operationtoolspage.h"
-#include "tablemodel/hxjplatforminfomodel.h"
 
 namespace Related {
 
@@ -34,15 +33,11 @@ namespace Related {
 
 		void prepareBringToTop();
 
-		void setTaskId(QString taskId);
-
 	private:
 		void init();
 
 	private:
-		Base::RTableView * m_tableView;
-		HXJPlatformInfoModel *m_tableModel;
-		OperationToolsPage *m_operationToolsPage;
+
 	};
 
 }// namespace Related 
