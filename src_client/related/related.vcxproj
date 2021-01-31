@@ -251,6 +251,7 @@
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
+    <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavfeature.ui" />
     <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

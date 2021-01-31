@@ -22,6 +22,8 @@
 #include "../../customwidget/operationtoolspage.h"
 #include "tablemodel/audiodatamodel.h"
 
+namespace Ui {class WavFeature;}
+
 namespace Related {
 
 	class WavDataPage : public AbstractPage
@@ -42,7 +44,8 @@ namespace Related {
 		enum PageIndex {
 			P_DEMON,
 			P_LOFAR,
-			P_MAP
+			P_MAP,
+			P_AIS
 		};
 
 	private:
@@ -51,6 +54,8 @@ namespace Related {
 	private:
 		QStackedWidget * m_pageContainer;
 		QWidget * m_wavFeatureWidget;
+
+		Ui::WavFeature * m_wavFeatureUi;
 	};
 
 }//namespace Related 
