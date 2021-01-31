@@ -25,6 +25,7 @@
 #include "../abstractpage.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/operationtoolspage.h"
+
 #include "tablemodel/dutyrecordmodel.h"
 #include "dialog/dutyrecordeditdialog.h"
 

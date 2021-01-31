@@ -37,6 +37,7 @@ namespace Related {
 		/*!< 主要页面，用于左侧菜单栏切换 */
 		Page_SystemMainPage,	/*!< 系统主页 */
 		Page_TargetDatabase,	/*!< 系统目标库 */
+		Page_AisDataBase,		/*!< AIS数据库 */
 		Page_Setting,			/*!< 系统设置 */
 		
 		Page_TaskOverviewPage,	/*!< 任务概览页面 */
@@ -54,8 +55,8 @@ namespace Related {
 
 		Page_TaskAnalyse_DataOverview,			/*!< 数据预览 */
 		Page_TaskAnalyse_WavData,				/*!< 音频信息 */
-		//Page_TaskAnalyse_WavData,				/*!< 音频信息 */
-		//Page_TaskAnalyse_WavData				/*!< 音频信息 */
+
+		Page_AisDataBase_AisData				/*!< AIS数据 */
 	};
 
 	/*!
@@ -145,6 +146,9 @@ namespace Related {
 		T_TargetName,				/*!< 目标名称 */
 		T_Edttime,					/*!< 录取时间 */
 		T_Tonnage,					/*!< 吨位 */
+		T_Lon,					/*!< 经度 */
+		T_Lat,					/*!< 纬度 */
+		T_Speed,					/*!< 航行速度 */
 		T_AxlesNumber,				/*!< 轴数 */
 		T_Datalength,				/*!< 数据时长 */
 		T_Type						/*!< 类型 */
@@ -155,6 +159,9 @@ namespace Related {
 		QString targetName;			/*!< 目标名称 */
 		QString edttime;			/*!< 录取时间 */
 		double tonnage;				/*!< 吨位 */
+		double lon;				/*!< 经度 */
+		double lat;				/*!<纬度 */
+		double speed;				/*!< 航行速度 */
 		int  axlesNumber;			/*!< 轴数 */
 		int datalength;				/*!< 数据时长 */
 		int type;					/*!< 类型 */
@@ -349,6 +356,24 @@ namespace Related {
 		int rollAngle;				/*!< 横滚角 */
 	};
 
+	enum  AISDATAColumnIndex {
+		AIS_INDEX,					/*!< 唯一标识 */
+		AIS_TARGETID,				/*!< 目标标识 */
+		AIS_MMSI,					/*!< 船舶MMSI */
+		AIS_TIME,					/*!< 实时信号时间 */
+		AIS_LON,					/*!< 经度 */
+		AIS_LAT,					/*!< 纬度 */
+		AIS_COURSE,					/*!< 航迹向 */
+		AIS_TRUEHEAD,				/*!< 航首向 */
+		AIS_NAME,					/*!< 船名 */
+		AIS_SHIPTYPE,				/*!< 船舶以及货物类型 */
+		AIS_NAVSTATUS,				/*!< 航行状态 */
+		AIS_SPEED,					/*!< 航行速度 */
+		AIS_LENGTH,					/*!< 船长 */
+		AIS_WIDTH,					/*!< 船宽 */
+		AIS_BUILDDATE,				/*!< 建造时间 */
+		AIS_PORT,					/*!< 船籍港 */
+	};
 } //namespace Related
 
 

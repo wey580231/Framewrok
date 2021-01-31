@@ -137,7 +137,8 @@ namespace Related {
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
 			m_operationToolsPage = new OperationToolsPage();
-			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
+			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)),
+				this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
 			cwidget->setContent(m_operationToolsPage);
 		}
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>290</height>
+    <height>289</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -59,10 +59,11 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="styleSheet">
-         <string notr="true">background-color: rgba(0, 255, 127,200);</string>
+         <string notr="true">
+background-image:url(:/QYBlue/resource/qyblue/试验001.png) 0 0 0 0 stretch stretch;</string>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
