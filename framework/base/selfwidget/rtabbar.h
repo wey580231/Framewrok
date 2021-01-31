@@ -57,6 +57,7 @@ namespace Base {
 
 		void setTabAlignment(TabAlignment align);
 
+		void addTabButton(QString tabName,int index);
 		void addTabButton(RTabButton * butt, int index);
 		void setTabButtonEnabled(int index, bool flag);
 		int tabCount() const { return m_buttList.size(); }

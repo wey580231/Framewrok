@@ -153,5 +153,11 @@
         <file>resource/qyblue/loading/11.png</file>
         <file>resource/qyblue/断开.png</file>
         <file>resource/qyblue/连接.png</file>
+        <file>resource/qyblue/radio/播放.png</file>
+        <file>resource/qyblue/radio/放大.png</file>
+        <file>resource/qyblue/radio/剪切.png</file>
+        <file>resource/qyblue/radio/结束.png</file>
+        <file>resource/qyblue/radio/缩小.png</file>
+        <file>resource/qyblue/radio/暂停.png</file>
     </qresource>
 </RCC>

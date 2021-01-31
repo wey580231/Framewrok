@@ -55,7 +55,7 @@ namespace Related {
 			m_taskNumItem->setLabelData(QString::number(0));
 			m_taskNumItem->setLabelText(QStringLiteral("任务总数"));
 			m_taskNumItem->setLabelBackground(QColor(237, 168, 27));
-			m_taskNumItem->setLabelIcon(WRAP_RESOURCE(上传.));
+			m_taskNumItem->setLabelIcon(WRAP_RESOURCE(上传));
 			m_taskNumItem->setFixedSize(maxSize);
 			m_taskNumItem->setMinimumSize(minSize);
 
