@@ -36,23 +36,21 @@ namespace Related {
 
 		void prepareBringToTop();
 
-		void setTaskId(QString taskId);
-
 	private slots:
-		void slotTableDoubleClicked(QModelIndex index);
-		void respButtCliecked();
+
+	private:
+		enum PageIndex {
+			P_DEMON,
+			P_LOFAR,
+			P_MAP
+		};
+
 	private:
 		void init();
 
 	private:
-		QStackedWidget *m_StackedWidget;
-
-		//[]
-		Base::RTableView * m_tableView;
-		AudioDataModel *m_tableModel;
-		OperationToolsPage *m_operationToolsPage;
-		//[]
-
+		QStackedWidget * m_pageContainer;
+		QWidget * m_wavFeatureWidget;
 	};
 
 }//namespace Related 

@@ -48,7 +48,7 @@ namespace Related {
 	private:
 		Base::RTabWidget * m_tabWidget;
 
-		DataPreviewPage * m_dataPreviewPage;				/*!< 数据雨啦界面 */
+		DataPreviewPage * m_dataPreviewPage;				/*!< 数据预览界面 */
 		WavDataPage * m_audioDataWidget;					/*!< 音频数据展示界面 */
 		AmbientNoiseDataWidget * m_ambientNoiseDataWidget;	/*!< 环境噪声数据展示界面 */
 		HXJPlatformInfoWidget * m_hxjPlatformDataWidget;	/*!< HXJ平台信息展示界面 */

@@ -17,6 +17,7 @@
 
 /*!< 获取资源信息 */
 #define WRAP_RESOURCE(name) QStringLiteral(":/QYBlue/resource/qyblue/"#name".png")
+#define WRAP_RESOURCE_RADIO(name) QStringLiteral(":/QYBlue/resource/qyblue/radio/"#name".png")
 
 namespace Related {
 

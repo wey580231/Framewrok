@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
+    <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp" />
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
@@ -9,6 +10,7 @@
     <ClCompile Include="databasemanage\frame\leftpanel.cpp" />
     <ClCompile Include="databasemanage\frame\loginpage.cpp" />
     <ClCompile Include="databasemanage\global.cpp" />
+    <ClCompile Include="databasemanage\net\datanetconnector.cpp" />
     <ClCompile Include="databasemanage\net\netconnector.cpp" />
     <ClCompile Include="databasemanage\net\signaldispatch.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
@@ -21,6 +23,7 @@
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
@@ -31,6 +34,7 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp" />
+    <ClCompile Include="databasemanage\pages\taskanalyse\datapreviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp" />
@@ -42,7 +46,12 @@
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\experimentrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
@@ -56,29 +65,7 @@
     <ClCompile Include="forwardcontroller\webserver.cpp" />
     <ClCompile Include="databasemanage\frame\mainwindow.cpp" />
     <ClCompile Include="startupcallback.cpp" />
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\experimentrecordpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\customwidget\loadingdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\net\datanetconnector.cpp">
-    <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskanalyse\datapreviewpage.cpp">
+    <ClCompile Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,6 +90,7 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\customwidget\timerangeedit.h" />
+    <QtMoc Include="databasemanage\customwidget\loadingdialog.h" />
     <QtMoc Include="databasemanage\pages\abstractpage.h" />
     <QtMoc Include="databasemanage\pages\databasemanage\datamanagewidget.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\systemsettingwidget.h" />
@@ -138,33 +126,19 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.h" />
+    <QtMoc Include="databasemanage\net\datanetconnector.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\detectplatformpage.h" />
+    <QtMoc Include="databasemanage\pages\taskanalyse\datapreviewpage.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <QtMoc Include="databasemanage\frame\mainwindow.h" />
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\experimentrecordpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\customwidget\loadingdialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\net\datanetconnector.h">
-    <QtMoc Include="databasemanage\pages\systemsetting\detectplatformpage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskanalyse\datapreviewpage.h">
+    <QtMoc Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -173,6 +147,9 @@
     <QtUic Include="databasemanage\pages\systemmainpage\overviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemmainpage\taskoverviewitem.ui" />
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
+    <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

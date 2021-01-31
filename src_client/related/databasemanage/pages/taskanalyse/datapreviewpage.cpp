@@ -1,9 +1,11 @@
 #include "datapreviewpage.h"
 
 #include <QDebug>
+#include <QListView>
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
+#include "subpage/wavorigindatawindow.h"
 
 namespace Related {
 
@@ -41,24 +43,24 @@ namespace Related {
 	{
 		switch (type)
 		{
-		case OperationToolsPage::Butt_Add: {
+			case OperationToolsPage::Butt_Add: {
 
-		}
-			break;
-		case OperationToolsPage::Butt_Delete: {
-	
-		}
-			break;
-		case OperationToolsPage::Butt_Edit: {
+			}
+											   break;
+			case OperationToolsPage::Butt_Delete: {
 
-		}
-			break;
-		case OperationToolsPage::Butt_Refresh: {
+			}
+												  break;
+			case OperationToolsPage::Butt_Edit: {
 
-		}
-			break;
-		default:
-			break;
+			}
+												break;
+			case OperationToolsPage::Butt_Refresh: {
+
+			}
+												   break;
+			default:
+				break;
 		}
 	}
 
@@ -78,25 +80,38 @@ namespace Related {
 		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
+	void DataPreviewPage::showTableContextMenu(const QPoint & point)
+	{
+		m_tableMenu->exec(QCursor::pos());
+	}
+
+	void DataPreviewPage::analyseWav(bool flag)
+	{
+		slotTableDoubleClicked(QModelIndex());
+	}
+
+	void DataPreviewPage::viewWavOriginalData(bool flag)
+	{
+		WavOriginDataWindow window(this);
+		window.exec();
+	}
+
 	void DataPreviewPage::init()
 	{
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
 			m_operationToolsPage = new OperationToolsPage();
 			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
-			
+
 			QLabel * label = new QLabel();
 			label->setText(QStringLiteral("侦查平台:"));
-			label->setFont(QFont(QStringLiteral("微软雅黑"), 15));
-// 			label->setMinimumSize(60, 35);
-// 			label->setMaximumSize(60, 35);
 
 			QComboBox * comboBox = new QComboBox();
-// 			comboBox->setMinimumSize(60, 35);
-// 			comboBox->setMaximumSize(60, 35);
+			comboBox->setView(new QListView());
+			comboBox->setMinimumSize(120, 30);
 
 			QStringList list;
-			list << QStringLiteral("HXJ01") << QStringLiteral("HXJ02") << QStringLiteral("HXJ03");
+			list << QStringLiteral("所有平台") << QStringLiteral("HXJ01") << QStringLiteral("HXJ02") << QStringLiteral("HXJ03");
 			comboBox->addItems(list);
 
 			QWidget * widget = new QWidget();
@@ -105,32 +120,35 @@ namespace Related {
 			hLayout->addStretch();
 			hLayout->addWidget(label);
 			hLayout->addWidget(comboBox);
-			hLayout->setContentsMargins(0,0,0,0); 
+			hLayout->setContentsMargins(0, 0, 0, 0);
 			widget->setLayout(hLayout);
 			cwidget->setContent(widget);
 		}
-	
+
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
 		{
+			m_tableModel = new DataOverviewMolel();
+
 			m_tableView = new Base::RTableView();
+			m_tableView->setContextMenuPolicy(Qt::CustomContextMenu);
+			m_tableView->setModel(m_tableModel);
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-			m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
+
+			m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引"),60));
 			m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("编号"), 140));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("录入时间"), 180));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("试验名"), 180));
 			m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("平台名")));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("数据时长")));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("类型")));
-			
-			connect(m_tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTableDoubleClicked(QModelIndex)));
 
-			m_tableModel = new DataOverviewMolel();
-			m_tableView->setModel(m_tableModel);
+			connect(m_tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTableDoubleClicked(QModelIndex)));
+			connect(m_tableView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showTableContextMenu(const QPoint &)));
+
 			m_tableModel->prepareData();
 
-	
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
 			connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
@@ -144,6 +162,21 @@ namespace Related {
 			twidget->setLayout(cvlayout);
 
 			ctableView->setContent(twidget);
+		}
+
+		{
+			m_tableMenu = new QMenu();
+
+			m_analyseWav = new QAction();
+			m_analyseWav->setText(QStringLiteral("分析音频"));
+			connect(m_analyseWav, SIGNAL(triggered(bool)),this,SLOT(analyseWav(bool)));
+
+			m_viewOriginalData = new QAction();
+			m_viewOriginalData->setText(QStringLiteral("查看原始数据"));
+			connect(m_viewOriginalData, SIGNAL(triggered(bool)),this,SLOT(viewWavOriginalData(bool)));
+
+			m_tableMenu->addAction(m_analyseWav);
+			m_tableMenu->addAction(m_viewOriginalData);
 		}
 
 
