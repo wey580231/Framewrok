@@ -113,6 +113,15 @@ namespace Base {
 		}
 	}
 
+	void RTabBar::addTabButton(QString tabName, int index)
+	{
+		if (tabName.isEmpty())
+			return;
+
+		RTabButton * tabButt = new RTabButton(tabName);
+		addTabButton(tabButt, index);
+	}
+
 	/*!
 	 * @brief 设置tab按钮是否可用
 	 * @param[in] index 按钮索引

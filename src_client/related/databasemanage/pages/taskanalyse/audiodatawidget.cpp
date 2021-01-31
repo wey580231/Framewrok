@@ -2,10 +2,14 @@
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QTimeEdit>
 
+#include <base\selfwidget\rtabwidget.h>
 #include "../../utils/util.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/customwidgetcontainer.h"
+#include "../../global.h"
 
 namespace Related {
 
@@ -28,124 +32,147 @@ namespace Related {
 	{
 	}
 
-	void WavDataPage::setTaskId(QString taskId)
-	{
-	}
-
-
-	void WavDataPage::slotTableDoubleClicked(QModelIndex index)
-	{
-		//m_StackedWidget->setCurrentIndex(1);
-	}
-
-	void WavDataPage::respButtCliecked()
-	{
-		m_StackedWidget->setCurrentIndex(0);
-	}
-
 	void WavDataPage::init()
 	{
-		m_StackedWidget = new QStackedWidget();
-		
-		//音频数据表格
-		QWidget * dataTableWidget = new QWidget();
+		CustomWidgetContainer * wavEditContaienr = new CustomWidgetContainer();
+		wavEditContaienr->setFixedHeight(80);
 		{
-			m_operationToolsPage = new OperationToolsPage();
+			QWidget * toolWidget = new QWidget();
+			toolWidget->setFixedHeight(26);
 
-			m_tableView = new Base::RTableView();
-			m_tableView->setFocusPolicy(Qt::NoFocus);
-			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-			m_tableModel = new AudioDataModel();
-			m_tableModel->prepareData();
+			{
+				QHBoxLayout * tooLayout = new QHBoxLayout();
+				tooLayout->setContentsMargins(0,0,0,0);
 
-			m_tableView->setModel(m_tableModel);
-			m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
-			m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("文件名"), 140));
-			m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("时长"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("平台名称"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("数据长度")));
-			
-			connect(m_tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTableDoubleClicked(QModelIndex)));
+				auto createButt = [](QString icon) {
+					Base::RIconButton * butt = new Base::RIconButton();
+					butt->setIcon(QIcon(icon));
+					butt->setFixedSize(26,26);
+					return butt;
+				};
 
-			PageSwitchBar * pageSwitch = new PageSwitchBar();
-			pageSwitch->setDataSize(m_tableModel->datasSize());
+				Base::RIconButton * playButt = createButt(WRAP_RESOURCE_RADIO(播放));
+				Base::RIconButton * zoomInButt = createButt(WRAP_RESOURCE_RADIO(放大));
+				Base::RIconButton * cutButt = createButt(WRAP_RESOURCE_RADIO(剪切));
+				Base::RIconButton * endButt = createButt(WRAP_RESOURCE_RADIO(结束));
+				Base::RIconButton * zoomOutButt = createButt(WRAP_RESOURCE_RADIO(缩小));
+				Base::RIconButton * pauseButt = createButt(WRAP_RESOURCE_RADIO(暂停));	
 
-			CustomWidgetContainer * cwidget = new CustomWidgetContainer();
-			cwidget->setContent(m_operationToolsPage);
+				QLabel * cutStart = new QLabel();
+				cutStart->setFixedWidth(60);
+				cutStart->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+				cutStart->setText(QStringLiteral("开始时间"));
 
-			QWidget * twidget = new QWidget();
-			QVBoxLayout * cvlayout = new QVBoxLayout();
-			cvlayout->setContentsMargins(0, 0, 0, 0);
-			cvlayout->addWidget(m_tableView);
-			cvlayout->addWidget(pageSwitch);
-			twidget->setLayout(cvlayout);
+				QLabel * cutEnd = new QLabel();
+				cutEnd->setFixedWidth(60);
+				cutEnd->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+				cutEnd->setText(QStringLiteral("结束时间"));
 
-			CustomWidgetContainer * ctableView = new CustomWidgetContainer();
-			ctableView->setContent(twidget);
+				QString timeFormat("mm:ss:zzz");
+
+				QTimeEdit * cutTime = new QTimeEdit();
+				cutTime->setDisplayFormat(timeFormat);
+				cutTime->setFixedWidth(95);
+
+				QTimeEdit * endTime = new QTimeEdit();
+				endTime->setDisplayFormat(timeFormat);
+				endTime->setFixedWidth(95);
 
 
-			QVBoxLayout * vlayout = new QVBoxLayout();
-			vlayout->setContentsMargins(0, 0, 0, 0);
-			vlayout->addWidget(cwidget);
-			vlayout->addWidget(ctableView);
-			dataTableWidget->setLayout(vlayout);
+				tooLayout->addWidget(endButt);
+				tooLayout->addWidget(playButt);
+				tooLayout->addWidget(pauseButt);
+				tooLayout->addWidget(zoomInButt);
+				tooLayout->addWidget(zoomOutButt);
+				tooLayout->addWidget(cutButt);
+				tooLayout->addSpacing(10);
+
+				tooLayout->addWidget(cutStart);
+				tooLayout->addWidget(cutTime);
+				tooLayout->addWidget(cutEnd);
+				tooLayout->addWidget(endTime);
+
+				tooLayout->addStretch(1);
+
+				toolWidget->setLayout(tooLayout);
+			}
+
+			QWidget * wavGraphWidget = new QWidget();
+			wavGraphWidget->setFixedHeight(53);
+
+			QVBoxLayout * wavLayout = new QVBoxLayout();
+			wavLayout->setSpacing(1);
+			wavLayout->setContentsMargins(4, 4, 4, 4);
+
+			wavLayout->addWidget(toolWidget);
+			wavLayout->addWidget(wavGraphWidget);
+
+			QWidget * tmpWidget = new QWidget();
+			tmpWidget->setLayout(wavLayout);
+			wavEditContaienr->setContent(tmpWidget);
 		}
 
-		QWidget * t_spectrogramWidget = new QWidget();
+		CustomWidgetContainer * graphContaienr = new CustomWidgetContainer();
 		{
-			QLabel * label1 = new QLabel();
-			QLabel * label2 = new QLabel();
-			label1->setText(QStringLiteral("侦查平台："));
-			label2->setText(QStringLiteral("HXJ_01"));
+			Base::RTabBar * tabBar = new Base::RTabBar();
+			tabBar->setFixedHeight(40);
+			tabBar->setTabAlignment(Base::AlignCenter);
+			tabBar->addTabButton(QStringLiteral("Demon谱图"), P_DEMON);
+			tabBar->addTabButton(QStringLiteral("Lofar谱图"), P_LOFAR);
+			tabBar->addTabButton(QStringLiteral("态势信息谱图"), P_MAP);
 
+			m_pageContainer = new QStackedWidget();
 
-			QWidget *titleWidget = new QWidget();
-			Base::RIconButton * quitButton = new Base::RIconButton();
-			quitButton->setText(QStringLiteral("退出"));
-			quitButton->setFont(QFont(QStringLiteral("微软雅黑"), 10));
-			quitButton->setMinimumSize(40, 30);
-			connect(quitButton, SIGNAL(pressed()), this, SLOT(respButtCliecked()));
+			//DEMON
+			QWidget * demonWidget = new QWidget();
+			{
+				demonWidget->setStyleSheet("background-color:red");
+			}
 
-			QHBoxLayout * hLayout = new QHBoxLayout();
-			hLayout->addWidget(label1);
-			hLayout->addWidget(label2);
-			hLayout->addStretch();
-		//	hLayout->addWidget(quitButton);
-			titleWidget->setLayout(hLayout);
-			titleWidget->setMinimumHeight(48);
-			titleWidget->setMaximumHeight(48);
+			//LOFAR
+			QWidget * lofarWidget = new QWidget();
+			{
 
-			CustomWidgetContainer * View1 = new CustomWidgetContainer();
-			View1->setMaximumHeight(300);
+			}
 
+			//态势信息
+			QWidget * mapWidget = new QWidget();
+			{
 
-			CustomWidgetContainer * View2 = new CustomWidgetContainer();
+			}
 
+			m_pageContainer->addWidget(demonWidget);
+			m_pageContainer->addWidget(lofarWidget);
+			m_pageContainer->addWidget(mapWidget);
 
-			CustomWidgetContainer * View3 = new CustomWidgetContainer();
+			connect(tabBar, SIGNAL(currentIndexChanged(int)), m_pageContainer, SLOT(setCurrentIndex(int)));
 
-			QWidget *t_widget = new QWidget();
-			QHBoxLayout * hLayout2 = new QHBoxLayout();
-			hLayout2->addWidget(View2);
-			hLayout2->addWidget(View3);
-			hLayout2->setContentsMargins(0,0,0,0);
-			t_widget->setLayout(hLayout2);
+			//特征信息
+			m_wavFeatureWidget = new QWidget();
+			m_wavFeatureWidget->setFixedWidth(200);
+			{
+				m_wavFeatureWidget->setStyleSheet("background-color:green");
+			}
 
-			QVBoxLayout *vLayout = new QVBoxLayout();
-			vLayout->addWidget(titleWidget);
-			vLayout->addWidget(View1);
-			vLayout->addWidget(t_widget);
-			vLayout->setContentsMargins(0, 0, 0, 0);
-			t_spectrogramWidget->setLayout(vLayout);
+			QHBoxLayout * layout = new QHBoxLayout();
+			layout->setContentsMargins(0, 0, 0, 0);
+			layout->addWidget(m_pageContainer);
+			layout->addWidget(m_wavFeatureWidget);
+
+			QWidget * tmpWidget = new QWidget();
+			QVBoxLayout * tmpLayout = new QVBoxLayout();
+			tmpLayout->setContentsMargins(0, 0, 0, 0);
+			tmpLayout->addWidget(tabBar);
+			tmpLayout->addLayout(layout);
+			tmpWidget->setLayout(tmpLayout);
+
+			graphContaienr->setContent(tmpWidget);
 		}
-
-		//m_StackedWidget->addWidget(dataTableWidget);
-		m_StackedWidget->addWidget(t_spectrogramWidget);
 
 		QVBoxLayout * mainlayout = new QVBoxLayout();
+		mainlayout->addWidget(wavEditContaienr);
+		mainlayout->addWidget(graphContaienr);
 		mainlayout->setContentsMargins(4, 4, 4, 4);
-		mainlayout->addWidget(m_StackedWidget);
 		setLayout(mainlayout);
 	}
 

@@ -294,7 +294,8 @@ namespace Related {
 			m_systemWidget->setStyleSheet("background-color:rgba(0,77,136, 230)");
 
 			QLabel * remoteIp = createLabel(QStringLiteral("服务器地址:"));
-			QLabel * remotePort = createLabel(QStringLiteral("端口号:"));
+			QLabel * remoteDataPort = createLabel(QStringLiteral("数据端口号:"));
+			QLabel * remoteFilePort = createLabel(QStringLiteral("文件端口号:"));
 
 			m_ipWidget = new Base::RIPWidget();
 			m_dataPortWidget = new QLineEdit();
@@ -318,8 +319,9 @@ namespace Related {
 			slayout->setRowStretch(0, 1);
 			slayout->addWidget(remoteIp, 1, 0, 1, 1);
 			slayout->addWidget(m_ipWidget, 1, 1, 1, 1);
-			slayout->addWidget(remotePort, 2, 0, 1, 1);
+			slayout->addWidget(remoteDataPort, 2, 0, 1, 1);
 			slayout->addWidget(m_dataPortWidget, 2, 1, 1, 1);
+			slayout->addWidget(remoteFilePort, 3, 0, 1, 1);
 			slayout->addWidget(m_filePortWidget, 3, 1, 1, 1);
 			slayout->setRowStretch(4, 1);
 

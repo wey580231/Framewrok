@@ -15,6 +15,8 @@
 #include <QDateTimeEdit>
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <QMenu>
+#include <QAction>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
@@ -49,6 +51,10 @@ namespace Related {
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
 
+		void showTableContextMenu(const QPoint & point);
+		void analyseWav(bool flag);
+		void viewWavOriginalData(bool flag);
+
 	private:
 		void init();
 		void initConnect();
@@ -62,6 +68,10 @@ namespace Related {
 		bool m_firstLoadData;									/*!< 第一次加载页面显示 */
 		QString m_taskId;										/*!< 任务Id */
 		int m_seleteTableRow;									/*!< 选中行数 */
+
+		QMenu * m_tableMenu;
+		QAction * m_analyseWav;				/*!< 分析音频 */
+		QAction * m_viewOriginalData;		/*!< 查看原始数据 */
 	};
 
 }//namespace Related 
