@@ -150,6 +150,9 @@
     <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavfeature.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

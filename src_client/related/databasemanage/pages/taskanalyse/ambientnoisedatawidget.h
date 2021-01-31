@@ -33,24 +33,11 @@ namespace Related {
 
 		PageType getPageType() const;
 
-		void prepareBringToTop();
-
-		void setTaskId(QString taskId);
-
-	private slots:
-		void respToolButtPressed(OperationToolsPage::ButtType type);
-		void setPageNum(int page);
-		void setFixedPageRowCount(int pageItemCount);
-
 	private:
 		void init();
-		void initConnect();
 
 	private:
-		Base::RTableView * m_tableView;
-		AmbientNoiseModel *m_tableModel;
-		OperationToolsPage *m_operationToolsPage;
-		PageSwitchBar * m_pageSwitch;
+
 	};
 
 }//namespace Related

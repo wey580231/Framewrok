@@ -1,7 +1,7 @@
 #include "ambientnoisedatawidget.h"
 
 #include <QDebug>
-
+#include <QRadioButton>
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
@@ -23,78 +23,43 @@ namespace Related {
 		return PageType();
 	}
 
-	void AmbientNoiseDataWidget::prepareBringToTop()
-	{
-	}
-
-	void AmbientNoiseDataWidget::setTaskId(QString taskId)
-	{
-	}
-
-	void AmbientNoiseDataWidget::respToolButtPressed(OperationToolsPage::ButtType type)
-	{
-
-	}
-
-	void AmbientNoiseDataWidget::setPageNum(int page)
-	{
-
-	}
-
-	void AmbientNoiseDataWidget::setFixedPageRowCount(int pageItemCount)
-	{
-	}
-
 	void AmbientNoiseDataWidget::init()
 	{
-		m_operationToolsPage = new OperationToolsPage();
+		auto createCheckBox = [](QString boxName, int fixedWidth = 60) {
+			QRadioButton * box = new QRadioButton;
+			box->setFixedWidth(fixedWidth);
+			box->setText(boxName);
+			return box;
+		};
 
-		m_tableView = new Base::RTableView();
-		m_tableView->setFocusPolicy(Qt::NoFocus);
-		m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-		m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+		CustomWidgetContainer * timeContainer = new CustomWidgetContainer();
+		{
+			QWidget * dataTypeWidget = new QWidget();
+			QLabel * typeLabel = new QLabel();
+			typeLabel->setText(QStringLiteral("时间间隔:"));
 
-		m_tableModel = new AmbientNoiseModel();
-		m_tableModel->prepareData();
+			QHBoxLayout * dataTypeLayout = new QHBoxLayout();
+			dataTypeLayout->addWidget(typeLabel);
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("1小时")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("6小时")));
+			dataTypeLayout->addWidget(createCheckBox(QStringLiteral("8小时")));
+			dataTypeLayout->addStretch(1);
 
-		m_tableView->setModel(m_tableModel);
+			dataTypeWidget->setLayout(dataTypeLayout);
+			timeContainer->setContent(dataTypeWidget);
+		}
 
-		m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("文件名称"), 140));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("平台名称"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Tonnage, QStringLiteral("时长"), 180));
-		m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("数据大小")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Datalength, QStringLiteral("起始索引")));
-		m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("结束索引")));
+		CustomWidgetContainer * graphContainer = new CustomWidgetContainer();
+		graphContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		{
 
-		m_pageSwitch = new PageSwitchBar();
-		m_pageSwitch->setDataSize(m_tableModel->datasSize());
-		connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
-		connect(m_pageSwitch, SIGNAL(switchPage(int)), this, SLOT(setPageNum(int)));
-
-
-		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
-		cwidget->setContent(m_operationToolsPage);
-
-		QWidget * twidget = new QWidget();
-		QVBoxLayout * cvlayout = new QVBoxLayout();
-		cvlayout->setContentsMargins(0, 0, 0, 0);
-		cvlayout->addWidget(m_tableView);
-		cvlayout->addWidget(m_pageSwitch);
-		twidget->setLayout(cvlayout);
-
-		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
-		ctableView->setContent(twidget);
+		}
 
 		QVBoxLayout * vlayout = new QVBoxLayout();
 		vlayout->setContentsMargins(4, 4, 4, 4);
-		vlayout->addWidget(cwidget);
-		vlayout->addWidget(ctableView);
+		vlayout->addWidget(timeContainer);
+		vlayout->addWidget(graphContainer);
 		setLayout(vlayout);
-	}
-
-	void AmbientNoiseDataWidget::initConnect()
-	{
 	}
 
 }//namespace Related 

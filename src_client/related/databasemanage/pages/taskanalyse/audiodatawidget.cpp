@@ -1,4 +1,5 @@
 #include "audiodatawidget.h"
+#include "ui_wavfeature.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -16,6 +17,7 @@ namespace Related {
 	WavDataPage::WavDataPage(QWidget *parent)
 		: AbstractPage(parent)
 	{
+		m_wavFeatureUi = new Ui::WavFeature();
 		init();
 	}
 
@@ -120,13 +122,14 @@ namespace Related {
 			tabBar->addTabButton(QStringLiteral("Demon谱图"), P_DEMON);
 			tabBar->addTabButton(QStringLiteral("Lofar谱图"), P_LOFAR);
 			tabBar->addTabButton(QStringLiteral("态势信息谱图"), P_MAP);
+			tabBar->addTabButton(QStringLiteral("AIS数据"), P_AIS);
 
 			m_pageContainer = new QStackedWidget();
 
 			//DEMON
 			QWidget * demonWidget = new QWidget();
 			{
-				demonWidget->setStyleSheet("background-color:red");
+
 			}
 
 			//LOFAR
@@ -141,17 +144,24 @@ namespace Related {
 
 			}
 
+			//AIS信息
+			QWidget * aisWidget = new QWidget();
+			{
+
+			}
+
 			m_pageContainer->addWidget(demonWidget);
 			m_pageContainer->addWidget(lofarWidget);
 			m_pageContainer->addWidget(mapWidget);
+			m_pageContainer->addWidget(aisWidget);
 
 			connect(tabBar, SIGNAL(currentIndexChanged(int)), m_pageContainer, SLOT(setCurrentIndex(int)));
 
 			//特征信息
 			m_wavFeatureWidget = new QWidget();
-			m_wavFeatureWidget->setFixedWidth(200);
+			m_wavFeatureWidget->setFixedWidth(250);
 			{
-				m_wavFeatureWidget->setStyleSheet("background-color:green");
+				m_wavFeatureUi->setupUi(m_wavFeatureWidget);
 			}
 
 			QHBoxLayout * layout = new QHBoxLayout();
