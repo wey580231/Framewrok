@@ -69,19 +69,19 @@ namespace Related {
 				}
 			}
 				break;
-			case AIS_SPEED:
+			case AIS_Speed:
 				return data.speed;
 				break;
-			case AIS_LENGTH:
+			case AIS_Length:
 				return data.length;
 				break;
-			case AIS_WIDTH:
+			case AIS_Width:
 				return data.width;
 				break;
-			case AIS_BUILDDATE:
+			case AIS_BuildDate:
 				return data.buildDate;
 				break;
-			case AIS_PORT:
+			case AIS_Port:
 				return data.port;
 				break;
 			default:

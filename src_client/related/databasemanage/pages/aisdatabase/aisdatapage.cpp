@@ -91,11 +91,11 @@ namespace Related {
 			m_tableView->addColumnItem(Base::ColumnItem(AIS_Name, QStringLiteral("船名")));
 			m_tableView->addColumnItem(Base::ColumnItem(AIS_ShipType, QStringLiteral("船舶以及货物类型"), 200));
 			m_tableView->addColumnItem(Base::ColumnItem(AIS_NavStatus, QStringLiteral("航行状态")));
-			m_tableView->addColumnItem(Base::ColumnItem(AIS_SPEED, QStringLiteral("航行速度")));
-			m_tableView->addColumnItem(Base::ColumnItem(AIS_LENGTH, QStringLiteral("船长(m)")));
-			m_tableView->addColumnItem(Base::ColumnItem(AIS_WIDTH, QStringLiteral("船宽(m)")));
-			m_tableView->addColumnItem(Base::ColumnItem(AIS_BUILDDATE, QStringLiteral("建造时间")));
-			m_tableView->addColumnItem(Base::ColumnItem(AIS_PORT, QStringLiteral("船籍港")));
+			m_tableView->addColumnItem(Base::ColumnItem(AIS_Speed, QStringLiteral("航行速度")));
+			m_tableView->addColumnItem(Base::ColumnItem(AIS_Length, QStringLiteral("船长(m)")));
+			m_tableView->addColumnItem(Base::ColumnItem(AIS_Width, QStringLiteral("船宽(m)")));
+			m_tableView->addColumnItem(Base::ColumnItem(AIS_BuildDate, QStringLiteral("建造时间")));
+			m_tableView->addColumnItem(Base::ColumnItem(AIS_Port, QStringLiteral("船籍港")));
 
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());

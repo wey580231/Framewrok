@@ -339,7 +339,6 @@ namespace Related {
 		HXJPI_CourseAngle,			/*!< 航向角 */
 		HXJPI_PitchAngle,			/*!< 俯仰角 */
 		HXJPI_RollAngle,			/*!< 横滚角 */
-
 	};
 
 	/*!
