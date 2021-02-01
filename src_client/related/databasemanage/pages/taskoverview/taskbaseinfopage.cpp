@@ -24,6 +24,7 @@ namespace Related {
 		m_taskLon->setText(info.lon);
 		m_taskLat->setText(info.lat);
 
+
 	}
 
 	void TaskBaseInfoPage::paintEvent(QPaintEvent * event)
@@ -65,23 +66,6 @@ namespace Related {
 			m_endTime = new QLabel();
 			m_endTime->setAlignment(Qt::AlignVCenter);
 
-			QGridLayout *leftLayout = new QGridLayout();
-			leftLayout->addWidget(t_taskname, 0, 0);
-			leftLayout->addWidget(m_taskname, 0, 1);
-			leftLayout->addWidget(t_startTime, 1, 0);
-			leftLayout->addWidget(m_startTime, 1, 1);
-			leftLayout->addWidget(t_endTime, 2, 0);
-			leftLayout->addWidget(m_endTime, 2, 1);
-			leftWidget->setLayout(leftLayout);
-		}
-
-		QWidget * middle1Widget = new QWidget();
-		{
-			QLabel *t_taskLocation = new QLabel(QStringLiteral("试验地点："));
-			t_taskLocation->setAlignment(Qt::AlignCenter);
-			m_taskLocation = new QLabel();
-			m_taskLocation->setAlignment(Qt::AlignVCenter);
-
 			QLabel *t_taskLon = new QLabel(QStringLiteral("经度："));
 			t_taskLon->setAlignment(Qt::AlignCenter);
 			m_taskLon = new QLabel();
@@ -92,13 +76,67 @@ namespace Related {
 			m_taskLat = new QLabel();
 			m_taskLat->setAlignment(Qt::AlignVCenter);
 
+
+			QGridLayout *leftLayout = new QGridLayout();
+			leftLayout->addWidget(t_taskname, 0, 0);
+			leftLayout->addWidget(m_taskname, 0, 1);
+
+			leftLayout->addWidget(t_startTime, 1, 0);
+			leftLayout->addWidget(m_startTime, 1, 1);
+
+			leftLayout->addWidget(t_endTime, 2, 0);
+			leftLayout->addWidget(m_endTime, 2, 1);
+
+			leftLayout->addWidget(t_taskLon, 3, 0);
+			leftLayout->addWidget(m_taskLon, 3, 1);
+
+			leftLayout->addWidget(t_taskLat, 4, 0);
+			leftLayout->addWidget(m_taskLat, 4, 1);
+			leftWidget->setLayout(leftLayout);
+		}
+
+		QWidget * middle1Widget = new QWidget();
+		{
+			QLabel *t_taskLocation = new QLabel(QStringLiteral("试验地点："));
+			t_taskLocation->setAlignment(Qt::AlignCenter);
+			m_taskLocation = new QLabel();
+			m_taskLocation->setAlignment(Qt::AlignVCenter);
+
+			QLabel *t_testImages = new QLabel(QStringLiteral("试验图片统计："));
+			t_testImages->setAlignment(Qt::AlignCenter);
+			QLabel  *m_testImages = new QLabel();
+			m_testImages->setText(QString::number(15));
+			m_taskname->setAlignment(Qt::AlignVCenter);
+
+			QLabel *t_dutyRecord = new QLabel(QStringLiteral("值班日志统计："));
+			t_dutyRecord->setAlignment(Qt::AlignCenter);
+			QLabel *m_dutyRecord = new QLabel();
+			m_dutyRecord->setText(QString::number(10));
+			m_dutyRecord->setAlignment(Qt::AlignVCenter);
+
+			QLabel *t_experimentRecord = new QLabel(QStringLiteral("试验记录统计："));
+			t_experimentRecord->setAlignment(Qt::AlignCenter);
+			QLabel * m_experimentRecord = new QLabel();
+			m_experimentRecord->setText(QString::number(10));
+			m_experimentRecord->setAlignment(Qt::AlignVCenter);
+
+			QLabel * t_testResults = new QLabel(QStringLiteral("试验结果统计："));
+			t_testResults->setAlignment(Qt::AlignCenter);
+			QLabel * m_testResults = new QLabel();
+			m_testResults->setText(QString::number(10));
+			m_testResults->setAlignment(Qt::AlignVCenter);
+
 			QGridLayout *middle1Layout = new QGridLayout();
 			middle1Layout->addWidget(t_taskLocation, 0, 0);
 			middle1Layout->addWidget(m_taskLocation, 0, 1);
-			middle1Layout->addWidget(t_taskLon, 1, 0);
-			middle1Layout->addWidget(m_taskLon, 1, 1);
-			middle1Layout->addWidget(t_taskLat, 2, 0);
-			middle1Layout->addWidget(m_taskLat, 2, 1);
+			middle1Layout->addWidget(t_testImages, 1, 0);
+			middle1Layout->addWidget(m_testImages, 1, 1);
+			middle1Layout->addWidget(t_dutyRecord, 2, 0);
+			middle1Layout->addWidget(m_dutyRecord, 2, 1);
+			middle1Layout->addWidget(t_experimentRecord, 3, 0);
+			middle1Layout->addWidget(m_experimentRecord, 3, 1);
+			middle1Layout->addWidget(t_testResults, 4, 0);
+			middle1Layout->addWidget(m_testResults, 4, 1);
 
 			middle1Layout->setContentsMargins(0, 0, 0, 0);
 			middle1Widget->setLayout(middle1Layout);

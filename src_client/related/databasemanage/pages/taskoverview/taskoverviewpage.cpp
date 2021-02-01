@@ -50,6 +50,10 @@ namespace Related {
 		}
 	}
 
+	void TaskOverViewPage::slotSeleteImagesIndex(int index)
+	{
+	}
+
 	void TaskOverViewPage::init()
 	{
 		CustomWidgetContainer * taskStatisticsInfoContainer = new CustomWidgetContainer();
@@ -134,7 +138,6 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)),
 			this, SLOT(processTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)));
-
 	}
 
 	void TaskOverViewPage::refreshCurrTaskSimple()

@@ -160,5 +160,6 @@
         <file>resource/qyblue/radio/缩小.png</file>
         <file>resource/qyblue/radio/暂停.png</file>
         <file>resource/qyblue/试验001.png</file>
+        <file>resource/qyblue/试验记录.png</file>
     </qresource>
 </RCC>

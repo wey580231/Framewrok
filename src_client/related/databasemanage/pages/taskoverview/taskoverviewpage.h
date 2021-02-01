@@ -52,6 +52,7 @@ namespace Related {
 
 	private slots:
 		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
+		void slotSeleteImagesIndex(int index);
 
 	private:
 		void init();
