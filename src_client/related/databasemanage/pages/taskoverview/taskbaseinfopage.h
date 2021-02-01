@@ -22,8 +22,6 @@
 
 #include "../../datastruct.h"
 
-#include "statisticalgraph/statisticalgraphpage.h"
-
 namespace Related {
 
 	class TaskBaseInfoPage : public QWidget

@@ -41,11 +41,8 @@
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskoverview\taskresultinfopage.cpp" />
-    <ClCompile Include="databasemanage\pages\taskoverview\taskresultitem.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dialog\dutyrecordeditdialog.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dialog\experimentrecordeditdialog.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\dutyrecordpage.cpp" />
@@ -77,7 +74,10 @@
     <ClCompile Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\taskoverview\dialog\testdetaildialog.cpp">
+    <ClCompile Include="databasemanage\pages\taskoverview\dialog\testimagesdetaildialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\testimagesitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,10 +119,7 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasewidget.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.h" />
     <QtMoc Include="databasemanage\pages\targetdatabase\tablemodel\targetdatabasemanagemodel.h" />
-    <QtMoc Include="databasemanage\pages\taskoverview\taskresultinfopage.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\taskbaseinfopage.h" />
-    <QtMoc Include="databasemanage\pages\taskoverview\taskresultitem.h" />
-    <QtMoc Include="databasemanage\pages\taskoverview\statisticalgraph\statisticalgraphpage.h" />
     <QtMoc Include="databasemanage\pages\systemmainpage\newtaskdialog.h" />
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
@@ -162,7 +159,10 @@
     <QtMoc Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\taskoverview\dialog\testdetaildialog.h">
+    <QtMoc Include="databasemanage\pages\taskoverview\dialog\testimagesdetaildialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\testimagesitem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
