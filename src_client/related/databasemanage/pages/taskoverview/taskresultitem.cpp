@@ -6,83 +6,54 @@
 
 namespace Related {
 
-	TaskResultItem::TaskResultItem(QWidget *parent)
+	TestImagesItem::TestImagesItem(QWidget *parent)
 		: QWidget(parent),
-		m_pictureIndex(0), m_selectedstatus(false)
+		m_imagesIndex(0)
 	{
-		
+		this->setMinimumSize(280, 270);
+		this->setMaximumSize(300, 290);
+		m_imagesPath = QStringLiteral(":/QYBlue/resource/qyblue/试验记录.png");
+
+		init();
 	}
 
-	TaskResultItem::~TaskResultItem()
+	TestImagesItem::~TestImagesItem()
 	{
 
 	}
 
-	void TaskResultItem::setPictureIndex(int index)
+	void TestImagesItem::setImagesType(int inde)
 	{
-		this->setWindowTitle(QString("%1_%2").arg(QStringLiteral("图片：")).arg(QString::number(index)));
-			m_pictureIndex = index;
+		m_imagesIndex = inde;
 	}
 
-	int TaskResultItem::getPictureIndex()
+	void TestImagesItem::paintEvent(QPaintEvent * event)
 	{
-		return m_pictureIndex;
-	}
-
-	void TaskResultItem::setPicturePath(QString path)
-	{
-		m_picturePath = path;
-	}
-
-	QString TaskResultItem::getPicturePath()
-	{
-		return m_picturePath;
-	}
-
-	void TaskResultItem::setSelectedstatus(bool status)
-	{
-		m_selectedstatus = status;
-	}
-
-	void TaskResultItem::updateItem()
-	{
-		this->update();
-	}
-
-	void TaskResultItem::paintEvent(QPaintEvent * event)
-	{
-
 		//[] 绘制图片
 		QPainter painter(this);
 		QPixmap pix;
 		painter.translate(0, 0);
-		pix.load(m_picturePath);
+		 bool t_statue =	pix.load(m_imagesPath);
 		painter.drawPixmap(5, 5, width()-10, height()-10, pix);//绘制图片 横坐标、纵坐标、宽度、高度
 
-		//[] 绘制选择边框
-		if (m_selectedstatus == true) {
-			// 反走样
-			painter.setRenderHint(QPainter::Antialiasing, true);
-			// 设置画笔颜色
-			painter.setPen(QColor(255, 0, 51));
+		painter.setRenderHint(QPainter::Antialiasing, true);
+		painter.setPen(QColor(0, 255, 255));
+		painter.drawRect(3, 3, width()-6, height()-6);
 
-			painter.drawRect(3, 3, width()-6, height()-6);
-		}
+		// 描述信息
+		painter.setPen(QColor(255, 255, 255));
+		painter.drawText(10, height() - 16, QStringLiteral("20210120 试验记录"));
 
 		QWidget::paintEvent(event);
 	}
 
-	void TaskResultItem::mousePressEvent(QMouseEvent * event)
+	void TestImagesItem::mouseDoubleClickEvent(QMouseEvent * event)
 	{
-		// 鼠标左键
-		if (event->button() == Qt::LeftButton){
-			m_selectedstatus = true;
-			this->update();
-			emit signalPictureIndex(m_pictureIndex, m_picturePath);
-		}
+		if (event->button() == Qt::LeftButton)
+		emit signalSeleteImagesIndex(m_imagesIndex);
 	}
 
-	void TaskResultItem::init()
+	void TestImagesItem::init()
 	{
 	}
 

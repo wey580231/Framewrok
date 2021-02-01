@@ -77,6 +77,9 @@
     <ClCompile Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskoverview\dialog\testdetaildialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -157,6 +160,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskoverview\dialog\testdetaildialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -1,5 +1,5 @@
 /*!
- * @brief     任务结果信息
+ * @brief     试验图片
  * @details   该类用于显示结果图片
  * @author    yzg
  * @version   1.0
@@ -11,44 +11,39 @@
 #pragma once
 
 #include <QWidget>
+#include <QPaintEvent>
 #include <QMouseEvent>
 
 namespace Related {
 
-	class TaskResultItem : public QWidget
+	class TestImagesItem : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		TaskResultItem(QWidget *parent = nullptr);
-		~TaskResultItem();
+		TestImagesItem(QWidget *parent = nullptr);
+		~TestImagesItem();
 
-		void setPictureIndex(int index);
-		int getPictureIndex();
+		enum TestImagesType{
+			TI_Sketch,				/*!< 简图*/
+			TI_Detail				/*!< 详图 */
+		};
 
-		void setPicturePath(QString path);
-		QString getPicturePath();
-
-		void setSelectedstatus(bool status);
-
-		void updateItem();
-
-		
+		void setImagesType(int inde);
 
 	signals:
-		void signalPictureIndex(int index, QString path);
+		void signalSeleteImagesIndex(int index);
 
 	protected:
-		void paintEvent(QPaintEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+ 		void paintEvent(QPaintEvent *event);
+		void mouseDoubleClickEvent(QMouseEvent * event);
 
 	private:
 		void  init();
 
 	private:
-		int m_pictureIndex;					/*!< 图片索引 */
-		QString  m_picturePath;				/*!< 图片路径 */
-		bool m_selectedstatus;				/*!< 鼠标选中状态 */
+		int m_imagesIndex;					/*!< 图片索引 */
+		QString  m_imagesPath;				/*!< 图片路径 */
 	};
 
 }//namespace Related
