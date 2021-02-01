@@ -22,7 +22,7 @@
 #include "../pages\taskoverview\taskoverviewpage.h"
 #include "../pages\taskrecord\taskrecordpage.h"
 #include "../pages\taskanalyse\taskanalysepage.h"
-
+#include "../pages/aisdatabase/aisdatabasepage.h"
 #include "../pages/targetdatabase/targetdatabasewidget.h"
 
 namespace Related {
@@ -65,7 +65,9 @@ namespace Related {
 		TaskRecordPage * m_taskRecordPage;
 		TaskAnalysePage * m_taskAnalysePage;
 
-		TargetDatabaseWidget *m_targetDatabaseWidget;
+		TargetDatabaseWidget * m_targetDatabasePage;
+
+		AisDataBasePage * m_aisDataBasePage;
 
 		QWidget * m_mainWidget;
 	};

@@ -46,19 +46,19 @@ namespace Related {
 			case OperationToolsPage::Butt_Add: {
 
 			}
-											   break;
+			break;
 			case OperationToolsPage::Butt_Delete: {
 
 			}
-												  break;
+				break;
 			case OperationToolsPage::Butt_Edit: {
 
 			}
-												break;
+			break;
 			case OperationToolsPage::Butt_Refresh: {
 
 			}
-												   break;
+			 break;
 			default:
 				break;
 		}

@@ -11,6 +11,7 @@
 
 #include <QWidget>
 #include <QDateTime>
+#include <QImage>
 namespace Ui { class TaskOverViewItem; };
 
 #include <base\util\widgetanimation.h>

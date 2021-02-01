@@ -68,6 +68,15 @@
     <ClCompile Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\aisdatabase\aisdatabasepage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\aisdatabase\aisdatapage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -139,6 +148,15 @@
     <QtMoc Include="forwardcontroller\multidataforwardclients.h" />
     <QtMoc Include="forwardcontroller\dataforwardclient.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\aisdatabase\aisdatabasepage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\aisdatabase\aisdatapage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\aisdatabase\tabelmodel\aisdatamodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

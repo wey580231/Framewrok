@@ -146,4 +146,31 @@ namespace Datastruct {
 		int lastTime;				/*!< 时长 */
 	};
 
+	/*!
+	 * @brief 
+	 */
+	struct AisEntityData{
+		QString id;					/*!< 唯一标识 */
+		QString targetId;			/*!< 目标标识 */
+		int mmsi;					/*!< 船舶MMSI */
+		int time;					/*!< 实时信号时间 */
+		double lon;					/*!< 经度 */
+		double lat;					/*!< 纬度 */
+		double course;				/*!< 航迹向 */
+		int  truehead;				/*!< 航首向 */
+		QString name;				/*!< 船名 */
+		int shipType;				/*!< 船舶以及货物类型 */
+		int shipImo;				/*!< 船舶IMO */
+		int navStatus;				/*!< 航行状态 */
+		double speed;				/*!< 航行速度 */
+		QString eta;				/*!< 预计到港时间 */
+		QString dest;				/*!< 目的港 */
+		double length;				/*!< 船长 */
+		double width;				/*!< 船宽 */
+		QString callsign;			/*!< 呼号 */
+		QString flag;				/*!< 船旗 */
+		QString buildDate;			/*!< 建造时间 */
+		QString port;				/*!< 船籍港 */
+	};
+
 } //namespace Datastruct 

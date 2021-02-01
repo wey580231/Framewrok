@@ -140,6 +140,7 @@ namespace Related {
 
 		m_systemListWidget->addItem(Page_SystemMainPage,QStringLiteral("任务统计"), QIcon(WRAP_RESOURCE(首页icon)));
 		m_systemListWidget->addItem(Page_TargetDatabase,QStringLiteral("目标库"), QIcon(WRAP_RESOURCE(数据管理icon)));
+		m_systemListWidget->addItem(Page_AisDataBase, QStringLiteral("AIS库"), QIcon(WRAP_RESOURCE(数据管理icon)));
 		m_systemListWidget->addItem(Page_Setting,QStringLiteral("系统设置"), QIcon(WRAP_RESOURCE(系统设置icon)));
 		m_systemListWidget->setCurrentIndex(0);
 

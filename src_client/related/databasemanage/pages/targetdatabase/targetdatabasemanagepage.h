@@ -13,11 +13,18 @@
 
 #include <QWidget>
 #include <QComboBox>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
+#include <base/selfwidget/rmessagebox.h>
+#include <base\util\rutil.h>
 
+#include "../abstractpage.h"
+#include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/operationtoolspage.h"
+
 #include "tablemodel/targetdatabasemanagemodel.h"
 
 namespace Related {
@@ -31,13 +38,20 @@ namespace Related {
 		~TargetDatabaseManagePage();
 
 
-	private:
-		void init();
+	private slots:
+		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void setPageNum(int page);
+		void setFixedPageRowCount(int pageItemCount);
 
 	private:
-		Base::RTableView * m_tableView;
-		TargetDatabaseManageModel *m_tableModel;
+		void init();
+		void initConnect();
+
+	private:
 		OperationToolsPage *m_operationToolsPage;
+		Base::RTableView * m_tableView;	
+		TargetDatabaseManageModel *m_tableModel;
+		PageSwitchBar * m_pageSwitch;							
 	};
 
 }//namespace Related 
