@@ -33,7 +33,8 @@
 #include "../../customwidget/customwidgetcontainer.h"
 
 #include "taskbaseinfopage.h"
-#include "taskresultinfopage.h"
+#include "testimagesitem.h"
+#include "dialog/testimagesdetaildialog.h"
 
 namespace Related {
 
@@ -52,12 +53,15 @@ namespace Related {
 
 	private slots:
 		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
-		void slotSeleteImagesIndex(int index);
+		void slotSelectedImagesIndex(int index);
 
 	private:
 		void init();
 		void initConnect();
+		void updateTestImages();
+
 		void refreshCurrTaskSimple();
+		void createTestImagesItem();
 
 	private:
 		OverViewItem * m_taskPlatformType;
@@ -65,7 +69,11 @@ namespace Related {
 		OverViewItem * m_advSize;
 
 		TaskBaseInfoPage   * m_taskBaseInfoPage;			/*!< 任务基本信息 */
-		TaskResultInfoPage * m_taskResultInfoPage;			/*!< 数据结果信息界面 */
+
+		// 试验图片显示区域
+		QScrollArea * m_testImagesScrollArea;
+		QWidget * m_testImagesWidget;
+		QList<TestImagesItem *> m_imagesItems;
 
 		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
 		QString m_taskId;									/*!< 任务Id */

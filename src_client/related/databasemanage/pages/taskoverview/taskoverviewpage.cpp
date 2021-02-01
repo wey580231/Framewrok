@@ -10,6 +10,7 @@ namespace Related {
 	{
 		init();
 		initConnect();
+		createTestImagesItem();
 	}
 
 	TaskOverViewPage::~TaskOverViewPage()
@@ -50,8 +51,12 @@ namespace Related {
 		}
 	}
 
-	void TaskOverViewPage::slotSeleteImagesIndex(int index)
+	void TaskOverViewPage::slotSelectedImagesIndex(int index)
 	{
+		TestImagesDetailDialog dialog(this);
+		if (QDialog::Accepted == dialog.exec()) {
+
+		}
 	}
 
 	void TaskOverViewPage::init()
@@ -112,10 +117,16 @@ namespace Related {
 		//[]任务结果信息展示窗口
 		CustomWidgetContainer * taskResultInfoContainer = new CustomWidgetContainer();
 		{
-			m_taskResultInfoPage = new TaskResultInfoPage();
+			m_testImagesScrollArea = new QScrollArea();
+			m_testImagesScrollArea->setStyleSheet("background-color:rgba(0,0,0,0)");
+			m_testImagesScrollArea->setWidgetResizable(true);
+
+			m_testImagesWidget = new QWidget();
+			m_testImagesWidget->setStyleSheet("background-color:rgba(0,0,0,0)");
+			m_testImagesScrollArea->setWidget(m_testImagesWidget);
 
 			QHBoxLayout *taskResultInfoLayout = new QHBoxLayout();
-			taskResultInfoLayout->addWidget(m_taskResultInfoPage);
+			taskResultInfoLayout->addWidget(m_testImagesScrollArea);
 			taskResultInfoLayout->setContentsMargins(0, 0, 0, 0);
 			taskResultInfoContainer->setLayout(taskResultInfoLayout);
 		}
@@ -140,11 +151,50 @@ namespace Related {
 			this, SLOT(processTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)));
 	}
 
+	void TaskOverViewPage::updateTestImages()
+	{
+		QGridLayout * gLayout = nullptr;
+
+		if (m_testImagesWidget->layout() == nullptr) {
+			gLayout = new QGridLayout();
+			gLayout->setContentsMargins(0, 0, 0, 0);
+			m_testImagesWidget->setLayout(gLayout);
+		}
+		else {
+			gLayout = dynamic_cast<QGridLayout *>(m_testImagesWidget->layout());
+			for (int i = gLayout->count() - 1; i >= 0; i--) {
+				if (gLayout->itemAt(i)->widget()) {
+					delete gLayout->takeAt(i);
+				}
+			}
+		}
+
+		for (int i = 0; i < m_imagesItems.size(); i++) {
+			int row = i / 5;
+			int column = i % 5;
+			gLayout->addWidget(m_imagesItems.at(i), row, column, 1, 1);
+		}
+	}
+
 	void TaskOverViewPage::refreshCurrTaskSimple()
 	{
 		Datastruct::TaskSimpleRequest request;
 		request.taskId = m_taskId;
 		DataNetConnector::instance()->write(request);
+	}
+
+	void TaskOverViewPage::createTestImagesItem()
+	{
+		for (int i = 0; i < 15; i++ ) {
+			TestImagesItem *item = new TestImagesItem();
+			item->setImagesType(TestImagesItem::TI_Sketch);
+			item->setImagesIndex(i + 1);
+			item->setMinimumSize(280, 270);
+			item->setMaximumSize(300, 290);
+			connect(item, SIGNAL(signalSeleteImagesIndex(int)), this, SLOT(slotSelectedImagesIndex(int)));
+			m_imagesItems.append(item);
+		}
+		updateTestImages();
 	}
 
 } //namespace Related

@@ -32,34 +32,34 @@ namespace Related {
 
 			switch (cindex)
 			{
-			case AIS_INDEX:
+			case AIS_Index:
 				return dataIndex + 1;
 				break;
-			case AIS_MMSI:
+			case AIS_Mmsi:
 				return data.mmsi;
 				break;
-			case AIS_TIME:
+			case AIS_Time:
 				return data.time;
 				break;
-			case AIS_LON:
+			case AIS_Lon:
 				return data.lon;
 				break;
-			case AIS_LAT:
+			case AIS_Lat:
 				return data.lat;
 				break;
-			case AIS_COURSE:
+			case AIS_Course:
 				return data.course;
 				break;
-			case AIS_TRUEHEAD:
+			case AIS_Truehead:
 				return data.truehead;
 				break;
-			case AIS_NAME:
+			case AIS_Name:
 				return data.name;
 				break;
-			case AIS_SHIPTYPE:
+			case AIS_ShipType:
 				return data.shipType;
 				break;
-			case AIS_NAVSTATUS: {
+			case AIS_NavStatus: {
 				if(data.navStatus == 1){
 					return QStringLiteral("Õý³£");
 				}
@@ -69,19 +69,19 @@ namespace Related {
 				}
 			}
 				break;
-			case AIS_SPEED:
+			case AIS_Speed:
 				return data.speed;
 				break;
-			case AIS_LENGTH:
+			case AIS_Length:
 				return data.length;
 				break;
-			case AIS_WIDTH:
+			case AIS_Width:
 				return data.width;
 				break;
-			case AIS_BUILDDATE:
+			case AIS_BuildDate:
 				return data.buildDate;
 				break;
-			case AIS_PORT:
+			case AIS_Port:
 				return data.port;
 				break;
 			default:

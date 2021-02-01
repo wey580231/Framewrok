@@ -29,21 +29,27 @@ namespace Related {
 			TI_Detail				/*!< ÏêÍ¼ */
 		};
 
-		void setImagesType(int inde);
+		void setImagesType(TestImagesType type);
+		void setImagesIndex(int index);
 
 	signals:
 		void signalSeleteImagesIndex(int index);
 
 	protected:
  		void paintEvent(QPaintEvent *event);
-		void mouseDoubleClickEvent(QMouseEvent * event);
+		void mousePressEvent(QMouseEvent * event);
 
+		void enterEvent(QEvent * event);
+		void leaveEvent(QEvent * event);
 	private:
 		void  init();
 
 	private:
+		TestImagesType m_imagesType;		/*!< Í¼Æ¬ÀàÐÍ */
 		int m_imagesIndex;					/*!< Í¼Æ¬Ë÷Òý */
+
 		QString  m_imagesPath;				/*!< Í¼Æ¬Â·¾¶ */
+		bool m_imagesSuspension;
 	};
 
 }//namespace Related
