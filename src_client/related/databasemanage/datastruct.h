@@ -339,7 +339,6 @@ namespace Related {
 		HXJPI_CourseAngle,			/*!< 航向角 */
 		HXJPI_PitchAngle,			/*!< 俯仰角 */
 		HXJPI_RollAngle,			/*!< 横滚角 */
-
 	};
 
 	/*!
@@ -357,22 +356,22 @@ namespace Related {
 	};
 
 	enum  AISDATAColumnIndex {
-		AIS_INDEX,					/*!< 唯一标识 */
-		AIS_TARGETID,				/*!< 目标标识 */
-		AIS_MMSI,					/*!< 船舶MMSI */
-		AIS_TIME,					/*!< 实时信号时间 */
-		AIS_LON,					/*!< 经度 */
-		AIS_LAT,					/*!< 纬度 */
-		AIS_COURSE,					/*!< 航迹向 */
-		AIS_TRUEHEAD,				/*!< 航首向 */
-		AIS_NAME,					/*!< 船名 */
-		AIS_SHIPTYPE,				/*!< 船舶以及货物类型 */
-		AIS_NAVSTATUS,				/*!< 航行状态 */
-		AIS_SPEED,					/*!< 航行速度 */
-		AIS_LENGTH,					/*!< 船长 */
-		AIS_WIDTH,					/*!< 船宽 */
-		AIS_BUILDDATE,				/*!< 建造时间 */
-		AIS_PORT,					/*!< 船籍港 */
+		AIS_Index,					/*!< 唯一标识 */
+		AIS_TargetId,				/*!< 目标标识 */
+		AIS_Mmsi,					/*!< 船舶MMSI */
+		AIS_Time,					/*!< 实时信号时间 */
+		AIS_Lon,					/*!< 经度 */
+		AIS_Lat,					/*!< 纬度 */
+		AIS_Course,					/*!< 航迹向 */
+		AIS_Truehead,				/*!< 航首向 */
+		AIS_Name,					/*!< 船名 */
+		AIS_ShipType,				/*!< 船舶以及货物类型 */
+		AIS_NavStatus,				/*!< 航行状态 */
+		AIS_Speed,					/*!< 航行速度 */
+		AIS_Length,					/*!< 船长 */
+		AIS_Width,					/*!< 船宽 */
+		AIS_BuildDate,				/*!< 建造时间 */
+		AIS_Port,					/*!< 船籍港 */
 	};
 } //namespace Related
 
