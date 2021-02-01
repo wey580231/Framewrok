@@ -148,8 +148,8 @@ namespace Related {
 		m_taskListWidget = new RListWidget(this);
 		connect(m_taskListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
 		m_taskListWidget->addItem(Page_TaskOverviewPage, QStringLiteral("任务概览"), QIcon(WRAP_RESOURCE(概览)));
-		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(WRAP_RESOURCE(记录)));
 		m_taskListWidget->addItem(Page_TaskDataAnalyse, QStringLiteral("任务分析"), QIcon(WRAP_RESOURCE(数据分析icon)));
+		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(WRAP_RESOURCE(记录)));
 		m_taskListWidget->setCurrentIndex(0);
 
 		m_leftMenuContainer = new QStackedWidget();

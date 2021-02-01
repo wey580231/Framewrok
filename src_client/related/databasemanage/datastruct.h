@@ -48,13 +48,17 @@ namespace Related {
 		Page_Setting_UserManage,				/*!< 用户管理 */
 		Page_Setting_SystemSetting,				/*!< 系统设置 */
 		Page_Setting_DetectPlatformPage,		/*!< 侦测平台 */	
-		/*!<  */
+
 		Page_TaskRecord_DutyRecord,				/*!< 值班日志 */
 		Page_TaskRecord_ExperimentRecord,		/*!< 试验记录 */
 		Page_TaskRecord_TaskReport,				/*!< 任务报告 */
 
 		Page_TaskAnalyse_DataOverview,			/*!< 数据预览 */
-		Page_TaskAnalyse_WavData,				/*!< 音频信息 */
+		Page_TaskAnalyse_TimeDomainAnalysis,	/*!< 时域分析 */
+		Page_TaskAnalyse_FrequencyDomainAnalysis,	/*!< 频域分析 */
+		Page_TaskAnalyse_DomenAnalysis,			/*!< Demen分析 */
+		Page_TaskAnalyse_LofarAnalysis,			/*!< Lofar分析 */
+		Page_TaskAnalyse_SituationAnalysi,		/*!< 态势分析 */
 
 		Page_AisDataBase_AisData				/*!< AIS数据 */
 	};
