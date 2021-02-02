@@ -10,6 +10,8 @@
 
 #include "../customwidget/customwidgetcontainer.h"
 #include "../net/datanetconnector.h"
+#include "../net/filenetconnector.h"
+#include "../net/connectormanage.h"
 #include "../net/signaldispatch.h"
 #include "../utils/util.h"
 #include "../global.h"
@@ -23,8 +25,7 @@ namespace Related {
 		initConnect();
 		loadNetConfig();
 
-		//NOTE 默认提供自动重连机制，用户也可以手动连接
-		DataNetConnector::instance()->setAutoReconnect(true);
+		qRegisterMetaType<Datastruct::ConnectionType>("Datastruct::ConnectionType");
 	}
 
 	LoginPage::~LoginPage()
@@ -37,7 +38,7 @@ namespace Related {
 		QSize windowSize = event->size();
 
 		int x = windowSize.width() - m_container->width() * 1.5;
-		int y = (windowSize.height() - m_container->height()) / 2 ;
+		int y = (windowSize.height() - m_container->height()) / 2;
 		m_container->move(x, y);
 	}
 
@@ -59,28 +60,17 @@ namespace Related {
 	{
 		START_WAIT
 
-		if (!DataNetConnector::instance()->isConnected()) {
-			if (DataNetConnector::instance()->connectTo(m_ipWidget->getIPString(), m_dataPortWidget->text().toInt())) {
-
-			}
-			else {
-				END_WAIT
-				Util::showWarning(this, QStringLiteral("连接服务器失败，请检查网络配置."));
-			}
-		}
-		else {
-			respNetConnected(true);
-		}
+			ConnectorManage::instance()->startConnect(m_ipWidget->getIPString(), m_dataPortWidget->text().toInt(), m_filePortWidget->text().toInt());
 	}
 
-	/*! 
+	/*!
 	 * @brief 响应用户点击重新连接网络
 	 * @detials 避免用户多次点击
 	 */
 	void LoginPage::reConnectServer()
 	{
 		if (!DataNetConnector::instance()->isConnected()) {
-			
+
 			if (!m_isReconnecting) {
 				m_isReconnecting = true;
 				connectToServer();
@@ -88,43 +78,66 @@ namespace Related {
 		}
 	}
 
+	void LoginPage::respConnectResult(Datastruct::ConnectionType type, bool connected, QString errorInfo)
+	{
+		if (connected) {
+			respNetConnected(type, connected);
+		}
+		else {
+			END_WAIT
+				Util::showWarning(this, errorInfo);
+		}
+	}
+
 	/*!
 	 * @brief 接收网络是否连接成功信号
+	 * @param type 数据链路类型
 	 * @param connected true:网络连接成功；false:网络连接失败
 	 */
-	void LoginPage::respNetConnected(bool connected)
+	void LoginPage::respNetConnected(Datastruct::ConnectionType type, bool connected)
 	{
 		m_isReconnecting = false;
 
 		if (connected) {
-			if (m_isLoginState) {
-				if (m_loginModel) {
-					Datastruct::UserLoginRequest request;
-					request.m_name = m_userName->text();
-					request.m_password = Base::RUtil::MD5(m_password->text());
+			if (type == Datastruct::Data_Connection) {
+				if (m_isLoginState) {
+					if (m_loginModel) {
+						Datastruct::UserLoginRequest request;
+						request.m_name = m_userName->text();
+						request.m_password = Base::RUtil::MD5(m_password->text());
 
-					DataNetConnector::instance()->write(request);
+						for (int i = 0; i < 100; i++) {
+							DataNetConnector::instance()->write(request);
+						}
+					}
+					else {
+						Datastruct::UserRegistRequest request;
+						request.m_name = m_registUserName->text();
+						request.m_password = Base::RUtil::MD5(m_registPassword1->text());
+
+						DataNetConnector::instance()->write(request);
+					}
 				}
-				else {
-					Datastruct::UserRegistRequest request;
-					request.m_name = m_registUserName->text();
-					request.m_password = Base::RUtil::MD5(m_registPassword1->text());
 
-					DataNetConnector::instance()->write(request);
-				}			
+				Global::G_Notify->information(QStringLiteral("数据传输链路网络已连接!"));
 			}
-			else {
-				END_WAIT
+			else if (type == Datastruct::File_Connection) {
+				Global::G_Notify->information(QStringLiteral("文件传输链路网络已连接!"));
 			}
 
-			Global::G_Notify->information(QStringLiteral("网络已连接!"));
-
-			emit netStateChanged(true);
+			END_WAIT
+				emit netStateChanged(type, true);
 		}
 		else {
+
 			END_WAIT
-			emit netStateChanged(false);
-			Util::showWarning(this, QStringLiteral("连接服务器失败，请检查网络配置."));
+				emit netStateChanged(type, false);
+			if (type == Datastruct::Data_Connection) {
+				Util::showWarning(this, QStringLiteral("连接数据服务器失败，请检查网络配置."));
+			}
+			else if (type == Datastruct::File_Connection) {
+				Util::showWarning(this, QStringLiteral("连接文件服务器失败，请检查网络配置."));
+			}
 		}
 	}
 
@@ -391,7 +404,7 @@ namespace Related {
 
 	void LoginPage::initConnect()
 	{
-		connect(DataNetConnector::instance(), SIGNAL(netConnected(bool)), this, SLOT(respNetConnected(bool)));
+		connect(ConnectorManage::instance(), SIGNAL(connectResult(Datastruct::ConnectionType, bool, QString)), this, SLOT(respConnectResult(Datastruct::ConnectionType, bool, QString)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const Datastruct::UserLoginResponse &)), this, SLOT(processUserLoginResponse(const Datastruct::UserLoginResponse &)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserRegistResponse(const Datastruct::UserRegistResponse &)), this, SLOT(processUserRegistResponse(const Datastruct::UserRegistResponse &)));
 	}

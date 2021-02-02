@@ -48,9 +48,10 @@ namespace Related {
 
 	/*! 
 	 * @brief 网络连接状态改变，同步改变网络按钮的状态
+	 * @param type 数据连接类型
 	 * @param isConnectToServer true:连接至服务器，false:断开和服务器连接
 	 */
-	void LeftPanel::respNetStateChanged(bool isConnectToServer)
+	void LeftPanel::respNetStateChanged(Datastruct::ConnectionType type,bool isConnectToServer)
 	{
 		if (isConnectToServer) {
 			m_netStateButt->setText(QStringLiteral("联网"));

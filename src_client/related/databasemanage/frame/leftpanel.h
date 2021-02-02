@@ -46,7 +46,7 @@ namespace Related {
 		void reConnectToServer();
 
 	private slots:
-		void respNetStateChanged(bool isConnectToServer);
+		void respNetStateChanged(Datastruct::ConnectionType type,bool isConnectToServer);
 		void respLeftPanelExpand(bool checked);
 		void backToSystemView();
 

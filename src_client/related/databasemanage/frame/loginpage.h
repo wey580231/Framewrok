@@ -16,6 +16,7 @@
 #include <base\util\widgetanimation.h>
 
 #include <commondefines/protocol.h>
+#include <commondefines/structdefines.h>
 
 namespace Related {
 
@@ -35,13 +36,14 @@ namespace Related {
 
 	signals:
 		void switchToMainPage();
-		void netStateChanged(bool isConnected);
+		void netStateChanged(Datastruct::ConnectionType type,bool isConnected);
 
 	private slots:
 		void connectToServer();
 		void reConnectServer();
 
-		void respNetConnected(bool connected);
+		void respConnectResult(Datastruct::ConnectionType type, bool connected, QString errorInfo);
+		void respNetConnected(Datastruct::ConnectionType type , bool connected);
 		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void processUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		

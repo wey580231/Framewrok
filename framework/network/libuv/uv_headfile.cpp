@@ -10,9 +10,10 @@
  */
 WriteSegment* allocWriteSegment(int fullDataSize)
 {
-	WriteSegment* param = (WriteSegment*)malloc(sizeof(WriteSegment));
+	WriteSegment * param = (WriteSegment*)malloc(sizeof(WriteSegment));
 
 	int realAllocSize = fullDataSize > BUFFER_SIZE ? BUFFER_SIZE : fullDataSize;
+	param->deleteable = false;
 	param->dataBuff.base = (char*)malloc(realAllocSize);
 	param->dataBuff.len = realAllocSize;
 	param->dataLen = realAllocSize;

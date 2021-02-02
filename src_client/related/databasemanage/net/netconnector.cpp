@@ -5,8 +5,8 @@
 
 namespace Related {
 
-	NetConnector::NetConnector(QObject *parent)
-		: QObject(parent)
+	NetConnector::NetConnector(Datastruct::ConnectionType type, QObject *parent)
+		: m_connType(type),QObject(parent)
 	{
 		initNetwork();
 	}
@@ -25,15 +25,15 @@ namespace Related {
 	void NetConnector::connectCallBack(Network::Uv_TcpClient * client)
 	{
 		if (client == nullptr) {
-			emit netConnected(false);
+			emit netConnected(m_connType,false);
 			return;
 		}
-		emit netConnected(true);
+		emit netConnected(m_connType, true);
 	}
 
 	void NetConnector::closeCallBack(Network::Uv_TcpClient * client)
 	{
-		emit netConnected(false);
+		emit netConnected(m_connType, false);
 	}
 
 	/*!

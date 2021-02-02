@@ -25,7 +25,7 @@ namespace Related {
 	{
 		Q_OBJECT
 	public:
-		NetConnector(QObject *parent = nullptr);
+		NetConnector(Datastruct::ConnectionType type,QObject *parent = nullptr);
 		~NetConnector();
 
 		void setAutoReconnect(bool isAutoReconnect);
@@ -46,7 +46,7 @@ namespace Related {
 		bool isConnected();
 
 	signals:
-		void netConnected(bool isConnected);
+		void netConnected(Datastruct::ConnectionType type,bool isConnected);
 
 	protected:
 		void initNetwork();
@@ -62,6 +62,7 @@ namespace Related {
 		void sendData(const QByteArray & data);
 
 	protected:
+		Datastruct::ConnectionType m_connType;		/*!< 网络连接类型 */
 		Network::Uv_EventLoop * m_eventLoop;		/*!< 事件循环线程 */
 		Network::Uv_TcpClient * m_dataTcpClient;	/*!< 普通数据连接 */
 

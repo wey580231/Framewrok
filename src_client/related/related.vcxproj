@@ -120,7 +120,9 @@
     <ClCompile Include="databasemanage\frame\leftpanel.cpp" />
     <ClCompile Include="databasemanage\frame\loginpage.cpp" />
     <ClCompile Include="databasemanage\global.cpp" />
+    <ClCompile Include="databasemanage\net\connectormanage.cpp" />
     <ClCompile Include="databasemanage\net\datanetconnector.cpp" />
+    <ClCompile Include="databasemanage\net\filenetconnector.cpp" />
     <ClCompile Include="databasemanage\net\netconnector.cpp" />
     <ClCompile Include="databasemanage\net\signaldispatch.cpp" />
     <ClCompile Include="databasemanage\pages\abstractpage.cpp" />
@@ -243,6 +245,8 @@
     <QtMoc Include="databasemanage\pages\taskanalyse\lofargraph.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\dialog\testimagesdetaildialog.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\testimagesitem.h" />
+    <QtMoc Include="databasemanage\net\filenetconnector.h" />
+    <QtMoc Include="databasemanage\net\connectormanage.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
     <QtMoc Include="databasemanage\customwidget\operationtoolspage.h" />
     <ClInclude Include="forwardcontroller\dataforwardmanager.h" />

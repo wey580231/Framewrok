@@ -70,9 +70,11 @@ struct TcpClientHandle
  * @brief 单块数据发送段
  */
 struct WriteSegment {
+	WriteSegment() :dataLen(0),deleteable(false){}
 	uv_write_t writeReq;
-	uv_buf_t dataBuff;
-	int dataLen;
+	uv_buf_t dataBuff;			/*!< 发送数据缓冲区 */
+	int dataLen;				/*!< 缓冲区数据长度 */
+	bool deleteable;			/*!< 是否可以被删除，true:可被删除 */
 };
 
 /*!
