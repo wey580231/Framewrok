@@ -106,9 +106,7 @@ namespace Related {
 						request.m_name = m_userName->text();
 						request.m_password = Base::RUtil::MD5(m_password->text());
 
-						for (int i = 0; i < 100; i++) {
-							DataNetConnector::instance()->write(request);
-						}
+						DataNetConnector::instance()->write(request);
 					}
 					else {
 						Datastruct::UserRegistRequest request;
