@@ -21,6 +21,7 @@ namespace Network {
 
 	class Uv_TcpClient;
 
+	typedef function<void(int)> ReConnectCallBack;
 	typedef function<void(Uv_TcpClient *)> ConnectedCallBack;
 	typedef function<void(Uv_TcpClient *, const char *, int)>  RecvCallBack;
 	typedef function<void(Uv_TcpClient *, int)> WriteCallBack;
@@ -38,6 +39,8 @@ namespace Network {
 		 */
 		void setAutoReconnect(bool flag = true);
 		bool isAutoReconnect() const;
+		void setMaxReconnectTimes(int maxTimes);
+		void stopReconnect();
 
 		/*! 
 		 * @brief 获取当前重连时间周期
@@ -71,6 +74,7 @@ namespace Network {
 		string errorInfo()const;
 
 		/*!< 用户回调接口 */
+		void setReconnCallback(ReConnectCallBack back) { m_reconnectCallback = back; }
 		void setConnectedCallBack(ConnectedCallBack back) { m_connectedCallback = back; }
 		void setRecvCallback(RecvCallBack back) { m_recvCallback = back; }
 		void setWriteCallBack(WriteCallBack back) { m_writeCallback = back; }
@@ -93,8 +97,7 @@ namespace Network {
 		static void remoteClientCloseCB(uv_handle_t * handle);
 		static void localClientCloseCB(uv_handle_t * handle);
 
-		void sendData(uv_write_t * req);
-		void stopReconnect();
+		void sendData();
 		void closing();
 
 	private:
@@ -102,12 +105,14 @@ namespace Network {
 		 * @brief 连接状态
 		 */
 		enum ConnectedState {
-			R_CLOSED,
-			R_CONNECTING,
-			R_ESTABLISHED,
-			R_CLOSING,
-			R_ERROR
+			R_CLOSED,			/*!< 连接关闭，不可收发 */
+			R_CONNECTING,		/*!< 网路正在连接，包括手动调用connect未返回，以及定时器重连过程 */
+			R_ESTABLISHED,		/*!< 连接已经建立，可进行数据传输 */
+			R_CLOSING,			/*!< 网络关闭中 */
+			R_ERROR				/*!< 发生错误，需要重新进行初始化.可通过错误函数获取具体信息 */
 		};
+
+		inline bool isReconnecting() {return m_connectedState == R_CONNECTING;}
 
 	private:
 		TcpClientHandle * m_handle;
@@ -115,14 +120,17 @@ namespace Network {
 		uv_loop_t * m_eventLoop;
 
 		uv_connect_t m_connReq;
-		ConnectedState m_connectedState;
+		ConnectedState m_connectedState;	/*!< 连接状态 */
 
-		uv_timer_t m_reconnectTimer;    /*!< 重连定时器 */
+		//网络重连
+		uv_timer_t m_reconnectTimer;	/*!< 重连定时器 */
 		bool m_bAutoReconnect;      /*!< 是否自动重连，默认为false */
+		int m_maxReconnectTimes;	/*!< 最大重连次数，超过此次数停止重连，若还未建立连接，则提示连接失败。-1表示限制，>0表示重连指定次数 */
+		int m_reconnectTimes;		/*!< 重连次数，每次连接建立后设置为0，每次重连时累加1 */
 		int m_repeatConnTime;       /*!< 重复连接周期,单位s */
 		bool m_bIsReconnecting;     /*!< 是否处于正在重连过程中,避免定时器多次回调 */
 
-		string m_errorMsg;
+		string m_errorMsg;			/*!< 错误信息，在m_connectedState为ERROR时有效 */
 
 		string m_remoteIp;          /*!< 远程服务器Ip */
 		int m_remotePort;
@@ -135,9 +143,11 @@ namespace Network {
 		bool m_bExit;               /*!< 是否已经退出程序 */
 
 		uv_mutex_t m_writeBuffMutex;
-		list<WriteSegment*> m_sendList;         /*!< 待发送数据缓冲区队列 */
+		list<WriteSegment*> m_cachedSendList;	/*!< 待发送数据区，新数据都加入此队列，唤醒发送线程 */
+		list<WriteSegment*> m_sendList;         /*!< 发送数据队列，每次发送前，将待发送缓冲区的内容转移至当前容器 */
 		Base::RFixedRingBuffer m_fixedRingBuffer;
 
+		ReConnectCallBack m_reconnectCallback;
 		ConnectedCallBack m_connectedCallback;
 		RecvCallBack m_recvCallback;
 		WriteCallBack m_writeCallback;

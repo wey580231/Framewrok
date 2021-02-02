@@ -48,9 +48,10 @@ namespace Related {
 
 	/*! 
 	 * @brief 网络连接状态改变，同步改变网络按钮的状态
+	 * @param type 数据连接类型
 	 * @param isConnectToServer true:连接至服务器，false:断开和服务器连接
 	 */
-	void LeftPanel::respNetStateChanged(bool isConnectToServer)
+	void LeftPanel::respNetStateChanged(Datastruct::ConnectionType type,bool isConnectToServer)
 	{
 		if (isConnectToServer) {
 			m_netStateButt->setText(QStringLiteral("联网"));
@@ -148,8 +149,8 @@ namespace Related {
 		m_taskListWidget = new RListWidget(this);
 		connect(m_taskListWidget, SIGNAL(currentIndexChanged(int)),this,SIGNAL(currentIndexChanged(int)));
 		m_taskListWidget->addItem(Page_TaskOverviewPage, QStringLiteral("任务概览"), QIcon(WRAP_RESOURCE(概览)));
-		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(WRAP_RESOURCE(记录)));
 		m_taskListWidget->addItem(Page_TaskDataAnalyse, QStringLiteral("任务分析"), QIcon(WRAP_RESOURCE(数据分析icon)));
+		m_taskListWidget->addItem(Page_TaskRecordPage, QStringLiteral("任务记录"), QIcon(WRAP_RESOURCE(记录)));
 		m_taskListWidget->setCurrentIndex(0);
 
 		m_leftMenuContainer = new QStackedWidget();

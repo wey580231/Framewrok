@@ -11,17 +11,22 @@ namespace Network {
 		return hdl;
 	}
 
-	Uv_TcpClient::Uv_TcpClient(uv_loop_t *loop) :m_eventLoop(loop), m_bAutoReconnect(false), m_repeatConnTime(5000),
-		m_bIsReconnecting(false), m_fixedRingBuffer(), m_bForceClosed(false), m_connectedState(R_CLOSED),
-		m_connectedCallback(nullptr), m_recvCallback(nullptr),
-		m_writeCallback(nullptr), m_closeCallback(nullptr),
-		m_bExit(false), m_bindLocalPort(0), m_bIsClosed(true)
+	Uv_TcpClient::Uv_TcpClient(uv_loop_t *loop) :
+		m_eventLoop(loop), 
+		m_bAutoReconnect(false), m_repeatConnTime(5000),m_bIsReconnecting(false), m_reconnectTimes(0), m_maxReconnectTimes(-1),
+		m_connectedCallback(nullptr), m_recvCallback(nullptr),m_writeCallback(nullptr), m_closeCallback(nullptr),
+		m_connectedState(R_CLOSED),
+		m_fixedRingBuffer(),
+		m_bForceClosed(false),m_bExit(false), m_bindLocalPort(0), m_bIsClosed(true)
 	{
+
 		m_handle = allocateHandle(this);
+
 		int ret = uv_mutex_init(&m_writeBuffMutex);
 		if (ret != 0) {
 			m_errorMsg = getLastUvError(ret);
 		}
+
 		m_connReq.data = this;
 	}
 
@@ -56,6 +61,8 @@ namespace Network {
 
 		Check_Return(!bindLocalAddress(), false);
 
+		stopReconnect();
+
 		int ret = uv_tcp_connect(&m_connReq, &m_handle->client, (const struct sockaddr *)&addr, connectCB);
 		if (ret != 0) {
 			getLastUvError(ret);
@@ -68,19 +75,6 @@ namespace Network {
 		m_connectedState = R_CONNECTING;
 
 		return true;
-	}
-
-	int Uv_TcpClient::send(const char *data, int len)
-	{
-		Check_Return(data == nullptr || len <= 0, 0);
-
-		uv_mutex_lock(&m_writeBuffMutex);
-		int t_writeToBuff = m_fixedRingBuffer.append(data, len);
-		uv_mutex_unlock(&m_writeBuffMutex);
-
-		uv_async_send(&m_aysnc);
-
-		return t_writeToBuff;
 	}
 
 	void Uv_TcpClient::close()
@@ -111,6 +105,11 @@ namespace Network {
 	bool Uv_TcpClient::isAutoReconnect() const
 	{
 		return m_bAutoReconnect;
+	}
+
+	void Uv_TcpClient::setMaxReconnectTimes(int maxTimes)
+	{
+		m_maxReconnectTimes = maxTimes;
 	}
 
 	int Uv_TcpClient::reconnectInterval() const
@@ -213,7 +212,7 @@ namespace Network {
 				tcpClient->closing();
 				return;
 			}
-			tcpClient->sendData(nullptr);
+			tcpClient->sendData();
 		}
 	}
 
@@ -223,7 +222,7 @@ namespace Network {
 	 * @param status 连接结果，<0表示连接错误；=0表示正确
 	 * @return 
 	 */
-	void Uv_TcpClient::connectCB(uv_connect_t *handle, int status)
+	void Uv_TcpClient::connectCB(uv_connect_t * handle, int status)
 	{
 		TcpClientHandle *  thdl = static_cast<TcpClientHandle *>(handle->handle->data);
 		Uv_TcpClient * tcpClient = static_cast<Uv_TcpClient*>(thdl->uv_tcpClient);
@@ -232,13 +231,29 @@ namespace Network {
 			tcpClient->m_connectedState = R_ERROR;
 			tcpClient->m_errorMsg = getLastUvError(status);
 
-			if (tcpClient->m_bAutoReconnect) {
-				uv_timer_stop(&tcpClient->m_reconnectTimer);
+			uv_close((uv_handle_t*)&tcpClient->m_handle->client,nullptr);
 
+			if (tcpClient->m_bAutoReconnect) {
+
+				if (tcpClient->m_maxReconnectTimes > 0 && tcpClient->m_reconnectTimes >= tcpClient->m_maxReconnectTimes) {
+					tcpClient->stopReconnect();
+
+					if (tcpClient->m_connectedCallback) {
+						tcpClient->m_connectedCallback(nullptr);
+					}
+
+					return;
+				}
+
+				uv_timer_stop(&tcpClient->m_reconnectTimer);
+				tcpClient->m_reconnectTimes += 1;
 				tcpClient->m_repeatConnTime += 1000;
-				tcpClient->m_bIsReconnecting = true;
+
+				if (tcpClient->m_reconnectCallback)
+					tcpClient->m_reconnectCallback(tcpClient->m_reconnectTimes);
 
 				cout << "start reconnect:" << tcpClient->m_repeatConnTime << endl;
+
 				uv_timer_start(&tcpClient->m_reconnectTimer, Uv_TcpClient::reconnectTimerCB, tcpClient->m_repeatConnTime, tcpClient->m_repeatConnTime);
 			}
 			else {
@@ -250,6 +265,10 @@ namespace Network {
 		}
 
 		cout << "connect successs,[" << tcpClient->m_remoteIp.data() << ":" << tcpClient->m_remotePort << "]" << endl;
+
+		if (tcpClient->isReconnecting()) {
+			tcpClient->stopReconnect();
+		}
 
 		int ret = uv_read_start(handle->handle, allocBufferForRecvCB, recvDataCB);
 
@@ -264,10 +283,6 @@ namespace Network {
 			if (tcpClient->m_connectedCallback) {
 				tcpClient->m_connectedCallback(tcpClient);
 			}
-		}
-
-		if (tcpClient->m_bIsReconnecting) {
-			tcpClient->stopReconnect();
 		}
 	}
 
@@ -287,20 +302,9 @@ namespace Network {
 
 		Uv_TcpClient * tcpClient = static_cast<Uv_TcpClient *>(hdl->uv_tcpClient);
 		if (nread < 0) {
-			if (nread == UV__EOF) {
-				//RLOG_DEBUG_S("server close(EOF) socket!");
-			}
-			else if (nread == UV_ECONNRESET) {
-				//RLOG_DEBUG_S("server close(RST) socket!");
-			}
-			else {
-				//RLOG_DEBUG("server close %s socket!", RUtil::getLastUvError(nread).data());
-			}
 
-			//关闭后开启重传设置
-			if (tcpClient->m_bAutoReconnect) {
-				tcpClient->m_bIsReconnecting = true;
-			}
+			//UV__EOF UV_ECONNRESET
+			tcpClient->m_errorMsg = getLastUvError(nread);
 
 			uv_close((uv_handle_t*)stream, remoteClientCloseCB);
 			return;
@@ -314,69 +318,96 @@ namespace Network {
 		}
 	}
 
-	/*!
-	 * @brief 通过libuv发送数据请求
-	 * @attention 1.若请求req为空，则检测缓存队列中是否存在未发送的数据，若有则发送缓存的数据；
-	 *            2.若请求req不为空，判断待发送缓存队列长度是否超过最大缓存个数，若超过将其释放，否则将其加入发送的队列末；
-	 * @param[in]
-	 * @return
-	 */
-	void Uv_TcpClient::sendData(uv_write_t *req)
+	int Uv_TcpClient::send(const char *data, int len)
 	{
-		WriteSegment * seg = (WriteSegment*)req;
-		if (req) {
-			if (m_sendList.size() > MAX_SEND_LIST_SIZE) {
-				freeWriteSegment(seg);
-			}
-			else {
-				m_sendList.push_back(seg);
-			}
+		Check_Return(data == nullptr || len <= 0, 0);
+
+		if (m_connectedState != R_ESTABLISHED) {
+			return 0;
 		}
 
-		while (true) {
+		int leftLen = len;
+		while (leftLen > 0) {
+			WriteSegment * seg = allocWriteSegment(len);
+			memcpy(seg->dataBuff.base, data + (len - leftLen), seg->dataLen);
+			seg->writeReq.data = this;
+
+			leftLen -= seg->dataLen;
+
 			uv_mutex_lock(&m_writeBuffMutex);
-			if (m_fixedRingBuffer.isEmpty()) {
-				uv_mutex_unlock(&m_writeBuffMutex);
-				break;
+			m_cachedSendList.push_back(seg);
+			uv_mutex_unlock(&m_writeBuffMutex);
+		}
+
+		uv_async_send(&m_aysnc);
+
+		return 0;
+	}
+
+	/*! 
+	 * @brief 将待发送数据从发送缓冲区移动至发送队列
+	 * @details  1.将待发送数据从发送缓冲区移动至发送队列；
+			     2.遍历队列:
+					2.1判断当前发送单元是否已经被成功发送，若是则将其删除。
+					2.2否则将其通过网络发送(并不是真正的发送成功，需要结合发送的回调函数判断)
+	 */
+	void Uv_TcpClient::sendData()
+	{
+		//[1]
+		{
+			uv_mutex_lock(&m_writeBuffMutex);
+			m_sendList.splice(m_sendList.end(),m_cachedSendList);
+			m_cachedSendList.clear();
+			uv_mutex_unlock(&m_writeBuffMutex);
+		}
+
+		if (m_sendList.size() > MAX_SEND_LIST_SIZE) {
+			//TODO 超过高水位，应该将其关闭掉
+		}
+
+		//[2]
+		auto beg = m_sendList.begin();
+		
+		while (beg != m_sendList.end()) {
+
+			//[2.1]
+			if ((*beg)->deleteable) {
+				freeWriteSegment(*beg);
+				beg = m_sendList.erase(beg);
+				continue;
 			}
 
-			if (m_sendList.empty()) {
-				seg = allocWriteSegment(m_fixedRingBuffer.dataSize());
-				seg->writeReq.data = this;
-				seg->dataBuff.len = m_fixedRingBuffer.read(seg->dataBuff.base, seg->dataLen);
-			}
-			else {
-				seg = m_sendList.front();
-				m_sendList.pop_front();
-			}
-			uv_mutex_unlock(&m_writeBuffMutex);
+			WriteSegment * seg = *beg;
+
+			//[2.2]
 			int iret = uv_write(&seg->writeReq, (uv_stream_t*)&m_handle->client, &seg->dataBuff, 1, sendDataCB);
 
 			if (iret) {
-				m_sendList.push_back(seg);
-				//RLOG_ERROR("client send error:%s", RUtil::getLastUvError(iret).data());
-				fprintf(stdout, "send error. %s-%s\n", uv_err_name(iret), uv_strerror(iret));
+				break;
 			}
+			
+			++beg;
 		}
 	}
 
+	/*! 
+	 * @brief 数据发送结束回调
+	 * @param req 此次发送的数据请求
+	 * @param status 发送结果 ==0表示发送成功
+	 * @details 若数据发送成功，则将当前发送请求标识设置为可删除，但下次发送前统一删除。
+				此举的目的是避免在在对发送队列遍历发送时，同时对其修改。
+	 */
 	void Uv_TcpClient::sendDataCB(uv_write_t *req, int status)
 	{
 		Uv_TcpClient* tcpClient = (Uv_TcpClient*)req->data;
 
 		if (status < 0) {
-			if (tcpClient->m_sendList.size() > MAX_SEND_LIST_SIZE) {
-				freeWriteSegment((WriteSegment*)req);
-			}
-			else {
-				tcpClient->m_sendList.push_back((WriteSegment*)req);
-			}
-			//RLOG_ERROR("send error:%s", RUtil::getLastUvError(status));
-			fprintf(stderr, "send error %s\n", getLastUvError(status).data());
+			cout << "send error:"<< getLastUvError(status) << endl;
 			return;
 		}
 		else {
-			freeWriteSegment((WriteSegment*)req);
+			WriteSegment * seg = (WriteSegment*)req;
+			seg->deleteable = true;
 
 			if (tcpClient->m_writeCallback) {
 				tcpClient->m_writeCallback(tcpClient, 0);
@@ -388,10 +419,11 @@ namespace Network {
 	{
 		Uv_TcpClient * tcpClient = static_cast<Uv_TcpClient*>(handle->data);
 
+		int ret = 0;
+
 		do {
-			int ret = uv_tcp_init(tcpClient->m_eventLoop, &tcpClient->m_handle->client);
+			ret = uv_tcp_init(tcpClient->m_eventLoop, &tcpClient->m_handle->client);
 			if (ret != 0) {
-				//RLOG_ERROR_S(RUtil::getLastUvError(ret));
 				break;
 			}
 
@@ -401,7 +433,6 @@ namespace Network {
 			struct sockaddr_in rsockAddr;
 			ret = uv_ip4_addr(tcpClient->m_remoteIp.data(), tcpClient->m_remotePort, &rsockAddr);
 			if (ret != 0) {
-				//RLOG_ERROR_S(RUtil::getLastUvError(ret));
 				break;
 			}
 
@@ -412,20 +443,18 @@ namespace Network {
 			ret = uv_tcp_connect(&tcpClient->m_connReq, &tcpClient->m_handle->client, (const struct sockaddr *)&rsockAddr, connectCB);
 
 			if (ret != 0) {
-				//RLOG_ERROR_S(RUtil::getLastUvError(ret));
 				uv_close((uv_handle_t*)&tcpClient->m_handle->client, nullptr);
 				break;
 			}
+
 			tcpClient->m_connectedState = R_CONNECTING;
-			tcpClient->m_bIsReconnecting = true;
 
 			return;
 
 		} while (0);
 
-		uv_timer_stop(handle);
-		tcpClient->m_repeatConnTime += 1000;
-		uv_timer_start(handle, Uv_TcpClient::reconnectTimerCB, tcpClient->m_repeatConnTime, tcpClient->m_repeatConnTime);
+		tcpClient->m_connectedState = R_ERROR;
+		tcpClient->m_errorMsg = getLastUvError(ret);
 	}
 
 	/*!
@@ -444,11 +473,11 @@ namespace Network {
 		tcpClient->m_bIsClosed = true;
 		tcpClient->m_connectedState = R_CLOSED;
 
-		if (handle == (uv_handle_t*)&tcpClient->m_handle->client && !tcpClient->m_bForceClosed && tcpClient->m_bIsReconnecting) {
+		if (handle == (uv_handle_t*)&tcpClient->m_handle->client && !tcpClient->m_bForceClosed) {
 			int ret = uv_timer_start(&tcpClient->m_reconnectTimer, Uv_TcpClient::reconnectTimerCB, tcpClient->m_repeatConnTime, tcpClient->m_repeatConnTime);
 			if (ret) {
 				uv_close((uv_handle_t*)&tcpClient->m_reconnectTimer, Uv_TcpClient::remoteClientCloseCB);
-				//RLOG_ERROR_S(RUtil::getLastUvError(ret));
+				tcpClient->m_errorMsg = getLastUvError(ret);
 				return;
 			}
 		}
@@ -491,8 +520,8 @@ namespace Network {
 	void Uv_TcpClient::stopReconnect()
 	{
 		uv_timer_stop(&m_reconnectTimer);
-		m_bIsReconnecting = false;
 		m_repeatConnTime = 5000;
+		m_reconnectTimes = 0;
 	}
 
 	void Uv_TcpClient::closing()

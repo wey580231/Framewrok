@@ -97,7 +97,7 @@ namespace Related {
 	void MainWindow::initConnect()
 	{
 		connect(m_loginPage, SIGNAL(switchToMainPage()), this, SLOT(respLoginSuccess()));
-		connect(m_loginPage, SIGNAL(netStateChanged(bool)), m_leftPanel,SLOT(respNetStateChanged(bool)));
+		connect(m_loginPage, SIGNAL(netStateChanged(Datastruct::ConnectionType,bool)), m_leftPanel,SLOT(respNetStateChanged(Datastruct::ConnectionType,bool)));
 
 		connect(m_leftPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(switchPage(int)));
 		connect(m_leftPanel, SIGNAL(switchToSystemView()), this, SLOT(switchToSystemView()));

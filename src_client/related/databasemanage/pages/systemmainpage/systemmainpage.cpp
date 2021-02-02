@@ -15,7 +15,7 @@ namespace Related {
 		m_diskSpaceItem(nullptr),
 		m_platNumItem(nullptr),
 		m_newTaskButt(nullptr),
-		m_refreshTaskButt(nullptr), 
+		m_refreshTaskButt(nullptr),
 		m_firstLoadData(true)
 	{
 		m_taskItems.clear();
@@ -31,7 +31,7 @@ namespace Related {
 	{
 		return Page_SystemMainPage;
 	}
-	
+
 	/*!
 	 * @brief   刷新任务列表信息
 	 */
@@ -92,8 +92,8 @@ namespace Related {
 		{
 			m_newTaskButt = new Base::RIconButton();
 			m_newTaskButt->setText(QStringLiteral("新建任务"));
-			m_newTaskButt->setMinimumSize(60,30);
-			m_newTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));		
+			m_newTaskButt->setMinimumSize(60, 30);
+			m_newTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));
 			connect(m_newTaskButt, SIGNAL(clicked()), this, SLOT(slotNewTaskClickde()));
 			m_refreshTaskButt = new Base::RIconButton();
 			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
@@ -211,7 +211,7 @@ namespace Related {
 			updateTaskListWidget();
 		}
 
-		END_WAIT
+		END_WAIT;
 	}
 
 	void SystemMainPage::processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response)

@@ -15,6 +15,14 @@
 
 namespace Datastruct {
 
+	/*!
+	 * @brief 网络连接类型
+	 */
+	enum ConnectionType {
+		Data_Connection,		/*!< 数据连接 */
+		File_Connection			/*!< 文件连接 */
+	};
+
 	enum UserPrivilege {
 		NonePrivilege = 0x0000,		/*!< 无权限 */
 		ReadOnly = 0x0001,			/*!< 只可以查询，不可编辑 */

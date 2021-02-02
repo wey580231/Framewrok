@@ -7,6 +7,7 @@
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
+#include "../../customwidget/rcustomplot.h"
 
 namespace Related {
 
@@ -83,7 +84,8 @@ namespace Related {
 		CustomWidgetContainer * container = new CustomWidgetContainer();
 		container->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		{
-			
+			RCustomPlot * plot = new RCustomPlot();
+			container->setContent(plot);
 		}
 
 		QVBoxLayout * vlayout = new QVBoxLayout();
