@@ -20,6 +20,7 @@
 #include <QLabel>
 #include <QDateTime>
 #include <QListView>
+#include <QMap>
 
 #include <base/selfwidget/iconbutton.h>
 #include <base/selfwidget/rmessagebox.h>
@@ -63,16 +64,20 @@ namespace Related {
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
 		void slotDeleteTask(QString taskId);
-
+		void slotLocationActivated(QString index);
+		void slotPlatActivated(QString index);
 
 		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void processTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response);
 		void processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
+		void processTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response);
 
 	private:
 		void init();
 		void initConnent();
 
 		void refreshCurrTask();
+		void refreshTaskByCondition(Datastruct::TaskByConditionRequest request);
 		void updateTaskListWidget();
 
 	private:

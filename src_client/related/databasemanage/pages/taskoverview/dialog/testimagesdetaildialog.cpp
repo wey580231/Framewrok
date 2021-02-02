@@ -11,8 +11,6 @@ namespace Related {
 		setTitle(QStringLiteral("ÊÔÑéÍ¼Æ¬ÏêÇé"));
 		setMinimumSize(900, 650);
 
-		setButton(DialogProxy::Ok, this, SLOT(accept()));
-
 		init();
 	}
 
@@ -42,14 +40,14 @@ namespace Related {
 			imagesContainer->setContent(hWidget);
 		}
 
-		QGroupBox * groupBox = new QGroupBox();
-		groupBox->setTitle(QStringLiteral("ÊÔÑéÍ¼Æ¬ÃèÊö"));
+// 		QGroupBox * groupBox = new QGroupBox();
+// 		groupBox->setTitle(QStringLiteral("ÊÔÑéÍ¼Æ¬ÃèÊö"));
 
 		QWidget *manWidget = new QWidget();
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 
 		mainLayout->addWidget(imagesContainer, 6);
-		mainLayout->addWidget(groupBox, 1);
+//		mainLayout->addWidget(groupBox, 1);
 		mainLayout->setContentsMargins(4,4,4,4);
 		manWidget->setLayout(mainLayout);
 		this->setContentWidget(manWidget);

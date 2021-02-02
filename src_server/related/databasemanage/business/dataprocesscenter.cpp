@@ -305,6 +305,44 @@ namespace Related {
 		return response;
 	}
 
+	Datastruct::TaskByConditionResponse DataProcessCenter::processTaskByCondition(int clientId, const Datastruct::TaskByConditionRequest & request)
+	{
+		Datastruct::TaskByConditionResponse response;
+
+		Table::TaskEntity task;
+		Base::RSelect rs(task.table);
+		rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
+			.createCriteria()
+			.add(Base::Restrictions::eq(task.location, request.location));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::TaskEntityData data;
+				data.id = query.value(task.id).toString();
+				data.taskName = query.value(task.name).toString();
+				data.startTime = query.value(task.startTime).toDateTime().toString(TIME_FORMAT);
+				data.endTime = query.value(task.endTime).toDateTime().toString(TIME_FORMAT);
+				data.location = query.value(task.location).toString();
+				data.lon = query.value(task.lon).toString();
+				data.lat = query.value(task.lat).toString();
+				data.description = query.value(task.description).toString();
+				response.m_taskInfos.append(data);
+			}
+
+			Base::RSelect rst(task.table);
+			rst.count();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_count = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+
 	Datastruct::TaskDeleteResponse DataProcessCenter::processTaskDelete(int clientId, const Datastruct::TaskDeleteRequest & request)
 	{
 		Datastruct::TaskDeleteResponse response;
@@ -324,6 +362,36 @@ namespace Related {
 				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 			}
 		}
+		return response;
+	}
+
+	Datastruct::TaskStaticsInfoResponse DataProcessCenter::processTaskStaticsInfo(int clientId, const Datastruct::TaskStaticsInfoRequest & request)
+	{
+		Datastruct::TaskStaticsInfoResponse response;
+		// 所有任务起始时间
+		Table::TaskEntity task;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		Base::RSelect minRst(task.table);
+		// 起始时间
+		minRst.min(task.startTime);
+		if (query.exec(minRst.sql())) {
+			if (query.next()) {
+				response.allTaskStartTime = query.value(0).toDateTime().toString(TIME_FORMAT);
+			}
+		}
+		// 结束时间
+		Base::RSelect maxRst(task.table);
+		maxRst.max(task.endTime);
+		if (query.exec(maxRst.sql())) {
+			if (query.next()) {
+				qDebug() << query.value(0).toDateTime().toString(TIME_FORMAT);
+				response.allTaskEndTime = query.value(0).toDateTime().toString(TIME_FORMAT);
+			}
+		}
+		// 海区
+
 		return response;
 	}
 
@@ -366,9 +434,9 @@ namespace Related {
 
 		Base::RPersistence rps(dutyRecord.table);
 		rps.insert({
-				{dutyRecord.id,				Base::RUtil::UUID()},
+				{dutyRecord.id,				request.m_id},
 				{dutyRecord.taskId,			request.m_taskId},
-				{dutyRecord.createTime,		QDateTime::currentDateTime()},
+				{dutyRecord.createTime,		QDateTime::fromString(request.m_createTime, TIME_FORMAT)},
 				{dutyRecord.description,	request.m_description},
 				{dutyRecord.seaCondition,	request.m_seaCondition},
 				{dutyRecord.wind,			request.m_wind},
@@ -402,6 +470,9 @@ namespace Related {
 		rs.orderBy(dutyRecord.table, dutyRecord.createTime, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(dutyRecord.taskId, request.m_taskId));
+
+		rs.limit(request.m_offsetIndex, request.m_limitIndex);
+
 		QSqlQuery query(m_database->sqlDatabase());
 
 		if (query.exec(rs.sql())) {
@@ -419,7 +490,16 @@ namespace Related {
 				response.m_dutyRecordInfos.append(data);
 			}
 
-			response.m_dutyRecordCount = response.m_dutyRecordInfos.size();
+			Base::RSelect rst(dutyRecord.table);
+			rst.select(dutyRecord.table).
+				createCriteria().
+				add(Base::Restrictions::eq(dutyRecord.taskId, request.m_taskId));
+			rst.count();
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_dutyRecordCount = query.value(0).toInt();
+				}
+			}
 		}
 		return response;
 	}
@@ -543,12 +623,10 @@ namespace Related {
 		Table::ExperimentRecordEntity experimentRecord;
 
 		Base::RSelect rs(experimentRecord.table);
-//  		rs.select(experimentRecord.table)
-//  			.limit(request.m_offsetIndex, request.m_limitIndex);
-
 		rs.orderBy(experimentRecord.table, experimentRecord.floatingTime, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
+		rs.limit(request.m_offsetIndex, request.m_limitIndex);
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -576,7 +654,16 @@ namespace Related {
 				response.m_experimentRecordInfos.append(data);
 			}
 
-			response.m_experimentRecordCount = response.m_experimentRecordInfos.size();
+			Base::RSelect rst(experimentRecord.table);
+			rst.select(experimentRecord.table).
+				createCriteria().
+				add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
+			rst.count();
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_experimentRecordCount = query.value(0).toInt();
+				}
+			}
 		}
 		return response;
 	}

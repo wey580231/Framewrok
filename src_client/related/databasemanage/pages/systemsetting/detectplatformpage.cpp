@@ -14,10 +14,10 @@ namespace Related {
 		m_firstLoadData(true)
 	{
 		m_detectPlatformsMap.clear();
-		m_detectPlatformSubtypesMap.clear();
 
 		init();
 		initConnect();
+		//m_DetectPlatformSubtypeListView->installEventFilter(this);
 	}
 
 	DetectPlatformPage::~DetectPlatformPage()
@@ -34,6 +34,25 @@ namespace Related {
 		if (m_firstLoadData) {
 			refreshCurrDetectPlatform();
 			m_firstLoadData = false;
+		}
+	}
+
+	void DetectPlatformPage::slotActivated(const QString & text)
+	{
+		m_listModel->clear();
+		if (m_detectPlatformsMap.contains(text)) {
+			int detectId = m_detectPlatformsMap.find(text).value();
+
+			if (m_detectPlatformSubtypesResponseMap.contains(detectId)) {
+
+				Datastruct::LoadAllDetectPlatformSubtypesResponse t_response = m_detectPlatformSubtypesResponseMap.find(detectId).value();
+
+				for (int i = 0; i < t_response.m_detectPlatformSubtypeInfos.size(); i++) {
+					Datastruct::DetectPlatformSubtypeEntityData data = t_response.m_detectPlatformSubtypeInfos.at(i);
+					QStandardItem *item = new QStandardItem(data.name);
+					m_listModel->appendRow(item);
+				}
+			}
 		}
 	}
 
@@ -54,40 +73,40 @@ namespace Related {
 		}
 	}
 
-	void DetectPlatformPage::processDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response)
-	{
-
-	}
-
 	void DetectPlatformPage::processDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response)
 	{
-	}
+		if (response.m_deleteResult) 
+		{
+			refreshCurrDetectPlatform();
+		}
+		else
+		{
 
-	void DetectPlatformPage::processDetectPlatformModifyResponse(const Datastruct::DetectPlatformModifyResponse & response)
-	{
+		}
 	}
 
 	void DetectPlatformPage::processQueryAllDetectPlatformSubtypeResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response)
 	{
 		if (response.m_detectPlatformSubtypeCount > 0) {
-			if (m_detectPlatformSubtypesMap.contains(response.m_detectId)) {
-				QMap<QString, int > t_map = m_detectPlatformSubtypesMap.find(response.m_detectId).value();
-				t_map.clear();
-
-				for (int i = 0; i < response.m_detectPlatformSubtypeInfos.size(); i++) {
-					Datastruct::DetectPlatformSubtypeEntityData data = response.m_detectPlatformSubtypeInfos.at(i);
-					t_map.insert(data.name, data.id);
-				}
-				m_detectPlatformSubtypesMap.insert(response.m_detectId, t_map);
-				m_detectPlatformSubtypesResponseMap.insert(response.m_detectId, response);
-			}
+			m_detectPlatformSubtypesResponseMap.insert(response.m_detectId, response);
 
 			//是否刷新界面
+			m_listModel->clear();
 			QString name =	m_DetectPlatformComboBox->currentText();
-// 			if (m_detectPlatformsMap.contains(name)) {
-// 				int detectId = 
-// 			}
+			if (m_detectPlatformsMap.contains(name)) {
+				int detectId = m_detectPlatformsMap.find(name).value();
 
+				if (m_detectPlatformSubtypesResponseMap.contains(detectId)) {
+			
+					Datastruct::LoadAllDetectPlatformSubtypesResponse t_response = m_detectPlatformSubtypesResponseMap.find(detectId).value();
+
+					for (int i = 0; i < t_response.m_detectPlatformSubtypeInfos.size(); i++) {
+						Datastruct::DetectPlatformSubtypeEntityData data = t_response.m_detectPlatformSubtypeInfos.at(i);
+						QStandardItem *item = new QStandardItem(data.name);
+						m_listModel->appendRow(item);
+					}
+				}
+			}
 		}
 	}
 
@@ -98,10 +117,23 @@ namespace Related {
 	void DetectPlatformPage::processDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response)
 	{
 	}
+// 
+// 	bool DetectPlatformPage::eventFilter(QObject * obj, QEvent * event)
+// 	{
+// 		if (obj == m_DetectPlatformSubtypeListView) {
+// 			if (event->type() == QEvent::ContextMenu)
+// 			{
+// 				QContextMenuEvent *keyEvent = static_cast<QContextMenuEvent *>(event)
+// 
 
-	void DetectPlatformPage::processDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response)
-	{
-	}
+// 				return true;
+// 			}
+// 			else {
+// 				return false;
+// 			}
+// 		}
+// 		return QWidget::eventFilter(obj, event);
+// 	}
 
 	void DetectPlatformPage::respToolButtPressed(OperationToolsPage::ButtType type)
 	{
@@ -109,22 +141,37 @@ namespace Related {
 		{
 		case OperationToolsPage::Butt_Add: {
 
+			DetectPlatformEditDialog dialog(this);
+			
+			if (dialog.exec() == QDialog::Accepted) {
+				refreshCurrDetectPlatform();
+			}
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
-
-		}
-			break;
-		case OperationToolsPage::Butt_Edit: {
-		}
-			break;
-		case OperationToolsPage::Butt_Refresh: {
-
+			QString name = m_DetectPlatformComboBox->currentText();
+			if (m_detectPlatformsMap.contains(name))
+			{
+				int detectId = m_detectPlatformsMap.find(name).value();
+				deleteDetectPlatform(detectId);
+			}
 		}
 			break;
 		default:
 			break;
 		}
+	}
+
+	void DetectPlatformPage::contextMenuEvent(QContextMenuEvent * event)
+	{
+		QMenu *menu = new QMenu(this);
+		QAction * newAction = new QAction();
+		newAction->setText(QStringLiteral("新建"));
+		QAction * deleteAction = new QAction();
+		deleteAction->setText(QStringLiteral("删除"));
+		menu->addAction(newAction);
+		menu->addAction(deleteAction);
+		menu->exec(Cursor::pos());
 	}
 
 	void DetectPlatformPage::init()
@@ -139,11 +186,16 @@ namespace Related {
 			QLabel * detectPlatformLabel = new QLabel();
 			detectPlatformLabel->setText(QStringLiteral("侦测平台："));
 			m_DetectPlatformComboBox = new QComboBox();
+			connect(m_DetectPlatformComboBox, SIGNAL(activated(QString)), this, SLOT(slotActivated(QString)));
 
 			QLabel * detectPlatformSubtypeLabel = new QLabel();
 			detectPlatformSubtypeLabel->setText(QStringLiteral("侦测平台亚型："));
 		
 			m_DetectPlatformSubtypeListView = new QListView();
+
+			m_listModel = new QStandardItemModel();
+
+			m_DetectPlatformSubtypeListView->setModel(m_listModel);
 
 			QHBoxLayout *hLayout = new QHBoxLayout();
 			hLayout->addWidget(detectPlatformLabel);
@@ -168,9 +220,6 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllDetectPlatformsResponse(const Datastruct::LoadAllDetectPlatformsResponse &)),
 			this, SLOT(processQueryAllDetectPlatformResponse(const Datastruct::LoadAllDetectPlatformsResponse &)));
-
-		connect(SignalDispatch::instance(), SIGNAL(respDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse &)),
-			this, SLOT(processDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse &)));
 
 		connect(SignalDispatch::instance(), SIGNAL(respDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse &)),
 			this, SLOT(processDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse &)));
@@ -213,14 +262,6 @@ namespace Related {
 		DataNetConnector::instance()->write(request);
 	}
 
-	void DetectPlatformPage::modifyDetectPlatform(Datastruct::DetectPlatformEntityData data)
-	{
-		Datastruct::DetectPlatformModifyRequest request;
-		request.m_id = data.id;
-		request.m_name = data.name;
-		DataNetConnector::instance()->write(request);
-	}
-
 	void DetectPlatformPage::refreshCurrDetectPlatformSubtype(int detectId)
 	{
 		Datastruct::LoadAllDetectPlatformSubtypesRequest request;
@@ -242,15 +283,6 @@ namespace Related {
 		Datastruct::DetectPlatformSubtypeModifyRequest request;
 		request.m_id = data.id;
 		request.m_detectId = data.detectId;
-		DataNetConnector::instance()->write(request);
-	}
-
-	void DetectPlatformPage::modifyDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data)
-	{
-		Datastruct::DetectPlatformSubtypeModifyRequest request;
-		request.m_id = data.id;
-		request.m_detectId = data.detectId;
-		request.m_name = data.name;
 		DataNetConnector::instance()->write(request);
 	}
 

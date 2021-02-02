@@ -381,6 +381,73 @@ namespace CommonDefines {
 		});
 	}
 
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskByConditionRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.startTime, request.startTime);
+			obj.insert(m_jsonKey.endTime, request.endTime);
+			obj.insert(m_jsonKey.location, request.location);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskByConditionRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.startTime = jsonObject.value(m_jsonKey.startTime).toString();
+			request.endTime = jsonObject.value(m_jsonKey.endTime).toString();
+			request.location = jsonObject.value(m_jsonKey.location).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskByConditionResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+
+			QJsonArray jarray;
+			for (int i = 0; i < response.m_taskInfos.size(); i++) {
+				const Datastruct::TaskEntityData & dRdata = response.m_taskInfos.at(i);
+
+				QJsonObject dataObj;
+
+				dataObj.insert(m_jsonKey.id, dRdata.id);
+				dataObj.insert(m_jsonKey.name, dRdata.taskName);
+				dataObj.insert(m_jsonKey.startTime, dRdata.startTime);
+				dataObj.insert(m_jsonKey.endTime, dRdata.endTime);
+				dataObj.insert(m_jsonKey.location, dRdata.location);
+				dataObj.insert(m_jsonKey.lon, dRdata.lon);
+				dataObj.insert(m_jsonKey.lat, dRdata.lat);
+				dataObj.insert(m_jsonKey.description, dRdata.description);
+				jarray.append(dataObj);
+			}
+			obj.insert(m_jsonKey.totalDataSize, response.m_count);
+			obj.insert(m_jsonKey.data, jarray);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskByConditionResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			QJsonArray jarray = jsonObject.value(m_jsonKey.data).toArray();
+			for (int i = 0; i < jarray.size(); i++) {
+				Datastruct::TaskEntityData data;
+
+				QJsonObject dataObj = jarray.at(i).toObject();
+
+				data.id = dataObj.value(m_jsonKey.id).toString();
+				data.taskName = dataObj.value(m_jsonKey.name).toString();
+				data.startTime = dataObj.value(m_jsonKey.startTime).toString();
+				data.endTime = dataObj.value(m_jsonKey.endTime).toString();
+				data.location = dataObj.value(m_jsonKey.location).toString();
+				data.lon = dataObj.value(m_jsonKey.lon).toString();
+				data.lat = dataObj.value(m_jsonKey.lat).toString();
+				data.description = dataObj.value(m_jsonKey.description).toString();
+
+				response.m_taskInfos.append(data);
+			}
+			response.m_count = jsonObject.value(m_jsonKey.totalDataSize).toInt();
+		});
+	}
+
 	QByteArray JsonWrapper::wrap(const Datastruct::TaskDeleteRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
@@ -409,6 +476,37 @@ namespace CommonDefines {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
 			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskStaticsInfoRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.id, request.id);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskStaticsInfoRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.id = jsonObject.value(m_jsonKey.id).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskStaticsInfoResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.startTime, response.allTaskStartTime);
+			obj.insert(m_jsonKey.endTime, response.allTaskEndTime);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskStaticsInfoResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.allTaskStartTime = jsonObject.value(m_jsonKey.startTime).toString();
+			response.allTaskEndTime = jsonObject.value(m_jsonKey.endTime).toString();
+		});
+		return false;
 	}
 
 	QByteArray JsonWrapper::wrap(const Datastruct::TaskSimpleRequest & request)

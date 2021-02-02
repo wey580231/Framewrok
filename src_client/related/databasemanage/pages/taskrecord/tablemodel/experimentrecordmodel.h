@@ -33,7 +33,6 @@ namespace Related {
 	protected:
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
-
 	private:
 		QList<Datastruct::ExperimentRecordEntityData> m_dataList;
 	};

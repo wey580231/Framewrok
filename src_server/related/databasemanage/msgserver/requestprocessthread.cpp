@@ -130,7 +130,11 @@ namespace Related {
 			}
 				break;
 			case  Datastruct::P_TaskByCondition: {
-
+				Datastruct::TaskByConditionRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskByConditionResponse response = m_processCenter.processTaskByCondition(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskByCondition, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case  Datastruct::P_TaskDelete: {
@@ -142,7 +146,11 @@ namespace Related {
 			}
 				break;
 			case  Datastruct::P_TaskStaticsInfo: {
-
+				Datastruct::TaskStaticsInfoRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskStaticsInfoResponse response = m_processCenter.processTaskStaticsInfo(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskStaticsInfo, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case  Datastruct::P_TaskSimpleInfo: {

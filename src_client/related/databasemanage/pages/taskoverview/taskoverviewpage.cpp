@@ -54,9 +54,8 @@ namespace Related {
 	void TaskOverViewPage::slotSelectedImagesIndex(int index)
 	{
 		TestImagesDetailDialog dialog(this);
-		if (QDialog::Accepted == dialog.exec()) {
+		dialog.exec();
 
-		}
 	}
 
 	void TaskOverViewPage::init()

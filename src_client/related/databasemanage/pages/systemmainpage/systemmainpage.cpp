@@ -38,6 +38,7 @@ namespace Related {
 	void SystemMainPage::prepareBringToTop() {
 		if (m_firstLoadData) {
 			refreshCurrTask();
+
 			m_firstLoadData = false;
 		}
 	}
@@ -105,11 +106,15 @@ namespace Related {
 
 			m_locationBox = new QComboBox();
 			m_locationBox->setView(new QListView());
-			m_locationBox->addItem(QStringLiteral("选择海区"));
+			m_locationBox->addItem(QStringLiteral("全部海区"));
+			connect(m_locationBox, SIGNAL(activated(QString)),
+				this, SLOT(slotLocationActivated(QString)));
 
 			m_platBox = new QComboBox();
 			m_platBox->setView(new QListView());
-			m_platBox->addItem(QStringLiteral("选择平台"));
+			m_platBox->addItem(QStringLiteral("全部平台"));
+			connect(m_platBox, SIGNAL(activated(QString)),
+				this, SLOT(slotPlatActivated(QString)));
 
 			QHBoxLayout * hlayout = new QHBoxLayout();
 			hlayout->setContentsMargins(0, 0, 0, 0);
@@ -155,8 +160,15 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)),
 			this, SLOT(processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskByConditionResponse(const Datastruct::TaskByConditionResponse &)),
+			this, SLOT(processTaskByConditionResponse(const Datastruct::TaskByConditionResponse &)));
+
 		connect(SignalDispatch::instance(), SIGNAL(respTaskeDleteResponse(const Datastruct::TaskDeleteResponse &)),
 			this, SLOT(processTaskDeleteResponse(const Datastruct::TaskDeleteResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse &)),
+			this, SLOT(processTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse &)));
 	}
 
 	void SystemMainPage::slotNewTaskClickde()
@@ -184,7 +196,69 @@ namespace Related {
 		DataNetConnector::instance()->write(request);
 	}
 
+	void SystemMainPage::slotLocationActivated(QString index)
+	{
+		if (index != QStringLiteral("全部海区")) 
+		{
+			Datastruct::TaskByConditionRequest  requset;
+			requset.location = index;
+			refreshTaskByCondition(requset);
+		} 
+		else
+		{
+			refreshCurrTask();
+		}
+	}
+
+	void SystemMainPage::slotPlatActivated(QString index)
+	{
+	}
+
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
+	{
+		if (m_taskItems.size() > 0) {
+			std::for_each(m_taskItems.begin(), m_taskItems.end(), [](TaskOverViewItem * item) {
+				delete item;
+			});
+
+			m_taskItems.clear();
+		}
+
+		if (response.m_taskInfos.size() > 0) {
+
+			m_taskNumItem->setLabelData(QString::number(response.m_taskInfos.size()));
+			//
+			QMap<QString, int> mapLocations;
+ 			mapLocations.clear();
+
+			for (int i = 0; i < response.m_taskInfos.size(); i++) {
+				Datastruct::TaskEntityData taskData = response.m_taskInfos.at(i);
+				mapLocations.insert(taskData.location, 0);
+			}
+			//刷新海区
+			m_locationBox->clear();
+			m_locationBox->addItem(QStringLiteral("全部海区"));
+ 			QMap<QString, int>::ConstIterator  it;
+			for (it = mapLocations.begin(); it != mapLocations.end(); it++) {
+				m_locationBox->addItem(it.key());
+			}
+
+			//[] 刷新显示窗口
+			for (int i = 0; i < response.m_taskInfos.size(); i++) {
+				Datastruct::TaskEntityData taskData = response.m_taskInfos.at(i);
+				TaskOverViewItem * item = new TaskOverViewItem();
+				item->setTaskBaseInfo(taskData);
+				connect(item, SIGNAL(openTask(QString)), this, SIGNAL(openTask(QString)));
+				connect(item, SIGNAL(deleteTask(QString)), this, SLOT(slotDeleteTask(QString)));
+				m_taskItems.append(item);
+			}
+			updateTaskListWidget();
+
+		}
+		END_WAIT
+	}
+
+	void SystemMainPage::processTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response)
 	{
 		if (m_taskItems.size() > 0) {
 
@@ -196,8 +270,9 @@ namespace Related {
 		}
 
 		if (response.m_taskInfos.size() > 0) {
-			m_taskNumItem->setLabelData(QString::number(response.m_taskInfos.size()));
 
+			//[] 刷新任务总数
+			m_taskNumItem->setLabelData(QString::number(response.m_taskInfos.size()));
 			//[] 刷新显示窗口
 			for (int i = 0; i < response.m_taskInfos.size(); i++) {
 				Datastruct::TaskEntityData taskData = response.m_taskInfos.at(i);
@@ -210,7 +285,6 @@ namespace Related {
 			}
 			updateTaskListWidget();
 		}
-
 		END_WAIT
 	}
 
@@ -221,6 +295,11 @@ namespace Related {
 		}
 	}
 
+	void SystemMainPage::processTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response)
+	{
+
+	}
+
 	/*!
 	 * @brief	更新当前任务
 	 * @details 任务创建、任删除等改变时，调用此方法可获得及时刷新
@@ -228,6 +307,15 @@ namespace Related {
 	void SystemMainPage::refreshCurrTask()
 	{
 		Datastruct::LoadAllTaskRequest request;
+		DataNetConnector::instance()->write(request);
+	}
+
+	/*!
+	 * @brief   更新任务统计信息
+	 * @details 
+	 */
+	void SystemMainPage::refreshTaskByCondition(Datastruct::TaskByConditionRequest request)
+	{
 		DataNetConnector::instance()->write(request);
 	}
 

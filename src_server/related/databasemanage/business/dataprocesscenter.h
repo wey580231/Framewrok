@@ -40,7 +40,9 @@ namespace Related {
 		// 有关任务
 		Datastruct::TaskCreateResponse  processTaskCreate(int clientId, const Datastruct::TaskCreateRequest & request);
 		Datastruct::LoadAllTaskResponse processTaskList(int clientId, const Datastruct::LoadAllTaskRequest & request);
+		Datastruct::TaskByConditionResponse processTaskByCondition(int clientId, const Datastruct::TaskByConditionRequest & request);
 		Datastruct::TaskDeleteResponse processTaskDelete(int clientId, const Datastruct::TaskDeleteRequest & request);
+		Datastruct::TaskStaticsInfoResponse processTaskStaticsInfo(int clientId, const Datastruct::TaskStaticsInfoRequest & request);
 		Datastruct::TaskSimpleResponse processTaskSimple(int clientId, const Datastruct::TaskSimpleRequest & request);
 
 		//值班日志

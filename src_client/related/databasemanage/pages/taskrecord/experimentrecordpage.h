@@ -1,6 +1,6 @@
 /*!
- * @brief     试验记录界面
- * @details
+ * @brief     试验记录数据显示界面
+ * @details	  
  * @author    yzg
  * @version   1.0
  * @date      2021.01.23 11:06:46
@@ -23,6 +23,7 @@
 #include "../abstractpage.h"
 #include "../../customwidget/pageswitchbar.h"
 #include "../../customwidget/operationtoolspage.h"
+
 #include "tablemodel/experimentrecordmodel.h"
 #include "dialog/experimentrecordeditdialog.h"
 
@@ -48,7 +49,7 @@ namespace Related {
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
-		void processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
+		
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
 		void slotClickedTable(QModelIndex index);
@@ -57,7 +58,6 @@ namespace Related {
 		void init();
 		void initConnent();
 
-		void insertExperimentRecord();
 		void deleteExperimentRecord(QString id);
 		void refreshCurrPage();
 

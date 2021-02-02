@@ -21,11 +21,16 @@
 #include <QStandardItemModel>
 #include <QModelIndex>
 #include <QMap>
+#include <QEvent>
+#include <QMenu>
+#include <QAction>
 
 #include <base\selfwidget\iconbutton.h>
 #include <base/selfwidget/rmessagebox.h>
 #include "../abstractpage.h"
 #include "../../customwidget/operationtoolspage.h"
+
+#include "dialog/detectplatformeditdialog.h"
 
 namespace Related {
 
@@ -43,16 +48,18 @@ namespace Related {
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
+		void slotActivated(const QString &text);
 
 		void processQueryAllDetectPlatformResponse(const Datastruct::LoadAllDetectPlatformsResponse & response);
-		void processDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response);
 		void processDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response);
-		void processDetectPlatformModifyResponse(const Datastruct::DetectPlatformModifyResponse & response);
 
 		void processQueryAllDetectPlatformSubtypeResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
 		void processDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
 		void processDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
-		void processDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
+
+	protected:
+	/*	bool eventFilter(QObject* obj, QEvent* event);*/
+		void contextMenuEvent(QContextMenuEvent *event);
 
 	private:
 		void init();
@@ -61,25 +68,24 @@ namespace Related {
 		void refreshCurrDetectPlatform();
 		void insertDetectPlatform(int id, QString name);
 		void deleteDetectPlatform(int id);
-		void modifyDetectPlatform(Datastruct::DetectPlatformEntityData data);
 
 		void refreshCurrDetectPlatformSubtype(int detectId);
 		void insertDetectPlatformSubtype(int detectId, int id, QString name);
 		void deleteDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data);
-		void modifyDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data);
 
 	private:
 		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */
 		QComboBox * m_DetectPlatformComboBox;					/*!< 侦测平台 */
 		QListView * m_DetectPlatformSubtypeListView;			/*!< 侦测平台亚型 */
+		QStandardItemModel * m_listModel;
 		bool m_firstLoadData;									/*!< 第一次加载页面显示 */
 
 		Datastruct::LoadAllDetectPlatformsResponse m_detectPlatformsList;
+
 		QMap<int, Datastruct::LoadAllDetectPlatformSubtypesResponse> m_detectPlatformSubtypesResponseMap;
 
+		QMap<QString, int>  m_detectPlatformsMap;
 
-		QMap<QString, int> m_detectPlatformsMap;
-		QMap<int, QMap<QString, int>> m_detectPlatformSubtypesMap;
 	};
 
 } //namespace Related

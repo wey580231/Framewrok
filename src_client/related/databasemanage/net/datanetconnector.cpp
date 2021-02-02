@@ -63,9 +63,21 @@ namespace Related {
 		sendData(array);
 	}
 
+	void DataNetConnector::write(const Datastruct::TaskByConditionRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskByCondition, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void DataNetConnector::write(const Datastruct::TaskDeleteRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_TaskDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskStaticsInfoRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskStaticsInfo, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 
@@ -209,7 +221,7 @@ namespace Related {
 					SignalDispatch::instance()->recvUserLoginResponse(response);
 				}
 			}
-										  break;
+				break;
 
 			case Datastruct::P_UserRegist: {
 				Datastruct::UserRegistResponse response;
@@ -217,7 +229,7 @@ namespace Related {
 					SignalDispatch::instance()->recvUseRegistResponse(response);
 				}
 			}
-										   break;
+				break;
 
 			case Datastruct::P_UserList: {
 				Datastruct::LoadAllUserResponse response;
@@ -225,7 +237,7 @@ namespace Related {
 					SignalDispatch::instance()->recvQueryUserListResponse(response);
 				}
 			}
-										 break;
+			 break;
 
 			case Datastruct::P_UserOperate: {
 				Datastruct::OperateUserResponse response;
@@ -233,7 +245,7 @@ namespace Related {
 					SignalDispatch::instance()->recvOperateUserResponse(response);
 				}
 			}
-											break;
+				break;
 
 			case  Datastruct::P_CreateTask: {
 				Datastruct::TaskCreateResponse response;
@@ -241,7 +253,7 @@ namespace Related {
 					SignalDispatch::instance()->recvTaskCreateResponse(response);
 				}
 			}
-											break;
+			break;
 
 			case  Datastruct::P_TaskList: {
 				Datastruct::LoadAllTaskResponse response;
@@ -249,12 +261,15 @@ namespace Related {
 					SignalDispatch::instance()->recvQueryAllTaskResponse(response);
 				}
 			}
-										  break;
+				break;
 
 			case  Datastruct::P_TaskByCondition: {
-
+				Datastruct::TaskByConditionResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskByConditionResponse(response);
+				}
 			}
-												 break;
+			 break;
 
 			case  Datastruct::P_TaskDelete: {
 				Datastruct::TaskDeleteResponse response;
@@ -262,11 +277,15 @@ namespace Related {
 					SignalDispatch::instance()->recvTaskDeleteResponse(response);
 				}
 			}
-											break;
+				break;
 			case  Datastruct::P_TaskStaticsInfo: {
+				Datastruct::TaskStaticsInfoResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskStaticsInfoResponse(response);
+				}
 
 			}
-												 break;
+				 break;
 
 			case  Datastruct::P_TaskSimpleInfo: {
 				Datastruct::TaskSimpleResponse response;

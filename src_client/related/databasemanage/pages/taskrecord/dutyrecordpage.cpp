@@ -25,6 +25,22 @@ namespace Related {
 
 	DutyRecordPage::~DutyRecordPage()
 	{
+		if (m_operationToolsPage != nullptr) {
+			delete m_operationToolsPage;
+			m_operationToolsPage = nullptr;
+		}
+		if (m_tableView != nullptr) {
+			delete m_tableView;
+			m_tableView = nullptr;
+		}
+		if (m_tableModel != nullptr) {
+			delete m_tableModel;
+			m_tableModel = nullptr;
+		}
+		if (m_pageSwitch != nullptr) {
+			delete m_pageSwitch;
+			m_pageSwitch = nullptr;
+		}
 	}
 
 	PageType DutyRecordPage::getPageType() const
@@ -59,7 +75,13 @@ namespace Related {
 		switch (type)
 		{
 		case OperationToolsPage::Butt_Add: {
-			insertDutyRecord();
+			DutyRecordEditDialog editDialog(this);
+			editDialog.setDutyRecordDataOperatioType(DutyRecordEditDialog::DRD_Create);
+			editDialog.setTaskId(m_taskId);
+			if (QDialog::Accepted == editDialog.exec()) {
+				refreshCurrPage();
+				m_seleteTableRow = DUTY_RECORD_SELET_MAX_INDEX;
+			}
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
@@ -79,6 +101,7 @@ namespace Related {
 			if (m_seleteTableRow < m_allDutyRecords.m_dutyRecordInfos.size() && m_seleteTableRow > DUTY_RECORD_SELET_MAX_INDEX) {
 				Datastruct::DutyRecordEntityData data = m_allDutyRecords.m_dutyRecordInfos.at(m_seleteTableRow);
 				DutyRecordEditDialog editDialog(this);
+				editDialog.setDutyRecordDataOperatioType(DutyRecordEditDialog::DRD_Modify);
 				editDialog.setDutyRecordEntityData(data);
 				if (QDialog::Accepted ==  editDialog.exec()) {
 					refreshCurrPage();
@@ -106,13 +129,6 @@ namespace Related {
 		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
-	void DutyRecordPage::processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
-	{
-		if (response.m_createResult == true) {
-			refreshCurrPage();
-		}
-	}
-
 	void DutyRecordPage::processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
 		m_allDutyRecords = response;
@@ -137,20 +153,18 @@ namespace Related {
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
 			m_operationToolsPage = new OperationToolsPage();
-			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)),
-				this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
+			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
 			cwidget->setContent(m_operationToolsPage);
 		}
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
 		{
-			m_tableModel = new DutyRecordModel();
-
 			m_tableView = new Base::RTableView();
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
+			m_tableModel = new DutyRecordModel();
 			m_tableView->setModel(m_tableModel);
 			m_tableView->addColumnItem(Base::ColumnItem(DR_Index, QStringLiteral("索引")));
 			m_tableView->addColumnItem(Base::ColumnItem(DR_CreateTime, QStringLiteral("录入时间"), 180));
@@ -187,36 +201,11 @@ namespace Related {
 
 	void DutyRecordPage::initConnect()
 	{
-		// 信号与槽
-		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse &)),
-			this, SLOT(processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse &)));
-
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse &)),
 			this, SLOT(processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse &)));
 	
 		connect(SignalDispatch::instance(), SIGNAL(respDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)),
 			this, SLOT(processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse &)));
-	}
-
-	/*!
-	 * @brief   插入一条记录
-	 * @details 
-	 */
-	void DutyRecordPage::insertDutyRecord()
-	{
-		Datastruct::DutyRecordCreateRequest request;
-		request.m_id = Base::RUtil::UUID();
-		request.m_taskId = m_taskId;
-		QDateTime current_date_time = QDateTime::currentDateTime();
-		request.m_createTime = current_date_time.toString(TIME_FORMAT);
-		request.m_description = QStringLiteral("1");
-		request.m_seaCondition; QStringLiteral("1");
-		request.m_wind = 0;						
-		request.m_windSpeed = 0;					
-		request.m_waveHigh = 0;					
-		request.m_oceanCurrents = 0;				
-
-		DataNetConnector::instance()->write(request);
 	}
 
 	void DutyRecordPage::deleteDutyRecord(QString id)
