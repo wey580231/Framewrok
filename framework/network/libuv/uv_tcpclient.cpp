@@ -107,6 +107,11 @@ namespace Network {
 		return m_bAutoReconnect;
 	}
 
+	void Uv_TcpClient::setMaxReconnectTimes(int maxTimes)
+	{
+		m_maxReconnectTimes = maxTimes;
+	}
+
 	int Uv_TcpClient::reconnectInterval() const
 	{
 		return m_repeatConnTime;
@@ -230,8 +235,13 @@ namespace Network {
 
 			if (tcpClient->m_bAutoReconnect) {
 
-				if (tcpClient->m_maxReconnectTimes > 0 && tcpClient->m_reconnectTimes > tcpClient->m_maxReconnectTimes) {
+				if (tcpClient->m_maxReconnectTimes > 0 && tcpClient->m_reconnectTimes >= tcpClient->m_maxReconnectTimes) {
 					tcpClient->stopReconnect();
+
+					if (tcpClient->m_connectedCallback) {
+						tcpClient->m_connectedCallback(nullptr);
+					}
+
 					return;
 				}
 

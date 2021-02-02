@@ -39,6 +39,7 @@ namespace Network {
 		 */
 		void setAutoReconnect(bool flag = true);
 		bool isAutoReconnect() const;
+		void setMaxReconnectTimes(int maxTimes);
 		void stopReconnect();
 
 		/*! 

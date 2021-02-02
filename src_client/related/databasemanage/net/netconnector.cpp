@@ -16,6 +16,7 @@ namespace Related {
 		m_eventLoop = new Network::Uv_EventLoop();
 		m_dataTcpClient = new Network::Uv_TcpClient(m_eventLoop->eventLoop());
 		m_dataTcpClient->setConnectedCallBack(std::bind(&NetConnector::connectCallBack, this, std::placeholders::_1));
+		m_dataTcpClient->setReconnCallback(std::bind(&NetConnector::reconnCallBack, this, std::placeholders::_1));
 		m_dataTcpClient->setCloseCallBack(std::bind(&NetConnector::closeCallBack, this, std::placeholders::_1));
 		m_dataTcpClient->setRecvCallback(std::bind(&NetConnector::recvDataCallBack, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
@@ -29,6 +30,11 @@ namespace Related {
 			return;
 		}
 		emit netConnected(m_connType, true);
+	}
+
+	void NetConnector::reconnCallBack(int tryTimes)
+	{
+		emit reconnTimes(m_connType, tryTimes);
 	}
 
 	void NetConnector::closeCallBack(Network::Uv_TcpClient * client)
@@ -145,9 +151,15 @@ namespace Related {
 	{
 	}
 
-	void NetConnector::setAutoReconnect(bool isAutoReconnect)
+	void NetConnector::setNetAutoConnect(bool isReconn, int maxReconnTimes)
 	{
-		m_dataTcpClient->setAutoReconnect(isAutoReconnect);
+		m_dataTcpClient->setAutoReconnect(isReconn);
+		if (isReconn) {
+			m_dataTcpClient->setMaxReconnectTimes(maxReconnTimes);
+		}
+		else {
+			m_dataTcpClient->stopReconnect();
+		}
 	}
 
 	bool NetConnector::connectTo(QString remoteIp, ushort remotePort)

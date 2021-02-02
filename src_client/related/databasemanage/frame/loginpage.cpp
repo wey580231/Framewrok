@@ -19,11 +19,12 @@
 namespace Related {
 
 	LoginPage::LoginPage(QWidget *parent)
-		: QWidget(parent), m_loginModel(true), m_isLoginState(true), m_isReconnecting(false)
+		: QWidget(parent), m_loginModel(true), m_isLoginState(true)
 	{
 		init();
 		initConnect();
 		loadNetConfig();
+		updateReconnConfig();
 
 		qRegisterMetaType<Datastruct::ConnectionType>("Datastruct::ConnectionType");
 	}
@@ -58,9 +59,8 @@ namespace Related {
 	 */
 	void LoginPage::connectToServer()
 	{
-		START_WAIT
-
-			ConnectorManage::instance()->startConnect(m_ipWidget->getIPString(), m_dataPortWidget->text().toInt(), m_filePortWidget->text().toInt());
+		START_WAIT;
+		ConnectorManage::instance()->startConnect(m_ipWidget->getIPString(), m_dataPortWidget->text().toInt(), m_filePortWidget->text().toInt());
 	}
 
 	/*!
@@ -69,12 +69,8 @@ namespace Related {
 	 */
 	void LoginPage::reConnectServer()
 	{
-		if (!DataNetConnector::instance()->isConnected()) {
-
-			if (!m_isReconnecting) {
-				m_isReconnecting = true;
-				connectToServer();
-			}
+		if (!ConnectorManage::instance()->allNetConnected()) {
+			connectToServer();
 		}
 	}
 
@@ -84,8 +80,8 @@ namespace Related {
 			respNetConnected(type, connected);
 		}
 		else {
-			END_WAIT
-				Util::showWarning(this, errorInfo);
+			END_WAIT;
+			Util::showWarning(this, errorInfo);
 		}
 	}
 
@@ -96,8 +92,6 @@ namespace Related {
 	 */
 	void LoginPage::respNetConnected(Datastruct::ConnectionType type, bool connected)
 	{
-		m_isReconnecting = false;
-
 		if (connected) {
 			if (type == Datastruct::Data_Connection) {
 				if (m_isLoginState) {
@@ -123,19 +117,35 @@ namespace Related {
 				Global::G_Notify->information(QStringLiteral("文件传输链路网络已连接!"));
 			}
 
-			END_WAIT
-				emit netStateChanged(type, true);
+			END_WAIT;
+			emit netStateChanged(type, true);
 		}
 		else {
 
-			END_WAIT
-				emit netStateChanged(type, false);
+			END_WAIT;
+			emit netStateChanged(type, false);
+
 			if (type == Datastruct::Data_Connection) {
 				Util::showWarning(this, QStringLiteral("连接数据服务器失败，请检查网络配置."));
 			}
 			else if (type == Datastruct::File_Connection) {
 				Util::showWarning(this, QStringLiteral("连接文件服务器失败，请检查网络配置."));
 			}
+		}
+	}
+
+	/*! 
+	 * @brief 响应网络重连尝试通知
+	 * @param type 网络连接类型
+	 * @param times 网络重连次数
+	 */
+	void LoginPage::respReconnResult(Datastruct::ConnectionType type, int times)
+	{
+		if (type == Datastruct::Data_Connection) {
+			Global::G_Notify->information(QString(QStringLiteral("第%1次重连数据服务器!")).arg(times));
+		}
+		else if (type == Datastruct::File_Connection) {
+			Global::G_Notify->information(QString(QStringLiteral("第%1次重连文件服务器!")).arg(times));
 		}
 	}
 
@@ -181,6 +191,10 @@ namespace Related {
 		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, m_ipWidget->getIPString());
 		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, m_dataPortWidget->text());
 		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerFilePort, m_filePortWidget->text());
+		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_netAutoReconnect, m_autoReconnet->isChecked());
+		Base::RUtil::setGlobalValue(ckey.m_netGroupId, ckey.m_maxReconnTimes, m_reconnectTimes->text().toInt());
+
+		updateReconnConfig();
 
 		respCancel();
 	}
@@ -307,10 +321,27 @@ namespace Related {
 			QLabel * remoteIp = createLabel(QStringLiteral("服务器地址:"));
 			QLabel * remoteDataPort = createLabel(QStringLiteral("数据端口号:"));
 			QLabel * remoteFilePort = createLabel(QStringLiteral("文件端口号:"));
+			QLabel * netreConnLabel = createLabel(QStringLiteral("网络重连:"));
 
 			m_ipWidget = new Base::RIPWidget();
 			m_dataPortWidget = new QLineEdit();
 			m_filePortWidget = new QLineEdit();
+
+			m_autoReconnet = new QCheckBox();
+
+			QLabel * maxTimes = createLabel(QStringLiteral("最大重连次数:"));
+			m_reconnectTimes = new QLineEdit();
+			m_reconnectTimes->setMinimumWidth(80);
+			m_reconnectTimes->setMinimumHeight(25);
+
+			connect(m_autoReconnet, SIGNAL(toggled(bool)),m_reconnectTimes,SLOT(setEnabled(bool)));
+
+			QHBoxLayout * netLayout = new QHBoxLayout();
+			netLayout->addWidget(m_autoReconnet);
+			netLayout->addWidget(maxTimes);
+			netLayout->addWidget(m_reconnectTimes);
+			netLayout->addStretch(1);
+			netLayout->addSpacing(10);
 
 			Base::RIconButton * saveButt = createButton(QStringLiteral("更新"), SLOT(respSave()));
 			Base::RIconButton * cancelButt = createButton(QStringLiteral("取消"), SLOT(respCancel()));
@@ -334,9 +365,11 @@ namespace Related {
 			slayout->addWidget(m_dataPortWidget, 2, 1, 1, 1);
 			slayout->addWidget(remoteFilePort, 3, 0, 1, 1);
 			slayout->addWidget(m_filePortWidget, 3, 1, 1, 1);
-			slayout->setRowStretch(4, 1);
+			slayout->addWidget(netreConnLabel, 4, 0, 1, 1);
+			slayout->addLayout(netLayout, 4, 1, 1, 1);
+			slayout->setRowStretch(5, 1);
 
-			slayout->addWidget(toolContainer, 5, 0, 1, 2);
+			slayout->addWidget(toolContainer, 6, 0, 1, 2);
 
 			m_systemWidget->setLayout(slayout);
 			m_systemWidget->hide();
@@ -403,6 +436,7 @@ namespace Related {
 	void LoginPage::initConnect()
 	{
 		connect(ConnectorManage::instance(), SIGNAL(connectResult(Datastruct::ConnectionType, bool, QString)), this, SLOT(respConnectResult(Datastruct::ConnectionType, bool, QString)));
+		connect(ConnectorManage::instance(), SIGNAL(reconnResult(Datastruct::ConnectionType, int)), this, SLOT(respReconnResult(Datastruct::ConnectionType,int)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserLoginResponse(const Datastruct::UserLoginResponse &)), this, SLOT(processUserLoginResponse(const Datastruct::UserLoginResponse &)));
 		connect(SignalDispatch::instance(), SIGNAL(respUserRegistResponse(const Datastruct::UserRegistResponse &)), this, SLOT(processUserRegistResponse(const Datastruct::UserRegistResponse &)));
 	}
@@ -414,6 +448,13 @@ namespace Related {
 		m_ipWidget->setIP(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerIp, "127.0.0.1").toString());
 		m_dataPortWidget->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerDataPort, "8888").toString());
 		m_filePortWidget->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_remoteServerFilePort, "9999").toString());
+		m_autoReconnet->setChecked(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_netAutoReconnect, true).toBool());
+		m_reconnectTimes->setText(Base::RUtil::getGlobalValue(ckey.m_netGroupId, ckey.m_maxReconnTimes, 5).toString());
+	}
+
+	void LoginPage::updateReconnConfig()
+	{
+		ConnectorManage::instance()->setNetAutoConnect(m_autoReconnet->isChecked(), m_reconnectTimes->text().toInt());
 	}
 
 	void LoginPage::clearRegistInput()
