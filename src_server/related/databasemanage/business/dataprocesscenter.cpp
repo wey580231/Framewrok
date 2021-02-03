@@ -311,9 +311,22 @@ namespace Related {
 
 		Table::TaskEntity task;
 		Base::RSelect rs(task.table);
-		rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
-			.createCriteria()
-			.add(Base::Restrictions::eq(task.location, request.location));
+	
+		if (request.location.isEmpty()) {
+			rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
+				.createCriteria()
+				.add(Base::Restrictions::ge(task.table, task.startTime, request.startTime))
+				.add(Base::Restrictions::le(task.table, task.startTime, request.endTime));
+		}
+		else
+		{
+			rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
+				.createCriteria()
+				.add(Base::Restrictions::eq(task.location, request.location))
+				.add(Base::Restrictions::ge(task.table, task.startTime, request.startTime))
+				.add(Base::Restrictions::le(task.table, task.startTime, request.endTime));
+		}
+
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -924,7 +937,7 @@ namespace Related {
 
 		Base::RDelete rde(detectPlatformSubtype.table);
 		rde.createCriteria()
-			.add(Base::Restrictions::eq(detectPlatformSubtype.name, request.m_name));
+			.add(Base::Restrictions::eq(detectPlatformSubtype.name, request.m_detectId));
 
 		if (query.exec(rde.sql())) {
 			if (query.numRowsAffected()) {

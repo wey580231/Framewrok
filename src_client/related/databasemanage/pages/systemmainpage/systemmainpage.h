@@ -63,10 +63,8 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
+		void slotSearchTaskClicked();
 		void slotDeleteTask(QString taskId);
-		void slotLocationActivated(QString index);
-		void slotPlatActivated(QString index);
-
 		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
 		void processTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response);
 		void processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);

@@ -107,20 +107,16 @@ namespace Related {
 			m_locationBox = new QComboBox();
 			m_locationBox->setView(new QListView());
 			m_locationBox->addItem(QStringLiteral("全部海区"));
-			connect(m_locationBox, SIGNAL(activated(QString)),
-				this, SLOT(slotLocationActivated(QString)));
 
 			m_platBox = new QComboBox();
 			m_platBox->setView(new QListView());
 			m_platBox->addItem(QStringLiteral("全部平台"));
-			connect(m_platBox, SIGNAL(activated(QString)),
-				this, SLOT(slotPlatActivated(QString)));
-
 
 			m_searchTaskButt = new Base::RIconButton();
-			m_searchTaskButt->setText(QStringLiteral("新建任务"));
+			m_searchTaskButt->setText(QStringLiteral("搜索"));
 			m_searchTaskButt->setMinimumSize(60, 30);
-			m_searchTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));
+			m_searchTaskButt->setIcon(QIcon(WRAP_RESOURCE(搜索)));
+			connect(m_searchTaskButt, SIGNAL(clicked()), this, SLOT(slotSearchTaskClicked()));
 
 			QHBoxLayout * hlayout = new QHBoxLayout();
 			hlayout->setContentsMargins(0, 0, 0, 0);
@@ -130,6 +126,7 @@ namespace Related {
 			hlayout->addWidget(m_timeRange);
 			hlayout->addWidget(m_locationBox);
 			hlayout->addWidget(m_platBox);
+			hlayout->addWidget(m_searchTaskButt);
 
 			m_taskSrollArea = new QScrollArea();
 			m_taskSrollArea->setStyleSheet("background-color:rgba(0,0,0,0)");
@@ -190,6 +187,32 @@ namespace Related {
 		refreshCurrTask();
 	}
 
+	void SystemMainPage::slotSearchTaskClicked()
+	{
+		//[] 获取时间
+		QPair<QDateTime, QDateTime> timeRange;
+		timeRange = m_timeRange->getTimeRange();
+		QDateTime startTime = timeRange.first;
+		QDateTime endTime = timeRange.second;
+		//获取海区
+		QString location;
+		if (m_locationBox->currentIndex() != 0) {
+			location = m_locationBox->currentText();
+		}
+		//获取平台
+		QString  platform;
+		if (m_platBox->currentIndex() != 0) {
+			platform = m_platBox->currentText();
+		}
+		Datastruct::TaskByConditionRequest request;
+
+		request.startTime = startTime.toString(TIME_FORMAT);
+		request.endTime = endTime.toString(TIME_FORMAT);
+		request.location = location;
+
+		refreshTaskByCondition(request);
+	}
+
 	void SystemMainPage::slotDeleteTask(QString taskId)
 	{
 		int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("是否删除该任务?"), Base::RMessageBox::Yes | Base::RMessageBox::No);
@@ -200,24 +223,6 @@ namespace Related {
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
 		DataNetConnector::instance()->write(request);
-	}
-
-	void SystemMainPage::slotLocationActivated(QString index)
-	{
-		if (index != QStringLiteral("全部海区")) 
-		{
-			Datastruct::TaskByConditionRequest  requset;
-			requset.location = index;
-			refreshTaskByCondition(requset);
-		} 
-		else
-		{
-			refreshCurrTask();
-		}
-	}
-
-	void SystemMainPage::slotPlatActivated(QString index)
-	{
 	}
 
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)
