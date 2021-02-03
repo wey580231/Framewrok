@@ -33,13 +33,9 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasemanagepage.cpp" />
     <ClCompile Include="databasemanage\pages\targetdatabase\targetdatabasewidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\audiodatawidget.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\datapreviewpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.cpp" />
-    <ClCompile Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskanalyse\taskanalysepage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskbaseinfopage.cpp" />
     <ClCompile Include="databasemanage\pages\taskoverview\taskoverviewpage.cpp" />
@@ -87,6 +83,31 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.cpp">
+    <ClCompile Include="databasemanage\pages\taskanalyse\timedomainanalyse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\customwidget\rcustomplot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\demongraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\dynamicgraphanalysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\lofargraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskanalyse\situationanalysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\customwidget\tinywavgraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\filenetconnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\net\connectormanage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,13 +154,9 @@
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.h" />
     <QtMoc Include="databasemanage\net\netconnector.h" />
     <QtMoc Include="databasemanage\net\signaldispatch.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\audiodatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\ambientnoisedatawidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\audiodatamodel.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\ambientnoisemodel.h" />
-    <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\hxjplatforminfomodel.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h" />
     <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
@@ -181,6 +198,31 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.h">
+    <QtMoc Include="databasemanage\pages\taskanalyse\timedomainanalyse.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\customwidget\rcustomplot.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\demongraph.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\dynamicgraphanalysis.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\lofargraph.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskanalyse\situationanalysis.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\customwidget\tinywavgraph.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\filenetconnector.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\net\connectormanage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

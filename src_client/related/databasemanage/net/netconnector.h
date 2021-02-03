@@ -25,10 +25,16 @@ namespace Related {
 	{
 		Q_OBJECT
 	public:
-		NetConnector(QObject *parent = nullptr);
+		NetConnector(Datastruct::ConnectionType type,QObject *parent = nullptr);
 		~NetConnector();
 
-		void setAutoReconnect(bool isAutoReconnect);
+		/*! 
+		 * @brief 设置断网重连和最大重连次数
+		 * @param isReconn true:开启断网重连,false:不开启重连
+		 * @param maxReconnTimes 最大重连次数，只在isReconn为true时有效
+		 * @return 
+		 */
+		void setNetAutoConnect(bool isReconn, int maxReconnTimes);
 
 		/*!
 		 * @brief 主动向指定的ip和端口号发起连接
@@ -46,7 +52,8 @@ namespace Related {
 		bool isConnected();
 
 	signals:
-		void netConnected(bool isConnected);
+		void netConnected(Datastruct::ConnectionType type,bool isConnected);
+		void reconnTimes(Datastruct::ConnectionType type,int times);
 
 	protected:
 		void initNetwork();
@@ -54,6 +61,7 @@ namespace Related {
 		virtual void processNetData(QByteArray & data) = 0;
 
 		void connectCallBack(Network::Uv_TcpClient * client);
+		void reconnCallBack(int tryTimes);
 		void closeCallBack(Network::Uv_TcpClient * client);
 		void recvDataCallBack(Network::Uv_TcpClient * remoteClient, const char * data, int dataLen);
 
@@ -62,6 +70,7 @@ namespace Related {
 		void sendData(const QByteArray & data);
 
 	protected:
+		Datastruct::ConnectionType m_connType;		/*!< 网络连接类型 */
 		Network::Uv_EventLoop * m_eventLoop;		/*!< 事件循环线程 */
 		Network::Uv_TcpClient * m_dataTcpClient;	/*!< 普通数据连接 */
 

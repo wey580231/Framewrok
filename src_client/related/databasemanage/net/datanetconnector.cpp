@@ -18,7 +18,7 @@ namespace Related {
 	}
 
 	DataNetConnector::DataNetConnector()
-		: NetConnector()
+		: NetConnector(Datastruct::Data_Connection)
 	{
 		connect(this, SIGNAL(newClientData(QByteArray)), this, SLOT(respRectNetData(QByteArray)));
 	}

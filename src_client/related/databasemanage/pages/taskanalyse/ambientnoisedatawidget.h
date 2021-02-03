@@ -13,13 +13,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 
-#include <base\selfwidget\tablemode\rtableview.h>
-#include <base\selfwidget\iconbutton.h>
-
 #include "../abstractpage.h"
-#include "../../customwidget/operationtoolspage.h"
-#include "tablemodel/ambientnoisemodel.h"
-#include "../../customwidget/pageswitchbar.h"
 
 namespace Related {
 

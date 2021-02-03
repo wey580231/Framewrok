@@ -10,8 +10,8 @@
 #include "customwidget\loadingdialog.h"
 
 /*!< ¿ªÆô¶¯»­´°¿Ú */
-#define START_WAIT Global::G_LoadingDialog->showMe();
-#define START_WAIT_ON(parent) Global::G_LoadingDialog->showMe(parent);
+#define START_WAIT Global::G_LoadingDialog->showMe()
+#define START_WAIT_ON(parent) Global::G_LoadingDialog->showMe(parent)
 
 #define END_WAIT Global::G_LoadingDialog->hideMe();
 

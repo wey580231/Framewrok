@@ -11,11 +11,14 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QCheckBox>
+#include <QSpinBox>
 #include <base/selfwidget/iconbutton.h>
 #include <base\selfwidget\ripwidget.h>
 #include <base\util\widgetanimation.h>
 
 #include <commondefines/protocol.h>
+#include <commondefines/structdefines.h>
 
 namespace Related {
 
@@ -35,13 +38,15 @@ namespace Related {
 
 	signals:
 		void switchToMainPage();
-		void netStateChanged(bool isConnected);
+		void netStateChanged(Datastruct::ConnectionType type,bool isConnected);
 
 	private slots:
 		void connectToServer();
 		void reConnectServer();
 
-		void respNetConnected(bool connected);
+		void respConnectResult(Datastruct::ConnectionType type, bool connected, QString errorInfo);
+		void respNetConnected(Datastruct::ConnectionType type , bool connected);
+		void respReconnResult(Datastruct::ConnectionType type, int times);
 		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void processUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		
@@ -58,6 +63,7 @@ namespace Related {
 		void init();
 		void initConnect();
 		void loadNetConfig();
+		void updateReconnConfig();
 		void clearRegistInput();
 
 	private:
@@ -67,6 +73,8 @@ namespace Related {
 			QString m_remoteServerIp = "ServerIp";
 			QString m_remoteServerDataPort = "DataServerPort";
 			QString m_remoteServerFilePort = "FileServerPort";
+			QString m_netAutoReconnect = "NetAutoReconnect";
+			QString m_maxReconnTimes = "MaxReconnTimes";
 		};
 	
 	private:
@@ -82,6 +90,8 @@ namespace Related {
 		Base::RIPWidget * m_ipWidget;
 		QLineEdit * m_dataPortWidget;
 		QLineEdit * m_filePortWidget;
+		QCheckBox * m_autoReconnet;
+		QLineEdit * m_reconnectTimes;
 
 		Base::RIconButton * m_userRegistSetting;	/*!< 用户注册按钮 */
 		QWidget * m_registWidget;
@@ -91,8 +101,6 @@ namespace Related {
 		QLineEdit * m_registPassword2;
 
 		Base::WidgetAnimation m_animation;
-
-		bool m_isReconnecting;		/*!< 是否处于重连状态中 */
 
 		bool m_isLoginState;	/*!< 是否为登录状态(包括注册) */
 		bool m_loginModel;		/*!< true:登录模式；false:注册模式 */
