@@ -45,7 +45,6 @@ namespace Related {
 		void reConnectServer();
 
 		void respConnectResult(Datastruct::ConnectionType type, bool connected, QString errorInfo);
-		void respNetConnected(Datastruct::ConnectionType type , bool connected);
 		void respReconnResult(Datastruct::ConnectionType type, int times);
 		void processUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void processUserRegistResponse(const Datastruct::UserRegistResponse & response);
