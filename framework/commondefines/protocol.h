@@ -666,6 +666,7 @@ namespace Datastruct {
 		DetectPlatformSubtypeDeleteRequest() :m_id(0), m_detectId(0){}
 		int m_id;							/*!< Id */
 		int m_detectId;						/*!< 侦测平台标识 */
+		QString m_name;
 	};
 
 	/*!

@@ -1337,6 +1337,8 @@ namespace CommonDefines {
 	{
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.detectId, request.m_detectId);
+			obj.insert(m_jsonKey.name, request.m_name);
 		});
 	}
 
@@ -1344,6 +1346,8 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			request.m_id = jsonObject.value(m_jsonKey.id).toInt();
+			request.m_detectId = jsonObject.value(m_jsonKey.detectId).toInt();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
 		});
 	}
 

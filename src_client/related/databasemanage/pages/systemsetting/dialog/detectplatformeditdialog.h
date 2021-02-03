@@ -1,6 +1,6 @@
 /*!
  * @brief     侦查平台/侦查平台亚型编辑子界面
- * @details 
+ * @details   该界面用于新增侦查平台或平台亚型信息
  * @author    yzg
  * @version   1.0
  * @date      2021.02.02 17:10:20
@@ -34,16 +34,30 @@ namespace Related {
 		DetectPlatformEditDialog(QWidget *parent);
 		~DetectPlatformEditDialog();
 
+		enum EditType {
+			E_DetectPlatform,							/*!< 平台 */
+			E_DetectPlatformSubtype,					/*!< 平台亚型 */
+		};
+
+		void setEditType(EditType type);
+		void setPlatformId(int platformId);
 		
 	private slots:
 		void acceptOk();
 		void processDetectPlatformCreateResponse(const Datastruct::DetectPlatformCreateResponse & response);
+		void processDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
+
 	private:
 		void init();
 		void initConnect();
 		void createNewDetectPlatform(QString name);
+		void createNewDetectPlatformSubtype(QString name, int platformId);
+
 	private:
 		QLineEdit * m_nameLineEdit;
+
+		EditType m_editType;							/*!< 编辑类型 */
+		int m_platformId;								/*!< 平台Id */
 	};
 
 }//namespace Related 

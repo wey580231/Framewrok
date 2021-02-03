@@ -63,10 +63,8 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
+		void slotSearchTaskClicked();
 		void slotDeleteTask(QString taskId);
-		void slotLocationActivated(QString index);
-		void slotPlatActivated(QString index);
-
 		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
 		void processTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response);
 		void processTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
@@ -87,6 +85,7 @@ namespace Related {
 
 		Base::RIconButton * m_newTaskButt;				
 		Base::RIconButton * m_refreshTaskButt;
+		Base::RIconButton * m_searchTaskButt;
 
 		TimeRangeEdit * m_timeRange;
 		QComboBox * m_locationBox;

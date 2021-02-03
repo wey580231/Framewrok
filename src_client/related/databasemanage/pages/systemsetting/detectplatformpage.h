@@ -32,6 +32,8 @@
 
 #include "dialog/detectplatformeditdialog.h"
 
+#define  TABLEMODEL_MAX_INDEX             -1
+
 namespace Related {
 
 	class DetectPlatformPage : public AbstractPage
@@ -49,16 +51,17 @@ namespace Related {
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void slotActivated(const QString &text);
+		void slotCreateNewDetectPlatformSubtypeTriggered();
+		void slotDetectPlatformSubtypeClicked(QModelIndex index);
+		void slotDeleteDetectPlatformSubtypeTriggered();
 
 		void processQueryAllDetectPlatformResponse(const Datastruct::LoadAllDetectPlatformsResponse & response);
 		void processDetectPlatformDeleteResponse(const Datastruct::DetectPlatformDeleteResponse & response);
 
 		void processQueryAllDetectPlatformSubtypeResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
-		void processDetectPlatformSubtypeCreateResponse(const Datastruct::DetectPlatformSubtypeCreateResponse & response);
 		void processDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
 
 	protected:
-	/*	bool eventFilter(QObject* obj, QEvent* event);*/
 		void contextMenuEvent(QContextMenuEvent *event);
 
 	private:
@@ -66,12 +69,10 @@ namespace Related {
 		void initConnect();
 
 		void refreshCurrDetectPlatform();
-		void insertDetectPlatform(int id, QString name);
 		void deleteDetectPlatform(int id);
 
 		void refreshCurrDetectPlatformSubtype(int detectId);
-		void insertDetectPlatformSubtype(int detectId, int id, QString name);
-		void deleteDetectPlatformSubtype(Datastruct::DetectPlatformSubtypeEntityData data);
+		void deleteDetectPlatformSubtype(QString name);
 
 	private:
 		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */
@@ -86,6 +87,9 @@ namespace Related {
 
 		QMap<QString, int>  m_detectPlatformsMap;
 
+		QModelIndex m_selectedModelIndex;
+		int m_selectedIndex;	
+		bool m_selectedModel;
 	};
 
 } //namespace Related
