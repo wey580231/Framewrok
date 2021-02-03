@@ -16,9 +16,10 @@
 #include <base\selfwidget\rtabwidget.h>
 #include "../abstractpage.h"
 
-#include "targetdatabasemanagepage.h"
-
 namespace Related {
+
+	class TargetDatabaseManagePage;
+	class TargetDetailPage;
 
 	class TargetDatabaseWidget : public AbstractPage
 	{
@@ -36,7 +37,8 @@ namespace Related {
 	private:
 		Base::RTabWidget * m_tabWidget;
 
-		TargetDatabaseManagePage *m_targetDatabaseManagePage;
+		TargetDatabaseManagePage * m_targetDatabaseManagePage;
+		TargetDetailPage * m_targetDetailPage;
 	};
 
 }//namespace Related 

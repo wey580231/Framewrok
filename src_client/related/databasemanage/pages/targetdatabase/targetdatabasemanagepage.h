@@ -29,7 +29,7 @@
 
 namespace Related {
 
-	class TargetDatabaseManagePage : public QWidget
+	class TargetDatabaseManagePage : public AbstractPage
 	{
 		Q_OBJECT
 
@@ -37,6 +37,7 @@ namespace Related {
 		TargetDatabaseManagePage(QWidget *parent = nullptr);
 		~TargetDatabaseManagePage();
 
+		PageType getPageType() const;
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);

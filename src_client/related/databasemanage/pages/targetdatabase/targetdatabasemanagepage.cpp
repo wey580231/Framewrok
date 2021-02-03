@@ -1,6 +1,10 @@
 #include "targetdatabasemanagepage.h"
 
 #include <QDebug>
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QListView>
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
@@ -8,7 +12,7 @@
 namespace Related {
 
 	TargetDatabaseManagePage::TargetDatabaseManagePage(QWidget *parent)
-		: QWidget(parent)
+		: AbstractPage(parent)
 	{
 		init();
 		initConnect();
@@ -18,28 +22,33 @@ namespace Related {
 	{
 	}
 
+	PageType TargetDatabaseManagePage::getPageType() const
+	{
+		return Page_TargetDatabase_TargetOverview;
+	}
+
 	void TargetDatabaseManagePage::respToolButtPressed(OperationToolsPage::ButtType type)
 	{
 		switch (type)
 		{
-		case OperationToolsPage::Butt_Add: {
+			case OperationToolsPage::Butt_Add: {
 
-		}
-			break;
-		case OperationToolsPage::Butt_Delete: {
+			}
+											   break;
+			case OperationToolsPage::Butt_Delete: {
 
-		}
-			break;
-		case OperationToolsPage::Butt_Edit: {
+			}
+												  break;
+			case OperationToolsPage::Butt_Edit: {
 
-		}
-			break;
-		case OperationToolsPage::Butt_Refresh: {
+			}
+												break;
+			case OperationToolsPage::Butt_Refresh: {
 
-		}
-			break;
-		default:
-			break;
+			}
+												   break;
+			default:
+				break;
 		}
 	}
 
@@ -56,10 +65,58 @@ namespace Related {
 	{
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
-			m_operationToolsPage = new OperationToolsPage();	
-			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), 
+			m_operationToolsPage = new OperationToolsPage();
+			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)),
 				this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
-			cwidget->setContent(m_operationToolsPage);
+
+			//临时测试代码
+			QWidget * conditionFilterWidget = new QWidget();
+			QHBoxLayout * filterLayout = new QHBoxLayout();
+			filterLayout->setContentsMargins(0, 0, 4, 0);
+			conditionFilterWidget->setLayout(filterLayout);
+
+			auto createLabel = [](QString text) {
+				QLabel * label = new QLabel();
+				label->setText(text);
+				return label;
+			};
+
+			filterLayout->addWidget(createLabel(QStringLiteral("目标种类")));
+
+			QComboBox * ct = new QComboBox();
+			ct->setView(new QListView());
+			QStringList ctList;
+			ctList << QStringLiteral("全部种类") << QStringLiteral("军用") << QStringLiteral("民用") << QStringLiteral("其它");
+			ct->addItems(ctList);
+
+			filterLayout->addWidget(ct);
+			filterLayout->addWidget(createLabel(QStringLiteral("类型")));
+
+			QComboBox * category = new QComboBox();
+			category->setView(new QListView());
+			QStringList cateList;
+			cateList << QStringLiteral("全部类型") << QStringLiteral("水面舰") << QStringLiteral("商船") << QStringLiteral("渔船");
+			category->addItems(cateList);
+			
+			filterLayout->addWidget(category);
+			filterLayout->addWidget(createLabel(QStringLiteral("型号")));
+
+			QComboBox * type = new QComboBox();
+			type->setView(new QListView());
+			QStringList tList;
+			tList << QStringLiteral("全部型号") << QStringLiteral("XX型") << QStringLiteral("XXA型");
+			type->addItems(tList);
+
+			filterLayout->addWidget(type);
+
+			QWidget * tmpWidget = new QWidget();
+			QHBoxLayout * tmpLayout = new QHBoxLayout();
+			tmpLayout->setContentsMargins(0, 0, 0, 0);
+			tmpLayout->addWidget(m_operationToolsPage);
+			tmpLayout->addStretch(1);
+			tmpLayout->addWidget(conditionFilterWidget);
+			tmpWidget->setLayout(tmpLayout);
+			cwidget->setContent(tmpWidget);
 		}
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
