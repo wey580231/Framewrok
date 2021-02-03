@@ -2,6 +2,9 @@
 
 #include <QDebug>
 
+#include "targetdatabasemanagepage.h"
+#include "targetdetailpage.h"
+
 namespace Related {
 
 	TargetDatabaseWidget::TargetDatabaseWidget(QWidget *parent)
@@ -25,8 +28,10 @@ namespace Related {
 		m_tabWidget->setTabBarHeight(60);
 
 		m_targetDatabaseManagePage = new TargetDatabaseManagePage();
+		m_targetDetailPage = new TargetDetailPage();
 
-		m_tabWidget->addPage(QStringLiteral("目标库"), m_targetDatabaseManagePage);
+		m_tabWidget->addPage(QStringLiteral("目标库概览"), m_targetDatabaseManagePage);
+		m_tabWidget->addPage(QStringLiteral("目标详情"), m_targetDetailPage);
 
 		m_tabWidget->setWidgetBringToBottomCallback([&](QWidget * preWidet) {
 			AbstractPage * preparePage = dynamic_cast<AbstractPage *>(preWidet);

@@ -45,6 +45,9 @@ namespace Related {
 		Page_TaskDataAnalyse,	/*!< 任务数据分析 */	
 
 		/*!< 子页面，按照‘Page_主页面_子页面’格式 */
+		Page_TargetDatabase_TargetOverview,		/*!< 目标概览页面 */
+		Page_TargetDatabase_TargetDetail,		/*!< 单个目标详情 */
+
 		Page_Setting_UserManage,				/*!< 用户管理 */
 		Page_Setting_SystemSetting,				/*!< 系统设置 */
 		Page_Setting_DetectPlatformPage,		/*!< 侦测平台 */	
