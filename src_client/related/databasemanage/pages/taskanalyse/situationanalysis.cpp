@@ -2,7 +2,10 @@
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QWebEngineView>
+#include <QWebChannel>
 
+#include <core/file/programfilepath.h>
 #include "../../customwidget/rcustomplot.h"
 
 namespace Related {
@@ -28,18 +31,24 @@ namespace Related {
 
 		m_mainGraph = new RCustomPlot();
 
-		m_mapWidget = new QWidget();
-		QLabel * label = new QLabel();
-		label->setText(QStringLiteral("µç×ÓµØÍ¼"));
+		QWebEngineView * webView = new QWebEngineView();
+		{
+			Core::ProgramFilePath filePath;
+			QDir tmpDir(filePath.programPath);
 
-		QHBoxLayout * mapLayout = new QHBoxLayout();
-		mapLayout->addWidget(label);
-		m_mapWidget->setLayout(mapLayout);
+			QWebChannel* pWebChannel = new QWebChannel(this);
+			webView->page()->setWebChannel(pWebChannel);
+
+			QString urlPath = "file:///";
+			urlPath += ("D:/code/qtcreator/build-ViewFrame-Desktop_Qt_5_12_10_MSVC2017_32bit-Release/Bin/rconfig/hw/mapdata/map_multicolor.html");
+
+			webView->page()->setUrl(QUrl(urlPath));
+		}
 
 		QHBoxLayout * mainLayout = new QHBoxLayout();
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->addWidget(m_mainGraph);
-		mainLayout->addWidget(m_mapWidget);
+		mainLayout->addWidget(webView);
 		mainWidget->setLayout(mainLayout);
 
 		QHBoxLayout * layout = new QHBoxLayout();
