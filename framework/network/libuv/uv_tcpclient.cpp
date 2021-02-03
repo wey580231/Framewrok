@@ -473,7 +473,7 @@ namespace Network {
 		tcpClient->m_bIsClosed = true;
 		tcpClient->m_connectedState = R_CLOSED;
 
-		if (handle == (uv_handle_t*)&tcpClient->m_handle->client && !tcpClient->m_bForceClosed) {
+		if (!tcpClient->m_bForceClosed && tcpClient->m_bAutoReconnect) {
 			int ret = uv_timer_start(&tcpClient->m_reconnectTimer, Uv_TcpClient::reconnectTimerCB, tcpClient->m_repeatConnTime, tcpClient->m_repeatConnTime);
 			if (ret) {
 				uv_close((uv_handle_t*)&tcpClient->m_reconnectTimer, Uv_TcpClient::remoteClientCloseCB);

@@ -77,22 +77,6 @@ namespace Related {
 	void LoginPage::respConnectResult(Datastruct::ConnectionType type, bool connected, QString errorInfo)
 	{
 		if (connected) {
-			respNetConnected(type, connected);
-		}
-		else {
-			END_WAIT;
-			Util::showWarning(this, errorInfo);
-		}
-	}
-
-	/*!
-	 * @brief 接收网络是否连接成功信号
-	 * @param type 数据链路类型
-	 * @param connected true:网络连接成功；false:网络连接失败
-	 */
-	void LoginPage::respNetConnected(Datastruct::ConnectionType type, bool connected)
-	{
-		if (connected) {
 			if (type == Datastruct::Data_Connection) {
 				if (m_isLoginState) {
 					if (m_loginModel) {
@@ -121,16 +105,9 @@ namespace Related {
 			emit netStateChanged(type, true);
 		}
 		else {
-
 			END_WAIT;
 			emit netStateChanged(type, false);
-
-			if (type == Datastruct::Data_Connection) {
-				Util::showWarning(this, QStringLiteral("连接数据服务器失败，请检查网络配置."));
-			}
-			else if (type == Datastruct::File_Connection) {
-				Util::showWarning(this, QStringLiteral("连接文件服务器失败，请检查网络配置."));
-			}
+			Global::G_Notify->information(errorInfo);
 		}
 	}
 
