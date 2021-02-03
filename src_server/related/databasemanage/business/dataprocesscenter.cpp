@@ -924,7 +924,7 @@ namespace Related {
 
 		Base::RDelete rde(detectPlatformSubtype.table);
 		rde.createCriteria()
-			.add(Base::Restrictions::eq(detectPlatformSubtype.id, request.m_id));
+			.add(Base::Restrictions::eq(detectPlatformSubtype.name, request.m_name));
 
 		if (query.exec(rde.sql())) {
 			if (query.numRowsAffected()) {

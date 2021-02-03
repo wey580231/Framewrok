@@ -87,6 +87,7 @@ namespace Related {
 
 		Base::RIconButton * m_newTaskButt;				
 		Base::RIconButton * m_refreshTaskButt;
+		Base::RIconButton * m_searchTaskButt;
 
 		TimeRangeEdit * m_timeRange;
 		QComboBox * m_locationBox;

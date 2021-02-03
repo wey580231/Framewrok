@@ -116,6 +116,12 @@ namespace Related {
 			connect(m_platBox, SIGNAL(activated(QString)),
 				this, SLOT(slotPlatActivated(QString)));
 
+
+			m_searchTaskButt = new Base::RIconButton();
+			m_searchTaskButt->setText(QStringLiteral("新建任务"));
+			m_searchTaskButt->setMinimumSize(60, 30);
+			m_searchTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));
+
 			QHBoxLayout * hlayout = new QHBoxLayout();
 			hlayout->setContentsMargins(0, 0, 0, 0);
 			hlayout->addWidget(m_newTaskButt);
