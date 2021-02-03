@@ -164,14 +164,14 @@ namespace Related {
 
 	void DetectPlatformPage::contextMenuEvent(QContextMenuEvent * event)
 	{
-		QMenu *menu = new QMenu(this);
-		QAction * newAction = new QAction();
-		newAction->setText(QStringLiteral("新建"));
-		QAction * deleteAction = new QAction();
-		deleteAction->setText(QStringLiteral("删除"));
-		menu->addAction(newAction);
-		menu->addAction(deleteAction);
-		menu->exec(Cursor::pos());
+// 		QMenu *menu = new QMenu(this);
+// 		QAction * newAction = new QAction();
+// 		newAction->setText(QStringLiteral("新建"));
+// 		QAction * deleteAction = new QAction();
+// 		deleteAction->setText(QStringLiteral("删除"));
+// 		menu->addAction(newAction);
+// 		menu->addAction(deleteAction);
+// 		menu->exec(Cursor::pos());
 	}
 
 	void DetectPlatformPage::init()
