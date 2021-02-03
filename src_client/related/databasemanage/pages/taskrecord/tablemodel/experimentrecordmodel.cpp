@@ -84,7 +84,6 @@ namespace Related {
 				break;
 			}
 		}
-
 		return QVariant();
 	}
 

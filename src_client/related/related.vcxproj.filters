@@ -76,6 +76,13 @@
     <ClCompile Include="databasemanage\pages\taskoverview\testimagesitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpreviewpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreporteditpage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.cpp">
     <ClCompile Include="databasemanage\pages\taskanalyse\timedomainanalyse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,6 +191,13 @@
     <QtMoc Include="databasemanage\pages\taskoverview\testimagesitem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpreviewpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreporteditpage.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.h">
     <QtMoc Include="databasemanage\pages\taskanalyse\timedomainanalyse.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -221,6 +235,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavfeature.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="databasemanage\pages\taskrecord\taskreporteditpage.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

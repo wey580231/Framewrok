@@ -1,5 +1,5 @@
 /*!
- * @brief	 值班日志表格数据模型  
+ * @brief	  值班日志表格数据模型  
  * @details
  * @author    yzg
  * @version   1.0

@@ -20,6 +20,12 @@ namespace Related {
 		m_tipInfoLabel->setText(tipInfo);
 	}
 
+	void TimeRangeEdit::setTimeRange(QString startTime, QString endTime)
+	{
+// 		QDate startTime = 
+// 		m_startTimeEdit->setDate();
+	}
+
 	TimeRangeEdit::TimeRange TimeRangeEdit::getTimeRange()
 	{
 		return qMakePair(m_startTimeEdit->dateTime(), m_endTimeEdit->dateTime());

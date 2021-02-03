@@ -28,10 +28,13 @@ namespace Related {
 		void recvUseRegistResponse(const Datastruct::UserRegistResponse & response);
 		void recvQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 		void recvOperateUserResponse(const Datastruct::OperateUserResponse & response);
+
 		//任务有关
 		void recvTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 		void recvQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void recvTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response);
 		void recvTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
+		void recvTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response);
 		void recvTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
 		
 		//值班日志
@@ -63,9 +66,12 @@ namespace Related {
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
 		void resOperateUserResponse(const Datastruct::OperateUserResponse & response);
 
+		//任务有关
 		void respTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 		void respQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
+		void respTaskByConditionResponse(const Datastruct::TaskByConditionResponse & response);
 		void respTaskeDleteResponse(const Datastruct::TaskDeleteResponse & response);
+		void respTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response);
 		void respTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
 		
 		//值班日志

@@ -1,6 +1,6 @@
 /*!
- * @brief     值班日志表  
- * @details
+ * @brief     值班日志数据显示界面
+ * @details   显示值班日志全部数据， 并对值班数据进行创建/编辑/删除等
  * @author    yzg
  * @version   1.0
  * @date      2021.01.20 19:39:23
@@ -51,17 +51,16 @@ namespace Related {
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
-		void processDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
+
 		void processQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void processDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
-
 
 		void slotClickedTable(QModelIndex index);
 
 	private:
 		void init();
 		void initConnect();
-		void insertDutyRecord();
+
 		void deleteDutyRecord(QString id);
 		void refreshCurrPage();
 

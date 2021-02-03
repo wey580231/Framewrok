@@ -63,7 +63,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\pages\taskoverview\statisticalgraph;.\databasemanage\pages\systemmainpage\controlpage;.\databasemanage\pages\systemmainpage;.\databasemanage\pages\systemmainpage\controlwidget;.\databasemanage\pages\taskrecord\tablemodel;.\databasemanage\pages\taskanalyse\tablemodel;.\databasemanage\pages\systemsetting\tablemodel;.\databasemanage\pages\taskrecord\dialog;.\databasemanage\net;.\databasemanage\pages\taskanalyse\subpage;.\databasemanage\pages\aisdatabase;.\databasemanage\pages\aisdatabase\tabelmodel;.\databasemanage\pages\taskoverview\dialog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\pages\mainpage;.\databasemanage\pages\taskoverview;.\databasemanage\pages\taskrecord;.\databasemanage\pages\taskanalyse;.\databasemanage\pages\targetlibrary;.\databasemanage\pages\targetdatabase;.\databasemanage\pages\targetdatabase\tablemodel;.\databasemanage\pages\taskoverview\statisticalgraph;.\databasemanage\pages\systemmainpage\controlpage;.\databasemanage\pages\systemmainpage;.\databasemanage\pages\systemmainpage\controlwidget;.\databasemanage\pages\taskrecord\tablemodel;.\databasemanage\pages\taskanalyse\tablemodel;.\databasemanage\pages\systemsetting\tablemodel;.\databasemanage\pages\taskrecord\dialog;.\databasemanage\net;.\databasemanage\pages\taskanalyse\subpage;.\databasemanage\pages\aisdatabase;.\databasemanage\pages\aisdatabase\tabelmodel;.\databasemanage\pages\taskoverview\dialog;.\databasemanage\pages\systemsetting\dialog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;network.lib;core.lib;commondefines.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -139,6 +139,7 @@
     <ClCompile Include="databasemanage\pages\systemmainpage\overviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\taskoverviewitem.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\detectplatformpage.cpp" />
+    <ClCompile Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\othersettingpage.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\systemsettingwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemsetting\tablemodel\usermanagemodel.cpp" />
@@ -169,7 +170,9 @@
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\tablemodel\experimentrecordmodel.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskrecordpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreporteditpage.cpp" />
     <ClCompile Include="databasemanage\pages\taskrecord\taskreportpage.cpp" />
+    <ClCompile Include="databasemanage\pages\taskrecord\taskreportpreviewpage.cpp" />
     <ClCompile Include="databasemanage\utils\util.cpp" />
     <ClCompile Include="databasemanage\customwidget\operationtoolspage.cpp" />
     <ClCompile Include="databasemanage\datastruct.cpp" />
@@ -245,6 +248,9 @@
     <QtMoc Include="databasemanage\pages\taskanalyse\lofargraph.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\dialog\testimagesdetaildialog.h" />
     <QtMoc Include="databasemanage\pages\taskoverview\testimagesitem.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreportpreviewpage.h" />
+    <QtMoc Include="databasemanage\pages\taskrecord\taskreporteditpage.h" />
+    <QtMoc Include="databasemanage\pages\systemsetting\dialog\detectplatformeditdialog.h" />
     <QtMoc Include="databasemanage\net\filenetconnector.h" />
     <QtMoc Include="databasemanage\net\connectormanage.h" />
     <ClInclude Include="databasemanage\utils\util.h" />
@@ -267,6 +273,7 @@
     <QtUic Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.ui" />
     <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavfeature.ui" />
     <QtUic Include="databasemanage\pages\taskanalyse\subpage\wavorigindatawindow.ui" />
+    <QtUic Include="databasemanage\pages\taskrecord\taskreporteditpage.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

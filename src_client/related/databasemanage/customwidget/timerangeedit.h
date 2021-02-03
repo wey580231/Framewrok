@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QDateTimeEdit>
 #include <QLabel>
+#include <QDate>
 
 namespace Related {
 
@@ -24,6 +25,8 @@ namespace Related {
 		~TimeRangeEdit();
 
 		void setText(QString tipInfo);
+
+		void setTimeRange(QString startTime,  QString endTime);
 
 		typedef QPair<QDateTime, QDateTime> TimeRange;
 		TimeRange getTimeRange();

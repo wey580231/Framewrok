@@ -35,10 +35,10 @@ namespace Related {
 		m_detectPlatformPage->setMaximumHeight(400);
 		m_detectPlatformPage->setMaximumWidth(250);
 
-
 		QVBoxLayout * mainLayout = new QVBoxLayout();
 		mainLayout->addWidget(m_detectPlatformPage);
 		mainLayout->addStretch();
+		setLayout(mainLayout);
 	}
 
 } //namespace Related 

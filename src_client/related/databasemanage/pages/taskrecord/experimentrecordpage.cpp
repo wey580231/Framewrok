@@ -25,6 +25,22 @@ namespace Related {
 
 	ExperimentRecordPage::~ExperimentRecordPage()
 	{
+		if (m_operationToolsPage != nullptr) {
+			delete m_operationToolsPage;
+			m_operationToolsPage = nullptr;
+		}
+		if (m_tableView != nullptr) {
+			delete m_tableView;
+			m_tableView = nullptr;
+		}
+		if (m_tableModel != nullptr) {
+			delete m_tableModel;
+			m_tableModel = nullptr;
+		}
+		if (m_pageSwitch != nullptr) {
+			delete m_pageSwitch;
+			m_pageSwitch = nullptr;
+		}
 	}
 
 	PageType ExperimentRecordPage::getPageType() const
@@ -59,16 +75,22 @@ namespace Related {
 		switch (type)
 		{
 		case OperationToolsPage::Butt_Add: {
-			insertExperimentRecord();
+			ExperimentRecordEditDialog editDialog(this);
+			editDialog.setExperimentRecordDataOperatioType(ExperimentRecordEditDialog::ERD_Create);
+			editDialog.setTaskId(m_taskId);
+			if (QDialog::Accepted == editDialog.exec()) {
+				refreshCurrPage();
+				m_seleteTableRow = EXPERIMENT_RECORD_SELET_MAX_INDEX;
+			}
 		}
 			break;
 
 		case OperationToolsPage::Butt_Delete: {
-
 			if (m_seleteTableRow <  m_allExperimentRecords.m_experimentRecordInfos.size()
 				&& m_seleteTableRow > EXPERIMENT_RECORD_SELET_MAX_INDEX) {
-
-				int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("是否删除数据?"), Base::RMessageBox::Yes | Base::RMessageBox::No);
+				int result = Base::RMessageBox::information(this, 
+					QStringLiteral("提示"), QStringLiteral("是否删除数据?"), 
+					Base::RMessageBox::Yes | Base::RMessageBox::No);
 				if (result != Base::RMessageBox::Yes) {
 					return;
 				}
@@ -87,6 +109,7 @@ namespace Related {
 				Datastruct::ExperimentRecordEntityData data = m_allExperimentRecords.m_experimentRecordInfos.at(m_seleteTableRow);
 				
 				ExperimentRecordEditDialog editDialog(this);
+				editDialog.setExperimentRecordDataOperatioType(ExperimentRecordEditDialog::ERD_Modify);
 				editDialog.setExperimentRecordEntityData(data);
 				if (QDialog::Accepted == editDialog.exec()) {
 					refreshCurrPage();
@@ -116,13 +139,6 @@ namespace Related {
 		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
-	void ExperimentRecordPage::processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response)
-	{
-		if (response.m_createResult == true) {
-			refreshCurrPage();
-		}
-	}
-
 	void ExperimentRecordPage::processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response)
 	{
 		m_allExperimentRecords = response;
@@ -132,7 +148,8 @@ namespace Related {
 
 	void ExperimentRecordPage::processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response)
 	{
-		if (response.m_deleteResult) {
+		if (response.m_deleteResult)
+		{
 			refreshCurrPage();
 		}
 	}
@@ -204,39 +221,11 @@ namespace Related {
 
 	void ExperimentRecordPage::initConnent()
 	{
-		connect(SignalDispatch::instance(), SIGNAL(respExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse &)),
-			this, SLOT(processExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse &)));
-
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse &)),
 			this, SLOT(processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse &)));
 
 		connect(SignalDispatch::instance(), SIGNAL(respExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)),
 			this, SLOT(processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse &)));
-	}
-
-	void ExperimentRecordPage::insertExperimentRecord()
-	{
-		QDateTime current_date_time = QDateTime::currentDateTime();
-
-		Datastruct::ExperimentRecordCreateRequest request;
-		request.m_id = Base::RUtil::UUID();						
-		request.m_taskId = m_taskId;						
-		request.m_platformId = QStringLiteral("platform01");
-		request.m_floatingTime = current_date_time.toString(TIME_FORMAT);
-		request.m_lon = 0;							
-		request.m_lat = 0;							
-		request.m_setHeadingDegree = 0;				
-		request.m_actualHeadingDegree = 0;			
-		request.m_acousticState = 0;					
-		request.m_targetNum = 1;						
-		request.m_underwaterTargetNum = 1;				
-		request.m_underwaterTargetInfo = QStringLiteral("0101");
-		request.m_maxDepth = 0;						
-		request.m_profileIndex = 1;						
-		request.m_profileLength = 1;					
-		request.m_profileDistance = 1;				
-
-		DataNetConnector::instance()->write(request);
 	}
 
 	void ExperimentRecordPage::deleteExperimentRecord(QString id)

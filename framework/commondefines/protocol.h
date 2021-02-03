@@ -209,7 +209,6 @@ namespace Datastruct {
 		TaskCreateResponse() : m_createResult(false) { }
 		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;		/*!< 注册失败时说明失败原因 */
-
 		TaskEntityData taskInfo;
 	};
 
@@ -218,8 +217,8 @@ namespace Datastruct {
 	*/
 	struct  LoadAllTaskRequest {
 		LoadAllTaskRequest():m_offsetIndex(0), m_limitIndex(0){}
-		int m_offsetIndex;			/*!< 分页时，需加载的起始页偏移量 */
-		int m_limitIndex;			/*!< 当前页面显示条数 */
+		int m_offsetIndex;							/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;							/*!< 当前页面显示条数 */
 	};
 
 	/*!
@@ -234,14 +233,9 @@ namespace Datastruct {
 	 * @brief   按条件查询任务请求
 	 */
 	struct TaskByConditionRequest {
-		QString taskId;				/*!< 数据库Id */
-		QString taskName;			/*!< 任务名称 */
-		QString startTime;			/*!< 起始时间 */
-		QString endTime;			/*!< 结束时间 */
-		QString location;			/*!< 任务地点 */
-		QString lon;				/*!< 经度 */
-		QString lat;				/*!< 纬度 */
-		QString description;		/*!< 描述 */
+		QString startTime;							/*!< 起始时间 */
+		QString endTime;							/*!< 结束时间 */
+		QString location;							/*!< 任务地点 */
 	};
 
 	/*!
@@ -276,7 +270,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct  TaskStaticsInfoRequest{
-
+		QString id;
 	};
 
 	/*!
@@ -284,6 +278,10 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct  TaskStaticsInfoResponse {
+		QString  allTaskStartTime;								/*!< 所有任务的起始时间 */
+		QString  allTaskEndTime;								/*!< 所有任务的结束时间 */
+
+		QList<QString> listAlllocations;						/*!< 统计海区信息 */
 
 	};
 

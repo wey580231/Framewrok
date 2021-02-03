@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPixmap>
+#include <QPen>
 
 namespace Related {
 
@@ -42,6 +43,10 @@ namespace Related {
 		painter.translate(0, 0);
 		pix.load(m_imagesPath);
 
+		QPen pen;
+		pen.setWidth(1);
+	;
+
 		if (m_imagesSuspension) {
 			painter.drawPixmap(3, 3, width() - 6, height() - 6, pix);
 		}
@@ -54,7 +59,8 @@ namespace Related {
 		// 描述信息
 		if (m_imagesType == TI_Sketch) {
 			painter.setRenderHint(QPainter::Antialiasing, true);
-			painter.setPen(QColor(0, 255, 255));
+			pen.setColor(QColor(0, 255, 255));
+			painter.setPen(pen);
 			if (m_imagesSuspension) {
 				painter.drawRect(3, 3, width() - 6, height() - 6);
 			}
@@ -62,8 +68,8 @@ namespace Related {
 			{
 				painter.drawRect(6, 6, width() - 12, height() - 12);
 			}
-
-			painter.setPen(QColor(255, 255, 255));
+			pen.setColor(QColor(255, 255, 255));
+			painter.setPen(pen);
 			painter.drawText(10, height() - 16, QStringLiteral("20210120 试验记录"));
 		}
 		QWidget::paintEvent(event);
