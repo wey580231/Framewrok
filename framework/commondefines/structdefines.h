@@ -155,9 +155,47 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief 
+	 * @brief 目标实体数据
+	 */
+	struct  TargetEntityData {
+		int  index;					/*!< 索引 */
+		QString targetName;			/*!< 目标名称 */
+		QString edttime;			/*!< 录取时间 */
+		double tonnage;				/*!< 吨位 */
+		double lon;					/*!< 经度 */
+		double lat;					/*!<纬度 */
+		double speed;				/*!< 航行速度 */
+		int  axlesNumber;			/*!< 轴数 */
+		int datalength;				/*!< 数据时长 */
+		int type;					/*!< 类型 */
+	};
+
+	/*!
+ * @brief 目标音频实体数据
+ */
+	struct  TargetWavEntityData {
+		int  index;					/*!< 索引 */
+		QString targetName;			/*!< 目标名称 */
+		QString edttime;			/*!< 录取时间 */
+		double tonnage;				/*!< 吨位 */
+		double lon;					/*!< 经度 */
+		double lat;					/*!<纬度 */
+		double speed;				/*!< 航行速度 */
+		int  axlesNumber;			/*!< 轴数 */
+		int datalength;				/*!< 数据时长 */
+		int type;					/*!< 类型 */
+	};
+
+
+
+	/*!
+	 * @brief AIS实体数据
 	 */
 	struct AisEntityData{
+		AisEntityData():mmsi(0), time(0), lon(0), lat(0), course(0), truehead(0),
+			shipType(0), shipImo(0), navStatus(0),speed (0), length(0), width(0){
+		}
+
 		QString id;					/*!< 唯一标识 */
 		QString targetId;			/*!< 目标标识 */
 		int mmsi;					/*!< 船舶MMSI */
@@ -180,5 +218,7 @@ namespace Datastruct {
 		QString buildDate;			/*!< 建造时间 */
 		QString port;				/*!< 船籍港 */
 	};
+
+
 
 } //namespace Datastruct 

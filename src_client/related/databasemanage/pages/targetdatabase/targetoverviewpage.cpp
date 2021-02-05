@@ -1,4 +1,4 @@
-#include "targetdatabasemanagepage.h"
+#include "targetoverviewpage.h"
 
 #include <QDebug>
 #include <QComboBox>
@@ -11,57 +11,66 @@
 
 namespace Related {
 
-	TargetDatabaseManagePage::TargetDatabaseManagePage(QWidget *parent)
-		: AbstractPage(parent)
+	TargetOverViewPage::TargetOverViewPage(QWidget *parent)
+		: AbstractPage(parent),
+		m_firstLoadData(true)
 	{
 		init();
 		initConnect();
 	}
 
-	TargetDatabaseManagePage::~TargetDatabaseManagePage()
+	TargetOverViewPage::~TargetOverViewPage()
 	{
 	}
 
-	PageType TargetDatabaseManagePage::getPageType() const
+	PageType TargetOverViewPage::getPageType() const
 	{
 		return Page_TargetDatabase_TargetOverview;
 	}
 
-	void TargetDatabaseManagePage::respToolButtPressed(OperationToolsPage::ButtType type)
+	void TargetOverViewPage::prepareBringToTop()
+	{
+		if (m_firstLoadData) {
+
+			m_firstLoadData = false;
+		}
+	}
+
+	void TargetOverViewPage::respToolButtPressed(OperationToolsPage::ButtType type)
 	{
 		switch (type)
 		{
 			case OperationToolsPage::Butt_Add: {
 
 			}
-											   break;
+				break;
 			case OperationToolsPage::Butt_Delete: {
 
 			}
-												  break;
+				break;
 			case OperationToolsPage::Butt_Edit: {
 
 			}
-												break;
+				break;
 			case OperationToolsPage::Butt_Refresh: {
 
 			}
-												   break;
+				break;
 			default:
 				break;
 		}
 	}
 
-	void TargetDatabaseManagePage::setPageNum(int page)
+	void TargetOverViewPage::setPageNum(int page)
 	{
 	}
 
-	void TargetDatabaseManagePage::setFixedPageRowCount(int pageItemCount)
+	void TargetOverViewPage::setFixedPageRowCount(int pageItemCount)
 	{
 		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
-	void TargetDatabaseManagePage::init()
+	void TargetOverViewPage::init()
 	{
 		CustomWidgetContainer * cwidget = new CustomWidgetContainer();
 		{
@@ -121,16 +130,14 @@ namespace Related {
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
 		{
+			m_tableModel = new TargetOverViewModel();
+
 			m_tableView = new Base::RTableView();
 			m_tableView->setFocusPolicy(Qt::NoFocus);
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-			m_tableModel = new TargetDatabaseManageModel();
-			m_tableModel->prepareData();
-
 			m_tableView->setModel(m_tableModel);
-
 			m_tableView->addColumnItem(Base::ColumnItem(T_Index, QStringLiteral("索引")));
 			m_tableView->addColumnItem(Base::ColumnItem(T_TargetName, QStringLiteral("目标名称"), 140));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Edttime, QStringLiteral("录人时间"), 180));
@@ -163,7 +170,7 @@ namespace Related {
 		setLayout(vlayout);
 	}
 
-	void TargetDatabaseManagePage::initConnect()
+	void TargetOverViewPage::initConnect()
 	{
 
 	}

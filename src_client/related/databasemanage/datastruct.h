@@ -145,34 +145,6 @@ namespace Related {
 		QString m_rights;			/*!< 用户权限 */
 	};
 
-	/*!
-	 * @brief 
-	 */
-	enum  TargetDatabaseDataColumnIndex {
-		T_Index,					/*!< 索引 */
-		T_TargetName,				/*!< 目标名称 */
-		T_Edttime,					/*!< 录取时间 */
-		T_Tonnage,					/*!< 吨位 */
-		T_Lon,					/*!< 经度 */
-		T_Lat,					/*!< 纬度 */
-		T_Speed,					/*!< 航行速度 */
-		T_AxlesNumber,				/*!< 轴数 */
-		T_Datalength,				/*!< 数据时长 */
-		T_Type						/*!< 类型 */
-	};
-
-	struct TargetDatabaseData{
-		int  index;					/*!< 索引 */
-		QString targetName;			/*!< 目标名称 */
-		QString edttime;			/*!< 录取时间 */
-		double tonnage;				/*!< 吨位 */
-		double lon;				/*!< 经度 */
-		double lat;				/*!<纬度 */
-		double speed;				/*!< 航行速度 */
-		int  axlesNumber;			/*!< 轴数 */
-		int datalength;				/*!< 数据时长 */
-		int type;					/*!< 类型 */
-	};
 
 	/*!
 	 * @brief 平台描述信息
@@ -362,6 +334,42 @@ namespace Related {
 		int rollAngle;				/*!< 横滚角 */
 	};
 
+
+	/*!
+	 * @brief 目标数据表格列
+	 */
+	enum  TargetDataColumnIndex {
+		T_Index,					/*!< 索引 */
+		T_TargetName,				/*!< 目标名称 */
+		T_Edttime,					/*!< 录取时间 */
+		T_Tonnage,					/*!< 吨位 */
+		T_Lon,						/*!< 经度 */
+		T_Lat,						/*!< 纬度 */
+		T_Speed,					/*!< 航行速度 */
+		T_AxlesNumber,				/*!< 轴数 */
+		T_Datalength,				/*!< 数据时长 */
+		T_Type						/*!< 类型 */
+	};
+
+	/*!
+ * @brief 目标数据表格列
+ */
+	enum  TargetWavDataColumnIndex {
+		TWAV_Index,					/*!< 索引 */
+		TWAV_TargetName,				/*!< 目标名称 */
+		TWAV_Edttime,					/*!< 录取时间 */
+		TWAV_Tonnage,					/*!< 吨位 */
+		TWAV_Lon,						/*!< 经度 */
+		TWAV_Lat,						/*!< 纬度 */
+		TWAV_Speed,					/*!< 航行速度 */
+		TWAV_AxlesNumber,				/*!< 轴数 */
+		TWAV_Datalength,				/*!< 数据时长 */
+		TWAV_Type						/*!< 类型 */
+	};
+
+	/*!
+	 * @brief AIS数据表格列
+     */
 	enum  AISDATAColumnIndex {
 		AIS_Index,					/*!< 唯一标识 */
 		AIS_TargetId,				/*!< 目标标识 */

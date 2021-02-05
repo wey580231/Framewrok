@@ -14,11 +14,12 @@
 #include <qstackedwidget.h>
 
 #include <base\selfwidget\rtabwidget.h>
+
 #include "../abstractpage.h"
 
 namespace Related {
 
-	class TargetDatabaseManagePage;
+	class TargetOverViewPage;
 	class TargetDetailPage;
 
 	class TargetDatabaseWidget : public AbstractPage
@@ -31,14 +32,15 @@ namespace Related {
 
 		PageType getPageType() const;
 
+		void prepareBringToTop();
+
 	private:
 		void init();
 
 	private:
 		Base::RTabWidget * m_tabWidget;
-
-		TargetDatabaseManagePage * m_targetDatabaseManagePage;
-		TargetDetailPage * m_targetDetailPage;
+		TargetOverViewPage * m_targetOverViewPage;				/*!< 目标库概览界面 */
+		TargetDetailPage * m_targetDetailPage;					/*!< 目标详情页面 */
 	};
 
 }//namespace Related 
