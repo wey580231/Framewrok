@@ -40,6 +40,17 @@ namespace Related {
 		void write(const Datastruct::TaskDeleteRequest & request);
 		void write(const Datastruct::TaskSimpleRequest & request);
 		void write(const Datastruct::TaskStaticsInfoRequest & request);
+		void write(const Datastruct::TaskModifyRequest & request);
+		
+		/*!
+		 * @brief 任务试验图片资源
+		 */
+		void write(const Datastruct::TaskImageCreateRequest & request);
+		void write(const Datastruct::LoadAllTaskImageRequest & request);
+		void write(const Datastruct::TaskImageByConditionRequest & request);
+		void write(const Datastruct::TaskImageDeleteRequest & request);
+		void write(const Datastruct::TaskImageModifyRequest & request);
+		
 		/*!
 		 * @brief  值班日志有关
 		 */
@@ -71,6 +82,22 @@ namespace Related {
 		void write(const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
 		void write(const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
 		void write(const Datastruct::DetectPlatformSubtypeModifyRequest & request);
+
+		/*!
+		 * @brief   侦测平台亚型有关
+		 */
+		void write(const Datastruct::TargetCreateRequest & request);
+		void write(const Datastruct::LoadAllTargetRequest & request);
+		void write(const Datastruct::TargetDeleteRequest & request);
+		void write(const Datastruct::TargetModifyRequest & request);
+
+		/*!
+		 * @brief   AIS数据有关
+		 */
+		void write(const Datastruct::AISDataCreateRequest & request);
+		void write(const Datastruct::LoadAllAISDataRequest & request);
+		void write(const Datastruct::AISDataDeleteRequest & request);
+		void write(const Datastruct::AISDataModifyRequest & request);
 
 	signals:
 		void newClientData(QByteArray  array);

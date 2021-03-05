@@ -32,11 +32,22 @@ namespace Related {
 
 	class NewTaskDialog : public Base::DialogProxy
 	{
-		Q_OBJECT
+	Q_OBJECT
 
 	public:
-		NewTaskDialog(QWidget *parent = nullptr);
+		/*!
+		 * @brief 任务控制类型
+		 */
+		enum  TaskEditType {
+			Task_New,				/*!< 创建 */
+			Task_Modify				/*!< 修改 */
+		};
+
+		NewTaskDialog(QString taskId, TaskEditType type, QWidget *parent);
 		~NewTaskDialog();
+
+		void setTaskBaseInfo(TaskBaseInfo info);
+		void setTaskImages(QList<Datastruct::TaskImageEntityData> list);
 
 	private slots:
 		void respOk();
@@ -44,13 +55,24 @@ namespace Related {
 		void openLocalFile();
 		void switchViewModel(bool isChecked);
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
+		void processTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
+		void processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response);
+		void processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response);
+
 	private:
 		void init();
 		void initConnect();
 
-		void sendTaskBaseInfo();
+		void sendNewTaskBaseInfo();
+		void sendModifyTaskBaseInfo();
+
+		void sendNewTaskImageInfo(Datastruct::TaskImageEntityData info);
+		void sendModifyTaskImageInfo();
 
 	private:
+		QString m_taskId;								/*!< 任务Id */				
+		TaskEditType m_taskEditType;					/*!< 任务编辑类型 */
+
 		Base::RTabWidget * m_tabWidget;
 
 		TaskBaseInfo m_taskBaseInfo;					/*!< 任务基本信息 */
@@ -72,6 +94,7 @@ namespace Related {
 		QString m_originalFilePath;						/*!< 原始文件路径：绝对路径 */
 
 		QList<OriginalDataFileParameter *> m_taskDataFilePaths;
+
 	};
 
 }//namespace Related 

@@ -96,6 +96,7 @@ namespace Related {
 			m_newTaskButt->setMinimumSize(60, 30);
 			m_newTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));
 			connect(m_newTaskButt, SIGNAL(clicked()), this, SLOT(slotNewTaskClickde()));
+			
 			m_refreshTaskButt = new Base::RIconButton();
 			m_refreshTaskButt->setText(QStringLiteral("刷新任务"));
 			m_refreshTaskButt->setMinimumSize(60, 30);
@@ -176,7 +177,7 @@ namespace Related {
 
 	void SystemMainPage::slotNewTaskClickde()
 	{
-		NewTaskDialog dialog(this);
+		NewTaskDialog dialog(Base::RUtil::UUID(), NewTaskDialog::Task_New, this);
 		if (QDialog::Accepted == dialog.exec()) {
 			refreshCurrTask();
 		}
@@ -219,10 +220,14 @@ namespace Related {
 		if (result != Base::RMessageBox::Yes) {
 			return;
 		}
-
+		// 
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
 		DataNetConnector::instance()->write(request);
+		//
+		Datastruct::TaskImageDeleteRequest taskImageDeleteRequest;
+		request.taskId = taskId;
+		DataNetConnector::instance()->write(taskImageDeleteRequest);
 	}
 
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)

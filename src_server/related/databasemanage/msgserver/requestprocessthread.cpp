@@ -165,6 +165,56 @@ namespace Related {
 
 			}
 				break;
+			case  Datastruct::P_TaskModify: {
+				Datastruct::TaskModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskModifyResponse response = m_processCenter.processTaskModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			// 任务图片资源
+			case  Datastruct::P_TaskImageCreate : {
+				Datastruct::TaskImageCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskImageCreateResponse response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskImageCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageList : {
+				Datastruct::LoadAllTaskImageRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllTaskImageResponse response = m_processCenter.processTaskImageList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskImageList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageByCondition : {
+// 				Datastruct::TaskImageCreateRequest request;
+// 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+// 					Datastruct::TaskImageCreateResponse response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
+// 					runit->m_resposneData = makePacket(Datastruct::P_TaskImageCreate, JsonWrapper::instance()->wrap(response));
+// 				}
+			}
+				break;			
+			case  Datastruct::P_TaskImageDelete : {
+				Datastruct::TaskImageDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskImageDeleteResponse response = m_processCenter.processTaskImageDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskImageDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageModify : {
+				Datastruct::TaskImageModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskImageModifyResponse response = m_processCenter.processTaskImageModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskImageModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -293,6 +343,87 @@ namespace Related {
 				}
 			}
 				break;
+
+			case  Datastruct::P_TargetCreate: {
+				Datastruct::TargetCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TargetCreateResponse response = m_processCenter.processTargetCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TargetCreate, JsonWrapper::instance()->wrap(response));
+				}
+			} 
+				break;
+
+			case  Datastruct::P_TargetList: {
+				Datastruct::LoadAllTargetRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllTargetResponse response = m_processCenter.processTargetList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TargetList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+
+			case  Datastruct::P_TargetByCondition: {
+
+			}
+				break;
+
+			case  Datastruct::P_TargetDelete: {
+				Datastruct::TargetDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TargetDeleteResponse response = m_processCenter.processTargetDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TargetCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+
+			case  Datastruct::P_TargetModify: {
+				Datastruct::TargetModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TargetModifyResponse response = m_processCenter.processTargetModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TargetModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+
+			case  Datastruct::P_TargetSimpleInfo: {
+
+			}
+				break;
+
+			case  Datastruct::P_TargetFullInfo: {
+
+			}
+				break;
+			//AIS数据
+			case  Datastruct::P_AISCreate: {
+				Datastruct::AISDataCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::AISDataCreateResponse response = m_processCenter.processAISCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_AISCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_AISList: {
+				Datastruct::LoadAllAISDataRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllAISDatasResponse response = m_processCenter.processAISDataList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_AISList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_AISByCondition: {
+
+			}
+				break;
+			case  Datastruct::P_AISDelete: {
+
+			}
+				break;
+			case  Datastruct::P_AISModify: {
+
+			}
+				break;
+
 			default:
 				break;
 		}

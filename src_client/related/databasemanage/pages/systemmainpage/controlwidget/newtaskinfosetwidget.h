@@ -28,6 +28,8 @@ namespace Related {
 		NewTaskInfoSetWidget(QWidget *parent = Q_NULLPTR);
 		~NewTaskInfoSetWidget();
 
+		void setTaskBaseInfo(TaskBaseInfo info);
+
 		TaskBaseInfo getTaskBaseInfo();
 
 	private:

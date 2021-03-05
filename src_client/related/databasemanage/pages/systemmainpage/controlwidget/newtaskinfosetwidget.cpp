@@ -18,6 +18,15 @@ namespace Related {
 
 	}
 
+	void NewTaskInfoSetWidget::setTaskBaseInfo(TaskBaseInfo info)
+	{
+		ui.lineEdit_name->setText(info.taskName);
+		ui.lineEdit_local->setText(info.taskLocation);
+		ui.lineEdit_local_2->setText(info.lon);
+		ui.lineEdit_local_3->setText(info.lat);
+	
+	}
+
 	TaskBaseInfo NewTaskInfoSetWidget::getTaskBaseInfo()
 	{
 		m_taskBaseInfo.taskName = ui.lineEdit_name->text();

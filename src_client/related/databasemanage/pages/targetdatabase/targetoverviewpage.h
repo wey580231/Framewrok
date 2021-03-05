@@ -8,7 +8,6 @@
  * @copyright NanJing RenGu.
  * @note
  */
- 
 #pragma once
 
 #include <QWidget>
@@ -41,14 +40,27 @@ namespace Related {
 
 		void prepareBringToTop();
 
+	signals:
+		void signalSelecteTargetDataInfo(QString indexId);
+
+
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
+		void slotTableDoubleClicked(const QModelIndex & index);
+
+		void processQueryTargetListResponse(const Datastruct::LoadAllTargetResponse & response);
+		void processTargetCreateResponse(const Datastruct::TargetCreateResponse & response);
+		void processTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response);
+		void processTargetModifyResponse(const Datastruct::TargetModifyResponse & response);
 
 	private:
 		void init();
 		void initConnect();
+
+		void refreshCurrPage();
+		void createTargetDataInfo();
 
 	private:
 		OperationToolsPage *m_operationToolsPage;

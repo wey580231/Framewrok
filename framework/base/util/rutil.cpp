@@ -370,6 +370,13 @@ namespace Base {
 		return QPoint((b.width() - a.width()) /2, (b.height() - a.height()) / 2);
 	}
 
+	QPixmap RUtil::screenshotSize(int x, int y, int width, int height)
+	{
+		QScreen *screen = QGuiApplication::primaryScreen();
+		QPixmap pixmap = screen->grabWindow(0, x, y, width, height);
+		return pixmap;
+	}
+
 	/*!
 	* @brief 将经纬度转换成时分秒形式
 	* @param[in] lonlatVal 经纬度值，需在[-180,180]之间

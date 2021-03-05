@@ -90,6 +90,22 @@ namespace Table {
 	};
 
 	/*!
+	 * @brief 试验图片资源表
+	 */
+	struct TaskImageEntity : public AbstractTable {
+		TaskImageEntity() :AbstractTable("task_image_resource") {}
+
+		QString id = "id";
+		QString taskId = "task_id";
+		QString realName = "real_name";
+		QString suffix = "suffix";
+		QString uploadTime = "upload_time";
+		QString imageSize = "image_size";
+		QString description = "description";
+	};
+
+
+	/*!
 	* @brief 值班日志信息表
 	*/
 	struct DutyRecordEntity : public AbstractTable {
@@ -130,5 +146,45 @@ namespace Table {
 		QString profileDistance = "profile_distance";
 	};
 
+	/*!
+	 * @brief 目标数据信息表
+	 */
+	struct  TargetDataEntity : public AbstractTable {
+		TargetDataEntity() :AbstractTable("target_entity") {}
+
+		QString id = "id";
+		QString name = "name";
+		QString type = "type";
+		QString createTime = "create_time";
+	};
+
+	/*!
+	 * @brief AIS数据信息表
+	 */
+	struct  AISDataEntity : public AbstractTable {
+		AISDataEntity() :AbstractTable("ais_data") {}
+
+		QString id = "id";
+		QString targetId = "target_id";
+		QString mmsi = "mmsi";
+		QString time = "time";					
+		QString lon = "lon";
+		QString lat = "lat";
+		QString course = "course";
+		QString truehead = "truehead";
+		QString name = "name";
+		QString shipType = "ship_type";
+		QString shipImo = "ship_imo";
+		QString navStatus = "nav_status";
+		QString speed = "speed";
+		QString eta = "eta";
+		QString dest = "dest";
+		QString length = "length";
+		QString width = "width";
+		QString callsign = "callsign";
+		QString flag = "flag";
+		QString buildDate = "build_date";
+		QString port = "port";
+	};
 
 }	//namespace Table

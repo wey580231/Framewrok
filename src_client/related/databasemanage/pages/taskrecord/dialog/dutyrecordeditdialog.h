@@ -18,6 +18,7 @@
 #include <QLineEdit>
 #include <QDateTimeEdit>
 #include <QDateTime>
+#include <QPlainTextEdit>
 
 #include <base/selfwidget/dialogproxy.h>
 #include <base/selfwidget/rmessagebox.h>
@@ -66,7 +67,7 @@ namespace Related {
 		QLineEdit * m_windSpeedLineEdit;
 		QLineEdit * m_waveHighLineEdit;
 		QLineEdit * m_oceanCurrentsLineEdit;
-		QLineEdit * m_descriptionLineEdit;
+		QPlainTextEdit * m_descriptionPlainTextEdit;
 
 		DutyRecordOperatioType m_operatioType;						/*!< 控制类型 */
 		QString m_taskId;											/*!< 任务Id */

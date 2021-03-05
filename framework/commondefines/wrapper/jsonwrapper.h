@@ -92,6 +92,43 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::TaskSimpleResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskSimpleResponse & response);
 
+		QByteArray wrap(const Datastruct::TaskModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskModifyResponse & response);
+
+		//TODO 20210304 有关试验
+		QByteArray wrap(const Datastruct::TaskImageCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskImageCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllTaskImageRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskImageRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllTaskImageResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskImageResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskImageByConditionRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageByConditionRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskImageByConditionResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageByConditionResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskImageDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskImageDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskImageModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskImageModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskImageModifyResponse & response);
+
 		//TODO 20210125 有关值班日志
 		QByteArray wrap(const Datastruct::DutyRecordCreateRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::DutyRecordCreateRequest & request);
@@ -167,7 +204,6 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::DetectPlatformModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::DetectPlatformModifyResponse & response);
 
-
 		// 有关侦测平台亚型
 		QByteArray wrap(const Datastruct::DetectPlatformSubtypeCreateRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeCreateRequest & request);
@@ -192,6 +228,44 @@ namespace CommonDefines {
 
 		QByteArray wrap(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::DetectPlatformSubtypeModifyResponse & response);
+
+		//目标信息
+		QByteArray wrap(const Datastruct::TargetCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TargetCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::TargetCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TargetCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllTargetRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTargetRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllTargetResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTargetResponse & response);
+
+		QByteArray wrap(const Datastruct::TargetDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TargetDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::TargetDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TargetDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::TargetModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TargetModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::TargetModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TargetModifyResponse & response);
+
+		/** AIS数据 **/
+		QByteArray wrap(const Datastruct::AISDataCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::AISDataCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::AISDataCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::AISDataCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllAISDataRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllAISDataRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllAISDatasResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllAISDatasResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);

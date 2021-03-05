@@ -44,6 +44,14 @@ namespace Related {
 		Datastruct::TaskDeleteResponse processTaskDelete(int clientId, const Datastruct::TaskDeleteRequest & request);
 		Datastruct::TaskStaticsInfoResponse processTaskStaticsInfo(int clientId, const Datastruct::TaskStaticsInfoRequest & request);
 		Datastruct::TaskSimpleResponse processTaskSimple(int clientId, const Datastruct::TaskSimpleRequest & request);
+		Datastruct::TaskModifyResponse processTaskModify(int clientId, const Datastruct::TaskModifyRequest & request);
+
+		//有关任务试验图片资源
+		Datastruct::TaskImageCreateResponse  processTaskImageCreate(int clientId, const Datastruct::TaskImageCreateRequest & request);
+		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
+		Datastruct::TaskImageByConditionResponse processTaskImageByCondition(int clientId, const Datastruct::TaskImageByConditionRequest & request);
+		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
+		Datastruct::TaskImageModifyResponse processTaskImageModify(int clientId, const Datastruct::TaskImageModifyRequest & request);
 
 		//值班日志
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
@@ -68,6 +76,17 @@ namespace Related {
 		Datastruct::LoadAllDetectPlatformSubtypesResponse processDetectPlatformSubtypeList(int clientId, const Datastruct::LoadAllDetectPlatformSubtypesRequest & request);
 		Datastruct::DetectPlatformSubtypeDeleteResponse  processDetectPlatformSubtypeDelete(int clientId, const Datastruct::DetectPlatformSubtypeDeleteRequest & request);
 		Datastruct::DetectPlatformSubtypeModifyResponse processDetectPlatformSubtypeModify(int clientId, const Datastruct::DetectPlatformSubtypeModifyRequest & request);
+
+		//目标信息
+		Datastruct::TargetCreateResponse  processTargetCreate(int clientId, const Datastruct::TargetCreateRequest & request);
+		Datastruct::LoadAllTargetResponse processTargetList(int clientId, const Datastruct::LoadAllTargetRequest & request);
+		Datastruct::TargetDeleteResponse  processTargetDelete(int clientId, const Datastruct::TargetDeleteRequest & request);
+		Datastruct::TargetModifyResponse processTargetModify(int clientId, const Datastruct::TargetModifyRequest & request);
+
+		//AIS 数据获取
+		Datastruct::AISDataCreateResponse  processAISCreate(int clientId, const Datastruct::AISDataCreateRequest & request);
+		Datastruct::LoadAllAISDatasResponse processAISDataList(int clientId, const Datastruct::LoadAllAISDataRequest & request);
+
 
 	private:
 		Base::Database * m_database;

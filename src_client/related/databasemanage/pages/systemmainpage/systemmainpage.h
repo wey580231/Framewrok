@@ -22,6 +22,7 @@
 #include <QListView>
 #include <QMap>
 
+#include <base/util/rutil.h>
 #include <base/selfwidget/iconbutton.h>
 #include <base/selfwidget/rmessagebox.h>
 #include <commondefines/protocol.h>

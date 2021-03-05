@@ -240,23 +240,20 @@ namespace Related {
 	Datastruct::TaskCreateResponse DataProcessCenter::processTaskCreate(int clientId, const Datastruct::TaskCreateRequest & request)
 	{
 		Datastruct::TaskCreateResponse response;
-
 		Table::TaskEntity task;
-
 		Base::RPersistence rps(task.table);
 		rps.insert({
-				{task.id,		Base::RUtil::UUID()},
-				{task.name,		request.taskName},
-				{task.startTime,QDateTime::fromString(request.startTime, TIME_FORMAT)},
-				{task.endTime,	QDateTime::fromString(request.endTime, TIME_FORMAT)},
-				{task.location, request.location},
-				{task.lon,		request.lon},
-				{task.lat,		request.lat},
-				{task.description, request.description},
+				{task.id,			request.taskId},
+				{task.name,			request.taskName},
+				{task.startTime,	QDateTime::fromString(request.startTime, TIME_FORMAT)},
+				{task.endTime,		QDateTime::fromString(request.endTime, TIME_FORMAT)},
+				{task.location,		request.location},
+				{task.lon,			request.lon},
+				{task.lat,			request.lat},
+				{task.description,	request.description},
 			});
 
 		QSqlQuery query(m_database->sqlDatabase());
-
 		if (query.exec(rps.sql())) {
 			if (query.numRowsAffected() > 0) {
 				response.m_createResult = true;
@@ -271,14 +268,10 @@ namespace Related {
 	Datastruct::LoadAllTaskResponse DataProcessCenter::processTaskList(int clientId, const Datastruct::LoadAllTaskRequest & request)
 	{
 		Datastruct::LoadAllTaskResponse response;
-
 		Table::TaskEntity task;
 		Base::RSelect rs(task.table);
-
 		rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC);
-
 		QSqlQuery query(m_database->sqlDatabase());
-
 		if (query.exec(rs.sql())) {
 			while (query.next()) {
 				Datastruct::TaskEntityData data;
@@ -295,7 +288,6 @@ namespace Related {
 
 			Base::RSelect rst(task.table);
 			rst.count();
-
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
 					response.m_count = query.value(0).toInt();
@@ -308,25 +300,21 @@ namespace Related {
 	Datastruct::TaskByConditionResponse DataProcessCenter::processTaskByCondition(int clientId, const Datastruct::TaskByConditionRequest & request)
 	{
 		Datastruct::TaskByConditionResponse response;
-
 		Table::TaskEntity task;
 		Base::RSelect rs(task.table);
-	
 		if (request.location.isEmpty()) {
 			rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
 				.createCriteria()
 				.add(Base::Restrictions::ge(task.table, task.startTime, request.startTime))
 				.add(Base::Restrictions::le(task.table, task.startTime, request.endTime));
 		}
-		else
-		{
+		else {
 			rs.orderBy(task.table, task.startTime, Base::SuperCondition::DESC)
 				.createCriteria()
 				.add(Base::Restrictions::eq(task.location, request.location))
 				.add(Base::Restrictions::ge(task.table, task.startTime, request.startTime))
 				.add(Base::Restrictions::le(task.table, task.startTime, request.endTime));
 		}
-
 
 		QSqlQuery query(m_database->sqlDatabase());
 
@@ -343,10 +331,8 @@ namespace Related {
 				data.description = query.value(task.description).toString();
 				response.m_taskInfos.append(data);
 			}
-
 			Base::RSelect rst(task.table);
 			rst.count();
-
 			if (query.exec(rst.sql())) {
 				if (query.next()) {
 					response.m_count = query.value(0).toInt();
@@ -360,11 +346,9 @@ namespace Related {
 	{
 		Datastruct::TaskDeleteResponse response;
 		Table::TaskEntity task;
-
 		Base::RDelete rde(task.table);
 		rde.createCriteria()
 			.add(Base::Restrictions::eq(task.id, request.taskId));
-
 		QSqlQuery query(m_database->sqlDatabase());
 
 		if (query.exec(rde.sql())) {
@@ -381,11 +365,8 @@ namespace Related {
 	Datastruct::TaskStaticsInfoResponse DataProcessCenter::processTaskStaticsInfo(int clientId, const Datastruct::TaskStaticsInfoRequest & request)
 	{
 		Datastruct::TaskStaticsInfoResponse response;
-		// 所有任务起始时间
 		Table::TaskEntity task;
-
 		QSqlQuery query(m_database->sqlDatabase());
-
 		Base::RSelect minRst(task.table);
 		// 起始时间
 		minRst.min(task.startTime);
@@ -412,7 +393,6 @@ namespace Related {
 	{
 		Datastruct::TaskSimpleResponse response;
 		Table::TaskEntity task;
-
 		Base::RSelect rs(task.table);
 		rs.select(task.table)
 			.createCriteria()
@@ -434,6 +414,237 @@ namespace Related {
 		}
 		else
 		{
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::TaskModifyResponse DataProcessCenter::processTaskModify(int clientId, const Datastruct::TaskModifyRequest & request)
+	{
+		Datastruct::TaskModifyResponse response;
+		Table::TaskEntity task;
+		Base::RSelect rs(task.table);
+		rs.select(task.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(task.id, request.taskId));
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}
+			else
+			{
+				Base::RUpdate rud(task.table);
+				rud.update(task.table, {
+					{ task.name,		request.taskName },
+					{ task.startTime,	QDateTime::fromString(request.startTime, TIME_FORMAT) },
+					{ task.endTime,		QDateTime::fromString(request.endTime, TIME_FORMAT) },
+					{ task.location,	request.location },
+					{ task.lon,			request.lon },
+					{ task.lat,			request.lat },
+					{ task.description, request.description },
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(task.id, request.taskId));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_result = true;
+					}
+					else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	/************************ 试验图片资源 *******************************************************/
+	Datastruct::TaskImageCreateResponse DataProcessCenter::processTaskImageCreate(int clientId, const Datastruct::TaskImageCreateRequest & request)
+	{
+		Datastruct::TaskImageCreateResponse response;
+		Table::TaskImageEntity taskImage;
+		Base::RPersistence rps(taskImage.table);
+		rps.insert({
+				{taskImage.id,			request.m_id},
+				{taskImage.taskId,		request.m_taskId},
+				{taskImage.realName,	request.m_realName},
+				{taskImage.suffix,		request.m_suffix},
+				{taskImage.uploadTime,	QDateTime::fromString(request.m_uploadTime, TIME_FORMAT)},
+				{taskImage.imageSize,	request.m_imageSize},
+				{taskImage.description,	request.m_description},
+			});
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		} 
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::LoadAllTaskImageResponse DataProcessCenter::processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request)
+	{
+		Datastruct::LoadAllTaskImageResponse response;
+		Table::TaskImageEntity taskImage;
+		Base::RSelect rs(taskImage.table);
+		rs.select(taskImage.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(taskImage.taskId, request.m_taskId));
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::TaskImageEntityData data;
+				data.id			= query.value(taskImage.id).toString();
+				data.taskId		= query.value(taskImage.taskId).toString();
+				data.realName   = query.value(taskImage.realName).toString();
+				data.suffix		= query.value(taskImage.suffix).toString();
+				data.uploadTime = query.value(taskImage.uploadTime).toDateTime().toString(TIME_FORMAT);
+				data.imageSize  = query.value(taskImage.imageSize).toDouble();
+				data.description = query.value(taskImage.description).toString();
+				response.m_taskImageInfos.append(data);
+			}
+
+			Base::RSelect rst(taskImage.table);
+			rst.select(taskImage.table).
+				createCriteria().
+				add(Base::Restrictions::eq(taskImage.taskId, request.m_taskId));
+			rst.count();
+
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_taskImageCount = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskImageByConditionResponse DataProcessCenter::processTaskImageByCondition(int clientId, const Datastruct::TaskImageByConditionRequest & request)
+	{
+// 		Datastruct::TaskImageByConditionResponse response;
+// 		Table::TaskImageEntity taskImage;
+// 		Base::RSelect rs(taskImage.table);
+// 		rs.select(taskImage.table)
+// 			.createCriteria()
+// 			.add(Base::Restrictions::eq(taskImage.id, request.));
+// 
+// 		QSqlQuery query(m_database->sqlDatabase());
+// 
+// 		if (query.exec(rs.sql())) {
+// 			if (query.numRowsAffected() < 0) {
+// 				response.m_errorInfo = Datastruct::NO_FINDDATA;
+// 			}
+// 			else
+// 			{
+// 				Base::RUpdate rud(task.table);
+// 				rud.update(task.table, {
+// 					{ task.name,		request.taskName },
+// 					{ task.startTime,	QDateTime::fromString(request.startTime, TIME_FORMAT) },
+// 					{ task.endTime,		QDateTime::fromString(request.endTime, TIME_FORMAT) },
+// 					{ task.location,	request.location },
+// 					{ task.lon,			request.lon },
+// 					{ task.lat,			request.lat },
+// 					{ task.description, request.description },
+// 					})
+// 					.createCriteria()
+// 					.add(Base::Restrictions::eq(task.id, request.taskId));
+// 
+// 				QSqlQuery query(m_database->sqlDatabase());
+// 
+// 				if (query.exec(rud.sql())) {
+// 					if (query.numRowsAffected()) {
+// 						response.m_result = true;
+// 					}
+// 					else {
+// 						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+// 					}
+// 				}
+// 			}
+// 		}
+// 		else
+// 		{
+// 			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+// 		}
+// 
+// 		return response;
+
+		return Datastruct::TaskImageByConditionResponse();
+	}
+
+	Datastruct::TaskImageDeleteResponse DataProcessCenter::processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request)
+	{
+		Datastruct::TaskImageDeleteResponse response;
+		Table::TaskImageEntity taskImage;
+		Base::RDelete rde(taskImage.table);
+
+
+		if (!request.m_id.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskImage.id, request.m_id));
+		}
+		if (!request.m_taskId.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskImage.taskId, request.m_taskId));
+		 }
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskImageModifyResponse DataProcessCenter::processTaskImageModify(int clientId, const Datastruct::TaskImageModifyRequest & request)
+	{
+		Datastruct::TaskImageModifyResponse response;
+		Table::TaskImageEntity taskImage;
+		Base::RSelect rs(taskImage.table);
+		rs.select(taskImage.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(taskImage.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}	else  {
+				Base::RUpdate rud(taskImage.table);
+				rud.update(taskImage.table, {
+					{taskImage.realName,	request.realName},
+					{taskImage.suffix,		request.suffix },
+					{taskImage.uploadTime,	QDateTime::fromString(request.uploadTime, TIME_FORMAT)},
+					{taskImage.imageSize,	request.imageSize},
+					{taskImage.description, request.m_description},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(taskImage.id, request.m_id));
+				QSqlQuery query(m_database->sqlDatabase());
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					} else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+				}
+			}
+		} else {
 			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
 		}
 		return response;
@@ -475,11 +686,8 @@ namespace Related {
 	Datastruct::LoadAllDutyRecordResponse DataProcessCenter::processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request)
 	{
 		Datastruct::LoadAllDutyRecordResponse response;
-
 		Table::DutyRecordEntity dutyRecord;
-
 		Base::RSelect rs(dutyRecord.table);
-
 		rs.orderBy(dutyRecord.table, dutyRecord.createTime, Base::SuperCondition::DESC)
 			.createCriteria()
 			.add(Base::Restrictions::eq(dutyRecord.taskId, request.m_taskId));
@@ -487,7 +695,6 @@ namespace Related {
 		rs.limit(request.m_offsetIndex, request.m_limitIndex);
 
 		QSqlQuery query(m_database->sqlDatabase());
-
 		if (query.exec(rs.sql())) {
 			while (query.next()) {
 				Datastruct::DutyRecordEntityData data;
@@ -520,9 +727,7 @@ namespace Related {
 	Datastruct::DutyRecordDeleteResponse DataProcessCenter::processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request)
 	{
 		Datastruct::DutyRecordDeleteResponse response;
-
 		Table::DutyRecordEntity dutyRecord;
-
 		Base::RDelete rde(dutyRecord.table);
 		rde.createCriteria()
 			.add(Base::Restrictions::eq(dutyRecord.id, request.m_id));
@@ -988,6 +1193,222 @@ namespace Related {
 		}
 		else {
 			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::TargetCreateResponse DataProcessCenter::processTargetCreate(int clientId, const Datastruct::TargetCreateRequest & request)
+	{
+		Datastruct::TargetCreateResponse response;
+
+		Table::TargetDataEntity target;
+		Base::RPersistence rps(target.table);
+		rps.insert({
+				{target.id,			request.m_id},
+				{target.name,		request.m_name},
+				{target.type,		request.m_type},
+				{target.createTime,	QDateTime::fromString(request.m_creanTime, TIME_FORMAT)},
+			});
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::LoadAllTargetResponse DataProcessCenter::processTargetList(int clientId, const Datastruct::LoadAllTargetRequest & request)
+	{
+		Datastruct::LoadAllTargetResponse response;
+		Table::TargetDataEntity target;
+
+		Base::RSelect rs(target.table);
+		rs.select(target.table);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::TargetEntityData data;
+				data.id = query.value(target.id).toString();
+				data.name = query.value(target.name).toString();
+				data.type = query.value(target.type).toInt();
+				data.createTime = query.value(target.createTime).toDateTime().toString(TIME_FORMAT);
+				response.m_targetInfos.append(data);
+			}
+			Base::RSelect rst(target.table);
+			rst.count();
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_targetCount = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TargetDeleteResponse DataProcessCenter::processTargetDelete(int clientId, const Datastruct::TargetDeleteRequest & request)
+	{
+		Datastruct::TargetDeleteResponse response;
+		Table::TargetDataEntity target;
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		Base::RDelete rde(target.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(target.id, request.m_id));
+
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			} else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TargetModifyResponse DataProcessCenter::processTargetModify(int clientId, const Datastruct::TargetModifyRequest & request)
+	{
+		Datastruct::TargetModifyResponse response;
+		Table::TargetDataEntity target;
+
+		Base::RSelect rs(target.table);
+		rs.select(target.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(target.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}
+			else {
+				Base::RUpdate rud(target.table);
+				rud.update(target.table, {
+						{target.name,		request.m_name},
+						{target.createTime,	QDateTime::fromString(request.m_createTime, TIME_FORMAT)},
+						{target.type,		request.m_type},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(target.id, request.m_id));
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+
+				}
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::AISDataCreateResponse DataProcessCenter::processAISCreate(int clientId, const Datastruct::AISDataCreateRequest & request)
+	{
+		Datastruct::AISDataCreateResponse response;
+
+		Table::AISDataEntity aisData;
+		Base::RPersistence rps(aisData.table);
+		rps.insert({
+				{aisData.id,		request.m_id},
+				{aisData.targetId,	request.m_targetId},
+				{aisData.mmsi,		request.m_mmsi},
+				{aisData.time,		request.m_time},
+				{aisData.lon,		request.m_lon},
+				{aisData.lat,		request.m_lat},
+				{aisData.course,	request.m_course},
+				{aisData.truehead,	request.m_truehead},
+				{aisData.name,		request.m_name},
+				{aisData.shipType,	request.m_shipType},
+				{aisData.shipImo,	request.m_shipImo},
+				{aisData.navStatus,	request.m_navStatus},
+				{aisData.speed,		request.m_speed},
+				{aisData.eta,		QDateTime::fromString(request.m_eta, TIME_FORMAT)},
+				{aisData.dest,		request.m_dest},
+				{aisData.length,	request.m_length},
+				{aisData.width,		request.m_width},
+				{aisData.callsign,	request.m_callsign},
+				{aisData.flag,		request.m_flag},
+				{aisData.buildDate,	QDateTime::fromString(request.m_buildDate, TIME_FORMAT)},
+				{aisData.port,		request.m_port},
+			});
+
+		QSqlQuery query(m_database->sqlDatabase());
+		qDebug() << rps.sql();
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::LoadAllAISDatasResponse DataProcessCenter::processAISDataList(int clientId, const Datastruct::LoadAllAISDataRequest & request)
+	{
+		Datastruct::LoadAllAISDatasResponse response;
+
+		Table::AISDataEntity aisData;
+
+		Base::RSelect rs(aisData.table);
+		rs.select(aisData.table)
+			.limit(request.m_offsetIndex, request.m_limitIndex);
+
+		QSqlQuery query(m_database->sqlDatabase());
+
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+
+				Datastruct::AisEntityData data;
+				data.id = query.value(aisData.id).toString();
+				data.targetId = query.value(aisData.targetId).toString();
+				data.mmsi = query.value(aisData.mmsi).toInt();
+				data.time = query.value(aisData.time).toInt();
+				data.lon = query.value(aisData.lon).toDouble();
+				data.lat = query.value(aisData.lat).toDouble();
+				data.course = query.value(aisData.course).toDouble();
+				data.truehead = query.value(aisData.truehead).toInt();
+				data.name = query.value(aisData.name).toString();
+				data.shipType = query.value(aisData.shipType).toInt();
+				data.shipImo = query.value(aisData.shipImo).toInt();
+				data.navStatus = query.value(aisData.navStatus).toInt();
+				data.speed = query.value(aisData.speed).toDouble();
+				data.eta = query.value(aisData.eta).toDateTime().toString(TIME_FORMAT);
+				data.dest = query.value(aisData.dest).toString();
+				data.length = query.value(aisData.length).toDouble();
+				data.width = query.value(aisData.width).toDouble();
+				data.callsign = query.value(aisData.callsign).toString();
+				data.flag = query.value(aisData.flag).toString();
+				data.buildDate = query.value(aisData.buildDate).toDateTime().toString(TIME_FORMAT);
+				data.port = query.value(aisData.port).toString();
+
+				response.m_aisDataInfos.append(data);
+			}
+
+			Base::RSelect rst(aisData.table);
+			rst.select(aisData.table);
+			rst.count();
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_aisDataCount = query.value(0).toInt();
+				}
+			}
 		}
 		return response;
 	}

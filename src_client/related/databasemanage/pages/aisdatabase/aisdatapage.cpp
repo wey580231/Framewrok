@@ -12,11 +12,11 @@ namespace Related {
 
 	AisDataPage::AisDataPage(QWidget *parent)
 		: AbstractPage(parent),
-		m_firstLoadData(false)
+		m_firstLoadData(true)
 	{
 		init();
 		initConnect();
-		createData();
+
 	}
 
 	AisDataPage::~AisDataPage()
@@ -28,12 +28,20 @@ namespace Related {
 		return Page_AisDataBase_AisData;
 	}
 
+	void AisDataPage::prepareBringToTop()
+	{
+		if (m_firstLoadData) {
+			refreshCurrPage();
+			m_firstLoadData = false;
+		}
+	}
+
 	void AisDataPage::respToolButtPressed(OperationToolsPage::ButtType type)
 	{
 		switch (type)
 		{
 		case OperationToolsPage::Butt_Add: {
-
+			createAISData();
 		}
 			break;
 		case OperationToolsPage::Butt_Delete: {
@@ -60,6 +68,33 @@ namespace Related {
 	void AisDataPage::setFixedPageRowCount(int pageItemCount)
 	{
 		m_tableModel->setFixedPageRowCount(pageItemCount);
+	}
+
+	void AisDataPage::processQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response)
+	{
+		m_tableModel->prepareData(response.m_aisDataInfos);
+		m_pageSwitch->setDataSize(response.m_aisDataCount);
+	}
+
+	void AisDataPage::processAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response)
+	{
+		if (response.m_createResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void AisDataPage::processAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response)
+	{
+		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void AisDataPage::processAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response)
+	{
+		if (response.m_modifyResult) {
+			refreshCurrPage();
+		}
 	}
 
 	void AisDataPage::init()
@@ -121,33 +156,50 @@ namespace Related {
 
 	void AisDataPage::initConnect()
 	{
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse &)),
+			this, SLOT(processQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respAISDataCreateResponse(const Datastruct::AISDataCreateResponse &)),
+			this, SLOT(processAISDataCreateResponse(const Datastruct::AISDataCreateResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse &)),
+			this, SLOT(processAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respAISDataModifyResponse(const Datastruct::AISDataModifyResponse &)),
+			this, SLOT(processAISDataModifyResponse(const Datastruct::AISDataModifyResponse &)));
 	}
 
-	void AisDataPage::createData()
+	void AisDataPage::refreshCurrPage()
 	{
-		QList<Datastruct::AisEntityData> listData;
-		for (int i = 0; i < 15;  i++) {
-			QDateTime current_date_time = QDateTime::currentDateTime();
+		Datastruct::LoadAllAISDataRequest request;
+		request.m_offsetIndex = m_pageSwitch->dataOffset();
+		request.m_limitIndex = m_pageSwitch->perPageCount();
+		DataNetConnector::instance()->write(request);
+	}
 
-			Datastruct::AisEntityData data;
-			data.mmsi = 0;					/*!< 船舶MMSI */
-			data.time = 1600;					/*!< 实时信号时间 */
-			data.lon = 15;					/*!< 经度 */
-			data.lat = 16;					/*!< 纬度 */
-			data.course = 16;				/*!< 航迹向 */
-			data.truehead= 15+1;				/*!< 航首向 */
-			data.name = QString("%1_%2").arg(QStringLiteral("中国")).arg(i+1);				/*!< 船名 */
-			data.navStatus = 1;				/*!< 航行状态 */
-			data.speed =16;				/*!< 航行速度 */
-			data.length = 160;				/*!< 船长 */
-			data.width = 43;				/*!< 船宽 */
-			data.buildDate = current_date_time.toString(TIME_FORMAT);			/*!< 建造时间 */
-			data.port = QStringLiteral("中国");				/*!< 船籍港 */
+	void AisDataPage::createAISData()
+	{
+		Datastruct::AISDataCreateRequest request;
+		request.m_id = Base::RUtil::UUID();					
+		request.m_targetId = QStringLiteral("AIS0");				
+		request.m_mmsi = 0;						
+		request.m_time = 1;						
+		request.m_lon = 2;					
+		request.m_lat = 3;					
+		request.m_course = 4;				
+		request.m_truehead = 5;				
+		request.m_name = QStringLiteral("AIS1");					
+		request.m_shipType = 6;					
+		request.m_shipImo = 7;					
+		request.m_navStatus = 8;				
+		request.m_speed = 9;					
+		request.m_eta = QStringLiteral("2020-12-13 02:51:46");					
+		request.m_dest = QStringLiteral("AIS3");					
+		request.m_length = 10;				
+		request.m_width = 11;					
+		request.m_callsign = QStringLiteral("AIS4");				
+		request.m_flag = QStringLiteral("AIS5");					
+		request.m_buildDate = QStringLiteral("2020-12-13 02:51:46");
+		request.m_port = QStringLiteral("AIS7");					
 
-			listData.append(data);
-		}
-
-		m_tableModel->prepareData(listData);
+		DataNetConnector::instance()->write(request);
 	}
 
 } //namespace Related

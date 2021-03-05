@@ -47,8 +47,9 @@ namespace Related {
 
 	private:
 		void init();
-
 		void refreshCurrPage();
+
+
 
 	private:
 		QStackedWidget * m_contentWidget;

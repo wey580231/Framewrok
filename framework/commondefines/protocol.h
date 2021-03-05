@@ -45,8 +45,15 @@ namespace Datastruct {
 		P_TaskStaticsInfo,		/*!< 任务统计信息，包括任务数、占用空间大小等 */
 		P_TaskSimpleInfo,		/*!< 单个任务概览信息 */
 		P_TaskFullInfo,			/*!< 单个任务详细信息 */
+		P_TaskModify,			/*!< 单个任务信息修改 */
 
-		P_CreateDutyRecord = 20,	/*!< 创建值班日志 */
+		P_TaskImageCreate,			/*!< 单个任务试验图片资源创建 */
+		P_TaskImageList,			/*!< 查询所有任务试验图片资源 */
+		P_TaskImageByCondition,		/*!< 按条件查询任务试验图片资源 */
+		P_TaskImageDelete,			/*!< 单个任务试验图片资源删除 */
+		P_TaskImageModify,			/*!< 单个任务试验图片资源修改 */
+
+		P_CreateDutyRecord = 25,	/*!< 创建值班日志 */
 		P_ListDutyRecords ,			/*!< 查询所有值班日志 */
 		P_DutyRecordByCondition,	/*!< 按条件查询值班日志 */
 		P_DeleteDutyRecords,		/*!< 删除值班日志-单条 */
@@ -73,6 +80,24 @@ namespace Datastruct {
 		P_TaskDetectPlatformByCondition,	/*!< 按条件查询任务侦测平台 */
 		P_TaskDetectPlatformDelete,			/*!< 删除任务侦测平台 */
 		P_TaskDetectPlatformModify,			/*!< 修改任务侦测平台 */
+
+		//目标信息
+		P_TargetCreate = 60,				/*!< 创建目标 */
+		P_TargetList,						/*!< 查询所有目标 */
+		P_TargetByCondition,				/*!< 按条件查询目标 */
+		P_TargetDelete,						/*!< 删除目标 */
+		P_TargetModify,						/*!< 修改目标 */
+		P_TargetSimpleInfo,					/*!< 单个目标概览信息 */
+		P_TargetFullInfo,					/*!< 单个目标详细信息 */
+
+		//AIS信息
+		P_AISCreate = 70,					/*!< 创建AIS */
+		P_AISList,							/*!< 查询所有AIS */
+		P_AISByCondition,					/*!< 按条件查询AIS */
+		P_AISDelete,						/*!< 删除AIS */
+		P_AISModify,						/*!< 修改AIS */
+		P_AISSimpleInfo,					/*!< 单个AIS概览信息 */
+		P_AISFullInfo,						/*!< 单个AIS详细信息 */
 	};
 
 	/*!
@@ -280,9 +305,7 @@ namespace Datastruct {
 	struct  TaskStaticsInfoResponse {
 		QString  allTaskStartTime;								/*!< 所有任务的起始时间 */
 		QString  allTaskEndTime;								/*!< 所有任务的结束时间 */
-
 		QList<QString> listAlllocations;						/*!< 统计海区信息 */
-
 	};
 
 	/*! 
@@ -320,6 +343,147 @@ namespace Datastruct {
      */
 	struct TaskFullInfoResponse {
 
+	};
+
+	/*!
+ * @brief  单条任务修改信息请求
+ * @details
+ */
+	struct TaskModifyRequest {
+		QString taskId;				/*!< 数据库Id */
+		QString taskName;			/*!< 任务名称 */
+		QString startTime;			/*!< 起始时间 */
+		QString endTime;			/*!< 结束时间 */
+		QString location;			/*!< 任务地点 */
+		QString lon;				/*!< 经度 */
+		QString lat;				/*!< 纬度 */
+		QString description;		/*!< 描述 */
+	};
+
+	/*!
+	 * @brief  单条任务修改信息响应
+	 * @details
+	 */
+	struct TaskModifyResponse {
+		TaskModifyResponse() : m_result(false) {
+		}
+		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
+		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
+
+		TaskEntityData taskInfo;
+	};
+
+	/*!
+	 * @brief 创建任务试验图片资源请求
+	 */
+	struct TaskImageCreateRequest {
+		TaskImageCreateRequest() :m_imageSize(0) {
+		}
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		QString m_realName;					/*!< 原始图片文件名 */
+		QString m_suffix;					/*!< 图片类型 */
+		QString m_uploadTime;				/*!< 上传时间 */
+		double m_imageSize;					/*!< 图片大小 */
+		QString m_description;				/*!< 图片描述 */
+	};
+
+	/*!
+	 * @brief  创建任务试验图片资源响应
+	 * @details 
+	 */
+	struct TaskImageCreateResponse {
+		TaskImageCreateResponse() : m_createResult(false) { }
+		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+
+		TaskImageEntityData m_taskImageInfo;
+	};
+
+	/*!
+	 * @brief  查询所有任务试验图片资源请求
+	 * @details 
+	 */
+	struct LoadAllTaskImageRequest {
+		LoadAllTaskImageRequest() :m_offsetIndex(0), m_limitIndex(0) { }
+		QString m_taskId;					/*!< 任务Id */
+		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;					/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  查询所有任务试验图片资源响应
+	 * @details 
+	 */
+	struct LoadAllTaskImageResponse {
+		LoadAllTaskImageResponse() :m_taskImageCount(0) { }
+		int m_taskImageCount;								/*!< 值班日志总条数 */
+		QList<TaskImageEntityData> m_taskImageInfos;		/*!< 当前页面下值班日志结果集合 */
+	};
+
+	/*!
+	 * @brief	按条件查询任务试验图片资源请求
+	 * @details 
+	 */
+	struct TaskImageByConditionRequest {
+
+	};
+
+	/*!
+	 * @brief 按条件查询任务试验图片资源响应
+	 * @details 
+	 */
+	struct TaskImageByConditionResponse {
+
+	};
+
+	/*!
+	 * @brief  删除任务试验图片资源请求
+	 * @details 
+	 */
+	struct TaskImageDeleteRequest {
+		QString m_id;						/*!< 唯一标识Id */
+		QString m_taskId;					/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  删除任务试验图片资源响应
+	 * @details 
+	 */
+	struct TaskImageDeleteResponse {
+		TaskImageDeleteResponse() : m_deleteResult(false) {
+		}
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief 修改任务试验图片资源请求
+	 * @details 
+	 */
+	struct TaskImageModifyRequest {
+		TaskImageModifyRequest() :imageSize(0) {
+		}
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		QString realName;					/*!< 原始图片文件名 */
+		QString suffix;						/*!< 图片类型 */
+		QString uploadTime;					/*!< 上传时间 */
+		double imageSize;					/*!< 图片大小 */
+		QString m_description;					/*!< 图片描述 */
+	};
+
+	/*!
+	 * @brief 修改任务试验图片资源响应
+	 * @details 
+	 */
+	struct TaskImageModifyResponse {
+		TaskImageModifyResponse() : m_modifyResult(false) {
+		}
+		bool m_modifyResult;					/*!< 注册结果，true:注册成功，false:注册失败 */
+		ErrorCode m_errorInfo;					/*!< 注册失败时说明失败原因 */
+
+		TaskImageEntityData taskInfo;
 	};
 
 	/*!
@@ -564,7 +728,6 @@ namespace Datastruct {
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 
 		DetectPlatformEntityData m_detectPlatformInfo;
-
 	};
 
 	/*!
@@ -574,7 +737,6 @@ namespace Datastruct {
 		LoadAllDetectPlatformsRequest():m_offsetIndex(0), m_limitIndex(0){}
 		int m_offsetIndex;						/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;						/*!< 当前页面显示条数 */
-
 	};
 
 	/*!
@@ -693,6 +855,182 @@ namespace Datastruct {
 	 */
 	struct DetectPlatformSubtypeModifyResponse {
 		DetectPlatformSubtypeModifyResponse() : m_modifyResult(false) {}
+		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief 目标数据信息创建请求
+	 */
+	struct  TargetCreateRequest	{
+		TargetCreateRequest() :m_type(0), m_lon(0), m_lat(0), 
+			tonnage(0), speed(0), axlesNumber(0){}
+		QString m_id;								/*!< 目标Id */
+		QString m_name;								/*!< 目标名称 */
+		int m_type;									/*!< 目标类型 */
+		QString m_creanTime;						/*!< 创建时间 */
+		double m_lon;								/*!< 经度 */
+		double m_lat;								/*!< 纬度 */
+		double tonnage;								/*!< 吨位 */
+		double speed;								/*!< 航行速度 */
+		int  axlesNumber;							/*!< 轴数 */
+	};
+
+	/*!
+	 * @brief 目标创建请求结果报文
+	 */
+	struct  TargetCreateResponse {
+		TargetCreateResponse() : m_createResult(false) { }
+		bool m_createResult;						/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;						/*!< 创建失败时说明失败原因 */
+		TargetEntityData m_targetInfo;		
+	};
+
+	/*!
+	 * @brief   加载所有目标请求
+	 */
+	struct  LoadAllTargetRequest {
+		LoadAllTargetRequest() :m_offsetIndex(0), m_limitIndex(0) {}
+		int m_offsetIndex;							/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;							/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  加载所有目标请求结果报文
+	 * @details
+	 */
+	struct LoadAllTargetResponse {
+		LoadAllTargetResponse() :m_targetCount(0) {}
+		int m_targetCount;								/*!< 值班日志总条数 */
+		QList<TargetEntityData> m_targetInfos;			/*!< 当前页面下值班日志结果集合 */
+	};
+
+	/*!
+	 * @brief  目标删除请求
+	 */
+	struct TargetDeleteRequest {
+		TargetDeleteRequest() :m_id(0){}
+		int m_id;											/*!< Id */
+		QString m_name;
+	};
+
+	/*!
+	 * @brief  目标删除请求结果报文
+	 */
+	struct TargetDeleteResponse {
+		TargetDeleteResponse() : m_deleteResult(false) {}
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief   目标修改请求
+	 */
+	struct TargetModifyRequest {
+		TargetModifyRequest()  {}
+		QString m_id;							/*!< 唯一标识 */
+		QString m_name;							/*!< 平台名称 */
+		int m_type;
+		QString m_createTime;
+	};
+
+	/*!
+	 * @brief  目标修改请求结果报文
+	 */
+	struct TargetModifyResponse {
+		TargetModifyResponse() : m_modifyResult(false) {}
+		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/***************************  *******************/
+	/*!
+	 * @brief AIS数据信息创建请求
+	 */
+	struct  AISDataCreateRequest {
+		AISDataCreateRequest() :m_mmsi(0), m_time(0), m_lon(0), m_lat(0),
+			m_course(0), m_truehead(0) {}
+		QString m_id;					/*!< 唯一标识 */
+		QString m_targetId;				/*!< 目标标识 */
+		int m_mmsi;						/*!< 船舶MMSI */
+		int m_time;						/*!< 实时信号时间 */
+		double m_lon;					/*!< 经度 */
+		double m_lat;					/*!< 纬度 */
+		double m_course;				/*!< 航迹向 */
+		int  m_truehead;				/*!< 航首向 */
+		QString m_name;					/*!< 船名 */
+		int m_shipType;					/*!< 船舶以及货物类型 */
+		int m_shipImo;					/*!< 船舶IMO */
+		int m_navStatus;				/*!< 航行状态 */
+		double m_speed;					/*!< 航行速度 */
+		QString m_eta;					/*!< 预计到港时间 */
+		QString m_dest;					/*!< 目的港 */
+		double m_length;				/*!< 船长 */
+		double m_width;					/*!< 船宽 */
+		QString m_callsign;				/*!< 呼号 */
+		QString m_flag;					/*!< 船旗 */
+		QString m_buildDate;			/*!< 建造时间 */
+		QString m_port;					/*!< 船籍港 */
+	};
+
+	/*!
+	 * @brief AIS创建请求结果报文
+	 */
+	struct  AISDataCreateResponse {
+		AISDataCreateResponse() : m_createResult(false) { }
+		bool m_createResult;						/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;						/*!< 创建失败时说明失败原因 */
+		AisEntityData m_targetInfo;
+	};
+	
+	/*!
+	 * @brief  加载所有AIS数据请求
+	 */
+	struct  LoadAllAISDataRequest {
+		LoadAllAISDataRequest() :m_offsetIndex(0), m_limitIndex(0) {}
+		int m_offsetIndex;						/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;						/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  加载所有侦测平台响应
+	 */
+	struct LoadAllAISDatasResponse {
+		LoadAllAISDatasResponse() : m_aisDataCount(0) { }
+		int m_aisDataCount;													/*!< 总条数 */
+		QList<AisEntityData > m_aisDataInfos;						/*!< 结果集合 */
+	};
+
+	/*!
+	 * @brief  侦测平台删除请求
+	 */
+	struct AISDataDeleteRequest {
+		int m_id;							/*!< Id */
+	};
+
+	/*!
+	 * @brief  侦测平台删除请求结果报文
+	 */
+	struct AISDataDeleteResponse {
+		AISDataDeleteResponse() : m_deleteResult(false) {}
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief   侦测平台修改请求
+	 */
+	struct AISDataModifyRequest {
+		AISDataModifyRequest() :m_id(0) {}
+		int m_id;							/*!< 唯一标识 */
+		QString m_name;						/*!< 平台名称 */
+	};
+
+	/*!
+	 * @brief  侦测平台修改请求结果报文
+	 */
+	struct AISDataModifyResponse {
+		AISDataModifyResponse() : m_modifyResult(false) {}
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};

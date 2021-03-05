@@ -36,7 +36,7 @@ namespace Related {
 		Q_OBJECT
 
 	public:
-		TargetDetailPage(QWidget *parent = nullptr);
+		TargetDetailPage(QWidget *parent);
 		~TargetDetailPage();
 
 		PageType getPageType() const;
@@ -45,13 +45,12 @@ namespace Related {
 
 	private slots:
 
-
 	private:
 		void init();
 		void initConnect();
 
 	private:
-		TargetBaseInfoItem * m_targetBaseInfoItem;				// 目标基本信息
+		TargetBaseInfoItem * m_targetBaseInfoItem;				/*!< 目标基本信息  */
 
 		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */
 		Base::RTableView * m_tableView;							/*!< 数据表格 */

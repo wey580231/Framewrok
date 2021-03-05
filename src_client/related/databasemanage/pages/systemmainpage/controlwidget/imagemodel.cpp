@@ -12,7 +12,7 @@ namespace Related {
 	ImageModel::ImageModel(QObject *parent)
 		: Base::RTableModel(parent)
 	{
-
+		m_dataList.clear();
 	}
 
 	ImageModel::~ImageModel()
@@ -29,15 +29,16 @@ namespace Related {
 		}
 	}
 
-	void ImageModel::updateData(QList<QFileInfo> & fileInfos)
+	void ImageModel::updateData(QList<Datastruct::TaskImageEntityData> & fileInfos)
 	{
-		for (QFileInfo & info : fileInfos) {
-			if (!m_dataList.contains(info)) {
-				m_dataList.append(info);
-			}
-		}
-
+		m_dataList.clear();
+		m_dataList.append(fileInfos);
 		refresh();
+	}
+
+	QList<Datastruct::TaskImageEntityData> ImageModel::getdatas()
+	{
+		return m_dataList;
 	}
 
 	void ImageModel::clearData()
@@ -50,20 +51,20 @@ namespace Related {
 	{
 		ImageTableColumn cindex = static_cast<ImageTableColumn>(columnId);
 		if (dataIndex >= 0 && dataIndex < m_dataList.size()) {
-			QFileInfo fileInfo = m_dataList.at(dataIndex);
+			Datastruct::TaskImageEntityData fileInfo = m_dataList.at(dataIndex);
 
 			switch (cindex)
 			{
 			case Img_Id:
 				return dataIndex + 1;
 			case Img_Name:
-				return fileInfo.baseName();
+				return fileInfo.realName;
 			case Img_FileTimeStamp:
-				return fileInfo.created().toString("yyyy-MM-dd hh:mm:ss");
+				return fileInfo.uploadTime;
 			case Img_FileType:
-				return fileInfo.suffix();
+				return fileInfo.suffix;
 			case Img_FileSize:
-				return Base::RUtil::switchBytesUnit(fileInfo.size());
+				return fileInfo.imageSize;
 			default:
 				break;
 			}

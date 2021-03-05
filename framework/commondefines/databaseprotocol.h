@@ -27,8 +27,7 @@ namespace DB{
 	 *  @brief 数据库特征信息
 	 *  @note 保存当前使用的数据库中的功能特点
 	 */
-	struct DBFeature
-	{
+	struct DBFeature {
 		bool lastInsertId;          /*!< 是否支持查询最后插入数据的id */
 		bool transactions;          /*!< 是否支持事务 */
 	};

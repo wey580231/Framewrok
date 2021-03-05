@@ -81,6 +81,42 @@ namespace Related {
 		sendData(array);
 	}
 
+	void DataNetConnector::write(const Datastruct::TaskModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskImageCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskImageCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::LoadAllTaskImageRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskImageList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskImageByConditionRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskImageByCondition, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskImageDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskImageDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskImageModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskImageModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void DataNetConnector::write(const Datastruct::TaskSimpleRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_TaskSimpleInfo, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -181,6 +217,54 @@ namespace Related {
 	{
 		QByteArray array = makePacket(Datastruct::P_DetectPlatformSubtypeModify, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TargetCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TargetCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::LoadAllTargetRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TargetList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TargetDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TargetDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TargetModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TargetModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::AISDataCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_AISCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::LoadAllAISDataRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_AISList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::AISDataDeleteRequest & request)
+	{
+// 		QByteArray array = makePacket(Datastruct::P_AISDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+// 		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::AISDataModifyRequest & request)
+	{
+// 		QByteArray array = makePacket(Datastruct::P_AISModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+// 		sendData(array);
 	}
 
 	QByteArray DataNetConnector::makePacket(Datastruct::PacketType type, QByteArray & body)
@@ -293,12 +377,56 @@ namespace Related {
 					SignalDispatch::instance()->recvTaskSimpleResponse(response);
 				}
 			}
-												break;
+				break;
 
 			case  Datastruct::P_TaskFullInfo: {
 
 			}
-											  break;
+				break;
+			case  Datastruct::P_TaskModify: {
+				Datastruct::TaskModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskModifyResponse(response);
+				}
+			}
+				break;
+
+			//[] 任务试验图片资源
+			case  Datastruct::P_TaskImageCreate: {
+				Datastruct::TaskImageCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskImageCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageList: {
+				Datastruct::LoadAllTaskImageResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllTaskImageResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageByCondition: {
+				Datastruct::TaskImageByConditionResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskImageByConditionResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageDelete: {
+				Datastruct::TaskImageDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskImageDeleteResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskImageModify: {
+				Datastruct::TaskImageModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskImageModifyResponse(response);
+				}
+			}
+				break;
 
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateResponse response;
@@ -306,7 +434,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDutyRecordCreateResponse(response);
 				}
 			}
-												  break;
+				break;
 
 			case  Datastruct::P_ListDutyRecords: {
 				Datastruct::LoadAllDutyRecordResponse response;
@@ -314,7 +442,7 @@ namespace Related {
 					SignalDispatch::instance()->recvQueryAllDutyRecordResponse(response);
 				}
 			}
-												 break;
+				break;
 
 			case  Datastruct::P_DeleteDutyRecords: {
 				Datastruct::DutyRecordDeleteResponse response;
@@ -322,7 +450,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDutyRecordDeleteResponse(response);
 				}
 			}
-												   break;
+				break;
 
 			case   Datastruct::P_ModifyDutyRecord: {
 				Datastruct::DutyRecordModifyResponse response;
@@ -330,7 +458,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDutyRecordModifyResponse(response);
 				}
 			}
-												   break;
+				break;
 
 			case  Datastruct::P_CreateExperimentRecord: {
 				Datastruct::ExperimentRecordCreateResponse response;
@@ -338,7 +466,7 @@ namespace Related {
 					SignalDispatch::instance()->recvExperimentRecordCreateResponse(response);
 				}
 			}
-														break;
+				break;
 
 			case  Datastruct::P_ListExperimentRecords: {
 				Datastruct::LoadAllExperimentRecordsResponse response;
@@ -346,7 +474,7 @@ namespace Related {
 					SignalDispatch::instance()->recvQueryAllExperimentRecordResponse(response);
 				}
 			}
-													   break;
+				break;
 
 			case  Datastruct::P_DeleteExperimentRecord: {
 				Datastruct::ExperimentRecordDeleteResponse response;
@@ -354,7 +482,7 @@ namespace Related {
 					SignalDispatch::instance()->recvExperimentRecordDeleteResponse(response);
 				}
 			}
-														break;
+				break;
 
 			case   Datastruct::P_ModifyExperimentRecord: {
 				Datastruct::ExperimentRecordModifyResponse response;
@@ -362,7 +490,7 @@ namespace Related {
 					SignalDispatch::instance()->recvExperimentRecordModifyResponse(response);
 				}
 			}
-														 break;
+				break;
 
 			case  Datastruct::P_DetectPlatformCreate: {
 				Datastruct::DetectPlatformCreateResponse response;
@@ -370,14 +498,14 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformCreateResponse(response);
 				}
 			}
-													  break;
+				break;
 			case  Datastruct::P_DetectPlatformList: {
 				Datastruct::LoadAllDetectPlatformsResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvQueryAllDetectPlatformsResponse(response);
 				}
 			}
-													break;
+				break;
 
 			case  Datastruct::P_DetectPlatformDelete: {
 				Datastruct::DetectPlatformDeleteResponse response;
@@ -385,7 +513,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformDeleteResponse(response);
 				}
 			}
-													  break;
+				break;
 
 			case  Datastruct::P_DetectPlatformModify: {
 				Datastruct::DetectPlatformModifyResponse response;
@@ -393,7 +521,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformModifyResponse(response);
 				}
 			}
-													  break;
+				break;
 
 			case  Datastruct::P_DetectPlatformSubtypeCreate: {
 				Datastruct::DetectPlatformSubtypeCreateResponse response;
@@ -425,7 +553,60 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformSubtypeModifyResponse(response);
 				}
 			}
-															 break;
+				break;
+			// 目标信息
+			case  Datastruct::P_TargetCreate: {
+				Datastruct::TargetCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTargetCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TargetList: {
+				Datastruct::LoadAllTargetResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllTargetResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TargetDelete: {
+				Datastruct::TargetDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTargetDeleteResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TargetModify: {
+				Datastruct::TargetModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTargetModifyResponse(response);
+				}
+			}
+				break;
+			
+				//AIS数据
+			case  Datastruct::P_AISCreate: {
+				Datastruct::AISDataCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvAISDataCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_AISList: {
+				Datastruct::LoadAllAISDatasResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllAISDataResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_AISDelete: {
+
+			}
+				break;
+			case  Datastruct::P_AISModify: {
+
+			}
+				break;
 
 			default:
 				break;

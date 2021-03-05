@@ -59,6 +59,36 @@ namespace Related {
 		emit respTaskSimpleResponse(response);
 	}
 
+	void SignalDispatch::recvTaskModifyResponse(const Datastruct::TaskModifyResponse & response)
+	{
+		emit respTaskModifyResponse(response);
+	}
+
+	void SignalDispatch::recvTaskImageCreateResponse(const Datastruct::TaskImageCreateResponse & response)
+	{
+		emit respTaskImageCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response)
+	{
+		emit respQueryAllTaskImageResponse(response);
+	}
+
+	void SignalDispatch::recvTaskImageByConditionResponse(const Datastruct::TaskImageByConditionResponse & response)
+	{
+		emit respTaskImageByConditionResponse(response);
+	}
+
+	void SignalDispatch::recvTaskImageDeleteResponse(const Datastruct::TaskImageDeleteResponse & response)
+	{
+		emit respTaskImageDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response)
+	{
+		emit respTaskImageModifyResponse(response);
+	}
+
 	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
 		emit respDutyRecordCreateResponse(response);
@@ -137,6 +167,46 @@ namespace Related {
 	void SignalDispatch::recvDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response)
 	{
 		emit respDetectPlatformSubtypeModifyResponse(response);
+	}
+
+	void SignalDispatch::recvTargetCreateResponse(const Datastruct::TargetCreateResponse & response)
+	{
+		emit respTargetCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTargetResponse(const Datastruct::LoadAllTargetResponse & response)
+	{
+		emit respQueryAllTargetResponse(response);
+	}
+
+	void SignalDispatch::recvTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response)
+	{
+		emit respTargetDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvTargetModifyResponse(const Datastruct::TargetModifyResponse & response)
+	{
+		emit respTargetModifyResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response)
+	{
+		emit respAISDataCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response)
+	{
+		emit respQueryAllAISDataResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response)
+	{
+		emit respAISDataDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response)
+	{
+		emit respAISDataModifyResponse(response);
 	}
 
 	SignalDispatch * SignalDispatch::instance()

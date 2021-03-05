@@ -15,23 +15,44 @@
 
 namespace Related {
 
-	NewTaskDialog::NewTaskDialog(QWidget *parent)
-		: Base::DialogProxy(parent)
+	NewTaskDialog::NewTaskDialog(QString taskId, TaskEditType type, QWidget *parent)
+		: Base::DialogProxy(parent), 
+		m_taskId(taskId),
+		m_taskEditType(type)
 	{
-		init();
-		initConnect();
-
-		setTitle(QStringLiteral("新建任务"));
+		switch (type) {
+		case Related::NewTaskDialog::Task_New: {
+			setTitle(QStringLiteral("新建任务"));
+		}
+			break;
+		case Related::NewTaskDialog::Task_Modify: {
+			setTitle(QStringLiteral("修改任务"));
+		}
+			break;
+		default:
+			break;
+		}
 		setMinimumSize(900, 650);
 
+		init();
+		initConnect();
 		setButton(DialogProxy::Ok, this, SLOT(respOk()));
-
 		setButton(DialogProxy::Cancel, this, SLOT(reject()));
 	}
 
 	NewTaskDialog::~NewTaskDialog()
 	{
 
+	}
+
+	void NewTaskDialog::setTaskBaseInfo(TaskBaseInfo info)
+	{
+		m_newTaskWidget->setTaskBaseInfo(info);
+	}
+
+	void NewTaskDialog::setTaskImages(QList<Datastruct::TaskImageEntityData> list)
+	{
+		m_imageTableModel->updateData(list);
 	}
 
 	void NewTaskDialog::init()
@@ -164,12 +185,44 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
 			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskModifyResponse(const Datastruct::TaskModifyResponse &)),
+			this, SLOT(processTaskModifyResponse(const Datastruct::TaskModifyResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskImageCreateResponse(const Datastruct::TaskImageCreateResponse &)),
+			this, SLOT(processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse &)),
+			this, SLOT(processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse &)));
 	}
 
 	void NewTaskDialog::respOk()
 	{
-		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
-		sendTaskBaseInfo();
+		switch (m_taskEditType)
+		{
+		case Related::NewTaskDialog::Task_New: {
+			//[] 任务基本信息 
+			m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
+			sendNewTaskBaseInfo();
+			//[] 图片基本信息
+			if (m_imageTableModel->datasSize()> 0) {
+				QList<Datastruct::TaskImageEntityData> listInfos = m_imageTableModel->getdatas();
+				for (int i = 0; i < listInfos.size(); i++) {
+					Datastruct::TaskImageEntityData info = listInfos.at(i);
+					sendNewTaskImageInfo(info);
+				}
+			}
+		}
+			break;
+		case Related::NewTaskDialog::Task_Modify: {
+			m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
+			sendModifyTaskBaseInfo();
+		}
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	void NewTaskDialog::openLocalFile()
@@ -186,10 +239,15 @@ namespace Related {
 		if (imageList.isEmpty())
 			return;
 
-		QList<QFileInfo> fileInfos;
+		QList<Datastruct::TaskImageEntityData> fileInfos;
 		for (QString fileName : imageList) {
 			QFileInfo fileInfo(fileName);
-			fileInfos.append(fileInfo);
+			Datastruct::TaskImageEntityData data;
+			data.realName = fileInfo.baseName();	
+			data.suffix = fileInfo.suffix();
+			data.uploadTime = fileInfo.created().toString("yyyy-MM-dd hh:mm:ss");
+			data.imageSize = Base::RUtil::switchBytesUnit(fileInfo.size()).toDouble();
+			fileInfos.append(data);
 		}
 
 		if (fileChoose) {
@@ -239,10 +297,38 @@ namespace Related {
 		}
 	}
 
-	void NewTaskDialog::sendTaskBaseInfo()
+	void NewTaskDialog::processTaskModifyResponse(const Datastruct::TaskModifyResponse & response)
+	{
+		if (response.m_result) {
+			this->accept();
+		}
+		else
+		{
+			int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("创建任务失败，请从新填写信息。"), Base::RMessageBox::Yes);
+			if (result != Base::RMessageBox::Yes) {
+				this->reject();
+			}
+		}
+	}
+
+	void NewTaskDialog::processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response)
+	{
+		if (response.m_createResult) {
+			qDebug() << "_____________processTaskImageCeateResponse_____________";
+		}
+		else
+		{
+		}
+	}
+
+	void NewTaskDialog::processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response)
+	{
+	}
+
+	void NewTaskDialog::sendNewTaskBaseInfo()
 	{
 		Datastruct::TaskCreateRequest request;
-		request.taskId = Base::RUtil::UUID();
+		request.taskId = m_taskId;
 		request.taskName = m_taskBaseInfo.taskName;
 		request.startTime = m_taskBaseInfo.startTime;
 		request.endTime = m_taskBaseInfo.endTime;
@@ -252,6 +338,38 @@ namespace Related {
 		request.description = QStringLiteral("description");
 
 		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendModifyTaskBaseInfo()
+	{
+		Datastruct::TaskModifyRequest request;
+		request.taskId = m_taskId;
+		request.taskName = m_taskBaseInfo.taskName;
+		request.startTime = m_taskBaseInfo.startTime;
+		request.endTime = m_taskBaseInfo.endTime;
+		request.location = m_taskBaseInfo.taskLocation;
+		request.lon = m_taskBaseInfo.lon;
+		request.lat = m_taskBaseInfo.lat;
+		request.description = QStringLiteral("description");
+
+		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendNewTaskImageInfo(Datastruct::TaskImageEntityData info)
+	{
+		Datastruct::TaskImageCreateRequest request;
+		request.m_id = Base::RUtil::UUID();						
+		request.m_taskId = m_taskId;					
+		request.m_realName = info.realName;
+		request.m_suffix = info.suffix;
+		request.m_uploadTime = info.uploadTime;
+		request.m_imageSize = info.imageSize;
+		request.m_description = QStringLiteral("description");
+		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendModifyTaskImageInfo()
+	{
 	}
 
 }//namespace Related 

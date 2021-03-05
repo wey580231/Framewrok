@@ -55,13 +55,28 @@ namespace Datastruct {
 		TaskEntityData() {
 		}
 		QString id;				/*!< 数据库Id */
-		QString taskName;		/*!< 任务名称 */
-		QString startTime;		/*!< 起始时间 */
-		QString endTime;		/*!< 结束时间 */
-		QString location;		/*!< 任务地点 */
-		QString lon;			/*!< 经度 */
-		QString lat;			/*!< 纬度 */
-		QString description;	/*!< 描述 */
+		QString taskName;			/*!< 任务名称 */
+		QString startTime;			/*!< 起始时间 */
+		QString endTime;			/*!< 结束时间 */
+		QString location;			/*!< 任务地点 */
+		QString lon;				/*!< 经度 */
+		QString lat;				/*!< 纬度 */
+		QString description;		/*!< 描述 */
+	};
+
+	/*!
+	 * @brief 单条任务试验图片资源实体数据结构
+	 * @details 
+	 */
+	struct TaskImageEntityData{
+
+		QString id ;				/*!< 唯一标识 */
+		QString taskId;				/*!< 任务标识 */
+		QString realName;			/*!< 原始图片文件名 */
+		QString suffix;				/*!< 图片类型 */
+		QString uploadTime;			/*!< 上传时间 */
+		double imageSize;			/*!< 图片大小 */
+		QString description;			/*!< 图片描述 */
 	};
 
 	/*!
@@ -145,7 +160,7 @@ namespace Datastruct {
 
 		QString id;					/*!< 唯一标识 */
 		QString taskId;				/*!< 任务标识 */
-		int detectId;			/*!< 侦测平台标识 */
+		int detectId;				/*!< 侦测平台标识 */
 		QString name;				/*!< 侦测平台名称 */
 		QString sensorType;			/*!< 侦测平台传感器类型 */
 		int platformPower;			/*!< 平台动力 */
@@ -158,34 +173,35 @@ namespace Datastruct {
 	 * @brief 目标实体数据
 	 */
 	struct  TargetEntityData {
-		int  index;					/*!< 索引 */
-		QString targetName;			/*!< 目标名称 */
-		QString edttime;			/*!< 录取时间 */
+		TargetEntityData() :type(0){
+
+		}
+		QString id;					/*!< 唯一标识 */
+		QString name;				/*!< 目标名称 */
+		QString createTime;			/*!< 创建时间 */
+		int type;					/*!< 类型 */
 		double tonnage;				/*!< 吨位 */
 		double lon;					/*!< 经度 */
-		double lat;					/*!<纬度 */
+		double lat;					/*!< 纬度 */
 		double speed;				/*!< 航行速度 */
 		int  axlesNumber;			/*!< 轴数 */
-		int datalength;				/*!< 数据时长 */
-		int type;					/*!< 类型 */
 	};
 
 	/*!
  * @brief 目标音频实体数据
  */
 	struct  TargetWavEntityData {
-		int  index;					/*!< 索引 */
+		QString  id;				/*!< 索引 */
 		QString targetName;			/*!< 目标名称 */
 		QString edttime;			/*!< 录取时间 */
 		double tonnage;				/*!< 吨位 */
 		double lon;					/*!< 经度 */
-		double lat;					/*!<纬度 */
+		double lat;					/*!< 纬度 */
 		double speed;				/*!< 航行速度 */
 		int  axlesNumber;			/*!< 轴数 */
 		int datalength;				/*!< 数据时长 */
 		int type;					/*!< 类型 */
 	};
-
 
 
 	/*!
@@ -218,7 +234,5 @@ namespace Datastruct {
 		QString buildDate;			/*!< 建造时间 */
 		QString port;				/*!< 船籍港 */
 	};
-
-
 
 } //namespace Datastruct 

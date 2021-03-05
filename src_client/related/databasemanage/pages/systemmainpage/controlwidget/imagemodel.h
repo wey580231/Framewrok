@@ -13,6 +13,9 @@
 #include <QFileInfo>
 
 #include <base\selfwidget\tablemode\rtablemodel.h>
+#include <commondefines\protocol.h>
+
+#include "../../../datastruct.h"
 
 namespace Related {
 
@@ -26,7 +29,9 @@ namespace Related {
 
 		int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
-		void updateData(QList<QFileInfo> & fileInfos);
+		void updateData(QList<Datastruct::TaskImageEntityData> & fileInfos);
+		QList<Datastruct::TaskImageEntityData> getdatas();
+
 		void clearData();
 		int datasSize() const;
 
@@ -34,7 +39,7 @@ namespace Related {
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<QFileInfo> m_dataList;
+		QList<Datastruct::TaskImageEntityData> m_dataList;
 	};
 
 } //namespace Related 

@@ -8,6 +8,8 @@
 
 #include "../../utils/util.h"
 #include "../../customwidget/customwidgetcontainer.h"
+#include "../../net/datanetconnector.h"
+#include "../../net/signaldispatch.h"
 
 namespace Related {
 
@@ -31,7 +33,7 @@ namespace Related {
 	void TargetOverViewPage::prepareBringToTop()
 	{
 		if (m_firstLoadData) {
-
+			refreshCurrPage();
 			m_firstLoadData = false;
 		}
 	}
@@ -41,7 +43,7 @@ namespace Related {
 		switch (type)
 		{
 			case OperationToolsPage::Butt_Add: {
-
+				createTargetDataInfo();
 			}
 				break;
 			case OperationToolsPage::Butt_Delete: {
@@ -68,6 +70,40 @@ namespace Related {
 	void TargetOverViewPage::setFixedPageRowCount(int pageItemCount)
 	{
 		m_tableModel->setFixedPageRowCount(pageItemCount);
+	}
+
+	void TargetOverViewPage::slotTableDoubleClicked(const QModelIndex & index)
+	{
+		QString indexId;
+
+		emit signalSelecteTargetDataInfo(indexId);
+	}
+
+	void TargetOverViewPage::processQueryTargetListResponse(const Datastruct::LoadAllTargetResponse & response)
+	{
+		m_tableModel->prepareData(response.m_targetInfos);
+		m_pageSwitch->setDataSize(response.m_targetCount);
+	}
+
+	void TargetOverViewPage::processTargetCreateResponse(const Datastruct::TargetCreateResponse & response)
+	{
+		if (response.m_createResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void TargetOverViewPage::processTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response)
+	{
+		if (response.m_deleteResult) {
+			refreshCurrPage();
+		}
+	}
+
+	void TargetOverViewPage::processTargetModifyResponse(const Datastruct::TargetModifyResponse & response)
+	{
+		if (response.m_modifyResult) {
+			refreshCurrPage();
+		}
 	}
 
 	void TargetOverViewPage::init()
@@ -148,6 +184,8 @@ namespace Related {
 			m_tableView->addColumnItem(Base::ColumnItem(T_AxlesNumber, QStringLiteral("轴数")));
 			m_tableView->addColumnItem(Base::ColumnItem(T_Type, QStringLiteral("类型")));
 
+			connect(m_tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotTableDoubleClicked(QModelIndex)));
+
 			m_pageSwitch = new PageSwitchBar();
 			m_pageSwitch->setDataSize(m_tableModel->datasSize());
 			connect(m_pageSwitch, SIGNAL(perPageNumsChanged(int)), this, SLOT(setFixedPageRowCount(int)));
@@ -172,7 +210,38 @@ namespace Related {
 
 	void TargetOverViewPage::initConnect()
 	{
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTargetResponse(const Datastruct::LoadAllTargetResponse &)),
+			this, SLOT(processQueryTargetListResponse(const Datastruct::LoadAllTargetResponse &)));
 
+		connect(SignalDispatch::instance(), SIGNAL(respTargetCreateResponse(const Datastruct::TargetCreateResponse &)),
+			this, SLOT(processTargetCreateResponse(const Datastruct::TargetCreateResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTargetDeleteResponse(const Datastruct::TargetDeleteResponse &)),
+			this, SLOT(processTargetDeleteResponse(const Datastruct::TargetDeleteResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTargetModifyResponse(const Datastruct::TargetModifyResponse &)),
+			this, SLOT(processTargetModifyResponse(const Datastruct::TargetModifyResponse &)));
 	}
+
+	void TargetOverViewPage::refreshCurrPage()
+	{
+		Datastruct::LoadAllTargetRequest request;
+		request.m_offsetIndex = m_pageSwitch->dataOffset();
+		request.m_limitIndex = m_pageSwitch->perPageCount();
+		DataNetConnector::instance()->write(request);
+	}
+
+	void TargetOverViewPage::createTargetDataInfo()
+	{
+		QDateTime current_date_time = QDateTime::currentDateTime();
+
+		Datastruct::TargetCreateRequest request;
+		request.m_id = Base::RUtil::UUID();
+		request.m_name = QStringLiteral("目标1");
+		request.m_type = 1;
+		request.m_creanTime = current_date_time.toString(TIME_FORMAT);
+		DataNetConnector::instance()->write(request);
+	}
+
 
 }//namespace Related 

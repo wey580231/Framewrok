@@ -6,7 +6,6 @@ namespace Related {
 		: Base::RTableModel(parent)
 	{
 		m_dataList.clear();
-
 	}
 
 	TargetOverViewModel::~TargetOverViewModel()
@@ -37,10 +36,10 @@ namespace Related {
 				return dataIndex + 1;
 				break;
 			case T_TargetName:
-				return data.targetName;
+				return data.name;
 				break;
 			case T_Edttime:
-				return data.edttime;
+				return data.createTime;
 				break;
 			case T_Tonnage:
 				return data.tonnage;
