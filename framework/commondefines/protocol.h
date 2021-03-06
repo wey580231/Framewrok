@@ -38,32 +38,38 @@ namespace Datastruct {
 		P_UserList,				/*!< 用户列表查询 */
 		P_UserOperate,			/*!< 用户信息更新,包括权限更新、删除用户 */
 
-		P_CreateTask = 10,		/*!< 创建任务 */
-		P_TaskList,				/*!< 查询所有任务 */
-		P_TaskByCondition,		/*!< 按条件查询任务 */
-		P_TaskDelete,			/*!< 删除任务 */
-		P_TaskStaticsInfo,		/*!< 任务统计信息，包括任务数、占用空间大小等 */
-		P_TaskSimpleInfo,		/*!< 单个任务概览信息 */
-		P_TaskFullInfo,			/*!< 单个任务详细信息 */
-		P_TaskModify,			/*!< 单个任务信息修改 */
+		P_CreateTask = 5,				/*!< 创建任务 */
+		P_TaskList,						/*!< 查询所有任务 */
+		P_TaskByCondition,				/*!< 按条件查询任务 */
+		P_TaskDelete,					/*!< 删除任务 */
+		P_TaskStaticsInfo,				/*!< 任务统计信息，包括任务数、占用空间大小等 */
+		P_TaskSimpleInfo,				/*!< 单个任务概览信息 */
+		P_TaskFullInfo,					/*!< 单个任务详细信息 */
+		P_TaskModify,					/*!< 单个任务信息修改 */
 
-		P_TaskImageCreate,			/*!< 单个任务试验图片资源创建 */
-		P_TaskImageList,			/*!< 查询所有任务试验图片资源 */
-		P_TaskImageByCondition,		/*!< 按条件查询任务试验图片资源 */
-		P_TaskImageDelete,			/*!< 单个任务试验图片资源删除 */
-		P_TaskImageModify,			/*!< 单个任务试验图片资源修改 */
+		P_TaskDetectPlatformCreate,			/*!< 任务侦测平台亚型创建 */
+		P_TaskDetectPlatformList,			/*!< 查询指定任务侦测平台亚型 */
+		P_TaskDetectPlatformByCondition,	/*!< 按条件查询侦测平台亚型 */
+		P_TaskDetectPlatformDelete,			/*!< 任务侦测平台亚型删除 */
+		P_TaskDetectPlatformModify,			/*!< 任务侦测平台亚型修改 */
 
-		P_CreateDutyRecord = 25,	/*!< 创建值班日志 */
-		P_ListDutyRecords ,			/*!< 查询所有值班日志 */
-		P_DutyRecordByCondition,	/*!< 按条件查询值班日志 */
-		P_DeleteDutyRecords,		/*!< 删除值班日志-单条 */
-		P_ModifyDutyRecord,			/*!< 修改值班日志 */
+		P_TaskImageCreate,					/*!< 任务试验图片资源创建 */
+		P_TaskImageList,					/*!< 查询任务试验图片资源 */
+		P_TaskImageByCondition,				/*!< 按条件查询任务试验图片资源 */
+		P_TaskImageDelete,					/*!< 任务试验图片资源删除 */
+		P_TaskImageModify,					/*!< 任务试验图片资源修改 */
 
-		P_CreateExperimentRecord = 30,	/*!< 创建试验记录 */
-		P_ListExperimentRecords,		/*!< 查询所有试验记录 */
-		P_ExperimentRecordByCondition,	/*!< 按条件查询试验记录 */
-		P_DeleteExperimentRecord,		/*!< 删除试验记录 - 单条*/
-		P_ModifyExperimentRecord,		/*!< 修改试验记录 */
+		P_CreateDutyRecord,					/*!< 创建值班日志 */
+		P_ListDutyRecords ,					/*!< 查询所有值班日志 */
+		P_DutyRecordByCondition,			/*!< 按条件查询值班日志 */
+		P_DeleteDutyRecords,				/*!< 删除值班日志-单条 */
+		P_ModifyDutyRecord,					/*!< 修改值班日志 */
+
+		P_CreateExperimentRecord,			/*!< 创建试验记录 */
+		P_ListExperimentRecords,			/*!< 查询所有试验记录 */
+		P_ExperimentRecordByCondition,		/*!< 按条件查询试验记录 */
+		P_DeleteExperimentRecord,			/*!< 删除试验记录 - 单条*/
+		P_ModifyExperimentRecord,			/*!< 修改试验记录 */
 
 		P_DetectPlatformCreate = 40,		/*!< 创建侦测平台 */
 		P_DetectPlatformList,				/*!< 查询所有侦测平台 */
@@ -75,14 +81,8 @@ namespace Datastruct {
 		P_DetectPlatformSubtypeDelete,		/*!< 删除侦测平台亚型 */
 		P_DetectPlatformSubtypeModify,		/*!< 修改侦测平台亚型 */
 
-		P_TaskDetectPlatformCreate = 50,	/*!< 创建任务侦测平台 */
-		P_TaskDetectPlatformList,			/*!< 查询所有任务侦测平台 */
-		P_TaskDetectPlatformByCondition,	/*!< 按条件查询任务侦测平台 */
-		P_TaskDetectPlatformDelete,			/*!< 删除任务侦测平台 */
-		P_TaskDetectPlatformModify,			/*!< 修改任务侦测平台 */
-
 		//目标信息
-		P_TargetCreate = 60,				/*!< 创建目标 */
+		P_TargetCreate = 50,				/*!< 创建目标 */
 		P_TargetList,						/*!< 查询所有目标 */
 		P_TargetByCondition,				/*!< 按条件查询目标 */
 		P_TargetDelete,						/*!< 删除目标 */
@@ -91,7 +91,7 @@ namespace Datastruct {
 		P_TargetFullInfo,					/*!< 单个目标详细信息 */
 
 		//AIS信息
-		P_AISCreate = 70,					/*!< 创建AIS */
+		P_AISCreate = 60,					/*!< 创建AIS */
 		P_AISList,							/*!< 查询所有AIS */
 		P_AISByCondition,					/*!< 按条件查询AIS */
 		P_AISDelete,						/*!< 删除AIS */
@@ -174,8 +174,8 @@ namespace Datastruct {
 	};
 
 	/*!
- * @brief 用户基础操作类型
- */
+	 * @brief 用户基础操作类型
+	 */
 	enum UserOperateType {
 		UpdateInfo,			/*!< 更新信息 */
 		EditPrivilege,		/*!< 编辑用户权力 */
@@ -213,6 +213,7 @@ namespace Datastruct {
 		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
 	};
 
+
 	/*!
 	 * @brief 创建任务请求
 	 */
@@ -231,25 +232,32 @@ namespace Datastruct {
 	 * @brief 任务创建响应
 	 */
 	struct TaskCreateResponse {
-		TaskCreateResponse() : m_createResult(false) { }
+		TaskCreateResponse() : m_createResult(false) {
+		}
+
 		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;		/*!< 注册失败时说明失败原因 */
 		TaskEntityData taskInfo;
 	};
 
 	/*!
-	* @brief   加载所任务请求
-	*/
+	 * @brief   加载所任务请求
+	 */
 	struct  LoadAllTaskRequest {
-		LoadAllTaskRequest():m_offsetIndex(0), m_limitIndex(0){}
+		LoadAllTaskRequest():m_offsetIndex(0), m_limitIndex(0){
+		}
+
 		int m_offsetIndex;							/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;							/*!< 当前页面显示条数 */
 	};
 
 	/*!
-	* @brief  加载所有任务响应
-	*/
+	 * @brief  加载所有任务响应
+	 */
 	struct LoadAllTaskResponse {
+		LoadAllTaskResponse() :m_count(0){
+		}
+
 		int m_count;									/*!< 任务总条数 */
 		QList<TaskEntityData> m_taskInfos;				/*!< 当前页面下任务结果集合 */
 	};
@@ -267,7 +275,9 @@ namespace Datastruct {
 	 * @brief   按条件查询任务响应
 	 */
 	struct TaskByConditionResponse {
-		TaskByConditionResponse() : m_count(0){}
+		TaskByConditionResponse() : m_count(0){
+		}
+
 		int m_count;									/*!< 任务总条数 */
 		QList<TaskEntityData> m_taskInfos;				/*!< 当前页面下任务结果集合 */
 	};
@@ -276,6 +286,7 @@ namespace Datastruct {
 	 * @brief   任务删除请求
 	 */
 	struct TaskDeleteRequest {
+
 		QString taskId;				/*!< 任务Id */
 	};
 
@@ -286,6 +297,7 @@ namespace Datastruct {
 	struct TaskDeleteResponse {
 		TaskDeleteResponse() : m_deleteResult(false) {
 		}
+
 		bool m_deleteResult;					/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;					/*!< 创建失败时说明失败原因 */
 	};
@@ -295,6 +307,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct  TaskStaticsInfoRequest{
+
 		QString id;
 	};
 
@@ -303,6 +316,7 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct  TaskStaticsInfoResponse {
+
 		QString  allTaskStartTime;								/*!< 所有任务的起始时间 */
 		QString  allTaskEndTime;								/*!< 所有任务的结束时间 */
 		QList<QString> listAlllocations;						/*!< 统计海区信息 */
@@ -313,6 +327,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskSimpleRequest{
+
 		QString taskId;				/*!< 任务Id */
 	};
 
@@ -323,9 +338,9 @@ namespace Datastruct {
 	struct TaskSimpleResponse {
 		TaskSimpleResponse() : m_result(false) {
 		}
+
 		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
-
 		TaskEntityData taskInfo;
 	};
 
@@ -367,10 +382,143 @@ namespace Datastruct {
 	struct TaskModifyResponse {
 		TaskModifyResponse() : m_result(false) {
 		}
+
 		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
 
 		TaskEntityData taskInfo;
+	};
+
+	/*!
+	 * @brief 创建任务侦测平台请求
+	 */
+	struct TaskDetectPlatformCreateRequest {
+		TaskDetectPlatformCreateRequest() :m_detectId(0), m_platformPower(0), m_lastTime(0){
+		}
+
+		QString m_id;						/*!< id */
+		QString m_taskId;					/*!< 任务标识 */
+		int m_detectId;						/*!< 侦测平台标识 */
+		QString m_name;						/*!< 侦测平台名称 */
+		QString m_sensorType;				/*!< 侦测平台传感器类型 */
+		int m_platformPower;				/*!< 平台动力 */
+		QString m_startTime;				/*!< 开始任务时间 */
+		QString m_endTime;					/*!< 结束任务时间 */
+		int m_lastTime;						/*!< 时长 */
+	};
+
+	/*!
+	 * @brief  创建任务侦测平台响应
+	 * @details
+	 */
+	struct TaskDetectPlatformCreateResponse {
+		TaskDetectPlatformCreateResponse() : m_createResult(false) { 
+		}
+
+		bool m_createResult;						/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;						/*!< 创建失败时说明失败原因 */
+		TaskDetectPlatformEntityData m_dataInfo;
+	};
+
+	/*!
+	 * @brief  查询所有任务侦测平台请求
+	 * @details
+	 */
+	struct LoadAllTaskDetectPlatformRequest {
+		LoadAllTaskDetectPlatformRequest() : m_offsetIndex(0), m_limitIndex(0) { 
+		}
+
+		QString m_taskId;					/*!< 任务Id */
+		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
+		int m_limitIndex;					/*!< 当前页面显示条数 */
+	};
+
+	/*!
+	 * @brief  查询所有任务侦测平台响应
+	 * @details
+	 */
+	struct LoadAllTaskDetectPlatformResponse {
+		LoadAllTaskDetectPlatformResponse() : m_taskDetectPlatformCount(0) { 
+		}
+
+		int m_taskDetectPlatformCount;								/*!< 值班日志总条数 */
+		QList<TaskDetectPlatformEntityData> m_dataInfos;		/*!< 当前页面下任务侦测平台结果集合 */
+	};
+
+	/*!
+	 * @brief	按条件查询任务侦测平台请求
+	 * @details
+	 */
+	struct TaskDetectPlatformByConditionRequest {
+
+	};
+
+	/*!
+	 * @brief 按条件查询任务侦测平台响应
+	 * @details
+	 */
+	struct TaskDetectPlatformByConditionResponse {
+		TaskDetectPlatformByConditionResponse() : m_taskDetectPlatformCount(0) {
+		}
+
+		int m_taskDetectPlatformCount;								/*!< 值班日志总条数 */
+		QList<TaskDetectPlatformEntityData> m_dataInfos;		/*!< 当前页面下任务侦测平台结果集合 */
+	};
+
+	/*!
+	 * @brief  删除任务侦测平台请求
+	 * @details
+	 */
+	struct TaskDetectPlatformDeleteRequest {
+		TaskDetectPlatformDeleteRequest() {
+		}
+
+		QString m_id;						/*!< 唯一标识Id */
+		QString m_taskId;					/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  删除任务侦测平台响应
+	 * @details
+	 */
+	struct TaskDetectPlatformDeleteResponse {
+		TaskDetectPlatformDeleteResponse() : m_deleteResult(false) {
+		}
+
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
+	/*!
+	 * @brief 修改任务侦测平台请求
+	 * @details
+	 */
+	struct TaskDetectPlatformModifyRequest {
+		TaskDetectPlatformModifyRequest() :m_detectId(0), m_platformPower(0), m_lastTime(0){
+		}
+
+		QString m_id;						/*!< 唯一标识 */
+		QString m_taskId;					/*!< 任务标识 */
+		int m_detectId;						/*!< 侦测平台标识 */
+		QString m_name;						/*!< 侦测平台名称 */
+		QString m_sensorType;				/*!< 侦测平台传感器类型 */
+		int m_platformPower;				/*!< 平台动力 */
+		QString m_startTime;				/*!< 开始任务时间 */
+		QString m_endTime;					/*!< 结束任务时间 */
+		int m_lastTime;						/*!< 时长 */
+	};
+
+	/*!
+	 * @brief 修改任务侦测平台响应
+	 * @details
+	 */
+	struct TaskDetectPlatformModifyResponse {
+		TaskDetectPlatformModifyResponse() : m_modifyResult(false) {
+		}
+
+		bool m_modifyResult;					/*!< 注册结果，true:注册成功，false:注册失败 */
+		ErrorCode m_errorInfo;					/*!< 注册失败时说明失败原因 */
+		TaskDetectPlatformEntityData m_dataInfo;
 	};
 
 	/*!
@@ -379,6 +527,7 @@ namespace Datastruct {
 	struct TaskImageCreateRequest {
 		TaskImageCreateRequest() :m_imageSize(0) {
 		}
+
 		QString m_id;						/*!< id */
 		QString m_taskId;					/*!< 任务标识 */
 		QString m_realName;					/*!< 原始图片文件名 */
@@ -393,10 +542,11 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskImageCreateResponse {
-		TaskImageCreateResponse() : m_createResult(false) { }
+		TaskImageCreateResponse() : m_createResult(false) { 
+		}
+
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-
 		TaskImageEntityData m_taskImageInfo;
 	};
 
@@ -405,7 +555,9 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct LoadAllTaskImageRequest {
-		LoadAllTaskImageRequest() :m_offsetIndex(0), m_limitIndex(0) { }
+		LoadAllTaskImageRequest() :m_offsetIndex(0), m_limitIndex(0) { 
+		}
+
 		QString m_taskId;					/*!< 任务Id */
 		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;					/*!< 当前页面显示条数 */
@@ -416,7 +568,9 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct LoadAllTaskImageResponse {
-		LoadAllTaskImageResponse() :m_taskImageCount(0) { }
+		LoadAllTaskImageResponse() :m_taskImageCount(0) { 
+		}
+
 		int m_taskImageCount;								/*!< 值班日志总条数 */
 		QList<TaskImageEntityData> m_taskImageInfos;		/*!< 当前页面下值班日志结果集合 */
 	};
@@ -442,6 +596,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskImageDeleteRequest {
+
 		QString m_id;						/*!< 唯一标识Id */
 		QString m_taskId;					/*!< 任务Id */
 	};
@@ -453,6 +608,7 @@ namespace Datastruct {
 	struct TaskImageDeleteResponse {
 		TaskImageDeleteResponse() : m_deleteResult(false) {
 		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -462,14 +618,15 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskImageModifyRequest {
-		TaskImageModifyRequest() :imageSize(0) {
+		TaskImageModifyRequest() :m_imageSize(0) {
 		}
+
 		QString m_id;						/*!< id */
 		QString m_taskId;					/*!< 任务标识 */
-		QString realName;					/*!< 原始图片文件名 */
-		QString suffix;						/*!< 图片类型 */
-		QString uploadTime;					/*!< 上传时间 */
-		double imageSize;					/*!< 图片大小 */
+		QString m_realName;					/*!< 原始图片文件名 */
+		QString m_suffix;						/*!< 图片类型 */
+		QString m_uploadTime;					/*!< 上传时间 */
+		double  m_imageSize;					/*!< 图片大小 */
 		QString m_description;					/*!< 图片描述 */
 	};
 
@@ -480,19 +637,18 @@ namespace Datastruct {
 	struct TaskImageModifyResponse {
 		TaskImageModifyResponse() : m_modifyResult(false) {
 		}
+
 		bool m_modifyResult;					/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;					/*!< 注册失败时说明失败原因 */
-
-		TaskImageEntityData taskInfo;
 	};
 
 	/*!
 	 * @brief 值班日志创建请求报文
 	 */
 	struct DutyRecordCreateRequest {
-		DutyRecordCreateRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),
-			m_oceanCurrents(0){
+		DutyRecordCreateRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),m_oceanCurrents(0){
 		}
+
 		QString m_id;						/*!< id */
 		QString m_taskId;					/*!< 任务标识 */
 		QString m_createTime;				/*!< 创建时间 */
@@ -510,9 +666,9 @@ namespace Datastruct {
 	struct DutyRecordCreateResponse	{
 		DutyRecordCreateResponse(): m_createResult(false){
 		}
+
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-
 		DutyRecordEntityData m_dutyRecordInfo;
 	};
 
@@ -523,6 +679,7 @@ namespace Datastruct {
 	struct  LoadAllDutyRecordRequest {
 		LoadAllDutyRecordRequest() :m_offsetIndex(0), m_limitIndex(0){
 		}
+
 		QString m_taskId;					/*!< 任务Id */
 		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;					/*!< 当前页面显示条数 */
@@ -534,8 +691,8 @@ namespace Datastruct {
 	 */
 	struct LoadAllDutyRecordResponse {
 		LoadAllDutyRecordResponse() :m_dutyRecordCount(0){
-
 		}
+
 		int m_dutyRecordCount;								/*!< 值班日志总条数 */
 		QList<DutyRecordEntityData> m_dutyRecordInfos;		/*!< 当前页面下值班日志结果集合 */
 	};
@@ -545,6 +702,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct DutyRecordDeleteRequest{
+
 		QString m_id;						/*!< Id */
 		QString m_taskId;					/*!< 任务Id */
 	};
@@ -556,6 +714,7 @@ namespace Datastruct {
 	struct DutyRecordDeleteResponse {
 		DutyRecordDeleteResponse() : m_deleteResult(false) {
 		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -565,9 +724,9 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct DutyRecordModifyRequest {
-		DutyRecordModifyRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),
-			m_oceanCurrents(0) {
+		DutyRecordModifyRequest() :m_wind(0), m_windSpeed(0), m_waveHigh(0),m_oceanCurrents(0) {
 		}
+
 		QString m_id;						/*!< id */
 		QString m_taskId;					/*!< 任务标识 */
 		QString m_createTime;				/*!< 创建时间 */
@@ -586,6 +745,7 @@ namespace Datastruct {
 	struct DutyRecordModifyResponse {
 		DutyRecordModifyResponse() : m_modifyResult(false) {
 		}
+
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -594,10 +754,11 @@ namespace Datastruct {
 	 * @brief 试验记录创建请求报文
 	*/
 	struct ExperimentRecordCreateRequest {
-		ExperimentRecordCreateRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
-			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
-			m_maxDepth(0), m_profileIndex(0), m_profileLength(0), m_profileDistance(0) {
+		ExperimentRecordCreateRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),m_actualHeadingDegree(0),
+			m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),m_maxDepth(0), m_profileIndex(0), 
+			m_profileLength(0), m_profileDistance(0) {
 		}
+
 		QString m_id;							/*!< 唯一标识 */
 		QString m_taskId;						/*!< 任务标识 */
 		QString m_platformId;					/*!< 平台标识 */
@@ -622,9 +783,9 @@ namespace Datastruct {
 	struct ExperimentRecordCreateResponse {
 		ExperimentRecordCreateResponse() : m_createResult(false) {
 		}
+
 		bool m_createResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
-
 		ExperimentRecordEntityData m_experimentRecordInfo;
 	};
 
@@ -634,8 +795,8 @@ namespace Datastruct {
 	*/
 	struct  LoadAllExperimentRecordsRequest {
 		LoadAllExperimentRecordsRequest():m_offsetIndex(0), m_limitIndex(0){
-
 		}
+
 		QString m_taskId;					/*!< 任务Id */
 		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;					/*!< 当前页面显示条数 */
@@ -648,6 +809,7 @@ namespace Datastruct {
 	struct LoadAllExperimentRecordsResponse {
 		LoadAllExperimentRecordsResponse() : m_experimentRecordCount(0){
 		}
+
 		int m_experimentRecordCount;													/*!< 总条数 */
 		QList<ExperimentRecordEntityData > m_experimentRecordInfos;		/*!< 当前页面下试验记录结果集合 */
 	};
@@ -657,6 +819,7 @@ namespace Datastruct {
 	 * @details
 	*/
 	struct ExperimentRecordDeleteRequest {
+
 		QString m_id;					/*!< Id */
 		QString m_taskId;				/*!< 任务Id */
 	};
@@ -668,6 +831,7 @@ namespace Datastruct {
 	struct ExperimentRecordDeleteResponse {
 		ExperimentRecordDeleteResponse() : m_deleteResult(false) {
 		}
+
 		bool m_deleteResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
@@ -677,10 +841,11 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct ExperimentRecordModifyRequest {
-		ExperimentRecordModifyRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),
-			m_actualHeadingDegree(0), m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),
-			m_maxDepth(0), m_profileIndex(0), m_profileLength(0), m_profileDistance(0) {
+		ExperimentRecordModifyRequest() :m_lon(0), m_lat(0), m_setHeadingDegree(0),m_actualHeadingDegree(0), 
+			m_acousticState(0), m_targetNum(0), m_underwaterTargetNum(0),m_maxDepth(0), m_profileIndex(0), 
+			m_profileLength(0), m_profileDistance(0) {
 		}
+
 		QString m_id;							/*!< 唯一标识 */
 		QString m_taskId;						/*!< 任务标识 */
 		QString m_platformId;					/*!< 平台标识 */
@@ -706,6 +871,7 @@ namespace Datastruct {
 	struct ExperimentRecordModifyResponse {
 		ExperimentRecordModifyResponse() : m_modifyResult(false) {
 		}
+
 		bool m_modifyResult;		/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;		/*!< 创建失败时说明失败原因 */
 	};
@@ -714,7 +880,9 @@ namespace Datastruct {
 	 * @brief 侦测平台创建请求报文
 	 */
 	struct DetectPlatformCreateRequest {
-		DetectPlatformCreateRequest() :m_id(0) { }
+		DetectPlatformCreateRequest() :m_id(0) { 
+		}
+
 		int m_id;						/*!< id */
 		QString m_name;					/*!< 平台名称 */
 	};
@@ -723,10 +891,11 @@ namespace Datastruct {
 	* @brief 侦测平台创建请求结果报文
 	*/
 	struct  DetectPlatformCreateResponse {
-		DetectPlatformCreateResponse() : m_createResult(false) { }
+		DetectPlatformCreateResponse() : m_createResult(false) { 
+		}
+
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-
 		DetectPlatformEntityData m_detectPlatformInfo;
 	};
 
@@ -734,7 +903,9 @@ namespace Datastruct {
 	 * @brief   加载所有侦测平台请求
 	 */
 	struct  LoadAllDetectPlatformsRequest {
-		LoadAllDetectPlatformsRequest():m_offsetIndex(0), m_limitIndex(0){}
+		LoadAllDetectPlatformsRequest():m_offsetIndex(0), m_limitIndex(0){
+		}
+
 		int m_offsetIndex;						/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;						/*!< 当前页面显示条数 */
 	};
@@ -743,7 +914,9 @@ namespace Datastruct {
 	 * @brief  加载所有侦测平台请求结果报文
 	 */
 	struct LoadAllDetectPlatformsResponse {
-		LoadAllDetectPlatformsResponse() : m_detectPlatformCount(0) { }
+		LoadAllDetectPlatformsResponse() : m_detectPlatformCount(0) { 
+		}
+
 		int m_detectPlatformCount;													/*!< 总条数 */
 		QList<DetectPlatformEntityData > m_detectPlatformInfos;						/*!< 结果集合 */
 	};
@@ -752,6 +925,9 @@ namespace Datastruct {
 	 * @brief  侦测平台删除请求
 	 */
 	struct DetectPlatformDeleteRequest {
+		DetectPlatformDeleteRequest() :m_id(0){
+		}
+
 		int m_id;							/*!< Id */
 	};
 
@@ -759,7 +935,9 @@ namespace Datastruct {
 	 * @brief  侦测平台删除请求结果报文
 	 */
 	struct DetectPlatformDeleteResponse {
-		DetectPlatformDeleteResponse() : m_deleteResult(false) {}
+		DetectPlatformDeleteResponse() : m_deleteResult(false) {
+		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -768,7 +946,9 @@ namespace Datastruct {
 	 * @brief   侦测平台修改请求
 	 */
 	struct DetectPlatformModifyRequest {
-		DetectPlatformModifyRequest() :m_id(0) {}
+		DetectPlatformModifyRequest() :m_id(0) {
+		}
+
 		int m_id;							/*!< 唯一标识 */
 		QString m_name;						/*!< 平台名称 */
 	};
@@ -777,7 +957,9 @@ namespace Datastruct {
 	 * @brief  侦测平台修改请求结果报文
 	 */
 	struct DetectPlatformModifyResponse {
-		DetectPlatformModifyResponse() : m_modifyResult(false) {}
+		DetectPlatformModifyResponse() : m_modifyResult(false) {
+		}
+
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -786,7 +968,9 @@ namespace Datastruct {
 	 * @brief 侦测平台亚型创建请求报文
 	 */
 	struct DetectPlatformSubtypeCreateRequest {
-		DetectPlatformSubtypeCreateRequest() :m_id(0), m_detectId(0) { }
+		DetectPlatformSubtypeCreateRequest() :m_id(0), m_detectId(0) { 
+		}
+
 		int m_id;						/*!< id */
 		int m_detectId;					/*!< 侦测平台标识 */
 		QString m_name;					/*!< 平台亚型名称 */
@@ -796,10 +980,11 @@ namespace Datastruct {
 	* @brief 侦测平台亚型创建请求结果报文
 	*/
 	struct DetectPlatformSubtypeCreateResponse {
-		DetectPlatformSubtypeCreateResponse() : m_createResult(false) { }
+		DetectPlatformSubtypeCreateResponse() : m_createResult(false) {
+		}
+
 		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-
 		DetectPlatformSubtypeEntityData m_dutyRecordInfo;
 	};
 
@@ -807,7 +992,9 @@ namespace Datastruct {
 	 * @brief   加载所有侦测平台亚型请求
 	 */
 	struct  LoadAllDetectPlatformSubtypesRequest {
-		LoadAllDetectPlatformSubtypesRequest() : m_detectId(0) { }
+		LoadAllDetectPlatformSubtypesRequest() : m_detectId(0) { 
+		}
+
 		int m_detectId;						/*!< 侦测平台标识 */
 	};
 
@@ -815,7 +1002,9 @@ namespace Datastruct {
 	 * @brief  加载所有侦测平台亚型请求结果报文
 	 */
 	struct LoadAllDetectPlatformSubtypesResponse {
-		LoadAllDetectPlatformSubtypesResponse() : m_detectPlatformSubtypeCount(0) { }
+		LoadAllDetectPlatformSubtypesResponse() : m_detectId(0), m_detectPlatformSubtypeCount(0) {
+		}
+
 		int m_detectId;
 		int m_detectPlatformSubtypeCount;													/*!< 总条数 */
 		QList<DetectPlatformSubtypeEntityData > m_detectPlatformSubtypeInfos;				/*!< 结果集合 */
@@ -825,7 +1014,9 @@ namespace Datastruct {
 	 * @brief  侦测平台亚型删除请求
 	 */
 	struct DetectPlatformSubtypeDeleteRequest {
-		DetectPlatformSubtypeDeleteRequest() :m_id(0), m_detectId(0){}
+		DetectPlatformSubtypeDeleteRequest() :m_id(0), m_detectId(0){
+		}
+
 		int m_id;							/*!< Id */
 		int m_detectId;						/*!< 侦测平台标识 */
 		QString m_name;
@@ -835,7 +1026,9 @@ namespace Datastruct {
 	 * @brief  侦测平台亚型删除请求结果报文
 	 */
 	struct DetectPlatformSubtypeDeleteResponse {
-		DetectPlatformSubtypeDeleteResponse() : m_deleteResult(false) {}
+		DetectPlatformSubtypeDeleteResponse() : m_deleteResult(false) {
+		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -844,7 +1037,9 @@ namespace Datastruct {
 	 * @brief   侦测平台亚型修改请求
 	 */
 	struct DetectPlatformSubtypeModifyRequest {
-		DetectPlatformSubtypeModifyRequest() : m_id(0), m_detectId(0){}
+		DetectPlatformSubtypeModifyRequest() : m_id(0), m_detectId(0){
+		}
+
 		int m_id;							/*!< 唯一标识 */
 		int m_detectId;						/*!< 侦测平台标识 */
 		QString m_name;						/*!< 平台名称 */
@@ -854,7 +1049,9 @@ namespace Datastruct {
 	 * @brief  侦测平台亚型修改请求结果报文
 	 */
 	struct DetectPlatformSubtypeModifyResponse {
-		DetectPlatformSubtypeModifyResponse() : m_modifyResult(false) {}
+		DetectPlatformSubtypeModifyResponse() : m_modifyResult(false) {
+		}
+
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -863,8 +1060,9 @@ namespace Datastruct {
 	 * @brief 目标数据信息创建请求
 	 */
 	struct  TargetCreateRequest	{
-		TargetCreateRequest() :m_type(0), m_lon(0), m_lat(0), 
-			tonnage(0), speed(0), axlesNumber(0){}
+		TargetCreateRequest() :m_type(0), m_lon(0), m_lat(0), tonnage(0), speed(0), axlesNumber(0){
+		}
+
 		QString m_id;								/*!< 目标Id */
 		QString m_name;								/*!< 目标名称 */
 		int m_type;									/*!< 目标类型 */
@@ -880,7 +1078,9 @@ namespace Datastruct {
 	 * @brief 目标创建请求结果报文
 	 */
 	struct  TargetCreateResponse {
-		TargetCreateResponse() : m_createResult(false) { }
+		TargetCreateResponse() : m_createResult(false) {
+		}
+
 		bool m_createResult;						/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;						/*!< 创建失败时说明失败原因 */
 		TargetEntityData m_targetInfo;		
@@ -890,17 +1090,20 @@ namespace Datastruct {
 	 * @brief   加载所有目标请求
 	 */
 	struct  LoadAllTargetRequest {
-		LoadAllTargetRequest() :m_offsetIndex(0), m_limitIndex(0) {}
+		LoadAllTargetRequest() :m_offsetIndex(0), m_limitIndex(0) {
+		}
+
 		int m_offsetIndex;							/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;							/*!< 当前页面显示条数 */
 	};
 
 	/*!
 	 * @brief  加载所有目标请求结果报文
-	 * @details
 	 */
 	struct LoadAllTargetResponse {
-		LoadAllTargetResponse() :m_targetCount(0) {}
+		LoadAllTargetResponse() :m_targetCount(0) {
+		}
+
 		int m_targetCount;								/*!< 值班日志总条数 */
 		QList<TargetEntityData> m_targetInfos;			/*!< 当前页面下值班日志结果集合 */
 	};
@@ -909,7 +1112,9 @@ namespace Datastruct {
 	 * @brief  目标删除请求
 	 */
 	struct TargetDeleteRequest {
-		TargetDeleteRequest() :m_id(0){}
+		TargetDeleteRequest() :m_id(0){
+		}
+
 		int m_id;											/*!< Id */
 		QString m_name;
 	};
@@ -918,7 +1123,9 @@ namespace Datastruct {
 	 * @brief  目标删除请求结果报文
 	 */
 	struct TargetDeleteResponse {
-		TargetDeleteResponse() : m_deleteResult(false) {}
+		TargetDeleteResponse() : m_deleteResult(false) {
+		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -927,7 +1134,6 @@ namespace Datastruct {
 	 * @brief   目标修改请求
 	 */
 	struct TargetModifyRequest {
-		TargetModifyRequest()  {}
 		QString m_id;							/*!< 唯一标识 */
 		QString m_name;							/*!< 平台名称 */
 		int m_type;
@@ -943,7 +1149,6 @@ namespace Datastruct {
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
-	/***************************  *******************/
 	/*!
 	 * @brief AIS数据信息创建请求
 	 */
@@ -993,23 +1198,43 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief  加载所有侦测平台响应
+	 * @brief  加载所有AIS数据请求响应
 	 */
 	struct LoadAllAISDatasResponse {
 		LoadAllAISDatasResponse() : m_aisDataCount(0) { }
-		int m_aisDataCount;													/*!< 总条数 */
+		int m_aisDataCount;											/*!< 总条数 */
 		QList<AisEntityData > m_aisDataInfos;						/*!< 结果集合 */
 	};
 
 	/*!
-	 * @brief  侦测平台删除请求
+	 * @brief	按条件查询AIS数据请求
+	 * @details
 	 */
-	struct AISDataDeleteRequest {
-		int m_id;							/*!< Id */
+	struct AISDataByConditionRequest {
+		QString m_id;					/*!< 唯一标识 */
+		QString m_targetId;				/*!< 目标标识 */
 	};
 
 	/*!
-	 * @brief  侦测平台删除请求结果报文
+	 * @brief  按条件查询AIS数据请求响应
+	 * @details
+	 */
+	struct AISDataByConditionResponse {
+		AISDataByConditionResponse() : m_aisDataCount(0) { }
+		int m_aisDataCount;											/*!< 总条数 */
+		QList<AisEntityData > m_aisDataInfos;						/*!< 结果集合 */
+	};
+
+	/*!
+	 * @brief  AIS数据删除请求
+	 */
+	struct AISDataDeleteRequest {
+		QString m_id;					/*!< 唯一标识 */
+		QString m_targetId;				/*!< 目标标识 */
+	};
+
+	/*!
+	 * @brief  AIS数据删除请求结果报文
 	 */
 	struct AISDataDeleteResponse {
 		AISDataDeleteResponse() : m_deleteResult(false) {}
@@ -1018,16 +1243,36 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief   侦测平台修改请求
+	 * @brief   AIS数据修改请求
 	 */
 	struct AISDataModifyRequest {
-		AISDataModifyRequest() :m_id(0) {}
-		int m_id;							/*!< 唯一标识 */
-		QString m_name;						/*!< 平台名称 */
+		AISDataModifyRequest() :m_mmsi(0), m_time(0), m_lon(0), m_lat(0),
+			m_course(0), m_truehead(0) {}
+		QString m_id;					/*!< 唯一标识 */
+		QString m_targetId;				/*!< 目标标识 */
+		int m_mmsi;						/*!< 船舶MMSI */
+		int m_time;						/*!< 实时信号时间 */
+		double m_lon;					/*!< 经度 */
+		double m_lat;					/*!< 纬度 */
+		double m_course;				/*!< 航迹向 */
+		int  m_truehead;				/*!< 航首向 */
+		QString m_name;					/*!< 船名 */
+		int m_shipType;					/*!< 船舶以及货物类型 */
+		int m_shipImo;					/*!< 船舶IMO */
+		int m_navStatus;				/*!< 航行状态 */
+		double m_speed;					/*!< 航行速度 */
+		QString m_eta;					/*!< 预计到港时间 */
+		QString m_dest;					/*!< 目的港 */
+		double m_length;				/*!< 船长 */
+		double m_width;					/*!< 船宽 */
+		QString m_callsign;				/*!< 呼号 */
+		QString m_flag;					/*!< 船旗 */
+		QString m_buildDate;			/*!< 建造时间 */
+		QString m_port;					/*!< 船籍港 */
 	};
 
 	/*!
-	 * @brief  侦测平台修改请求结果报文
+	 * @brief  AIS数据修改请求响应
 	 */
 	struct AISDataModifyResponse {
 		AISDataModifyResponse() : m_modifyResult(false) {}

@@ -56,6 +56,10 @@ namespace Related {
 		void switchViewModel(bool isChecked);
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 		void processTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
+
+		void processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response);
+		void processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response);
+
 		void processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response);
 		void processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response);
 
@@ -65,6 +69,9 @@ namespace Related {
 
 		void sendNewTaskBaseInfo();
 		void sendModifyTaskBaseInfo();
+
+		void sendNewTaskDetectPlatformInfo();
+		void sendModifyTaskDetectPlatformInfo();
 
 		void sendNewTaskImageInfo(Datastruct::TaskImageEntityData info);
 		void sendModifyTaskImageInfo();

@@ -31,6 +31,7 @@ namespace CommonDefines {
 		static JsonWrapper * instance();
 		~JsonWrapper();
 
+		// 有关用户
 		QByteArray wrap(const Datastruct::UserLoginRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::UserLoginRequest & request); 
 
@@ -98,7 +99,38 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::TaskModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskModifyResponse & response);
 
-		//TODO 20210304 有关试验
+		//有关任务侦测平台
+		QByteArray wrap(const Datastruct::TaskDetectPlatformCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformCreateRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformCreateResponse & response);
+
+		QByteArray wrap(const Datastruct::LoadAllTaskDetectPlatformRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskDetectPlatformRequest & request);
+
+		QByteArray wrap(const Datastruct::LoadAllTaskDetectPlatformResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskDetectPlatformResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformByConditionRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformByConditionRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformByConditionResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformByConditionResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::TaskDetectPlatformModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformModifyResponse & response);
+
+		// 有关任务试验图片资源
 		QByteArray wrap(const Datastruct::TaskImageCreateRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::TaskImageCreateRequest & request);
 
@@ -266,6 +298,24 @@ namespace CommonDefines {
 
 		QByteArray wrap(const Datastruct::LoadAllAISDatasResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllAISDatasResponse & response);
+
+		QByteArray wrap(const Datastruct::AISDataByConditionRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::AISDataByConditionRequest & request);
+
+		QByteArray wrap(const Datastruct::AISDataByConditionResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::AISDataByConditionResponse & response);
+
+		QByteArray wrap(const Datastruct::AISDataDeleteRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::AISDataDeleteRequest & request);
+
+		QByteArray wrap(const Datastruct::AISDataDeleteResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::AISDataDeleteResponse & response);
+
+		QByteArray wrap(const Datastruct::AISDataModifyRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::AISDataModifyRequest & request);
+
+		QByteArray wrap(const Datastruct::AISDataModifyResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::AISDataModifyResponse & response);
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);

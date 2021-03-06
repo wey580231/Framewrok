@@ -189,6 +189,12 @@ namespace Related {
 		connect(SignalDispatch::instance(), SIGNAL(respTaskModifyResponse(const Datastruct::TaskModifyResponse &)),
 			this, SLOT(processTaskModifyResponse(const Datastruct::TaskModifyResponse &)));
 
+		connect(SignalDispatch::instance(), SIGNAL(respTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse &)),
+			this, SLOT(processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse &)),
+			this, SLOT(processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse &)));
+
 		connect(SignalDispatch::instance(), SIGNAL(respTaskImageCreateResponse(const Datastruct::TaskImageCreateResponse &)),
 			this, SLOT(processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse &)));
 
@@ -204,6 +210,9 @@ namespace Related {
 			//[] 任务基本信息 
 			m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
 			sendNewTaskBaseInfo();
+
+			sendNewTaskDetectPlatformInfo();
+
 			//[] 图片基本信息
 			if (m_imageTableModel->datasSize()> 0) {
 				QList<Datastruct::TaskImageEntityData> listInfos = m_imageTableModel->getdatas();
@@ -311,6 +320,15 @@ namespace Related {
 		}
 	}
 
+	void NewTaskDialog::processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response)
+	{
+		qDebug() << "__________________processTaskDetectPlatformCreateResponse___________________";
+	}
+
+	void NewTaskDialog::processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response)
+	{
+	}
+
 	void NewTaskDialog::processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response)
 	{
 		if (response.m_createResult) {
@@ -353,6 +371,25 @@ namespace Related {
 		request.description = QStringLiteral("description");
 
 		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendNewTaskDetectPlatformInfo()
+	{
+		Datastruct::TaskDetectPlatformCreateRequest request;
+		request.m_id = Base::RUtil::UUID();
+		request.m_taskId = m_taskId;
+		request.m_detectId = 1;
+		request.m_name = QStringLiteral("测试平台");
+		request.m_sensorType = QStringLiteral("测试类型");
+		request.m_platformPower = 5;
+		request.m_startTime = QStringLiteral("2021-01-31 22:56:55");
+		request.m_endTime = QStringLiteral("2021-01-31 22:56:55");
+		request.m_lastTime = 10;	
+		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendModifyTaskDetectPlatformInfo()
+	{
 	}
 
 	void NewTaskDialog::sendNewTaskImageInfo(Datastruct::TaskImageEntityData info)

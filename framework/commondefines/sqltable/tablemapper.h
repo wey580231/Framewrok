@@ -36,22 +36,6 @@ namespace Table {
 	};
 
 	/*!
-	 * @brief 任务信息表
-	*/
-	struct TaskEntity : public AbstractTable {
-		TaskEntity() :AbstractTable("task_entity") {}
-
-		QString id = "id";
-		QString name = "name";
-		QString startTime = "start_time";
-		QString endTime = "end_time";
-		QString location = "location";
-		QString lon = "lon";
-		QString lat = "lat";
-		QString description = "description";
-	};
-
-	/*!
 	 * @brief 侦测平台表
 	 */
 	struct DetectPlatformEntity : public AbstractTable {
@@ -70,6 +54,22 @@ namespace Table {
 		QString id = "id";
 		QString detectId = "detect_id";
 		QString name = "name";
+	};
+
+	/*!
+	 * @brief 任务信息表
+	*/
+	struct TaskEntity : public AbstractTable {
+		TaskEntity() :AbstractTable("task_entity") {}
+
+		QString id = "id";
+		QString name = "name";
+		QString startTime = "start_time";
+		QString endTime = "end_time";
+		QString location = "location";
+		QString lon = "lon";
+		QString lat = "lat";
+		QString description = "description";
 	};
 
 	/*!
@@ -103,7 +103,6 @@ namespace Table {
 		QString imageSize = "image_size";
 		QString description = "description";
 	};
-
 
 	/*!
 	* @brief 值班日志信息表

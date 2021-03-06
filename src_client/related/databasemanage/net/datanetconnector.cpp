@@ -87,6 +87,36 @@ namespace Related {
 		sendData(array);
 	}
 
+	void DataNetConnector::write(const Datastruct::TaskDetectPlatformCreateRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDetectPlatformCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::LoadAllTaskDetectPlatformRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDetectPlatformList, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskDetectPlatformByConditionRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDetectPlatformByCondition, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskDetectPlatformDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDetectPlatformDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
+	void DataNetConnector::write(const Datastruct::TaskDetectPlatformModifyRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDetectPlatformModify, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void DataNetConnector::write(const Datastruct::TaskImageCreateRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_TaskImageCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -331,6 +361,7 @@ namespace Related {
 			}
 				break;
 
+				/*****************  有关任务  *****************************/ 
 			case  Datastruct::P_CreateTask: {
 				Datastruct::TaskCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -390,8 +421,44 @@ namespace Related {
 				}
 			}
 				break;
+				/*****************  任务侦测平台亚型  *****************************/ 
+			case  Datastruct::P_TaskDetectPlatformCreate: {
+				Datastruct::TaskDetectPlatformCreateResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskDetectPlatformCreateResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformList: {
+				Datastruct::LoadAllTaskDetectPlatformResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvQueryAllTaskDetectPlatformResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformByCondition: {
+				Datastruct::TaskDetectPlatformByConditionResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskDetectPlatformByConditionResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformDelete: {
+				Datastruct::TaskDetectPlatformDeleteResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskDetectPlatformDeleteResponse(response);
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformModify: {
+				Datastruct::TaskDetectPlatformModifyResponse response;
+				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
+					SignalDispatch::instance()->recvTaskDetectPlatformModifyResponse(response);
+				}
+			}
+				break;
 
-			//[] 任务试验图片资源
+				/*****************  任务试验图片资源  *****************************/
 			case  Datastruct::P_TaskImageCreate: {
 				Datastruct::TaskImageCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -427,7 +494,7 @@ namespace Related {
 				}
 			}
 				break;
-
+				/*****************    *****************************/
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -529,7 +596,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformSubtypeCreateResponse(response);
 				}
 			}
-															 break;
+				break;
 
 			case  Datastruct::P_DetectPlatformSubtypeList: {
 				Datastruct::LoadAllDetectPlatformSubtypesResponse response;
@@ -537,7 +604,7 @@ namespace Related {
 					SignalDispatch::instance()->recvQueryAllDetectPlatformSubtypesResponse(response);
 				}
 			}
-														   break;
+				break;
 
 			case  Datastruct::P_DetectPlatformSubtypeDelete: {
 				Datastruct::DetectPlatformSubtypeDeleteResponse response;
@@ -545,7 +612,7 @@ namespace Related {
 					SignalDispatch::instance()->recvDetectPlatformSubtypeDeleteResponse(response);
 				}
 			}
-															 break;
+				break;
 
 			case  Datastruct::P_DetectPlatformSubtypeModify: {
 				Datastruct::DetectPlatformSubtypeModifyResponse response;

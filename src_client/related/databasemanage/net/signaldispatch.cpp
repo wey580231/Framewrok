@@ -64,6 +64,31 @@ namespace Related {
 		emit respTaskModifyResponse(response);
 	}
 
+	void SignalDispatch::recvTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response)
+	{
+		emit respTaskDetectPlatformCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response)
+	{
+		emit respQueryAllTaskDetectPlatformResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformByConditionResponse(const Datastruct::TaskDetectPlatformByConditionResponse & response)
+	{
+		emit respTaskDetectPlatformByConditionResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformDeleteResponse(const Datastruct::TaskDetectPlatformDeleteResponse & response)
+	{
+		emit respTaskDetectPlatformDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response)
+	{
+		emit respTaskDetectPlatformModifyResponse(response);
+	}
+
 	void SignalDispatch::recvTaskImageCreateResponse(const Datastruct::TaskImageCreateResponse & response)
 	{
 		emit respTaskImageCreateResponse(response);

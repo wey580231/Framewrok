@@ -41,7 +41,16 @@ namespace Related {
 		void write(const Datastruct::TaskSimpleRequest & request);
 		void write(const Datastruct::TaskStaticsInfoRequest & request);
 		void write(const Datastruct::TaskModifyRequest & request);
-		
+	
+		/*!
+		 * @brief 任务侦测平台
+		 */
+		void write(const Datastruct::TaskDetectPlatformCreateRequest & request);
+		void write(const Datastruct::LoadAllTaskDetectPlatformRequest & request);
+		void write(const Datastruct::TaskDetectPlatformByConditionRequest & request);
+		void write(const Datastruct::TaskDetectPlatformDeleteRequest & request);
+		void write(const Datastruct::TaskDetectPlatformModifyRequest & request);
+
 		/*!
 		 * @brief 任务试验图片资源
 		 */

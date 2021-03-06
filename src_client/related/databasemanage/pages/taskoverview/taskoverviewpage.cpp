@@ -58,6 +58,11 @@ namespace Related {
 		}
 	}
 
+	void TaskOverViewPage::processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response)
+	{
+		qDebug() << "_____________________processQueryAllTaskDetectPlatformResponse________________________";
+	}
+
 	void TaskOverViewPage::processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response)
 	{
 		if (m_imagesItems.size() > 0) {
@@ -203,6 +208,9 @@ namespace Related {
 		connect(SignalDispatch::instance(), SIGNAL(respTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)),
 			this, SLOT(processTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)));
 
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse &)),
+			this, SLOT(processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse &)));
+
 		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse &)),
 			this, SLOT(processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse &)));
 	}
@@ -238,6 +246,12 @@ namespace Related {
 		Datastruct::TaskSimpleRequest request;
 		request.taskId = m_taskId;
 		DataNetConnector::instance()->write(request);
+
+		// 任务侦测平台
+		Datastruct::LoadAllTaskDetectPlatformRequest taskDetectPlatformRequest;
+		taskDetectPlatformRequest.m_taskId = m_taskId;
+		DataNetConnector::instance()->write(taskDetectPlatformRequest);
+
 		// 任务试验图片
 		Datastruct::LoadAllTaskImageRequest taskImageRequest;
 		taskImageRequest.m_taskId = m_taskId;

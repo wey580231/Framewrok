@@ -23,6 +23,9 @@ namespace Datastruct {
 		File_Connection			/*!< 文件连接 */
 	};
 
+	/*!
+	 * @brief 用户权限
+	 */
 	enum UserPrivilege {
 		NonePrivilege = 0x0000,		/*!< 无权限 */
 		ReadOnly = 0x0001,			/*!< 只可以查询，不可编辑 */
@@ -33,10 +36,10 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 单个用户实体数据结构
-	 * @details 
 	 */
 	struct UserEntityData {
-		UserEntityData() :id(0), isManager(false){}
+		UserEntityData() :id(0), privilege(0), isManager(false){
+		}
 
 		int id;					/*!< 数据库ID */
 		QString name;			/*!< 用户名 */
@@ -48,20 +51,64 @@ namespace Datastruct {
 	};
 
 	/*!
+	 * @brief 单个侦测平台数据结构
+	 */
+	struct DetectPlatformEntityData {
+		DetectPlatformEntityData() : id(0) {
+		}
+
+		int id;							/*!< 唯一标识ID */
+		QString name;					/*!< 平台名称 */
+	};
+
+	/*!
+	 * @brief 单个侦测平台亚型数据结构
+	 * @details
+	 */
+	struct DetectPlatformSubtypeEntityData {
+		DetectPlatformSubtypeEntityData() : id(0), detectId(0) {
+		}
+
+		int id;							/*!< 唯一标识ID */
+		int detectId;					/*!< 侦测平台标识 */
+		QString name;					/*!< 平台亚型名称 */
+	};
+
+	/*!
 	 * @brief  单条任务实体数据结构
 	 * @details 
 	 */
 	struct TaskEntityData {
 		TaskEntityData() {
 		}
-		QString id;				/*!< 数据库Id */
-		QString taskName;			/*!< 任务名称 */
-		QString startTime;			/*!< 起始时间 */
-		QString endTime;			/*!< 结束时间 */
-		QString location;			/*!< 任务地点 */
-		QString lon;				/*!< 经度 */
-		QString lat;				/*!< 纬度 */
-		QString description;		/*!< 描述 */
+
+		QString id;						/*!< 数据库Id */
+		QString taskName;				/*!< 任务名称 */
+		QString startTime;				/*!< 起始时间 */
+		QString endTime;				/*!< 结束时间 */
+		QString location;				/*!< 任务地点 */
+		QString lon;					/*!< 经度 */
+		QString lat;					/*!< 纬度 */
+		QString description;			/*!< 描述 */
+	};
+
+	/*!
+	 * @brief 单个任务侦测平台表数据结构
+	 * @details
+	 */
+	struct TaskDetectPlatformEntityData {
+		TaskDetectPlatformEntityData() : detectId(0), platformPower(0),lastTime(0) {
+		}
+
+		QString id;						/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		int detectId;					/*!< 侦测平台标识 */
+		QString name;					/*!< 侦测平台名称 */
+		QString sensorType;				/*!< 侦测平台传感器类型 */
+		int platformPower;				/*!< 平台动力 */
+		QString startTime;				/*!< 开始任务时间 */
+		QString endTime;				/*!< 结束任务时间 */
+		int lastTime;					/*!< 时长 */
 	};
 
 	/*!
@@ -69,13 +116,15 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskImageEntityData{
+		TaskImageEntityData():imageSize(0){
+		}
 
-		QString id ;				/*!< 唯一标识 */
-		QString taskId;				/*!< 任务标识 */
-		QString realName;			/*!< 原始图片文件名 */
-		QString suffix;				/*!< 图片类型 */
-		QString uploadTime;			/*!< 上传时间 */
-		double imageSize;			/*!< 图片大小 */
+		QString id ;					/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		QString realName;				/*!< 原始图片文件名 */
+		QString suffix;					/*!< 图片类型 */
+		QString uploadTime;				/*!< 上传时间 */
+		double imageSize;				/*!< 图片大小 */
 		QString description;			/*!< 图片描述 */
 	};
 
@@ -84,10 +133,9 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct DutyRecordEntityData {
-		DutyRecordEntityData():wind(0), windSpeed(0),
-			waveHigh(0), oceanCurrents(0){
-
+		DutyRecordEntityData():wind(0), windSpeed(0),waveHigh(0), oceanCurrents(0){
 		}
+
 		QString id;						/*!< 唯一标识 */
 		QString taskId;					/*!< 任务标识 */
 		QString createTime;				/*!< 创建时间 */
@@ -104,11 +152,10 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct ExperimentRecordEntityData {
-		ExperimentRecordEntityData() :lon(0), lat(0), setHeadingDegree(0),
-			actualHeadingDegree(0), acousticState(0), targetNum(0), underwaterTargetNum(0),
-			maxDepth(0), profileIndex(0), profileLength(0), profileDistance(0){
-
+		ExperimentRecordEntityData() :lon(0), lat(0), setHeadingDegree(0),actualHeadingDegree(0), acousticState(0), 
+			targetNum(0), underwaterTargetNum(0),maxDepth(0), profileIndex(0), profileLength(0), profileDistance(0){
 		}
+
 		QString id;						/*!< 唯一标识 */
 		QString taskId;					/*!< 任务标识 */
 		QString platformId;				/*!< 平台标识 */
@@ -125,48 +172,6 @@ namespace Datastruct {
 		int profileIndex;				/*!< 剖面序号 */
 		double profileLength;			/*!< 剖面时长 */
 		double profileDistance;			/*!< 剖面移动距离 */
-	};
-
-	/*!
- * @brief 单个侦测平台数据结构
- * @details
- */
-	struct DetectPlatformEntityData {
-		DetectPlatformEntityData() : id(0) {}
-
-		int id;					/*!< 唯一标识ID */
-		QString name;			/*!< 平台名称 */
-	};
-
-	/*!
-	 * @brief 单个侦测平台亚型数据结构
-	 * @details
-	 */
-	struct DetectPlatformSubtypeEntityData {
-		DetectPlatformSubtypeEntityData() : id(0), detectId(0) {}
-
-		int id;					/*!< 唯一标识ID */
-		int detectId;			/*!< 侦测平台标识 */
-		QString name;			/*!< 平台亚型名称 */
-	};
-
-	/*!
-	 * @brief 单个任务侦测平台表数据结构
-	 * @details
-	 */
-	struct TaskDetectPlatformEntityData {
-		TaskDetectPlatformEntityData() : detectId(0), platformPower(0),
-			lastTime(0) {}
-
-		QString id;					/*!< 唯一标识 */
-		QString taskId;				/*!< 任务标识 */
-		int detectId;				/*!< 侦测平台标识 */
-		QString name;				/*!< 侦测平台名称 */
-		QString sensorType;			/*!< 侦测平台传感器类型 */
-		int platformPower;			/*!< 平台动力 */
-		QString startTime;			/*!< 开始任务时间 */
-		QString endTime;			/*!< 结束任务时间 */
-		int lastTime;				/*!< 时长 */
 	};
 
 	/*!

@@ -173,6 +173,49 @@ namespace Related {
 				}
 			}
 				break;
+
+				/************************ 任务侦测平台亚型 *********************************/
+			case  Datastruct::P_TaskDetectPlatformCreate: {
+				Datastruct::TaskDetectPlatformCreateRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDetectPlatformCreateResponse response = m_processCenter.processTaskDetectPlatformCreate(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDetectPlatformCreate, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformList: {
+				Datastruct::LoadAllTaskDetectPlatformRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::LoadAllTaskDetectPlatformResponse response = m_processCenter.processTaskDetectPlatformList(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDetectPlatformList, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformByCondition: {
+				Datastruct::TaskDetectPlatformByConditionRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDetectPlatformByConditionResponse response = m_processCenter.processTaskDetectPlatformByCondition(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDetectPlatformByCondition, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformDelete: {
+				Datastruct::TaskDetectPlatformDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDetectPlatformDeleteResponse response = m_processCenter.processTaskDetectPlatformDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDetectPlatformDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+			case  Datastruct::P_TaskDetectPlatformModify: {
+				Datastruct::TaskDetectPlatformModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDetectPlatformModifyResponse response = m_processCenter.processTaskDetectPlatformModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDetectPlatformModify, JsonWrapper::instance()->wrap(response));
+				}
+			}
+				break;
+
 			// 任务图片资源
 			case  Datastruct::P_TaskImageCreate : {
 				Datastruct::TaskImageCreateRequest request;
@@ -394,7 +437,8 @@ namespace Related {
 
 			}
 				break;
-			//AIS数据
+
+			/******************************     AIS数据       **********************************************/
 			case  Datastruct::P_AISCreate: {
 				Datastruct::AISDataCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -412,15 +456,27 @@ namespace Related {
 			}
 				break;
 			case  Datastruct::P_AISByCondition: {
-
+				Datastruct::AISDataByConditionRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::AISDataByConditionResponse response = m_processCenter.processAISDataByCondition(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_AISByCondition, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case  Datastruct::P_AISDelete: {
-
+				Datastruct::AISDataDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::AISDataDeleteResponse response = m_processCenter.processAISDataDelete(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_AISDelete, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 			case  Datastruct::P_AISModify: {
-
+				Datastruct::AISDataModifyRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::AISDataModifyResponse response = m_processCenter.processAISDataModify(unit->m_clientId, request);
+					runit->m_resposneData = makePacket(Datastruct::P_AISModify, JsonWrapper::instance()->wrap(response));
+				}
 			}
 				break;
 

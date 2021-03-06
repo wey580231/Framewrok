@@ -88,8 +88,10 @@ namespace CommonDefines {
 		const QString suffix = "suffix";
 		const QString uploadTime = "uploadTime";
 		const QString imageSize = "imageSize";
-		const QString decription = "decription";
 
+		const QString sensorType = "sensorType";
+		const QString platformPower = "platformPower";
+		const QString lastTime = "lastTime";
 	};
 
 } //namespace CommonDefines 

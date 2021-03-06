@@ -467,6 +467,147 @@ namespace Related {
 		return response;
 	}
 
+	/**************************** 任务侦测平台 *******************************************/
+	Datastruct::TaskDetectPlatformCreateResponse DataProcessCenter::processTaskDetectPlatformCreate(int clientId, const Datastruct::TaskDetectPlatformCreateRequest & request)
+	{
+		Datastruct::TaskDetectPlatformCreateResponse response;
+		Table::TaskDetectPlatformEntity taskDetectPlatform;
+		Base::RPersistence rps(taskDetectPlatform.table);
+		rps.insert({
+				{taskDetectPlatform.id,			request.m_id},
+				{taskDetectPlatform.taskId,		request.m_taskId},
+				{taskDetectPlatform.detectId,	request.m_detectId},
+				{taskDetectPlatform.name,		request.m_name},
+				{taskDetectPlatform.sensorType,	request.m_sensorType},
+				{taskDetectPlatform.platformPower,	request.m_platformPower},
+				{taskDetectPlatform.startTime,	QDateTime::fromString(request.m_startTime, TIME_FORMAT)},
+				{taskDetectPlatform.endTime,	QDateTime::fromString(request.m_endTime, TIME_FORMAT)},
+				{taskDetectPlatform.lastTime,	request.m_lastTime},
+			});
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rps.sql())) {
+			if (query.numRowsAffected() > 0) {
+				response.m_createResult = true;
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
+	Datastruct::LoadAllTaskDetectPlatformResponse DataProcessCenter::processTaskDetectPlatformList(int clientId, const Datastruct::LoadAllTaskDetectPlatformRequest & request)
+	{
+		Datastruct::LoadAllTaskDetectPlatformResponse response;
+		Table::TaskDetectPlatformEntity taskDetectPlatform;
+		Base::RSelect rs(taskDetectPlatform.table);
+		rs.select(taskDetectPlatform.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(taskDetectPlatform.taskId, request.m_taskId));
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			while (query.next()) {
+				Datastruct::TaskDetectPlatformEntityData data;
+				data.id			= query.value(taskDetectPlatform.id).toString();
+				data.taskId		= query.value(taskDetectPlatform.taskId).toString();
+				data.detectId	= query.value(taskDetectPlatform.detectId).toInt();
+				data.name		= query.value(taskDetectPlatform.name).toString();
+				data.sensorType = query.value(taskDetectPlatform.sensorType).toString();
+				data.platformPower = query.value(taskDetectPlatform.platformPower).toInt();
+				data.startTime	= query.value(taskDetectPlatform.startTime).toDateTime().toString(TIME_FORMAT);
+				data.endTime	= query.value(taskDetectPlatform.endTime).toDateTime().toString(TIME_FORMAT);
+				data.lastTime	= query.value(taskDetectPlatform.lastTime).toInt();
+				response.m_dataInfos.append(data);
+			}
+			Base::RSelect rst(taskDetectPlatform.table);
+			rst.select(taskDetectPlatform.table).
+				createCriteria().
+				add(Base::Restrictions::eq(taskDetectPlatform.taskId, request.m_taskId));
+			rst.count();
+			if (query.exec(rst.sql())) {
+				if (query.next()) {
+					response.m_taskDetectPlatformCount = query.value(0).toInt();
+				}
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskDetectPlatformByConditionResponse DataProcessCenter::processTaskDetectPlatformByCondition(int clientId, const Datastruct::TaskDetectPlatformByConditionRequest & request)
+	{
+		return Datastruct::TaskDetectPlatformByConditionResponse();
+	}
+
+	Datastruct::TaskDetectPlatformDeleteResponse DataProcessCenter::processTaskDetectPlatformDelete(int clientId, const Datastruct::TaskDetectPlatformDeleteRequest & request)
+	{
+		Datastruct::TaskDetectPlatformDeleteResponse response;
+		Table::TaskDetectPlatformEntity taskDetectPlatform;
+		Base::RDelete rde(taskDetectPlatform.table);
+		if (!request.m_id.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskDetectPlatform.id, request.m_id));
+		}
+		if (!request.m_taskId.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskDetectPlatform.taskId, request.m_taskId));
+		}
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskDetectPlatformModifyResponse DataProcessCenter::processTaskDetectPlatformModify(int clientId, const Datastruct::TaskDetectPlatformModifyRequest & request)
+	{
+		Datastruct::TaskDetectPlatformModifyResponse response;
+		Table::TaskDetectPlatformEntity taskDetectPlatform;
+		Base::RSelect rs(taskDetectPlatform.table);
+		rs.select(taskDetectPlatform.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(taskDetectPlatform.id, request.m_id));
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::NO_FINDDATA;
+			}
+			else {
+				Base::RUpdate rud(taskDetectPlatform.table);
+				rud.update(taskDetectPlatform.table, {
+
+					{taskDetectPlatform.detectId,	request.m_detectId},
+					{taskDetectPlatform.name,		request.m_name},
+					{taskDetectPlatform.sensorType,	request.m_sensorType},
+					{taskDetectPlatform.platformPower,	request.m_platformPower},
+					{taskDetectPlatform.startTime,	QDateTime::fromString(request.m_startTime, TIME_FORMAT)},
+					{taskDetectPlatform.endTime,	QDateTime::fromString(request.m_endTime, TIME_FORMAT)},
+					{taskDetectPlatform.lastTime,	request.m_lastTime},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(taskDetectPlatform.id, request.m_id));
+				QSqlQuery query(m_database->sqlDatabase());
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+					}
+				}
+			}
+		}
+		else {
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+		return response;
+	}
+
 	/************************ 试验图片资源 *******************************************************/
 	Datastruct::TaskImageCreateResponse DataProcessCenter::processTaskImageCreate(int clientId, const Datastruct::TaskImageCreateRequest & request)
 	{
@@ -588,8 +729,6 @@ namespace Related {
 		Datastruct::TaskImageDeleteResponse response;
 		Table::TaskImageEntity taskImage;
 		Base::RDelete rde(taskImage.table);
-
-
 		if (!request.m_id.isEmpty()) {
 			rde.createCriteria()
 				.add(Base::Restrictions::eq(taskImage.id, request.m_id));
@@ -619,7 +758,6 @@ namespace Related {
 		rs.select(taskImage.table)
 			.createCriteria()
 			.add(Base::Restrictions::eq(taskImage.id, request.m_id));
-
 		QSqlQuery query(m_database->sqlDatabase());
 		if (query.exec(rs.sql())) {
 			if (query.numRowsAffected() < 0) {
@@ -627,10 +765,10 @@ namespace Related {
 			}	else  {
 				Base::RUpdate rud(taskImage.table);
 				rud.update(taskImage.table, {
-					{taskImage.realName,	request.realName},
-					{taskImage.suffix,		request.suffix },
-					{taskImage.uploadTime,	QDateTime::fromString(request.uploadTime, TIME_FORMAT)},
-					{taskImage.imageSize,	request.imageSize},
+					{taskImage.realName,	request.m_realName},
+					{taskImage.suffix,		request.m_suffix },
+					{taskImage.uploadTime,	QDateTime::fromString(request.m_uploadTime, TIME_FORMAT)},
+					{taskImage.imageSize,	request.m_imageSize},
 					{taskImage.description, request.m_description},
 					})
 					.createCriteria()
@@ -1226,12 +1364,9 @@ namespace Related {
 	{
 		Datastruct::LoadAllTargetResponse response;
 		Table::TargetDataEntity target;
-
 		Base::RSelect rs(target.table);
 		rs.select(target.table);
-
 		QSqlQuery query(m_database->sqlDatabase());
-
 		if (query.exec(rs.sql())) {
 			while (query.next()) {
 				Datastruct::TargetEntityData data;
@@ -1277,14 +1412,11 @@ namespace Related {
 	{
 		Datastruct::TargetModifyResponse response;
 		Table::TargetDataEntity target;
-
 		Base::RSelect rs(target.table);
 		rs.select(target.table)
 			.createCriteria()
 			.add(Base::Restrictions::eq(target.id, request.m_id));
-
 		QSqlQuery query(m_database->sqlDatabase());
-
 		if (query.exec(rs.sql())) {
 			if (query.numRowsAffected() < 0) {
 				response.m_errorInfo = Datastruct::NO_FINDDATA;
@@ -1411,6 +1543,94 @@ namespace Related {
 			}
 		}
 		return response;
+	}
+
+	Datastruct::AISDataByConditionResponse DataProcessCenter::processAISDataByCondition(int clientId, const Datastruct::AISDataByConditionRequest & request)
+	{
+		return Datastruct::AISDataByConditionResponse();
+	}
+
+	Datastruct::AISDataDeleteResponse DataProcessCenter::processAISDataDelete(int clientId, const Datastruct::AISDataDeleteRequest & request)
+	{
+		Datastruct::AISDataDeleteResponse response;
+		Table::AISDataEntity aisData;
+		QSqlQuery query(m_database->sqlDatabase());
+
+		Base::RDelete rde(aisData.table);
+		rde.createCriteria()
+			.add(Base::Restrictions::eq(aisData.id, request.m_id));
+
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::AISDataModifyResponse DataProcessCenter::processAISDataModify(int clientId, const Datastruct::AISDataModifyRequest & request)
+	{
+		Datastruct::AISDataModifyResponse response;
+		Table::AISDataEntity aisData;
+		Base::RSelect rs(aisData.table);
+		rs.select(aisData.table)
+			.createCriteria()
+			.add(Base::Restrictions::eq(aisData.id, request.m_id));
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rs.sql())) {
+			if (query.numRowsAffected() < 0) {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+			else
+			{
+				Base::RUpdate rud(aisData.table);
+				rud.update(aisData.table, {
+					{aisData.targetId,	request.m_targetId},
+					{aisData.mmsi,		request.m_mmsi},
+					{aisData.time,		request.m_time},
+					{aisData.lon,		request.m_lon},
+					{aisData.lat,		request.m_lat},
+					{aisData.course,	request.m_course},
+					{aisData.truehead,	request.m_truehead},
+					{aisData.name,		request.m_name},
+					{aisData.shipType,	request.m_shipType},
+					{aisData.shipImo,	request.m_shipImo},
+					{aisData.navStatus,	request.m_navStatus},
+					{aisData.speed,		request.m_speed},
+					{aisData.eta,		QDateTime::fromString(request.m_eta, TIME_FORMAT)},
+					{aisData.dest,		request.m_dest},
+					{aisData.length,	request.m_length},
+					{aisData.width,		request.m_width},
+					{aisData.callsign,	request.m_callsign},
+					{aisData.flag,		request.m_flag},
+					{aisData.buildDate,	QDateTime::fromString(request.m_buildDate, TIME_FORMAT)},
+					{aisData.port,		request.m_port},
+					})
+					.createCriteria()
+					.add(Base::Restrictions::eq(aisData.id, request.m_id));
+
+				QSqlQuery query(m_database->sqlDatabase());
+
+				if (query.exec(rud.sql())) {
+					if (query.numRowsAffected()) {
+						response.m_modifyResult = true;
+					}
+					else {
+						response.m_errorInfo = Datastruct::NO_FINDDATA;
+					}
+				}
+			}
+		}
+		else
+		{
+			response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+		}
+
+		return response;
+		return Datastruct::AISDataModifyResponse();
 	}
 
 } //namespace Related 

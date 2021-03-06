@@ -55,6 +55,7 @@ namespace Related {
 
 	private slots:
 		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
+		void processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response);
 		void processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response);
 		void slotSelectedImagesIndex(int index);
 		void slotModiftTaskBaseInfo();
