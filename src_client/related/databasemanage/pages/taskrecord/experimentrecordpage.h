@@ -11,8 +11,10 @@
 #pragma once
 
 #include <QWidget>
+#include <QLabel>
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 
 #include <base\selfwidget\tablemode\rtableview.h>
 #include <base\selfwidget\iconbutton.h>
@@ -49,9 +51,11 @@ namespace Related {
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
+		void slotDetectPlatformCurrentIndexChanged(int index);
 		
 		void processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
 		void processExperimentRecordDeleteResponse(const Datastruct::ExperimentRecordDeleteResponse & response);
+		
 		void slotClickedTable(QModelIndex index);
 
 	private:
@@ -66,6 +70,7 @@ namespace Related {
 		Base::RTableView * m_tableView;						/*!< 数据表格 */	
 		ExperimentRecordModel * m_tableModel;				/*!< 数据模型 */
 		PageSwitchBar * m_pageSwitch;						/*!< 切换页 */
+		QComboBox * m_detectPlatformComboBox;
 
 		bool m_firstLoadData;													/*!< 第一次加载页面显示 */
 		QString m_taskId;														/*!< 任务Id */

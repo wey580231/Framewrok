@@ -225,6 +225,10 @@ namespace Related {
 		request.taskId = taskId;
 		DataNetConnector::instance()->write(request);
 		//
+		Datastruct::TaskDetectPlatformDeleteRequest taskDetectPlatformDeleteRequest;
+		taskDetectPlatformDeleteRequest.m_taskId = taskId;
+		DataNetConnector::instance()->write(taskDetectPlatformDeleteRequest);
+		//
 		Datastruct::TaskImageDeleteRequest taskImageDeleteRequest;
 		request.taskId = taskId;
 		DataNetConnector::instance()->write(taskImageDeleteRequest);

@@ -75,9 +75,7 @@ namespace Related {
 		switch (type)
 		{
 		case OperationToolsPage::Butt_Add: {
-			ExperimentRecordEditDialog editDialog(this);
-			editDialog.setExperimentRecordDataOperatioType(ExperimentRecordEditDialog::ERD_Create);
-			editDialog.setTaskId(m_taskId);
+			ExperimentRecordEditDialog editDialog(m_taskId, ExperimentRecordEditDialog::ERD_Create, this);
 			if (QDialog::Accepted == editDialog.exec()) {
 				refreshCurrPage();
 				m_seleteTableRow = EXPERIMENT_RECORD_SELET_MAX_INDEX;
@@ -108,8 +106,7 @@ namespace Related {
 				&& m_seleteTableRow > EXPERIMENT_RECORD_SELET_MAX_INDEX) {
 				Datastruct::ExperimentRecordEntityData data = m_allExperimentRecords.m_experimentRecordInfos.at(m_seleteTableRow);
 				
-				ExperimentRecordEditDialog editDialog(this);
-				editDialog.setExperimentRecordDataOperatioType(ExperimentRecordEditDialog::ERD_Modify);
+				ExperimentRecordEditDialog editDialog(m_taskId, ExperimentRecordEditDialog::ERD_Modify, this);
 				editDialog.setExperimentRecordEntityData(data);
 				if (QDialog::Accepted == editDialog.exec()) {
 					refreshCurrPage();
@@ -139,6 +136,11 @@ namespace Related {
 		m_tableModel->setFixedPageRowCount(pageItemCount);
 	}
 
+	void ExperimentRecordPage::slotDetectPlatformCurrentIndexChanged(int index)
+	{
+		refreshCurrPage();
+	}
+
 	void ExperimentRecordPage::processQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response)
 	{
 		m_allExperimentRecords = response;
@@ -165,7 +167,28 @@ namespace Related {
 		{
 			m_operationToolsPage = new OperationToolsPage();
 			connect(m_operationToolsPage, SIGNAL(buttPressed(OperationToolsPage::ButtType)), this, SLOT(respToolButtPressed(OperationToolsPage::ButtType)));
-			cwidget->setContent(m_operationToolsPage);
+			
+			QLabel * detectPlatformLabel = new QLabel();
+			detectPlatformLabel->setText(QStringLiteral("侦查平台："));
+
+			m_detectPlatformComboBox = new QComboBox();
+			QStringList strList;
+			strList << QStringLiteral("所有平台") 
+				<< QStringLiteral("HXJ01")
+				<< QStringLiteral("HXJ02") 
+				<< QStringLiteral("HXJ03")
+				<< QStringLiteral("HXJ04");
+			m_detectPlatformComboBox->addItems(strList);
+			connect(m_detectPlatformComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotDetectPlatformCurrentIndexChanged(int)));
+
+			QWidget * widget = new QWidget();
+			QHBoxLayout * layout = new QHBoxLayout();
+			layout->addWidget(m_operationToolsPage);
+			layout->addWidget(detectPlatformLabel);
+			layout->addWidget(m_detectPlatformComboBox);
+			layout->setContentsMargins(0,0,0,0);
+			widget->setLayout(layout);
+			cwidget->setContent(widget);
 		}
 
 		CustomWidgetContainer * ctableView = new CustomWidgetContainer();
@@ -239,6 +262,9 @@ namespace Related {
 	{
 		Datastruct::LoadAllExperimentRecordsRequest request;
 		request.m_taskId = m_taskId;
+		if (m_detectPlatformComboBox->currentIndex() != 0) {
+			request.m_platformId = m_detectPlatformComboBox->currentText();
+		}
 		request.m_offsetIndex = m_pageSwitch->dataOffset();
 		request.m_limitIndex = m_pageSwitch->perPageCount();
 		DataNetConnector::instance()->write(request);

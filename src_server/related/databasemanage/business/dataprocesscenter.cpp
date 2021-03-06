@@ -979,9 +979,20 @@ namespace Related {
 		Table::ExperimentRecordEntity experimentRecord;
 
 		Base::RSelect rs(experimentRecord.table);
-		rs.orderBy(experimentRecord.table, experimentRecord.floatingTime, Base::SuperCondition::DESC)
-			.createCriteria()
-			.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
+		if (!request.m_platformId.isEmpty()) {
+			rs.orderBy(experimentRecord.table, experimentRecord.floatingTime, Base::SuperCondition::DESC)
+				.createCriteria()
+				.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId))
+				.add(Base::Restrictions::eq(experimentRecord.platformId, request.m_platformId));
+		}
+		else
+		{
+			rs.orderBy(experimentRecord.table, experimentRecord.floatingTime, Base::SuperCondition::DESC)
+				.createCriteria()
+				.add(Base::Restrictions::eq(experimentRecord.taskId, request.m_taskId));
+		}
+
+
 		rs.limit(request.m_offsetIndex, request.m_limitIndex);
 
 		QSqlQuery query(m_database->sqlDatabase());

@@ -16,9 +16,11 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QComboBox>
 
 #include <base/selfwidget/dialogproxy.h>
 #include <base/selfwidget/rmessagebox.h>
+#include <base/selfwidget/lonlatedit/rlonlatedit.h>
 #include <base/util/rutil.h>
 #include <commondefines/protocol.h>
 
@@ -31,17 +33,14 @@ namespace Related {
 		Q_OBJECT
 
 	public:
-		ExperimentRecordEditDialog(QWidget *parent = nullptr);
-		~ExperimentRecordEditDialog();
 
 		enum ExperimentRecordOperatioType {
 			ERD_Create,					/*!< ´´½¨  */
 			ERD_Modify,					/*!< ÐÞ¸Ä */
 		};
 
-		void setExperimentRecordDataOperatioType(ExperimentRecordOperatioType type);
-
-		void setTaskId(QString taskId);
+		ExperimentRecordEditDialog(QString taskId, ExperimentRecordOperatioType type, QWidget *parent = nullptr);
+		~ExperimentRecordEditDialog();
 
 		void setExperimentRecordEntityData(Datastruct::ExperimentRecordEntityData data);
 
@@ -57,11 +56,11 @@ namespace Related {
 		void createNewExperimentRecord(Datastruct::ExperimentRecordCreateRequest request);
 		void modifyExperimentRecord(Datastruct::ExperimentRecordEntityData data);
 	private:
-		QLineEdit * m_lonLineEdit;
-		QLineEdit * m_latLineEdit;
+		Base::RLonLatEdit * m_lonEdit;
+		Base::RLonLatEdit * m_latEdit;
 		QLineEdit * m_setHeadingDegreeLineEdit;
 		QLineEdit * m_actualHeadingDegreeLineEdit;
-
+		QComboBox * m_detectPlatformComboBox;
 
 		ExperimentRecordOperatioType m_operatioType;
 		QString m_taskId;

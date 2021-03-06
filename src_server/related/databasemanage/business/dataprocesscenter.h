@@ -54,7 +54,6 @@ namespace Related {
 		Datastruct::TaskDetectPlatformDeleteResponse processTaskDetectPlatformDelete(int clientId, const Datastruct::TaskDetectPlatformDeleteRequest & request);
 		Datastruct::TaskDetectPlatformModifyResponse processTaskDetectPlatformModify(int clientId, const Datastruct::TaskDetectPlatformModifyRequest & request);
 
-
 		// 有关任务试验图片资源
 		Datastruct::TaskImageCreateResponse  processTaskImageCreate(int clientId, const Datastruct::TaskImageCreateRequest & request);
 		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
@@ -65,8 +64,8 @@ namespace Related {
 		// 有关值班日志
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
 		Datastruct::LoadAllDutyRecordResponse processDutyRecordList(int clientId, const Datastruct::LoadAllDutyRecordRequest & request);
-		Datastruct::DutyRecordDeleteResponse processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request);
-		Datastruct::DutyRecordModifyResponse processDutyRecordModify(int clientId, const Datastruct::DutyRecordModifyRequest & request);
+		Datastruct::DutyRecordDeleteResponse  processDutyRecordDelete(int clientId, const Datastruct::DutyRecordDeleteRequest & request);
+		Datastruct::DutyRecordModifyResponse  processDutyRecordModify(int clientId, const Datastruct::DutyRecordModifyRequest & request);
 
 		// 有关试验记录
 		Datastruct::ExperimentRecordCreateResponse  processExperimentRecordCreate(int clientId, const Datastruct::ExperimentRecordCreateRequest & request);

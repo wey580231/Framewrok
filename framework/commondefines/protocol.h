@@ -798,6 +798,7 @@ namespace Datastruct {
 		}
 
 		QString m_taskId;					/*!< 任务Id */
+		QString m_platformId;
 		int m_offsetIndex;					/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;					/*!< 当前页面显示条数 */
 	};

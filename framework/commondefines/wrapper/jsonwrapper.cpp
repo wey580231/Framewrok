@@ -1433,6 +1433,7 @@ namespace CommonDefines {
 	{
 		return wrapObject([&](QJsonObject & obj) {
 			obj.insert(m_jsonKey.taskId, request.m_taskId);
+			obj.insert(m_jsonKey.platformId, request.m_platformId);
 			obj.insert(m_jsonKey.offsetIndex, request.m_offsetIndex);
 			obj.insert(m_jsonKey.limitIndex, request.m_limitIndex);
 		});
@@ -1442,6 +1443,7 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			request.m_platformId = jsonObject.value(m_jsonKey.platformId).toString();
 			request.m_offsetIndex = jsonObject.value(m_jsonKey.offsetIndex).toInt();
 			request.m_limitIndex = jsonObject.value(m_jsonKey.limitIndex).toInt();
 		});
