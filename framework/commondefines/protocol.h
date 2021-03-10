@@ -98,6 +98,10 @@ namespace Datastruct {
 		P_AISModify,						/*!< 修改AIS */
 		P_AISSimpleInfo,					/*!< 单个AIS概览信息 */
 		P_AISFullInfo,						/*!< 单个AIS详细信息 */
+
+		//原始文件
+		P_RawFile = 90,
+
 	};
 
 	/*!
@@ -115,6 +119,12 @@ namespace Datastruct {
 	{
 		PacketTail() :m_magicTail(PACK_TAIL) {}
 		uint m_magicTail;		/*!< 报文尾标识 */
+	};
+
+	//网络数据参数
+	struct NetworkDataParameter {
+		uint ParameterLength;
+		uint dataLength;
 	};
 
 #pragma  pack(pop)
@@ -620,9 +630,9 @@ namespace Datastruct {
 		TaskImageModifyRequest() :m_imageSize(0) {
 		}
 
-		QString m_id;						/*!< id */
-		QString m_taskId;					/*!< 任务标识 */
-		QString m_realName;					/*!< 原始图片文件名 */
+		QString m_id;							/*!< id */
+		QString m_taskId;						/*!< 任务标识 */
+		QString m_realName;						/*!< 原始图片文件名 */
 		QString m_suffix;						/*!< 图片类型 */
 		QString m_uploadTime;					/*!< 上传时间 */
 		double  m_imageSize;					/*!< 图片大小 */
@@ -1301,6 +1311,17 @@ namespace Datastruct {
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
+
+	struct TaskRawDataFileRequest{
+		int parameterLength;					/*!< 参数数据长度 */
+
+		char m_id[32];							/*!< id */
+		char m_taskId[32];						/*!< 任务标识 */
+		char m_realName[200];					/*!< 原始文件名 */
+		char m_realPath[500];					/*!< 原始文件路径 */
+		char m_Md5[32];							/*!< 原始文件大小 */
+	};
+
 
 } // namespace Datastruct
 

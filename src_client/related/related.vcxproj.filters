@@ -89,6 +89,12 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\item\targetbaseinfoitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafiledealthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafilecheckthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="databasemanage\datastruct.h" />
@@ -181,6 +187,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\pages\targetdatabase\item\targetbaseinfoitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafiledealthread.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafilecheckthread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

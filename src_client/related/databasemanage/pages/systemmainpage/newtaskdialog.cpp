@@ -13,6 +13,9 @@
 #include "../../utils/util.h"
 #include "../../global.h"
 
+#include "rawfiledeal/taskrawdatafilecheckthread.h"
+#include "rawfiledeal/taskrawdatafiledealthread.h"
+
 namespace Related {
 
 	NewTaskDialog::NewTaskDialog(QString taskId, TaskEditType type, QWidget *parent)
@@ -221,6 +224,13 @@ namespace Related {
 					sendNewTaskImageInfo(info);
 				}
 			}
+			//[] 原始数据文件
+			if (m_rawDataList.size() > 0)  {
+				TaskRawDataFileDealThread * dealThread = new TaskRawDataFileDealThread();
+				dealThread->setTaskId(m_taskId);
+				dealThread->setFilePats(m_rawDataList);
+				dealThread->startMe();
+			}
 		}
 			break;
 		case Related::NewTaskDialog::Task_Modify: {
@@ -239,8 +249,17 @@ namespace Related {
 		bool fileChoose = QObject::sender()->objectName().contains("file");
 
 		QStringList imageList;
+
 		if (fileChoose) {
-			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.dat)");
+			//imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.dat)");
+
+			QString filePath = QFileDialog::getExistingDirectory(this, QStringLiteral("请选择路径..."), "/ home");
+
+			TaskRawDataFileCheckThread * t_taskRawDataFileCheck = new TaskRawDataFileCheckThread();
+			t_taskRawDataFileCheck->setRawDataFileRootPath(filePath);
+			t_taskRawDataFileCheck->checkRawDataDir();
+			imageList = t_taskRawDataFileCheck->getFileLists();
+			m_rawDataList = imageList;
 		}
 		else {
 			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择任务图片"),"/home", "Images (*.png *.jpg)");

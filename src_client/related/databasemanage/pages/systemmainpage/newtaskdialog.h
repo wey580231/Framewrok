@@ -54,12 +54,13 @@ namespace Related {
 		void respClearFile();
 		void openLocalFile();
 		void switchViewModel(bool isChecked);
+		//[] 任务基本信息
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
 		void processTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
-
+		//[] 任务平台信息
 		void processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response);
 		void processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response);
-
+		//[] 任务试验图片基本信息
 		void processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response);
 		void processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response);
 
@@ -77,6 +78,8 @@ namespace Related {
 
 		void sendNewTaskImageInfo(Datastruct::TaskImageEntityData info);
 		void sendModifyTaskImageInfo();
+
+		
 
 	private:
 		QString m_taskId;								/*!< 任务Id */				
@@ -103,7 +106,7 @@ namespace Related {
 		QString m_originalFilePath;						/*!< 原始文件路径：绝对路径 */
 
 		QList<OriginalDataFileParameter *> m_taskDataFilePaths;
-
+		QStringList m_rawDataList;
 	};
 
 }//namespace Related 

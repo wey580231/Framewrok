@@ -24,6 +24,9 @@ namespace Related {
 		TaskRawDataFileDealThread(QObject *parent = nullptr);
 		~TaskRawDataFileDealThread();
 
+		void setTaskId(QString taskId);
+		void setFilePats(QStringList pathList);
+
 		void startMe();
 		void stopMe();
 
@@ -32,7 +35,14 @@ namespace Related {
 
 	private:
 		void dealFile();
+		void dealSingleFile(QString filePath);
 
+		void sendNewTaskRawDataFile(QByteArray buff);
+
+	private:
+		QString m_taskId;
+		QStringList m_rawDataList;
+		double m_totalFileSize;
 	};
 
 }//namespace Related 

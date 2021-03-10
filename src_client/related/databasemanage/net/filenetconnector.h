@@ -23,11 +23,15 @@ namespace Related {
 		static FileNetConnector * instance();
 		~FileNetConnector();
 
+		void write(QByteArray  buff);
+
 	protected:
 		void processNetData(QByteArray & data);
+
 		
 	private:
 		FileNetConnector();
+		QByteArray makePacket(Datastruct::PacketType type, QByteArray & body);
 
 	private:
 		static FileNetConnector * m_instance;

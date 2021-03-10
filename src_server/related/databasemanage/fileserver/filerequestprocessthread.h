@@ -17,9 +17,10 @@
 #include <base\common\sql\databasemanager.h>
 
 #include "../datastruct.h"
-#include "../business/dataprocesscenter.h"
 
 namespace Related {
+
+	struct FileRequestUnit;
 
 	class FileRequestProcessThread : public Core::RTask
 	{
@@ -38,6 +39,9 @@ namespace Related {
 	private: 
 		void parseFileRequest(FileRequestUnit * unit);
 
+	private:
+
+		Base::Database * m_dbConnect;						/*!< Êý¾Ý¿â */
 	};
 
 }//namespace Related 
