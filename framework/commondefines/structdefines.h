@@ -178,9 +178,10 @@ namespace Datastruct {
 	 * @brief 目标实体数据
 	 */
 	struct  TargetEntityData {
-		TargetEntityData() :type(0){
+		TargetEntityData() :type(0), tonnage(0), lon(0), lat(0), speed(0), axlesNumber(0){
 
 		}
+
 		QString id;					/*!< 唯一标识 */
 		QString name;				/*!< 目标名称 */
 		QString createTime;			/*!< 创建时间 */
@@ -196,6 +197,10 @@ namespace Datastruct {
  * @brief 目标音频实体数据
  */
 	struct  TargetWavEntityData {
+		TargetWavEntityData() :tonnage(0), lon(0), lat(0), speed(0), axlesNumber(0), datalength(0),
+			type(0){
+		}
+
 		QString  id;				/*!< 索引 */
 		QString targetName;			/*!< 目标名称 */
 		QString edttime;			/*!< 录取时间 */
@@ -207,7 +212,6 @@ namespace Datastruct {
 		int datalength;				/*!< 数据时长 */
 		int type;					/*!< 类型 */
 	};
-
 
 	/*!
 	 * @brief AIS实体数据

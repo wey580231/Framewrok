@@ -248,11 +248,11 @@ namespace CommonDefines {
 	QByteArray JsonWrapper::wrap(const Datastruct::TaskCreateRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.taskId);
-			obj.insert(m_jsonKey.name, request.taskName);
-			obj.insert(m_jsonKey.startTime, request.startTime);
-			obj.insert(m_jsonKey.endTime, request.endTime);
-			obj.insert(m_jsonKey.location, request.location);
+			obj.insert(m_jsonKey.id, request.m_taskId);
+			obj.insert(m_jsonKey.name, request.m_taskName);
+			obj.insert(m_jsonKey.startTime, request.m_startTime);
+			obj.insert(m_jsonKey.endTime, request.m_endTime);
+			obj.insert(m_jsonKey.location, request.m_location);
 			obj.insert(m_jsonKey.lon, request.lon);
 			obj.insert(m_jsonKey.lat, request.lat);
 			obj.insert(m_jsonKey.description, request.description);
@@ -262,11 +262,11 @@ namespace CommonDefines {
 	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskCreateRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.taskId = jsonObject.value(m_jsonKey.id).toString();
-			request.taskName = jsonObject.value(m_jsonKey.name).toString();
-			request.startTime = jsonObject.value(m_jsonKey.startTime).toString();
-			request.endTime = jsonObject.value(m_jsonKey.endTime).toString();
-			request.location = jsonObject.value(m_jsonKey.location).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskName = jsonObject.value(m_jsonKey.name).toString();
+			request.m_startTime = jsonObject.value(m_jsonKey.startTime).toString();
+			request.m_endTime = jsonObject.value(m_jsonKey.endTime).toString();
+			request.m_location = jsonObject.value(m_jsonKey.location).toString();
 			request.lon = jsonObject.value(m_jsonKey.lon).toString();
 			request.lat = jsonObject.value(m_jsonKey.lat).toString();
 			request.description = jsonObject.value(m_jsonKey.description).toString();

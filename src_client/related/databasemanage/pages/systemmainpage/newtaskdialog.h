@@ -63,6 +63,8 @@ namespace Related {
 		void processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response);
 		void processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response);
 
+
+
 	private:
 		void init();
 		void initConnect();

@@ -68,6 +68,26 @@ namespace Related {
 		QByteArray m_resposneData;	/*!< 响应数据体 */
 	};
 
+	/*!
+	 * @brief  单次文件网络数据请求
+	 * @details 
+	 */
+	struct FileRequestUnit{
+		FileRequestUnit():m_clientId(0){ }
+		int m_clientId;				/*!< 客户端tcp连接标识，可通过此标识找到网络连接 */
+		QByteArray m_requestData;	/*!< 数据请求体，包括数据包头、包尾，由处理线程自行解析 */
+	};
+
+	/*!
+	 * @brief 单次处理结果响应
+	 * @details 服务器处理完请求后，需对结果进行打包，根据连接标识，发送回客户端。
+	 */
+	struct FileResponseUnit {
+		FileResponseUnit():m_clientId(0){}
+		int m_clientId;				/*!< 客户端tcp连接标识，可通过此标识找到网络连接 */
+		QByteArray m_resposneData;	/*!< 响应数据体 */
+	};
+
 } //namespace Related
 
 

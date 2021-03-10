@@ -218,11 +218,11 @@ namespace Datastruct {
 	 * @brief 创建任务请求
 	 */
 	struct  TaskCreateRequest{
-		QString taskId;				/*!< 数据库Id */
-		QString taskName;			/*!< 任务名称 */
-		QString startTime;			/*!< 起始时间 */
-		QString endTime;			/*!< 结束时间 */
-		QString location;			/*!< 任务地点 */
+		QString m_taskId;				/*!< 数据库Id */
+		QString m_taskName;			/*!< 任务名称 */
+		QString m_startTime;			/*!< 起始时间 */
+		QString m_endTime;			/*!< 结束时间 */
+		QString m_location;			/*!< 任务地点 */
 		QString lon;				/*!< 经度 */
 		QString lat;				/*!< 纬度 */
 		QString description;		/*!< 描述 */
@@ -385,7 +385,6 @@ namespace Datastruct {
 
 		bool m_result;					/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
-
 		TaskEntityData taskInfo;
 	};
 
@@ -1061,7 +1060,7 @@ namespace Datastruct {
 	 * @brief 目标数据信息创建请求
 	 */
 	struct  TargetCreateRequest	{
-		TargetCreateRequest() :m_type(0), m_lon(0), m_lat(0), tonnage(0), speed(0), axlesNumber(0){
+		TargetCreateRequest() :m_type(0), m_lon(0), m_lat(0), m_tonnage(0), m_speed(0), m_axlesNumber(0){
 		}
 
 		QString m_id;								/*!< 目标Id */
@@ -1070,9 +1069,9 @@ namespace Datastruct {
 		QString m_creanTime;						/*!< 创建时间 */
 		double m_lon;								/*!< 经度 */
 		double m_lat;								/*!< 纬度 */
-		double tonnage;								/*!< 吨位 */
-		double speed;								/*!< 航行速度 */
-		int  axlesNumber;							/*!< 轴数 */
+		double m_tonnage;								/*!< 吨位 */
+		double m_speed;								/*!< 航行速度 */
+		int  m_axlesNumber;							/*!< 轴数 */
 	};
 
 	/*!
@@ -1154,8 +1153,10 @@ namespace Datastruct {
 	 * @brief AIS数据信息创建请求
 	 */
 	struct  AISDataCreateRequest {
-		AISDataCreateRequest() :m_mmsi(0), m_time(0), m_lon(0), m_lat(0),
-			m_course(0), m_truehead(0) {}
+		AISDataCreateRequest() :m_mmsi(0), m_time(0), m_lon(0), m_lat(0), m_course(0), m_truehead(0),m_shipType(0),
+			m_shipImo(0), m_navStatus(0), m_speed(0), m_length(0), m_width(0){
+		}
+
 		QString m_id;					/*!< 唯一标识 */
 		QString m_targetId;				/*!< 目标标识 */
 		int m_mmsi;						/*!< 船舶MMSI */
@@ -1183,7 +1184,9 @@ namespace Datastruct {
 	 * @brief AIS创建请求结果报文
 	 */
 	struct  AISDataCreateResponse {
-		AISDataCreateResponse() : m_createResult(false) { }
+		AISDataCreateResponse() : m_createResult(false) { 
+		}
+
 		bool m_createResult;						/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;						/*!< 创建失败时说明失败原因 */
 		AisEntityData m_targetInfo;
@@ -1193,7 +1196,9 @@ namespace Datastruct {
 	 * @brief  加载所有AIS数据请求
 	 */
 	struct  LoadAllAISDataRequest {
-		LoadAllAISDataRequest() :m_offsetIndex(0), m_limitIndex(0) {}
+		LoadAllAISDataRequest() :m_offsetIndex(0), m_limitIndex(0) {
+		}
+
 		int m_offsetIndex;						/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;						/*!< 当前页面显示条数 */
 	};
@@ -1202,7 +1207,9 @@ namespace Datastruct {
 	 * @brief  加载所有AIS数据请求响应
 	 */
 	struct LoadAllAISDatasResponse {
-		LoadAllAISDatasResponse() : m_aisDataCount(0) { }
+		LoadAllAISDatasResponse() : m_aisDataCount(0) { 
+		}
+
 		int m_aisDataCount;											/*!< 总条数 */
 		QList<AisEntityData > m_aisDataInfos;						/*!< 结果集合 */
 	};
@@ -1212,6 +1219,9 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct AISDataByConditionRequest {
+		AISDataByConditionRequest() {
+		}
+
 		QString m_id;					/*!< 唯一标识 */
 		QString m_targetId;				/*!< 目标标识 */
 	};
@@ -1221,7 +1231,9 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct AISDataByConditionResponse {
-		AISDataByConditionResponse() : m_aisDataCount(0) { }
+		AISDataByConditionResponse() : m_aisDataCount(0) { 
+		}
+
 		int m_aisDataCount;											/*!< 总条数 */
 		QList<AisEntityData > m_aisDataInfos;						/*!< 结果集合 */
 	};
@@ -1230,6 +1242,9 @@ namespace Datastruct {
 	 * @brief  AIS数据删除请求
 	 */
 	struct AISDataDeleteRequest {
+		AISDataDeleteRequest() {
+		}
+
 		QString m_id;					/*!< 唯一标识 */
 		QString m_targetId;				/*!< 目标标识 */
 	};
@@ -1238,7 +1253,9 @@ namespace Datastruct {
 	 * @brief  AIS数据删除请求结果报文
 	 */
 	struct AISDataDeleteResponse {
-		AISDataDeleteResponse() : m_deleteResult(false) {}
+		AISDataDeleteResponse() : m_deleteResult(false) {
+		}
+
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
@@ -1247,8 +1264,10 @@ namespace Datastruct {
 	 * @brief   AIS数据修改请求
 	 */
 	struct AISDataModifyRequest {
-		AISDataModifyRequest() :m_mmsi(0), m_time(0), m_lon(0), m_lat(0),
-			m_course(0), m_truehead(0) {}
+		AISDataModifyRequest() : m_mmsi(0), m_time(0), m_lon(0), m_lat(0),m_course(0), m_truehead(0) , m_shipType(0), 
+			m_shipImo(0), m_navStatus(0), m_speed(0), m_length(0), m_width(0){
+		}
+
 		QString m_id;					/*!< 唯一标识 */
 		QString m_targetId;				/*!< 目标标识 */
 		int m_mmsi;						/*!< 船舶MMSI */
@@ -1276,7 +1295,9 @@ namespace Datastruct {
 	 * @brief  AIS数据修改请求响应
 	 */
 	struct AISDataModifyResponse {
-		AISDataModifyResponse() : m_modifyResult(false) {}
+		AISDataModifyResponse() : m_modifyResult(false) {
+		}
+
 		bool m_modifyResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};

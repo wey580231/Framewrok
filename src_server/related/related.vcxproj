@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;.\databasemanage\datafiledeal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;commondefines.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -62,7 +62,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>RELATED_LIBRARY;THREE_COORDINATES_PROJ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\databasemanage;.\databasemanage\customwidget;.\databasemanage\pages;.\databasemanage\pages\databasemanage;.\databasemanage\pages\systemsetting;.\databasemanage\pages\dataanalyse;.\databasemanage\pages\databasemanage\tablemodel;.\databasemanage\net;.\databasemanage\business;.\databasemanage\msgserver;.\databasemanage\fileserver;.\databasemanage\datafiledeal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>base.lib;commondefines.lib;network.lib;core.lib;uv.lib;uv_a.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -113,6 +113,8 @@
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
+    <ClCompile Include="databasemanage\datafiledeal\package.cpp" />
+    <ClCompile Include="databasemanage\fileserver\filerequestprocessthread.cpp" />
     <ClCompile Include="databasemanage\fileserver\fileserver.cpp" />
     <ClCompile Include="databasemanage\fileserver\filesession.cpp" />
     <ClCompile Include="databasemanage\global.cpp" />
@@ -139,8 +141,10 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
+    <QtMoc Include="databasemanage\datafiledeal\package.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\fileserver\fileserver.h" />
+    <QtMoc Include="databasemanage\fileserver\filerequestprocessthread.h" />
     <ClInclude Include="databasemanage\fileserver\filesession.h" />
     <ClInclude Include="databasemanage\global.h" />
     <QtMoc Include="databasemanage\msgserver\msgserver.h" />

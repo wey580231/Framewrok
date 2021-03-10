@@ -240,7 +240,7 @@ namespace Related {
 
 		QStringList imageList;
 		if (fileChoose) {
-			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.data)");
+			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.dat)");
 		}
 		else {
 			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择任务图片"),"/home", "Images (*.png *.jpg)");
@@ -346,11 +346,11 @@ namespace Related {
 	void NewTaskDialog::sendNewTaskBaseInfo()
 	{
 		Datastruct::TaskCreateRequest request;
-		request.taskId = m_taskId;
-		request.taskName = m_taskBaseInfo.taskName;
-		request.startTime = m_taskBaseInfo.startTime;
-		request.endTime = m_taskBaseInfo.endTime;
-		request.location = m_taskBaseInfo.taskLocation;
+		request.m_taskId = m_taskId;
+		request.m_taskName = m_taskBaseInfo.taskName;
+		request.m_startTime = m_taskBaseInfo.startTime;
+		request.m_endTime = m_taskBaseInfo.endTime;
+		request.m_location = m_taskBaseInfo.taskLocation;
 		request.lon = m_taskBaseInfo.lon;
 		request.lat = m_taskBaseInfo.lat;
 		request.description = QStringLiteral("description");

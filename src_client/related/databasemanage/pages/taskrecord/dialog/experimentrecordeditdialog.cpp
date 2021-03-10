@@ -36,11 +36,12 @@ namespace Related {
 	{
 		m_experimentRecordData = data;
 
+		m_detectPlatformComboBox->setCurrentText(data.platformId);
+
 		m_lonEdit->setValue(data.lon);
 		m_latEdit->setValue(data.lat);
 		m_setHeadingDegreeLineEdit->setText(QString::number(data.setHeadingDegree));
 		m_actualHeadingDegreeLineEdit->setText(QString::number(data.actualHeadingDegree));
-
 	}
 
 	void ExperimentRecordEditDialog::acceptOk()

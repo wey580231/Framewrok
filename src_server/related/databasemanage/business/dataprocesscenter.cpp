@@ -243,11 +243,11 @@ namespace Related {
 		Table::TaskEntity task;
 		Base::RPersistence rps(task.table);
 		rps.insert({
-				{task.id,			request.taskId},
-				{task.name,			request.taskName},
-				{task.startTime,	QDateTime::fromString(request.startTime, TIME_FORMAT)},
-				{task.endTime,		QDateTime::fromString(request.endTime, TIME_FORMAT)},
-				{task.location,		request.location},
+				{task.id,			request.m_taskId},
+				{task.name,			request.m_taskName},
+				{task.startTime,	QDateTime::fromString(request.m_startTime, TIME_FORMAT)},
+				{task.endTime,		QDateTime::fromString(request.m_endTime, TIME_FORMAT)},
+				{task.location,		request.m_location},
 				{task.lon,			request.lon},
 				{task.lat,			request.lat},
 				{task.description,	request.description},

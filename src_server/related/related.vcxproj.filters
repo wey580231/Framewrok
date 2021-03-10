@@ -90,6 +90,12 @@
     <ClCompile Include="databasemanage\fileserver\filesession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="databasemanage\datafiledeal\package.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\fileserver\filerequestprocessthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="3rdLibrary\qcustomplot.h">
@@ -123,6 +129,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="databasemanage\fileserver\fileserver.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\datafiledeal\package.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\fileserver\filerequestprocessthread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

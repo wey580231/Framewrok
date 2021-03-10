@@ -16,7 +16,7 @@
 
 namespace Related {
 
-	extern Base::RBlockingQueque<RequestUnit *> G_RequestQuque;		/*!< 客户端请求队列 */
-
+	extern Base::RBlockingQueque<RequestUnit *> G_RequestQuque;				/*!< 客户端请求队列 */
+	extern Base::RBlockingQueque<FileRequestUnit *> G_FileRequestQuque;		/*!< 文件客户端请求队列 */
 
 } //namespace Related 

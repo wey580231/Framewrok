@@ -1,4 +1,14 @@
-#pragma once
+/*!
+ * @brief     文件网络连接接收器
+ * @details 
+ * @author    wey
+ * @version   1.0
+ * @date      2021.03.10 08:19:04
+ * @warning
+ * @copyright NanJing RenGu.
+ * @note
+ */
+ #pragma once
 
 #include <QObject>
 #include <QSharedPointer>
