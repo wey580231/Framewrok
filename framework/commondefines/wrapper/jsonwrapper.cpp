@@ -929,6 +929,40 @@ namespace CommonDefines {
 		});
 	}
 
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.fileType, request.m_fileType);
+			obj.insert(m_jsonKey.id, request.m_id);
+			obj.insert(m_jsonKey.taskId, request.m_taskId);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			request.m_fileType = jsonObject.value(m_jsonKey.fileType).toInt();
+			request.m_id	= jsonObject.value(m_jsonKey.id).toString();
+			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+		});
+	}
+
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDataFileDeleteResponse & response)
+	{
+		return wrapObject([&](QJsonObject & obj) {
+			obj.insert(m_jsonKey.result, response.m_deleteResult);
+			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
+		});
+	}
+
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDataFileDeleteResponse & response)
+	{
+		return unwrapObject(data, [&](QJsonObject & jsonObject) {
+			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_errorInfo	= static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
+		});
+	}
+
 	/******************************      任务试验图片资源        ******************************************/
 
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllTaskImageRequest & request)

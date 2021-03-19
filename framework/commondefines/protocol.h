@@ -129,12 +129,10 @@ namespace Datastruct {
 	 */
 	struct FileInfoParameter {
 		FileInfoParameter() : m_totalLength(0), m_currentLength(0) {
-			memset(m_fileId, 0, 50);
-			memset(m_md5, 0, 50);
+			memset(m_fileId, 0, 32);
 		}
 
-		char m_fileId[50];
-		char m_md5[50];
+		char m_fileId[32];
 		qint64 m_totalLength;
 		qint64 m_currentLength;
 	};
@@ -242,7 +240,6 @@ namespace Datastruct {
 		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
 		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
 	};
-
 
 	/*!
 	 * @brief 创建任务请求
@@ -538,6 +535,16 @@ namespace Datastruct {
 	};
 
 	/*!
+	 * @brief  文件类型
+	 */
+	enum  FileType {
+		File_Image,				/*!< 图片文件 */
+		File_XML,				/*!< xml文件 */
+		File_Dat,				/*!< dat文件 */
+	};
+
+
+	/*!
 	 * @brief  任务数据文件创建请求
 	 */
 	struct TaskDataFileCreateRequest{
@@ -574,7 +581,10 @@ namespace Datastruct {
 	 * @details
 	 */
 	struct TaskDataFileDeleteRequest {
+		TaskDataFileDeleteRequest():m_fileType(0){
+		}
 		
+		int m_fileType;						/*!< 文件类型 */
 		QString m_id;						/*!< 唯一标识Id */
 		QString m_taskId;					/*!< 任务Id */
 	};
@@ -622,6 +632,7 @@ namespace Datastruct {
 	 * @details 
 	 */
 	struct TaskImageDeleteRequest {
+		int fileType;
 		QString m_id;						/*!< 唯一标识Id */
 		QString m_taskId;					/*!< 任务Id */
 	};

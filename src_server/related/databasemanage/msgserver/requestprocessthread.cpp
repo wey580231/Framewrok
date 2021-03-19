@@ -222,13 +222,13 @@ namespace Related {
 				Datastruct::TaskDataFileCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
 					Datastruct::TaskDataFileCreateResponse response;
-					if (request.m_suffix == QStringLiteral("png") || request.m_suffix == QStringLiteral("jpg")) {
+					if (request.m_suffix == QStringLiteral("png") || request.m_suffix == QStringLiteral("jpg")) 
+					{
 						response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
 					}
 					else if(request.m_suffix == QStringLiteral("xml"))
 					{
 						response = m_processCenter.processTaskOriginalXMLCreate(unit->m_clientId, request);
-
 					}
 					else if (request.m_suffix == QStringLiteral("dat"))
 					{
@@ -238,21 +238,31 @@ namespace Related {
 				}
 			}
 				break;
-
+			case  Datastruct::P_TaskDataFileDelete: {
+				Datastruct::TaskDataFileDeleteRequest request;
+				if (JsonWrapper::instance()->unrap(jsonData, request)) {
+					Datastruct::TaskDataFileDeleteResponse response;
+					if (request.m_fileType == Datastruct::File_Image) 
+					{
+						response = m_processCenter.processTaskImageDelete(unit->m_clientId, request);
+					} 
+					else if(request.m_fileType == Datastruct::File_XML)
+					{
+						response = m_processCenter.processTaskOriginalXMLDelete(unit->m_clientId, request);
+					}
+					else if (request.m_fileType == Datastruct::File_Dat)
+					{
+						response = m_processCenter.processTaskOriginalDataDelete(unit->m_clientId, request);
+					}
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDataFileDelete, JsonWrapper::instance()->wrap(response));
+				}
+			}
 
 			case  Datastruct::P_TaskImageList : {
 				Datastruct::LoadAllTaskImageRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
 					Datastruct::LoadAllTaskImageResponse response = m_processCenter.processTaskImageList(unit->m_clientId, request);
 					runit->m_resposneData = makePacket(Datastruct::P_TaskImageList, JsonWrapper::instance()->wrap(response));
-				}
-			}
-				break;
-			case  Datastruct::P_TaskImageDelete : {
-				Datastruct::TaskImageDeleteRequest request;
-				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-					Datastruct::TaskImageDeleteResponse response = m_processCenter.processTaskImageDelete(unit->m_clientId, request);
-					runit->m_resposneData = makePacket(Datastruct::P_TaskImageDelete, JsonWrapper::instance()->wrap(response));
 				}
 			}
 				break;

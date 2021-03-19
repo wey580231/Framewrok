@@ -59,21 +59,12 @@ namespace Related {
 		Datastruct::TaskDataFileCreateResponse  processTaskOriginalXMLCreate(int clientId, const Datastruct::TaskDataFileCreateRequest & request);
 		Datastruct::TaskDataFileCreateResponse  processTaskOriginalDataCreate(int clientId, const Datastruct::TaskDataFileCreateRequest & request);
 
-		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
-		Datastruct::TaskImageDeleteResponse processTaskOriginalXMLDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
-		Datastruct::TaskImageDeleteResponse processTaskOriginalDataDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
-
-
-/*		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);*/
-	
+		Datastruct::TaskDataFileDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request);
+		Datastruct::TaskDataFileDeleteResponse processTaskOriginalXMLDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request);
+		Datastruct::TaskDataFileDeleteResponse processTaskOriginalDataDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request);
 
 		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
 		
-		// 
-// 		void processTaskImageModify(const Datastruct::LoadAllTaskImageRequest & request);
-// 		void processTaskOriginalXMLModify(const Datastruct::LoadAllTaskImageRequest & request);
-// 		void processTaskOriginalDataModify(const Datastruct::LoadAllTaskImageRequest & request);
-
 
 	
 	

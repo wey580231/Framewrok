@@ -89,7 +89,7 @@ namespace CommonDefines {
 		const QString size = "size";
 		const QString MD5 = "MD5";
 		const QString lastLen = "lastLen";
-
+		const QString fileType = "fileType";
 
 		const QString sensorType = "sensorType";
 		const QString platformPower = "platformPower";

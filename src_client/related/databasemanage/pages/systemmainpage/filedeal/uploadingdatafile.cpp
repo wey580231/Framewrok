@@ -142,17 +142,14 @@ namespace Related {
 				// 
 				Datastruct::FileInfoParameter  parameter;
 				memcpy(parameter.m_fileId, m_fileId.toLocal8Bit().data(), m_fileId.toLocal8Bit().size());
-				memcpy(parameter.m_md5, m_fileDescription.m_md5.toLocal8Bit().data(), m_fileDescription.m_md5.toLocal8Bit().size());
 				parameter.m_totalLength = m_file->size();
-				parameter.m_currentLength = data.size();
+				parameter.m_currentLength = m_currentLength;
 
 				FileNetConnector::instance()->write(parameter, data);
 
 				emit signalSendFileProgressStataus(m_fileDescription.m_size, m_currentLength);
 
-				bool t_b_fileEnd = m_file->atEnd();
-
-				if (t_b_fileEnd) {
+				if (m_file->atEnd()) {
 					closeFile();
 				}
 			}

@@ -18,6 +18,7 @@ namespace Related {
 
 	void FileSession::processData(QByteArray & requestData)
 	{
+
 		FileRequestUnit * unit = new FileRequestUnit();
 		unit->m_clientId = m_tcpClient->id();
 		unit->m_requestData.swap(requestData);

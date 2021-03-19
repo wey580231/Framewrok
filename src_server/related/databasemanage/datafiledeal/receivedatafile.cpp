@@ -6,8 +6,7 @@ namespace Related {
 
 	ReceiveDataFile::ReceiveDataFile(QObject *parent)
 		: QObject(parent),
-		m_dataProcess(nullptr),
-		m_saveFileIndex(0)
+		m_dataProcess(nullptr)
 	{
 
 	}
@@ -26,7 +25,7 @@ namespace Related {
 		m_taskId = taskId;
 	}
 
-	void ReceiveDataFile::setFileType(FileType type)
+	void ReceiveDataFile::setFileType(Datastruct::FileType type)
 	{
 		m_fileType = type;
 	}
@@ -34,29 +33,41 @@ namespace Related {
 	void ReceiveDataFile::setFileName(QString rootPath ,QString fileName, QString suffix)
 	{
 		QString filePath;
-		if (m_fileType == File_Image) {
+		if (m_fileType == Datastruct::File_Image) {
 			filePath = QString("%1/%2/%3").arg(rootPath).arg(m_taskId).arg(QStringLiteral("image"));
 		}
-		else if(m_fileType == File_Data)
+		else if(m_fileType == Datastruct::P_FileData || m_fileType == Datastruct::File_XML)
 		{
 			filePath = QString("%1/%2/%3").arg(rootPath).arg(m_taskId).arg(QStringLiteral("data"));
+
+			m_resolveFilePath = QString("%1/%2/%3").arg(rootPath).arg(m_taskId).arg(QStringLiteral("resolvedata"));
 		}
 		//
 		Base::RUtil::createDir(filePath);
+		Base::RUtil::createDir(m_resolveFilePath);
 
-		QString t_allFileName = QString("%1/%2.%3").arg(filePath).arg(fileName).arg(suffix);
+		m_filePathName = QString("%1/%2.%3").arg(filePath).arg(fileName).arg(suffix);
 
-		openFile(t_allFileName);
+		openFile(m_filePathName);
 	}
 
-	void ReceiveDataFile::seFileData(Datastruct::FileInfoParameter parameter, QByteArray data)
+	void ReceiveDataFile::setFileData(Datastruct::FileInfoParameter parameter, QByteArray data)
 	{	
 		if (m_file != nullptr) {
 			m_file->write(data);
 			m_file->flush();
-			m_saveFileIndex += parameter.m_currentLength;
-			if (m_saveFileIndex == parameter.m_totalLength) {
+			qDebug() << "___________setFileData____________________" << parameter.m_totalLength << parameter.m_currentLength << data.size();
+
+			if (parameter.m_currentLength >= parameter.m_totalLength  ) {
+				//[1] 关闭文件
 				closeFile();
+				//[2] 对数据文件进行处理
+				if (m_fileType == Datastruct::P_FileData || m_fileType == Datastruct::File_XML) {
+					m_originalDataDeal = new OriginalDataDealRunnable();
+					m_originalDataDeal->setDataFilePath(m_filePathName);
+					m_originalDataDeal->setResolveDataFilePath(m_resolveFilePath);
+					QThreadPool::globalInstance()->start(m_originalDataDeal);
+				}	
 			}
 		}
 	}

@@ -20,9 +20,7 @@ namespace Related {
 
 	FileRequestProcessThread::~FileRequestProcessThread()
 	{
-		runningFlag = false;
-		g_cv_FileRequestQuqueCondition.notify_one();
-		wait();
+
 	}
 
 	void FileRequestProcessThread::startMe()
@@ -42,13 +40,6 @@ namespace Related {
 
 	void FileRequestProcessThread::run()
 	{
-		m_dbConnect = Base::DatabaseManager::instance()->newDatabase();
-		if (m_dbConnect == nullptr) {
-			RLOG_ERROR("create database error!");
-			return;
-		}
-// 
-// 		m_processCenter.bindDatabase(m_dbConnect);
 
 // 		while (runningFlag) {
 // 
@@ -108,8 +99,7 @@ namespace Related {
 			if (G_MapWriteRawDataFile.size() > 0) {
 				if (G_MapWriteRawDataFile.contains(QString::fromLocal8Bit(Parameter.m_fileId))) {
 					ReceiveDataFile * dataFile = G_MapWriteRawDataFile.find(QString::fromLocal8Bit(Parameter.m_fileId)).value();
-					dataFile->seFileData(Parameter, data);
-					dataFile->seFileData(Parameter, data);
+					dataFile->setFileData(Parameter, data);
 				}
 			}
 		}

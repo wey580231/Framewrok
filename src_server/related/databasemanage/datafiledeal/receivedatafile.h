@@ -13,11 +13,13 @@
 #include <QObject>
 #include <QFile>
 #include <QByteArray>
+#include <QThreadPool>
 
 #include <base/util/rutil.h>
 #include <commondefines/protocol.h>
 
 #include "../business/dataprocesscenter.h"
+#include "originaldatadealrunnable.h"
 
 namespace Related {
 
@@ -29,19 +31,13 @@ public:
 	ReceiveDataFile(QObject *parent = nullptr);
 	~ReceiveDataFile();
 
-	enum FileType{
-		File_Image,
-		File_Data,
-	};
-
 	void bindDataProcess(DataProcessCenter * dataProcess);
 
 	void setTaskId(QString taskId);
-	void setFileType(FileType type);
+	void setFileType(Datastruct::FileType type);
 	void setFileName(QString rootPath, QString fileName, QString suffix);
 
-
-	void seFileData(Datastruct::FileInfoParameter parameter, QByteArray data);
+	void setFileData(Datastruct::FileInfoParameter parameter, QByteArray data);
 
 private:
 	bool openFile(QString fileName);
@@ -49,14 +45,15 @@ private:
 
 private:
 	DataProcessCenter * m_dataProcess;	
-	QString m_rootPath;
-
 	QString  m_taskId;					/*!< 任务Id */
-	FileType m_fileType;				/*!< 文件类型 */
-	QString m_fileId;
-	QFile * m_file;
+	Datastruct::FileType m_fileType;	/*!< 文件类型 */
+	QString m_fileId;					/*!< 文件Id */
+	QString m_filePathName;				/*!< 文件路径 */
+	QString m_resolveFilePath;			/*!< 处理完成的文件路径 */
 
-	int m_saveFileIndex;
+	QFile * m_file;						/*!< 文件句柄 */
+
+	OriginalDataDealRunnable * m_originalDataDeal;	
 };
 
 }//namespace Related

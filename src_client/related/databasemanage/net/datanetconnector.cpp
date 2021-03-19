@@ -125,6 +125,12 @@ namespace Related {
 		sendData(array);
 	}
 
+	void DataNetConnector::write(const Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		QByteArray array = makePacket(Datastruct::P_TaskDataFileDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
+		sendData(array);
+	}
+
 	void DataNetConnector::write(const Datastruct::LoadAllTaskImageRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_TaskImageList, CommonDefines::JsonWrapper::instance()->wrap(request));
@@ -444,15 +450,15 @@ namespace Related {
 			/*****************  任务数据文件  *****************************/
 			case  Datastruct::P_TaskDataFileCreate: {
 				Datastruct::TaskDataFileCreateResponse response;
-
-				qDebug() << "_____________________P_TaskDataFileCreate________________________________";
-
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvTaskDataFileCreateResponse(response);
 				}
 			}
-														  break;
+			  break;
+			case Datastruct::P_TaskDataFileDelete: {
 
+			}
+												   break;
 			/*****************  任务试验图片资源  *****************************/
 
 			case  Datastruct::P_TaskImageList: {

@@ -114,7 +114,8 @@
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
-    <ClCompile Include="databasemanage\datafiledeal\package.cpp" />
+    <ClCompile Include="databasemanage\datafiledeal\originaldatadealrunnable.cpp" />
+    <ClCompile Include="databasemanage\datafiledeal\rawdatafileprocessing.cpp" />
     <ClCompile Include="databasemanage\datafiledeal\receivedatafile.cpp" />
     <ClCompile Include="databasemanage\fileserver\filerequestprocessthread.cpp" />
     <ClCompile Include="databasemanage\fileserver\fileserver.cpp" />
@@ -143,9 +144,10 @@
     <QtMoc Include="databasemanage\customwidget\pageswitchbar.h" />
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
-    <QtMoc Include="databasemanage\datafiledeal\package.h" />
     <QtMoc Include="databasemanage\datafiledeal\receivedatafile.h" />
     <QtMoc Include="databasemanage\business\fileprocesscenter.h" />
+    <QtMoc Include="databasemanage\datafiledeal\originaldatadealrunnable.h" />
+    <QtMoc Include="databasemanage\datafiledeal\rawdatafileprocessing.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\fileserver\fileserver.h" />
     <QtMoc Include="databasemanage\fileserver\filerequestprocessthread.h" />

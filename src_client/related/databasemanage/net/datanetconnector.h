@@ -55,6 +55,7 @@ namespace Related {
 		 * @brief 任务数据文件
 		 */
 		void write(const Datastruct::TaskDataFileCreateRequest & request);
+		void write(const Datastruct::TaskDataFileDeleteRequest & request);
 
 		/*!
 		 * @brief 任务试验图片资源

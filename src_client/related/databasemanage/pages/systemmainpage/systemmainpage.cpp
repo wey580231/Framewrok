@@ -242,18 +242,32 @@ namespace Related {
 		if (result != Base::RMessageBox::Yes) {
 			return;
 		}
-		// 
+		//删除任务信息
 		Datastruct::TaskDeleteRequest request;
 		request.taskId = taskId;
 		DataNetConnector::instance()->write(request);
-		//
+		//删除任务平台
 		Datastruct::TaskDetectPlatformDeleteRequest taskDetectPlatformDeleteRequest;
 		taskDetectPlatformDeleteRequest.m_taskId = taskId;
 		DataNetConnector::instance()->write(taskDetectPlatformDeleteRequest);
-		//
-		Datastruct::TaskImageDeleteRequest taskImageDeleteRequest;
-		request.taskId = taskId;
-		DataNetConnector::instance()->write(taskImageDeleteRequest);
+		
+		//删除任务图片
+		Datastruct::TaskDataFileDeleteRequest imageRequest;
+		imageRequest.m_fileType = Datastruct::File_Image;
+		imageRequest.m_taskId = taskId;
+		DataNetConnector::instance()->write(imageRequest);
+
+		//删除任务Xml 原始文件
+		Datastruct::TaskDataFileDeleteRequest xmlRequest;
+		xmlRequest.m_fileType = Datastruct::File_XML;
+		xmlRequest.m_taskId = taskId;
+		DataNetConnector::instance()->write(xmlRequest);
+
+		//删除任务Dat原始文件
+		Datastruct::TaskDataFileDeleteRequest datRequest;
+		datRequest.m_fileType = Datastruct::File_Dat;
+		datRequest.m_taskId = taskId;
+		DataNetConnector::instance()->write(datRequest);
 	}
 
 	void SystemMainPage::processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response)

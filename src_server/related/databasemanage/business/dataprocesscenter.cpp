@@ -660,7 +660,7 @@ namespace Related {
 						ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 						t_writeRawDataFile->bindDataProcess(this);
 						t_writeRawDataFile->setTaskId(request.m_taskId);
-						t_writeRawDataFile->setFileType(ReceiveDataFile::File_Image);
+						t_writeRawDataFile->setFileType(Datastruct::File_Image);
 						t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 						G_MapWriteRawDataFile.insert(fileId, t_writeRawDataFile);
 					}
@@ -692,7 +692,7 @@ namespace Related {
 					ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 					t_writeRawDataFile->bindDataProcess(this);
 					t_writeRawDataFile->setTaskId(request.m_taskId);
-					t_writeRawDataFile->setFileType(ReceiveDataFile::File_Image);
+					t_writeRawDataFile->setFileType(Datastruct::File_Image);
 					t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 					G_MapWriteRawDataFile.insert(data.id, t_writeRawDataFile);
 				}
@@ -753,7 +753,7 @@ namespace Related {
 						ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 						t_writeRawDataFile->bindDataProcess(this);
 						t_writeRawDataFile->setTaskId(request.m_taskId);
-						t_writeRawDataFile->setFileType(ReceiveDataFile::File_Data);
+						t_writeRawDataFile->setFileType(Datastruct::File_XML);
 						t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 						G_MapWriteRawDataFile.insert(fileId, t_writeRawDataFile);
 					}
@@ -785,7 +785,7 @@ namespace Related {
 					ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 					t_writeRawDataFile->bindDataProcess(this);
 					t_writeRawDataFile->setTaskId(request.m_taskId);
-					t_writeRawDataFile->setFileType(ReceiveDataFile::File_Image);
+					t_writeRawDataFile->setFileType(Datastruct::File_XML);
 					t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 					G_MapWriteRawDataFile.insert(data.id, t_writeRawDataFile);
 				}
@@ -843,7 +843,7 @@ namespace Related {
 						ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 						t_writeRawDataFile->bindDataProcess(this);
 						t_writeRawDataFile->setTaskId(request.m_taskId);
-						t_writeRawDataFile->setFileType(ReceiveDataFile::File_Data);
+						t_writeRawDataFile->setFileType(Datastruct::File_Dat);
 						t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 						G_MapWriteRawDataFile.insert(fileId, t_writeRawDataFile);
 					}
@@ -873,7 +873,7 @@ namespace Related {
 					ReceiveDataFile * t_writeRawDataFile = new ReceiveDataFile();
 					t_writeRawDataFile->bindDataProcess(this);
 					t_writeRawDataFile->setTaskId(request.m_taskId);
-					t_writeRawDataFile->setFileType(ReceiveDataFile::File_Image);
+					t_writeRawDataFile->setFileType(Datastruct::File_Dat);
 					t_writeRawDataFile->setFileName(G_FileSaveRootPath, request.m_name, request.m_suffix);
 					G_MapWriteRawDataFile.insert(data.id, t_writeRawDataFile);
 				}
@@ -891,6 +891,83 @@ namespace Related {
 		return response;
 	}
 
+	Datastruct::TaskDataFileDeleteResponse DataProcessCenter::processTaskImageDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		Datastruct::TaskDataFileDeleteResponse response;
+		Table::TaskImageEntity taskImage;
+		Base::RDelete rde(taskImage.table);
+		if (!request.m_id.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskImage.id, request.m_id));
+		}
+		if (!request.m_taskId.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskImage.taskId, request.m_taskId));
+		}
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskDataFileDeleteResponse DataProcessCenter::processTaskOriginalXMLDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		Datastruct::TaskDataFileDeleteResponse response;
+		Table::TaskPlatformOriginalXmlEntity taskXml;
+		Base::RDelete rde(taskXml.table);
+		if (!request.m_id.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskXml.id, request.m_id));
+		}
+		if (!request.m_taskId.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(taskXml.taskId, request.m_taskId));
+		}
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
+
+	Datastruct::TaskDataFileDeleteResponse DataProcessCenter::processTaskOriginalDataDelete(int clientId, const Datastruct::TaskDataFileDeleteRequest & request)
+	{
+		Datastruct::TaskDataFileDeleteResponse response;
+		Table::TaskplatformOriginalDataEntity dataEntity;
+		Base::RDelete rde(dataEntity.table);
+		if (!request.m_id.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(dataEntity.id, request.m_id));
+		}
+		if (!request.m_taskId.isEmpty()) {
+			rde.createCriteria()
+				.add(Base::Restrictions::eq(dataEntity.taskId, request.m_taskId));
+		}
+
+		QSqlQuery query(m_database->sqlDatabase());
+		if (query.exec(rde.sql())) {
+			if (query.numRowsAffected()) {
+				response.m_deleteResult = true;
+			}
+			else {
+				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
+			}
+		}
+		return response;
+	}
 
 	Datastruct::LoadAllTaskImageResponse DataProcessCenter::processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request)
 	{
@@ -929,41 +1006,6 @@ namespace Related {
 		return response;
 	}
 
-	Datastruct::TaskImageDeleteResponse DataProcessCenter::processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request)
-	{
-		Datastruct::TaskImageDeleteResponse response;
-		Table::TaskImageEntity taskImage;
-		Base::RDelete rde(taskImage.table);
-		if (!request.m_id.isEmpty()) {
-			rde.createCriteria()
-				.add(Base::Restrictions::eq(taskImage.id, request.m_id));
-		}
-		if (!request.m_taskId.isEmpty()) {
-			rde.createCriteria()
-				.add(Base::Restrictions::eq(taskImage.taskId, request.m_taskId));
-		 }
-
-		QSqlQuery query(m_database->sqlDatabase());
-		if (query.exec(rde.sql())) {
-			if (query.numRowsAffected()) {
-				response.m_deleteResult = true;
-			}
-			else {
-				response.m_errorInfo = Datastruct::SQL_EXECUTE_ERROR;
-			}
-		}
-		return response;
-	}
-
-	Datastruct::TaskImageDeleteResponse DataProcessCenter::processTaskOriginalXMLDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request)
-	{
-		return Datastruct::TaskImageDeleteResponse();
-	}
-
-	Datastruct::TaskImageDeleteResponse DataProcessCenter::processTaskOriginalDataDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request)
-	{
-		return Datastruct::TaskImageDeleteResponse();
-	}
 
 	Datastruct::DutyRecordCreateResponse DataProcessCenter::processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request)
 	{
