@@ -64,7 +64,7 @@ namespace Related {
 		Datastruct::TaskImageDeleteResponse processTaskOriginalDataDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
 
 
-		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
+/*		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);*/
 	
 
 		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
