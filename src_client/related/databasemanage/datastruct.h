@@ -99,42 +99,6 @@ namespace Related {
 	};
 
 	/*!
-	 * @brief 任务图片表格列
-	 */
-	enum ImageTableColumn {
-		Img_Id,
-		Img_Name,
-		Img_FileTimeStamp,
-		Img_FileType,
-		Img_FileSize,
-	};
-
-	/*!
-	 * @brief 数据分析页面数据结构
-	 */
-	enum DataAnalyseColumnIndex {
-		D_Id,
-		D_BatchNumber,
-		D_Time,
-		D_LocalDistinguish,
-		D_Result,
-		D_PlatformName,
-		D_DataType
-	};
-
-	/*!
-	 * @brief 用户管理表格列
-	 */
-	enum UserManageColumnIndex {
-		U_Id,
-		U_UserName,				/*!< 用户名 */
-		U_RegisterTime,			/*!< 注册时间 */
-		U_LastLoginTime,		/*!< 上次登录时间 */
-		U_UserRights,			/*!< 用户权限 */
-		U_IsManage				/*!< 是否为管理员 */
-	};
-
-	/*!
 	 * @brief 用户数据管理结构
 	 */
 	struct UserManageData {
@@ -171,20 +135,56 @@ namespace Related {
 		QString taskDescription;		/*!< 描述 */
 	};
 
+
 	/*!
-	 * @brief   原始数据文件参数信息
-	 * @details 
+	 * @brief 用户管理表格列
 	 */
-	struct OriginalDataFileParameter
-	{
-		QString name;				/*!< 名称 */
-		QString path;				/*!< 路径: 相对路径 */
-		double size;				/*!< 文件大小 */
-		int startIndex;				/*!< 起始数据帧 */
-		int  endIndex;				/*!< 结束数据帧 */
-		QString createTime;			/*!< 创建时间 */
-		bool isDir;					/*!< 是否为文件夹 */
+	enum UserManageColumnIndex {
+		U_Id,
+		U_UserName,				/*!< 用户名 */
+		U_RegisterTime,			/*!< 注册时间 */
+		U_LastLoginTime,		/*!< 上次登录时间 */
+		U_UserRights,			/*!< 用户权限 */
+		U_IsManage				/*!< 是否为管理员 */
 	};
+
+	/*!
+	 * @brief 文件描述表格列
+	 */
+	enum FileDescriptionTableColumn {
+		FileDescription_Index,					/*!< 索引 */
+		FileDescription_Name,					/*!< 文件名 */
+		FileDescription_FileTimeStamp,			/*!< 文件创建时间 */
+		FileDescription_FileType,				/*!< 文件类型 */
+		FileDescription_FileSize,				/*!< 文件大小 */
+	};
+
+	enum  FileType{
+		File_image,
+		File_Xml,
+		File_Dat,
+	};
+
+	/*!
+	 * @brief  文件描述书
+	 * @details 文件基本的描述信息
+	 */
+	struct FileDescriptionData {
+		FileDescriptionData() : m_size(0){
+		}
+
+		QString m_name;					/*!< 名称 */
+		QString m_suffix;				/*!< 后缀名 */
+		qint64 m_size;					/*!< 大小 */
+		QString m_fileTimeStamp;		/*!< 时间 */
+		QString m_md5;					/*!< MD5 */
+		QString m_filePath;				/*!< 全路径 */
+		QString m_rootPath;				/*!< 根路径 */
+
+		QString m_taskId;				/*!< 任务Id */
+		FileType m_FileType;			/*!< 文件类型 */
+	};
+
 
 	/*!
 	* @brief 值班日志表格列索引
@@ -388,6 +388,9 @@ namespace Related {
 		AIS_BuildDate,				/*!< 建造时间 */
 		AIS_Port,					/*!< 船籍港 */
 	};
+
+
+
 } //namespace Related
 
 

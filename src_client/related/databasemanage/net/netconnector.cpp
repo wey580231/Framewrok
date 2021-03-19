@@ -8,6 +8,7 @@ namespace Related {
 	NetConnector::NetConnector(Datastruct::ConnectionType type, QObject *parent)
 		: m_connType(type),QObject(parent)
 	{
+		m_index = 0;
 		initNetwork();
 	}
 
@@ -19,7 +20,7 @@ namespace Related {
 		m_dataTcpClient->setReconnCallback(std::bind(&NetConnector::reconnCallBack, this, std::placeholders::_1));
 		m_dataTcpClient->setCloseCallBack(std::bind(&NetConnector::closeCallBack, this, std::placeholders::_1));
 		m_dataTcpClient->setRecvCallback(std::bind(&NetConnector::recvDataCallBack, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-
+		m_dataTcpClient->setWriteCallBack(std::bind(&NetConnector::writeDataCallBack, this, std::placeholders::_1, std::placeholders::_2));
 		m_eventLoop->startLoop();
 	}
 
@@ -40,6 +41,11 @@ namespace Related {
 	void NetConnector::closeCallBack(Network::Uv_TcpClient * client)
 	{
 		emit netConnected(m_connType, false);
+	}
+
+	void NetConnector::writeDataCallBack(Network::Uv_TcpClient * client, int dataLen)
+	{
+		emit writeDataResult(m_connType);
 	}
 
 	/*!

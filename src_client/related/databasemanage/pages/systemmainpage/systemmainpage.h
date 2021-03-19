@@ -32,6 +32,7 @@
 #include "../abstractpage.h"
 #include "taskoverviewitem.h"
 #include "newtaskdialog.h"
+#include "filetransferdialog.h"
 
 namespace Related {
 
@@ -64,6 +65,7 @@ namespace Related {
 	private slots:
 		void slotNewTaskClickde();
 		void slotRefreshTaskClicked();
+		void slotFileUploadListClicked();
 		void slotSearchTaskClicked();
 		void slotDeleteTask(QString taskId);
 		void processQueryAllTaskResponse(const Datastruct::LoadAllTaskResponse & response);
@@ -87,6 +89,7 @@ namespace Related {
 		Base::RIconButton * m_newTaskButt;				
 		Base::RIconButton * m_refreshTaskButt;
 		Base::RIconButton * m_searchTaskButt;
+		Base::RIconButton * m_fileUploadButt;
 
 		TimeRangeEdit * m_timeRange;
 		QComboBox * m_locationBox;
@@ -96,7 +99,9 @@ namespace Related {
 		QWidget * m_taskWindow;							/*!< 任务窗口区 */
 
 		QList<TaskOverViewItem *> m_taskItems;			/*!< 任务列表 */	
-		bool m_firstLoadData;	/*!< 第一次加载页面显示 */
+		bool m_firstLoadData;							/*!< 第一次加载页面显示 */
+
+		FileTransferDialog * m_fileUploadingDialog;		/*!< 文件上传界面 */
 	};
 
 } //namespace Related

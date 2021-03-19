@@ -28,10 +28,14 @@ namespace Related {
 	MainWindow::~MainWindow()
 	{
 		RSingleton<RequestProcessThread>::instance()->stopMe();
+		RSingleton<FileRequestProcessThread>::instance()->stopMe();
 	}
 
 	void MainWindow::init()
 	{
+		ConfigKey ckey;
+		G_FileSaveRootPath = Base::RUtil::getGlobalValue(ckey.m_fileSave, ckey.m_filePath, "F:/RootPath").toString();
+
 		m_stackedWidget = new QStackedWidget();
 
 		QWidget * mainWidget = new QWidget();

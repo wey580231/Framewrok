@@ -1,5 +1,7 @@
 #include "signaldispatch.h"
 
+#include <QDebug>
+
 namespace Related {
 
 	SignalDispatch * SignalDispatch::m_instance = nullptr;
@@ -89,9 +91,9 @@ namespace Related {
 		emit respTaskDetectPlatformModifyResponse(response);
 	}
 
-	void SignalDispatch::recvTaskImageCreateResponse(const Datastruct::TaskImageCreateResponse & response)
+	void SignalDispatch::recvTaskDataFileCreateResponse(const Datastruct::TaskDataFileCreateResponse & response)
 	{
-		emit respTaskImageCreateResponse(response);
+		emit respTaskDataFileCreateResponse(response);
 	}
 
 	void SignalDispatch::recvQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response)
@@ -99,19 +101,9 @@ namespace Related {
 		emit respQueryAllTaskImageResponse(response);
 	}
 
-	void SignalDispatch::recvTaskImageByConditionResponse(const Datastruct::TaskImageByConditionResponse & response)
-	{
-		emit respTaskImageByConditionResponse(response);
-	}
-
 	void SignalDispatch::recvTaskImageDeleteResponse(const Datastruct::TaskImageDeleteResponse & response)
 	{
 		emit respTaskImageDeleteResponse(response);
-	}
-
-	void SignalDispatch::recvTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response)
-	{
-		emit respTaskImageModifyResponse(response);
 	}
 
 	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
@@ -122,8 +114,8 @@ namespace Related {
 	void SignalDispatch::recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
 		emit respQueryAllDutyRecordResponse(response);
-
 	}
+
 	void SignalDispatch::recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
 		emit respDutyRecordDeleteResponse(response);

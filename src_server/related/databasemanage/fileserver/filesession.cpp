@@ -18,13 +18,16 @@ namespace Related {
 
 	void FileSession::processData(QByteArray & requestData)
 	{
-		qDebug() << "____________________FileSession____________________________________";
-
 		FileRequestUnit * unit = new FileRequestUnit();
 		unit->m_clientId = m_tcpClient->id();
 		unit->m_requestData.swap(requestData);
 
-		G_FileRequestQuque.put(unit);
+		//G_FileRequestQuque.put(unit);
+
+		g_mutex_FileRequestQueueMutex.lock();
+		g_FileRequestQueue.push_back(unit);
+		g_mutex_FileRequestQueueMutex.unlock();
+		g_cv_FileRequestQuqueCondition.notify_one();
 	}
 
 } //namespace Related 

@@ -3,10 +3,13 @@
 #include <QDebug>
 
 #include <commondefines/protocol.h>
+#include <commondefines/wrapper/jsonwrapper.h>
 #include <base\util\rlog.h>
 
 #include "../global.h"
 #include "../datastruct.h"
+
+using namespace CommonDefines;
 
 namespace Related {
 
@@ -17,6 +20,9 @@ namespace Related {
 
 	FileRequestProcessThread::~FileRequestProcessThread()
 	{
+		runningFlag = false;
+		g_cv_FileRequestQuqueCondition.notify_one();
+		wait();
 	}
 
 	void FileRequestProcessThread::startMe()
@@ -30,26 +36,52 @@ namespace Related {
 	{
 		RTask::stopMe();
 		runningFlag = false;
-		G_FileRequestQuque.wakeUpConsumer(true);
+		//G_FileRequestQuque.wakeUpConsumer(true);
+		g_cv_FileRequestQuqueCondition.notify_all();
 	}
 
 	void FileRequestProcessThread::run()
 	{
+		m_dbConnect = Base::DatabaseManager::instance()->newDatabase();
+		if (m_dbConnect == nullptr) {
+			RLOG_ERROR("create database error!");
+			return;
+		}
+// 
+// 		m_processCenter.bindDatabase(m_dbConnect);
 
-		// 处理数据
+// 		while (runningFlag) {
+// 
+// 			while (runningFlag && G_FileRequestQuque.size() == 0) {
+// 				G_FileRequestQuque.wait();
+// 			}
+// 
+// 			if (runningFlag) {
+// 				//[1]
+// 				std::list<FileRequestUnit *> dataList = G_FileRequestQuque.takeAll();
+// 
+// 				std::for_each(dataList.begin(), dataList.end(), [&](FileRequestUnit * unit) {
+// 					parseFileRequest(unit);
+// 
+// 					//delete unit;
+// 				});
+// 			}
+// 		}
+
 		while (runningFlag) {
-
-			while (runningFlag && G_FileRequestQuque.size() == 0) {
-				G_FileRequestQuque.wait();
+			while (runningFlag && g_FileRequestQueue.size() == 0) {
+				std::unique_lock<std::mutex> lg(g_mutex_FileRequestQueueMutex);
+				g_cv_FileRequestQuqueCondition.wait(lg);
 			}
 
-			if (runningFlag) {
-				//[1]
-				std::list<FileRequestUnit *> dataList = G_FileRequestQuque.takeAll();
-
-				std::for_each(dataList.begin(), dataList.end(), [&](FileRequestUnit * unit) {
-					parseFileRequest(unit);
-				});
+			while (runningFlag && g_FileRequestQueue.size() > 0) {
+				g_mutex_FileRequestQueueMutex.lock();
+				FileRequestUnit * unit = g_FileRequestQueue.dequeue();
+				g_mutex_FileRequestQueueMutex.unlock();
+				//[]解析数据信息
+				parseFileRequest(unit);
+				//[] 释放信息
+				//delete unit;
 			}
 		}
 	}
@@ -60,18 +92,28 @@ namespace Related {
 	 */
 	void FileRequestProcessThread::parseFileRequest(FileRequestUnit * unit)
 	{
-		qDebug() << "__________parseFileRequest_______________121212_____";
 		Datastruct::PacketHead head;
 		memcpy((char *)&head, unit->m_requestData.data(), sizeof(Datastruct::PacketHead));
-
+		
 		switch (head.m_packetType)
 		{
-		case Datastruct::P_RawFile: {
+		case Datastruct::P_FileData: {
 
-			qDebug() << "___________Datastruct::P_RawFile:____________________";
+			Datastruct::FileInfoParameter Parameter;
+			memcpy((char *)&Parameter, unit->m_requestData.data() + sizeof(Datastruct::PacketHead), sizeof(Datastruct::FileInfoParameter));
 
+			QByteArray data(unit->m_requestData.data() + sizeof(Datastruct::PacketHead) + sizeof(Datastruct::FileInfoParameter), 
+				unit->m_requestData.size() - sizeof(Datastruct::PacketHead) - sizeof(Datastruct::FileInfoParameter) - sizeof(Datastruct::PacketTail));
+
+			if (G_MapWriteRawDataFile.size() > 0) {
+				if (G_MapWriteRawDataFile.contains(QString::fromLocal8Bit(Parameter.m_fileId))) {
+					ReceiveDataFile * dataFile = G_MapWriteRawDataFile.find(QString::fromLocal8Bit(Parameter.m_fileId)).value();
+					dataFile->seFileData(Parameter, data);
+					dataFile->seFileData(Parameter, data);
+				}
+			}
 		}
-									  break;
+		  break;
 
 		default:
 			break;

@@ -110,10 +110,12 @@
   <ItemGroup>
     <ClCompile Include="3rdLibrary\qcustomplot.cpp" />
     <ClCompile Include="databasemanage\business\dataprocesscenter.cpp" />
+    <ClCompile Include="databasemanage\business\fileprocesscenter.cpp" />
     <ClCompile Include="databasemanage\customwidget\pageswitchbar.cpp" />
     <ClCompile Include="databasemanage\customwidget\rlistwidget.cpp" />
     <ClCompile Include="databasemanage\customwidget\customwidgetcontainer.cpp" />
     <ClCompile Include="databasemanage\datafiledeal\package.cpp" />
+    <ClCompile Include="databasemanage\datafiledeal\receivedatafile.cpp" />
     <ClCompile Include="databasemanage\fileserver\filerequestprocessthread.cpp" />
     <ClCompile Include="databasemanage\fileserver\fileserver.cpp" />
     <ClCompile Include="databasemanage\fileserver\filesession.cpp" />
@@ -142,6 +144,8 @@
     <QtMoc Include="databasemanage\customwidget\customwidgetcontainer.h" />
     <QtMoc Include="databasemanage\business\dataprocesscenter.h" />
     <QtMoc Include="databasemanage\datafiledeal\package.h" />
+    <QtMoc Include="databasemanage\datafiledeal\receivedatafile.h" />
+    <QtMoc Include="databasemanage\business\fileprocesscenter.h" />
     <ClInclude Include="databasemanage\datastruct.h" />
     <QtMoc Include="databasemanage\fileserver\fileserver.h" />
     <QtMoc Include="databasemanage\fileserver\filerequestprocessthread.h" />

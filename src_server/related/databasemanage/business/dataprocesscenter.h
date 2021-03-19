@@ -54,12 +54,29 @@ namespace Related {
 		Datastruct::TaskDetectPlatformDeleteResponse processTaskDetectPlatformDelete(int clientId, const Datastruct::TaskDetectPlatformDeleteRequest & request);
 		Datastruct::TaskDetectPlatformModifyResponse processTaskDetectPlatformModify(int clientId, const Datastruct::TaskDetectPlatformModifyRequest & request);
 
-		// 有关任务试验图片资源
-		Datastruct::TaskImageCreateResponse  processTaskImageCreate(int clientId, const Datastruct::TaskImageCreateRequest & request);
-		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
-		Datastruct::TaskImageByConditionResponse processTaskImageByCondition(int clientId, const Datastruct::TaskImageByConditionRequest & request);
+		// 有关任务数据文件
+		Datastruct::TaskDataFileCreateResponse  processTaskImageCreate(int clientId, const Datastruct::TaskDataFileCreateRequest & request);
+		Datastruct::TaskDataFileCreateResponse  processTaskOriginalXMLCreate(int clientId, const Datastruct::TaskDataFileCreateRequest & request);
+		Datastruct::TaskDataFileCreateResponse  processTaskOriginalDataCreate(int clientId, const Datastruct::TaskDataFileCreateRequest & request);
+
 		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
-		Datastruct::TaskImageModifyResponse processTaskImageModify(int clientId, const Datastruct::TaskImageModifyRequest & request);
+		Datastruct::TaskImageDeleteResponse processTaskOriginalXMLDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
+		Datastruct::TaskImageDeleteResponse processTaskOriginalDataDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
+
+
+		Datastruct::TaskImageDeleteResponse processTaskImageDelete(int clientId, const Datastruct::TaskImageDeleteRequest & request);
+	
+
+		Datastruct::LoadAllTaskImageResponse processTaskImageList(int clientId, const Datastruct::LoadAllTaskImageRequest & request);
+		
+		// 
+// 		void processTaskImageModify(const Datastruct::LoadAllTaskImageRequest & request);
+// 		void processTaskOriginalXMLModify(const Datastruct::LoadAllTaskImageRequest & request);
+// 		void processTaskOriginalDataModify(const Datastruct::LoadAllTaskImageRequest & request);
+
+
+	
+	
 
 		// 有关值班日志
 		Datastruct::DutyRecordCreateResponse  processDutyRecordCreate(int clientId, const Datastruct::DutyRecordCreateRequest & request);
@@ -97,6 +114,9 @@ namespace Related {
 		Datastruct::AISDataByConditionResponse processAISDataByCondition(int clientId, const Datastruct::AISDataByConditionRequest & request);
 		Datastruct::AISDataDeleteResponse processAISDataDelete(int clientId, const Datastruct::AISDataDeleteRequest & request);
 		Datastruct::AISDataModifyResponse processAISDataModify(int clientId, const Datastruct::AISDataModifyRequest & request);
+
+
+	private:
 
 
 	private:

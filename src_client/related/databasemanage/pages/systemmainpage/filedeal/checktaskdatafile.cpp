@@ -1,17 +1,17 @@
-#include "taskrawdatafilecheckthread.h"
+#include "checktaskdatafile.h"
 
 #include <QDebug>
 #include <QDir>
 
 namespace Related {
 
-	TaskRawDataFileCheckThread::TaskRawDataFileCheckThread(QObject *parent)
+	CheckTaskDataFile::CheckTaskDataFile(QObject *parent)
 		: QObject(parent)
 	{
 		m_listFileNames.clear();
 	}
 
-	TaskRawDataFileCheckThread::~TaskRawDataFileCheckThread()
+	CheckTaskDataFile::~CheckTaskDataFile()
 	{
 	}
 
@@ -19,12 +19,12 @@ namespace Related {
 	 * @brief  设置数据文件根路径
 	 * @details 
 	 */
-	void TaskRawDataFileCheckThread::setRawDataFileRootPath(QString path)
+	void CheckTaskDataFile::setRawDataFileRootPath(QString path)
 	{
 		m_rootPath = path;
 	}
 
-	bool TaskRawDataFileCheckThread::checkRawDataDir()
+	bool CheckTaskDataFile::checkRawDataDir()
 	{
 		// 判断文件路径是否有效
 		QDir dir(m_rootPath);
@@ -38,13 +38,13 @@ namespace Related {
 		return true;
 	}
 
-	QStringList TaskRawDataFileCheckThread::getFileLists()
+	QStringList CheckTaskDataFile::getFileLists()
 	{
 		return m_listFileNames;
 	}
 
 
-	bool TaskRawDataFileCheckThread::dealRawDataDir(QString path)
+	bool CheckTaskDataFile::dealRawDataDir(QString path)
 	{
 		QDir dir(path);
 		if (!dir.exists()) {
@@ -52,7 +52,7 @@ namespace Related {
 		}
 
 		QStringList filters;
-		filters << QStringLiteral("*.xlsx") << QStringLiteral("*.xls") << QStringLiteral("*.dat");
+		filters << QStringLiteral("*.xml") << QStringLiteral("*.xml") << QStringLiteral("*.dat");
 
 		QFileInfoList fileList = dir.entryInfoList(filters, QDir::AllDirs | QDir::Files);
 

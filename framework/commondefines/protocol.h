@@ -33,19 +33,19 @@ namespace Datastruct {
 				3.在绝大部分情况下，两者是发送和接收是一一对应的关系。
 	 */
 	enum PacketType {
-		P_UserLogin = 1,		/*!< 用户登录 */
-		P_UserRegist,			/*!< 用户注册 */
-		P_UserList,				/*!< 用户列表查询 */
-		P_UserOperate,			/*!< 用户信息更新,包括权限更新、删除用户 */
+		P_UserLogin = 1,					/*!< 用户登录 */
+		P_UserRegist,						/*!< 用户注册 */
+		P_UserList,							/*!< 用户列表查询 */
+		P_UserOperate,						/*!< 用户信息更新,包括权限更新、删除用户 */
 
-		P_CreateTask = 5,				/*!< 创建任务 */
-		P_TaskList,						/*!< 查询所有任务 */
-		P_TaskByCondition,				/*!< 按条件查询任务 */
-		P_TaskDelete,					/*!< 删除任务 */
-		P_TaskStaticsInfo,				/*!< 任务统计信息，包括任务数、占用空间大小等 */
-		P_TaskSimpleInfo,				/*!< 单个任务概览信息 */
-		P_TaskFullInfo,					/*!< 单个任务详细信息 */
-		P_TaskModify,					/*!< 单个任务信息修改 */
+		P_CreateTask = 5,					/*!< 创建任务 */
+		P_TaskList,							/*!< 查询所有任务 */
+		P_TaskByCondition,					/*!< 按条件查询任务 */
+		P_TaskDelete,						/*!< 删除任务 */
+		P_TaskStaticsInfo,					/*!< 任务统计信息，包括任务数、占用空间大小等 */
+		P_TaskSimpleInfo,					/*!< 单个任务概览信息 */
+		P_TaskFullInfo,						/*!< 单个任务详细信息 */
+		P_TaskModify,						/*!< 单个任务信息修改 */
 
 		P_TaskDetectPlatformCreate,			/*!< 任务侦测平台亚型创建 */
 		P_TaskDetectPlatformList,			/*!< 查询指定任务侦测平台亚型 */
@@ -53,7 +53,9 @@ namespace Datastruct {
 		P_TaskDetectPlatformDelete,			/*!< 任务侦测平台亚型删除 */
 		P_TaskDetectPlatformModify,			/*!< 任务侦测平台亚型修改 */
 
-		P_TaskImageCreate,					/*!< 任务试验图片资源创建 */
+		P_TaskDataFileCreate,				/*!< 任务数据文件创建 */
+		P_TaskDataFileDelete,				/*!< 任务数据文件删除 */
+
 		P_TaskImageList,					/*!< 查询任务试验图片资源 */
 		P_TaskImageByCondition,				/*!< 按条件查询任务试验图片资源 */
 		P_TaskImageDelete,					/*!< 任务试验图片资源删除 */
@@ -100,7 +102,7 @@ namespace Datastruct {
 		P_AISFullInfo,						/*!< 单个AIS详细信息 */
 
 		//原始文件
-		P_RawFile = 90,
+		P_FileData,
 
 	};
 
@@ -115,16 +117,26 @@ namespace Datastruct {
 		ushort m_packetType;	/*!< 指令类型 */
 	};
 
-	struct PacketTail
-	{
+	struct PacketTail {
 		PacketTail() :m_magicTail(PACK_TAIL) {}
 		uint m_magicTail;		/*!< 报文尾标识 */
 	};
 
-	//网络数据参数
-	struct NetworkDataParameter {
-		uint ParameterLength;
-		uint dataLength;
+
+	/*!
+	 * @brief  任务原始数据请求
+	 * @details
+	 */
+	struct FileInfoParameter {
+		FileInfoParameter() : m_totalLength(0), m_currentLength(0) {
+			memset(m_fileId, 0, 50);
+			memset(m_md5, 0, 50);
+		}
+
+		char m_fileId[50];
+		char m_md5[50];
+		qint64 m_totalLength;
+		qint64 m_currentLength;
 	};
 
 #pragma  pack(pop)
@@ -133,6 +145,7 @@ namespace Datastruct {
 	 * @brief 用户登录请求
 	 */
 	struct UserLoginRequest {
+		
 		QString m_name;			/*!< 用户名 */
 		QString m_password;		/*!< 密码，转换成MD5 */
 	};
@@ -141,7 +154,8 @@ namespace Datastruct {
 	 * @brief 用户登录结果报文
 	 */
 	struct UserLoginResponse {
-		UserLoginResponse() :m_loginResult(false) {}
+		UserLoginResponse() :m_loginResult(false) { }
+
 		bool m_loginResult;		/*!< 登录结果信息，true:登录成功，false:登录失败 */
 		ErrorCode m_errorCode;	/*!< 登录失败时说明失败原因 */
 
@@ -152,6 +166,7 @@ namespace Datastruct {
 	 * @brief 用户注册请求
 	 */
 	struct UserRegistRequest {
+
 		QString m_name;			/*!< 用户名 */
 		QString m_password;		/*!< 密码，转换成MD5 */
 	};
@@ -161,6 +176,7 @@ namespace Datastruct {
 	 */
 	struct UserRegistResponse {
 		UserRegistResponse() : m_loginResult(false) {}
+
 		bool m_loginResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
 		ErrorCode m_errorCode;	/*!< 注册失败时说明失败原因 */
 	};
@@ -169,6 +185,7 @@ namespace Datastruct {
 	 * @brief 加载所有用户请求
 	 */
 	struct LoadAllUserRequest {
+
 		QString m_name;			/*!< 当前操作用户名 */
 		int m_offsetIndex;		/*!< 分页时，需加载的起始页偏移量 */
 		int m_limitIndex;		/*!< 当前页面显示条数 */
@@ -179,6 +196,7 @@ namespace Datastruct {
 	 */
 	struct LoadAllUserResponse {
 		LoadAllUserResponse() :m_userCount(0) {}
+
 		int m_userCount;		/*!< 用户总条数 */
 		QList<UserEntityData> m_userInfos;		/*!< 当前页面下用户结果集合 */
 	};
@@ -187,6 +205,7 @@ namespace Datastruct {
 	 * @brief 用户基础操作类型
 	 */
 	enum UserOperateType {
+
 		UpdateInfo,			/*!< 更新信息 */
 		EditPrivilege,		/*!< 编辑用户权力 */
 		DeleteUser			/*!< 删除用户 */
@@ -218,6 +237,7 @@ namespace Datastruct {
 	 * @brief 用户基础操作响应
 	 */
 	struct OperateUserResponse {
+
 		UserOperateType m_operateType;
 		bool m_operateResult;		/*!< 操作结果信息，true:操作成功，false:操作失败 */
 		ErrorCode m_errorCode;		/*!< 操作失败时说明失败原因 */
@@ -228,14 +248,17 @@ namespace Datastruct {
 	 * @brief 创建任务请求
 	 */
 	struct  TaskCreateRequest{
+		TaskCreateRequest() {
+		}
+
 		QString m_taskId;				/*!< 数据库Id */
-		QString m_taskName;			/*!< 任务名称 */
+		QString m_taskName;				/*!< 任务名称 */
 		QString m_startTime;			/*!< 起始时间 */
-		QString m_endTime;			/*!< 结束时间 */
-		QString m_location;			/*!< 任务地点 */
-		QString lon;				/*!< 经度 */
-		QString lat;				/*!< 纬度 */
-		QString description;		/*!< 描述 */
+		QString m_endTime;				/*!< 结束时间 */
+		QString m_location;				/*!< 任务地点 */
+		QString lon;					/*!< 经度 */
+		QString lat;					/*!< 纬度 */
+		QString description;			/*!< 描述 */
 	};
 
 	/*!
@@ -245,13 +268,13 @@ namespace Datastruct {
 		TaskCreateResponse() : m_createResult(false) {
 		}
 
-		bool m_createResult;		/*!< 注册结果，true:注册成功，false:注册失败 */
-		ErrorCode m_errorInfo;		/*!< 注册失败时说明失败原因 */
+		bool m_createResult;			/*!< 注册结果，true:注册成功，false:注册失败 */
+		ErrorCode m_errorInfo;			/*!< 注册失败时说明失败原因 */
 		TaskEntityData taskInfo;
 	};
 
 	/*!
-	 * @brief   加载所任务请求
+	 * @brief  加载所任务请求
 	 */
 	struct  LoadAllTaskRequest {
 		LoadAllTaskRequest():m_offsetIndex(0), m_limitIndex(0){
@@ -276,6 +299,7 @@ namespace Datastruct {
 	 * @brief   按条件查询任务请求
 	 */
 	struct TaskByConditionRequest {
+
 		QString startTime;							/*!< 起始时间 */
 		QString endTime;							/*!< 结束时间 */
 		QString location;							/*!< 任务地点 */
@@ -302,7 +326,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  任务删除请求结果报文
-	 * @details
 	 */
 	struct TaskDeleteResponse {
 		TaskDeleteResponse() : m_deleteResult(false) {
@@ -314,7 +337,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  任务统计信息请求
-	 * @details 
 	 */
 	struct  TaskStaticsInfoRequest{
 
@@ -323,7 +345,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  任务统计信息响应
-	 * @details
 	 */
 	struct  TaskStaticsInfoResponse {
 
@@ -334,7 +355,6 @@ namespace Datastruct {
 
 	/*! 
 	 * @brief  单条任务预览信息请求
-	 * @details 
 	 */
 	struct TaskSimpleRequest{
 
@@ -343,7 +363,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  单条任务预览信息响应
-	 * @details
 	 */
 	struct TaskSimpleResponse {
 		TaskSimpleResponse() : m_result(false) {
@@ -356,7 +375,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief    单个任务详细信息
-	 * @details 
 	 */
 	struct TaskFullInfoRequest {
 
@@ -364,17 +382,16 @@ namespace Datastruct {
 
 	/*!
 	 * @brief    单个任务详细信息
-     * @details
      */
 	struct TaskFullInfoResponse {
 
 	};
 
 	/*!
- * @brief  单条任务修改信息请求
- * @details
- */
+	 * @brief  单条任务修改信息请求
+	 */
 	struct TaskModifyRequest {
+
 		QString taskId;				/*!< 数据库Id */
 		QString taskName;			/*!< 任务名称 */
 		QString startTime;			/*!< 起始时间 */
@@ -387,7 +404,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  单条任务修改信息响应
-	 * @details
 	 */
 	struct TaskModifyResponse {
 		TaskModifyResponse() : m_result(false) {
@@ -418,7 +434,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  创建任务侦测平台响应
-	 * @details
 	 */
 	struct TaskDetectPlatformCreateResponse {
 		TaskDetectPlatformCreateResponse() : m_createResult(false) { 
@@ -431,7 +446,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  查询所有任务侦测平台请求
-	 * @details
 	 */
 	struct LoadAllTaskDetectPlatformRequest {
 		LoadAllTaskDetectPlatformRequest() : m_offsetIndex(0), m_limitIndex(0) { 
@@ -444,7 +458,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  查询所有任务侦测平台响应
-	 * @details
 	 */
 	struct LoadAllTaskDetectPlatformResponse {
 		LoadAllTaskDetectPlatformResponse() : m_taskDetectPlatformCount(0) { 
@@ -456,7 +469,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief	按条件查询任务侦测平台请求
-	 * @details
 	 */
 	struct TaskDetectPlatformByConditionRequest {
 
@@ -464,7 +476,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 按条件查询任务侦测平台响应
-	 * @details
 	 */
 	struct TaskDetectPlatformByConditionResponse {
 		TaskDetectPlatformByConditionResponse() : m_taskDetectPlatformCount(0) {
@@ -476,7 +487,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  删除任务侦测平台请求
-	 * @details
 	 */
 	struct TaskDetectPlatformDeleteRequest {
 		TaskDetectPlatformDeleteRequest() {
@@ -488,7 +498,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  删除任务侦测平台响应
-	 * @details
 	 */
 	struct TaskDetectPlatformDeleteResponse {
 		TaskDetectPlatformDeleteResponse() : m_deleteResult(false) {
@@ -500,7 +509,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 修改任务侦测平台请求
-	 * @details
 	 */
 	struct TaskDetectPlatformModifyRequest {
 		TaskDetectPlatformModifyRequest() :m_detectId(0), m_platformPower(0), m_lastTime(0){
@@ -519,7 +527,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 修改任务侦测平台响应
-	 * @details
 	 */
 	struct TaskDetectPlatformModifyResponse {
 		TaskDetectPlatformModifyResponse() : m_modifyResult(false) {
@@ -531,33 +538,59 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief 创建任务试验图片资源请求
+	 * @brief  任务数据文件创建请求
 	 */
-	struct TaskImageCreateRequest {
-		TaskImageCreateRequest() :m_imageSize(0) {
+	struct TaskDataFileCreateRequest{
+		TaskDataFileCreateRequest() :m_size(0){
 		}
 
-		QString m_id;						/*!< id */
 		QString m_taskId;					/*!< 任务标识 */
-		QString m_realName;					/*!< 原始图片文件名 */
+		QString m_detectId;					/*!< 侦测平台标识 */
+
+		QString m_name;						/*!< 原始图片文件名 */
 		QString m_suffix;					/*!< 图片类型 */
-		QString m_uploadTime;				/*!< 上传时间 */
-		double m_imageSize;					/*!< 图片大小 */
-		QString m_description;				/*!< 图片描述 */
+		QString m_timeStamp;				/*!< 时间标识 */
+		qint64 m_size;						/*!< 图片大小 */
+		QString m_md5;						/*!< Md5值 */
 	};
 
 	/*!
-	 * @brief  创建任务试验图片资源响应
-	 * @details 
+	 * @brief  任务数据文件创建相应
 	 */
-	struct TaskImageCreateResponse {
-		TaskImageCreateResponse() : m_createResult(false) { 
+	struct TaskDataFileCreateResponse {
+		TaskDataFileCreateResponse() :m_result(false) , m_lastLen(0){
 		}
 
-		bool m_createResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		bool m_result;						/*!< 创建结果，true:创建成功，false:创建失败 */
+		QString m_taskId;					/*!< 任务标识 */
+		QString m_md5;						/*!< Md5值 */
+		QString m_id;						/*!< 文件标识Id */
+		qint64 m_lastLen;					/*!< 上一次上传的长度 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-		TaskImageEntityData m_taskImageInfo;
 	};
+
+	/*!
+	 * @brief  任务数据文件删除请求
+	 * @details
+	 */
+	struct TaskDataFileDeleteRequest {
+		
+		QString m_id;						/*!< 唯一标识Id */
+		QString m_taskId;					/*!< 任务Id */
+	};
+
+	/*!
+	 * @brief  任务数据文件删除响应
+	 * @details
+	 */
+	struct TaskDataFileDeleteResponse {
+		TaskDataFileDeleteResponse() : m_deleteResult(false) {
+		}
+
+		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
+		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
+	};
+
 
 	/*!
 	 * @brief  查询所有任务试验图片资源请求
@@ -585,27 +618,10 @@ namespace Datastruct {
 	};
 
 	/*!
-	 * @brief	按条件查询任务试验图片资源请求
-	 * @details 
-	 */
-	struct TaskImageByConditionRequest {
-
-	};
-
-	/*!
-	 * @brief 按条件查询任务试验图片资源响应
-	 * @details 
-	 */
-	struct TaskImageByConditionResponse {
-
-	};
-
-	/*!
 	 * @brief  删除任务试验图片资源请求
 	 * @details 
 	 */
 	struct TaskImageDeleteRequest {
-
 		QString m_id;						/*!< 唯一标识Id */
 		QString m_taskId;					/*!< 任务Id */
 	};
@@ -620,35 +636,6 @@ namespace Datastruct {
 
 		bool m_deleteResult;				/*!< 创建结果，true:创建成功，false:创建失败 */
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
-	};
-
-	/*!
-	 * @brief 修改任务试验图片资源请求
-	 * @details 
-	 */
-	struct TaskImageModifyRequest {
-		TaskImageModifyRequest() :m_imageSize(0) {
-		}
-
-		QString m_id;							/*!< id */
-		QString m_taskId;						/*!< 任务标识 */
-		QString m_realName;						/*!< 原始图片文件名 */
-		QString m_suffix;						/*!< 图片类型 */
-		QString m_uploadTime;					/*!< 上传时间 */
-		double  m_imageSize;					/*!< 图片大小 */
-		QString m_description;					/*!< 图片描述 */
-	};
-
-	/*!
-	 * @brief 修改任务试验图片资源响应
-	 * @details 
-	 */
-	struct TaskImageModifyResponse {
-		TaskImageModifyResponse() : m_modifyResult(false) {
-		}
-
-		bool m_modifyResult;					/*!< 注册结果，true:注册成功，false:注册失败 */
-		ErrorCode m_errorInfo;					/*!< 注册失败时说明失败原因 */
 	};
 
 	/*!
@@ -1312,15 +1299,6 @@ namespace Datastruct {
 		ErrorCode m_errorInfo;				/*!< 创建失败时说明失败原因 */
 	};
 
-	struct TaskRawDataFileRequest{
-		int parameterLength;					/*!< 参数数据长度 */
-
-		char m_id[32];							/*!< id */
-		char m_taskId[32];						/*!< 任务标识 */
-		char m_realName[200];					/*!< 原始文件名 */
-		char m_realPath[500];					/*!< 原始文件路径 */
-		char m_Md5[32];							/*!< 原始文件大小 */
-	};
 
 
 } // namespace Datastruct

@@ -84,14 +84,29 @@ namespace CommonDefines {
 		const QString buildDate = "buildDate";
 		const QString port = "port";
 
-		const QString realName = "realName";
 		const QString suffix = "suffix";
-		const QString uploadTime = "uploadTime";
-		const QString imageSize = "imageSize";
+		const QString timeStamp = "timeStamp";
+		const QString size = "size";
+		const QString MD5 = "MD5";
+		const QString lastLen = "lastLen";
+
 
 		const QString sensorType = "sensorType";
 		const QString platformPower = "platformPower";
 		const QString lastTime = "lastTime";
+
+		const QString detectPlatformId = "detectPlatformId";
+		
+		const QString fileSize = "fileSize";
+		const QString startFrameIndex = "startFrameIndex";
+		const QString endFrameIndex = "endFrameIndex";
+
+		const QString realPath = "realPath";
+	
+		const QString totalPackagesNum = "totalPackagesNum";
+		const QString currentPackagesNum = "currentPackagesNum";
+		const QString totalLength = "totalLength";
+		const QString currentLength = "currentLength";
 	};
 
 } //namespace CommonDefines 

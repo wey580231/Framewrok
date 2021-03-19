@@ -130,12 +130,13 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::TaskDetectPlatformModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskDetectPlatformModifyResponse & response);
 
-		// 有关任务试验图片资源
-		QByteArray wrap(const Datastruct::TaskImageCreateRequest & request);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageCreateRequest & request);
+		// 有关任务数据文件
+		QByteArray wrap(const Datastruct::TaskDataFileCreateRequest & request);
+		bool unrap(const QByteArray & data, Datastruct::TaskDataFileCreateRequest & request);
 
-		QByteArray wrap(const Datastruct::TaskImageCreateResponse & response);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageCreateResponse & response);
+		QByteArray wrap(const Datastruct::TaskDataFileCreateResponse & response);
+		bool unrap(const QByteArray & data, Datastruct::TaskDataFileCreateResponse & response);
+
 
 		QByteArray wrap(const Datastruct::LoadAllTaskImageRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskImageRequest & request);
@@ -143,23 +144,11 @@ namespace CommonDefines {
 		QByteArray wrap(const Datastruct::LoadAllTaskImageResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::LoadAllTaskImageResponse & response);
 
-		QByteArray wrap(const Datastruct::TaskImageByConditionRequest & request);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageByConditionRequest & request);
-
-		QByteArray wrap(const Datastruct::TaskImageByConditionResponse & response);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageByConditionResponse & response);
-
 		QByteArray wrap(const Datastruct::TaskImageDeleteRequest & request);
 		bool unrap(const QByteArray & data, Datastruct::TaskImageDeleteRequest & request);
 
 		QByteArray wrap(const Datastruct::TaskImageDeleteResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::TaskImageDeleteResponse & response);
-
-		QByteArray wrap(const Datastruct::TaskImageModifyRequest & request);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageModifyRequest & request);
-
-		QByteArray wrap(const Datastruct::TaskImageModifyResponse & response);
-		bool unrap(const QByteArray & data, Datastruct::TaskImageModifyResponse & response);
 
 		//TODO 20210125 有关值班日志
 		QByteArray wrap(const Datastruct::DutyRecordCreateRequest & request);
@@ -316,6 +305,8 @@ namespace CommonDefines {
 
 		QByteArray wrap(const Datastruct::AISDataModifyResponse & response);
 		bool unrap(const QByteArray & data, Datastruct::AISDataModifyResponse & response);
+
+
 
 	private:
 		JsonWrapper(QObject *parent = nullptr);

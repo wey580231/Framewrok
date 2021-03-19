@@ -37,6 +37,9 @@ namespace Related {
 		QString m_userName = "UserName";
 		QString m_password = "Password";
 		QString m_userInnerPassword = "UsePasswordInProgram";
+
+		QString m_fileSave = "FileSave";
+		QString m_filePath = "FilePath";
 	};
 
 	/*!

@@ -17,6 +17,7 @@
 #include <base\common\sql\databasemanager.h>
 
 #include "../datastruct.h"
+#include "../business/fileprocesscenter.h"
 
 namespace Related {
 
@@ -40,8 +41,8 @@ namespace Related {
 		void parseFileRequest(FileRequestUnit * unit);
 
 	private:
-
 		Base::Database * m_dbConnect;						/*!< 数据库 */
+		FileProcessCenter m_processCenter;					/*!< 文件处理 */
 	};
 
 }//namespace Related 

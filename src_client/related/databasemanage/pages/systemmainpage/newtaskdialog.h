@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include <QObject>
 #include <QWidget>
 #include <QLineEdit>
 #include <QFileSystemModel>
@@ -26,21 +27,21 @@
 #include <commondefines/protocol.h>
 
 #include "controlwidget/newtaskinfosetwidget.h"
-#include "controlwidget/imagemodel.h"
+#include "tablemodel/filedescriptionmodel.h"
 
 namespace Related {
 
 	class NewTaskDialog : public Base::DialogProxy
 	{
-	Q_OBJECT
+		Q_OBJECT
 
 	public:
 		/*!
 		 * @brief 任务控制类型
 		 */
 		enum  TaskEditType {
-			Task_New,				/*!< 创建 */
-			Task_Modify				/*!< 修改 */
+			Task_Create,				/*!< 创建 */
+			Task_Modify					/*!< 修改 */
 		};
 
 		NewTaskDialog(QString taskId, TaskEditType type, QWidget *parent);
@@ -49,64 +50,53 @@ namespace Related {
 		void setTaskBaseInfo(TaskBaseInfo info);
 		void setTaskImages(QList<Datastruct::TaskImageEntityData> list);
 
+		QList<FileDescriptionData > getFileList();
+
 	private slots:
 		void respOk();
-		void respClearFile();
 		void openLocalFile();
+		void respClearFile();
 		void switchViewModel(bool isChecked);
-		//[] 任务基本信息
 		void processTaskCreateResponse(const Datastruct::TaskCreateResponse & response);
-		void processTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
-		//[] 任务平台信息
 		void processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response);
+
+		void processTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
 		void processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response);
-		//[] 任务试验图片基本信息
-		void processTaskImageCeateResponse(const Datastruct::TaskImageCreateResponse & response);
-		void processTaskImageModifyResponse(const Datastruct::TaskImageModifyResponse & response);
-
-
 
 	private:
 		void init();
 		void initConnect();
 
-		void sendNewTaskBaseInfo();
+		void sendCreateTaskBaseInfo();
+		void sendCreateTaskDetectPlatformInfo();
+
+
 		void sendModifyTaskBaseInfo();
-
-		void sendNewTaskDetectPlatformInfo();
 		void sendModifyTaskDetectPlatformInfo();
-
-		void sendNewTaskImageInfo(Datastruct::TaskImageEntityData info);
-		void sendModifyTaskImageInfo();
-
-		
 
 	private:
 		QString m_taskId;								/*!< 任务Id */				
 		TaskEditType m_taskEditType;					/*!< 任务编辑类型 */
 
-		Base::RTabWidget * m_tabWidget;
-
+		Base::RTabWidget * m_tabWidget;	
+		//
 		TaskBaseInfo m_taskBaseInfo;					/*!< 任务基本信息 */
 		NewTaskInfoSetWidget * m_newTaskWidget;			/*!< 新建任务设置界面 */
 
+		//图片
 		Base::RTableView * m_tableView;
-		ImageModel * m_imageTableModel;
+		FileDescriptionModel * m_imageTableModel;
 		Base::RIconButton * m_viewModelSwitch;
 
 		QScrollArea * m_cardModel;
-
 		QStackedWidget * m_imageStack;
 
+		//原始文件
+		QLineEdit * m_dataFilePath;							/*!< 数据文件路径 */
 		Base::RTableView * m_fileTableView;
-		ImageModel * m_fileTableModel;
+		FileDescriptionModel * m_rawDataTableModel;			/*!< 原始收据表格模型 */
 
-		QLineEdit * m_dataFilePath;						/*!< 数据文件路径 */
-
-		QString m_originalFilePath;						/*!< 原始文件路径：绝对路径 */
-
-		QList<OriginalDataFileParameter *> m_taskDataFilePaths;
-		QStringList m_rawDataList;
+		QList<FileDescriptionData > m_listFileDescriptions;
 	};
 
 }//namespace Related 

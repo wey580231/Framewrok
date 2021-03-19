@@ -3,6 +3,8 @@
 #include <commondefines/wrapper/jsonwrapper.h>
 #include "signaldispatch.h"
 
+#include <QDebug>
+
 using namespace CommonDefines;
 
 namespace Related {
@@ -117,9 +119,9 @@ namespace Related {
 		sendData(array);
 	}
 
-	void DataNetConnector::write(const Datastruct::TaskImageCreateRequest & request)
+	void DataNetConnector::write(const Datastruct::TaskDataFileCreateRequest & request)
 	{
-		QByteArray array = makePacket(Datastruct::P_TaskImageCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
+		QByteArray array = makePacket(Datastruct::P_TaskDataFileCreate, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 
@@ -129,21 +131,9 @@ namespace Related {
 		sendData(array);
 	}
 
-	void DataNetConnector::write(const Datastruct::TaskImageByConditionRequest & request)
-	{
-		QByteArray array = makePacket(Datastruct::P_TaskImageByCondition, CommonDefines::JsonWrapper::instance()->wrap(request));
-		sendData(array);
-	}
-
 	void DataNetConnector::write(const Datastruct::TaskImageDeleteRequest & request)
 	{
 		QByteArray array = makePacket(Datastruct::P_TaskImageDelete, CommonDefines::JsonWrapper::instance()->wrap(request));
-		sendData(array);
-	}
-
-	void DataNetConnector::write(const Datastruct::TaskImageModifyRequest & request)
-	{
-		QByteArray array = makePacket(Datastruct::P_TaskImageModify, CommonDefines::JsonWrapper::instance()->wrap(request));
 		sendData(array);
 	}
 
@@ -329,6 +319,7 @@ namespace Related {
 
 		switch (head.m_packetType)
 		{
+			/*****************  有关用户  *****************************/
 			case Datastruct::P_UserLogin: {
 				Datastruct::UserLoginResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -336,7 +327,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case Datastruct::P_UserRegist: {
 				Datastruct::UserRegistResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -344,7 +334,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case Datastruct::P_UserList: {
 				Datastruct::LoadAllUserResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -352,7 +341,6 @@ namespace Related {
 				}
 			}
 			 break;
-
 			case Datastruct::P_UserOperate: {
 				Datastruct::OperateUserResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -368,8 +356,7 @@ namespace Related {
 					SignalDispatch::instance()->recvTaskCreateResponse(response);
 				}
 			}
-			break;
-
+				break;
 			case  Datastruct::P_TaskList: {
 				Datastruct::LoadAllTaskResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -377,7 +364,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_TaskByCondition: {
 				Datastruct::TaskByConditionResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -385,7 +371,6 @@ namespace Related {
 				}
 			}
 			 break;
-
 			case  Datastruct::P_TaskDelete: {
 				Datastruct::TaskDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -398,10 +383,8 @@ namespace Related {
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
 					SignalDispatch::instance()->recvTaskStaticsInfoResponse(response);
 				}
-
 			}
 				 break;
-
 			case  Datastruct::P_TaskSimpleInfo: {
 				Datastruct::TaskSimpleResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -409,7 +392,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_TaskFullInfo: {
 
 			}
@@ -421,6 +403,7 @@ namespace Related {
 				}
 			}
 				break;
+
 				/*****************  任务侦测平台亚型  *****************************/ 
 			case  Datastruct::P_TaskDetectPlatformCreate: {
 				Datastruct::TaskDetectPlatformCreateResponse response;
@@ -458,14 +441,20 @@ namespace Related {
 			}
 				break;
 
-				/*****************  任务试验图片资源  *****************************/
-			case  Datastruct::P_TaskImageCreate: {
-				Datastruct::TaskImageCreateResponse response;
+			/*****************  任务数据文件  *****************************/
+			case  Datastruct::P_TaskDataFileCreate: {
+				Datastruct::TaskDataFileCreateResponse response;
+
+				qDebug() << "_____________________P_TaskDataFileCreate________________________________";
+
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
-					SignalDispatch::instance()->recvTaskImageCreateResponse(response);
+					SignalDispatch::instance()->recvTaskDataFileCreateResponse(response);
 				}
 			}
-				break;
+														  break;
+
+			/*****************  任务试验图片资源  *****************************/
+
 			case  Datastruct::P_TaskImageList: {
 				Datastruct::LoadAllTaskImageResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -473,13 +462,7 @@ namespace Related {
 				}
 			}
 				break;
-			case  Datastruct::P_TaskImageByCondition: {
-				Datastruct::TaskImageByConditionResponse response;
-				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
-					SignalDispatch::instance()->recvTaskImageByConditionResponse(response);
-				}
-			}
-				break;
+
 			case  Datastruct::P_TaskImageDelete: {
 				Datastruct::TaskImageDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -487,13 +470,7 @@ namespace Related {
 				}
 			}
 				break;
-			case  Datastruct::P_TaskImageModify: {
-				Datastruct::TaskImageModifyResponse response;
-				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
-					SignalDispatch::instance()->recvTaskImageModifyResponse(response);
-				}
-			}
-				break;
+
 				/*****************    *****************************/
 			case  Datastruct::P_CreateDutyRecord: {
 				Datastruct::DutyRecordCreateResponse response;
@@ -502,7 +479,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_ListDutyRecords: {
 				Datastruct::LoadAllDutyRecordResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -510,7 +486,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DeleteDutyRecords: {
 				Datastruct::DutyRecordDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -518,7 +493,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case   Datastruct::P_ModifyDutyRecord: {
 				Datastruct::DutyRecordModifyResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -526,7 +500,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_CreateExperimentRecord: {
 				Datastruct::ExperimentRecordCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -534,7 +507,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_ListExperimentRecords: {
 				Datastruct::LoadAllExperimentRecordsResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -542,7 +514,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DeleteExperimentRecord: {
 				Datastruct::ExperimentRecordDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -550,7 +521,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case   Datastruct::P_ModifyExperimentRecord: {
 				Datastruct::ExperimentRecordModifyResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -558,6 +528,7 @@ namespace Related {
 				}
 			}
 				break;
+
 
 			case  Datastruct::P_DetectPlatformCreate: {
 				Datastruct::DetectPlatformCreateResponse response;
@@ -573,7 +544,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformDelete: {
 				Datastruct::DetectPlatformDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -581,7 +551,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformModify: {
 				Datastruct::DetectPlatformModifyResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -589,7 +558,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformSubtypeCreate: {
 				Datastruct::DetectPlatformSubtypeCreateResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -597,7 +565,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformSubtypeList: {
 				Datastruct::LoadAllDetectPlatformSubtypesResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -605,7 +572,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformSubtypeDelete: {
 				Datastruct::DetectPlatformSubtypeDeleteResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -613,7 +579,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_DetectPlatformSubtypeModify: {
 				Datastruct::DetectPlatformSubtypeModifyResponse response;
 				if (CommonDefines::JsonWrapper::instance()->unrap(jsonData, response)) {
@@ -621,6 +586,7 @@ namespace Related {
 				}
 			}
 				break;
+
 			// 目标信息
 			case  Datastruct::P_TargetCreate: {
 				Datastruct::TargetCreateResponse response;
@@ -674,6 +640,8 @@ namespace Related {
 
 			}
 				break;
+
+	
 
 			default:
 				break;

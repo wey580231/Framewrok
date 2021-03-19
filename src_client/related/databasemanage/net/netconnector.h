@@ -13,6 +13,8 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QFile>
+#include <QFileInfo>
 
 #include <base\util\rringbuffer.h>
 #include <commondefines/protocol.h>
@@ -52,8 +54,9 @@ namespace Related {
 		bool isConnected();
 
 	signals:
-		void netConnected(Datastruct::ConnectionType type,bool isConnected);
+		void netConnected(Datastruct::ConnectionType type, bool isConnected);
 		void reconnTimes(Datastruct::ConnectionType type,int times);
+		void writeDataResult(Datastruct::ConnectionType type);
 
 	protected:
 		void initNetwork();
@@ -64,7 +67,7 @@ namespace Related {
 		void reconnCallBack(int tryTimes);
 		void closeCallBack(Network::Uv_TcpClient * client);
 		void recvDataCallBack(Network::Uv_TcpClient * remoteClient, const char * data, int dataLen);
-
+		void writeDataCallBack(Network::Uv_TcpClient * client, int dataLen);
 		bool searchNextPackHead();
 
 		void sendData(const QByteArray & data);
@@ -75,6 +78,8 @@ namespace Related {
 		Network::Uv_TcpClient * m_dataTcpClient;	/*!< 普通数据连接 */
 
 		Base::RFixedRingBuffer m_dataRecvRingBuffer;	/*!< 数据接收环形缓冲区 */
+
+		int m_index;
 	};
 
 } //namespace Related 

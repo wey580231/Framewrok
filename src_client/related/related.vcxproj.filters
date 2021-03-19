@@ -24,7 +24,6 @@
     <ClCompile Include="databasemanage\pages\databasemanage\datamanagewidget.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\level0page.cpp" />
     <ClCompile Include="databasemanage\pages\databasemanage\tablemodel\levelmodel0.cpp" />
-    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\newtaskinfosetwidget.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\newtaskdialog.cpp" />
     <ClCompile Include="databasemanage\pages\systemmainpage\systemmainpage.cpp" />
@@ -89,10 +88,19 @@
     <ClCompile Include="databasemanage\pages\targetdatabase\item\targetbaseinfoitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafiledealthread.cpp">
+    <ClCompile Include="databasemanage\pages\systemmainpage\filedeal\checktaskdatafile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafilecheckthread.cpp">
+    <ClCompile Include="databasemanage\pages\systemmainpage\controlwidget\fileuploadingitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\filetransferdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\filedeal\uploadingdatafile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="databasemanage\pages\systemmainpage\tablemodel\filedescriptionmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,7 +151,6 @@
     <QtMoc Include="databasemanage\pages\taskanalyse\hxjplatforminfowidget.h" />
     <QtMoc Include="databasemanage\pages\taskanalyse\tablemodel\dataoverviewmolel.h" />
     <QtMoc Include="databasemanage\pages\systemsetting\userprivilegeeditwindow.h" />
-    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\imagemodel.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\dutyrecordpage.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\taskreportpage.h" />
     <QtMoc Include="databasemanage\pages\taskrecord\tablemodel\dutyrecordmodel.h" />
@@ -189,10 +196,19 @@
     <QtMoc Include="databasemanage\pages\targetdatabase\item\targetbaseinfoitem.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafiledealthread.h">
+    <QtMoc Include="databasemanage\pages\systemmainpage\filedeal\checktaskdatafile.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="databasemanage\pages\systemmainpage\rawfiledeal\taskrawdatafilecheckthread.h">
+    <QtMoc Include="databasemanage\pages\systemmainpage\controlwidget\fileuploadingitem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\filetransferdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\filedeal\uploadingdatafile.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="databasemanage\pages\systemmainpage\tablemodel\filedescriptionmodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

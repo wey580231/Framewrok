@@ -52,13 +52,15 @@ namespace Related {
 		void write(const Datastruct::TaskDetectPlatformModifyRequest & request);
 
 		/*!
+		 * @brief 任务数据文件
+		 */
+		void write(const Datastruct::TaskDataFileCreateRequest & request);
+
+		/*!
 		 * @brief 任务试验图片资源
 		 */
-		void write(const Datastruct::TaskImageCreateRequest & request);
 		void write(const Datastruct::LoadAllTaskImageRequest & request);
-		void write(const Datastruct::TaskImageByConditionRequest & request);
 		void write(const Datastruct::TaskImageDeleteRequest & request);
-		void write(const Datastruct::TaskImageModifyRequest & request);
 		
 		/*!
 		 * @brief  值班日志有关

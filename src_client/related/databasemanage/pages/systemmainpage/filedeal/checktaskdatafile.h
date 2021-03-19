@@ -14,13 +14,13 @@
 
 namespace Related {
 
-	class TaskRawDataFileCheckThread : public QObject
+	class CheckTaskDataFile : public QObject
 	{
 		Q_OBJECT
 
 	public:
-		TaskRawDataFileCheckThread(QObject *parent = nullptr);
-		~TaskRawDataFileCheckThread();
+		CheckTaskDataFile(QObject *parent = nullptr);
+		~CheckTaskDataFile();
 
 		void setRawDataFileRootPath(QString path);
 		bool checkRawDataDir();

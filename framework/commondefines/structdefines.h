@@ -63,7 +63,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 单个侦测平台亚型数据结构
-	 * @details
 	 */
 	struct DetectPlatformSubtypeEntityData {
 		DetectPlatformSubtypeEntityData() : id(0), detectId(0) {
@@ -76,7 +75,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief  单条任务实体数据结构
-	 * @details 
 	 */
 	struct TaskEntityData {
 		TaskEntityData() {
@@ -94,7 +92,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 单个任务侦测平台表数据结构
-	 * @details
 	 */
 	struct TaskDetectPlatformEntityData {
 		TaskDetectPlatformEntityData() : detectId(0), platformPower(0),lastTime(0) {
@@ -113,10 +110,9 @@ namespace Datastruct {
 
 	/*!
 	 * @brief 单条任务试验图片资源实体数据结构
-	 * @details 
 	 */
 	struct TaskImageEntityData{
-		TaskImageEntityData():imageSize(0){
+		TaskImageEntityData():imageSize(0), recvSize(0) {
 		}
 
 		QString id ;					/*!< 唯一标识 */
@@ -124,13 +120,55 @@ namespace Datastruct {
 		QString realName;				/*!< 原始图片文件名 */
 		QString suffix;					/*!< 图片类型 */
 		QString uploadTime;				/*!< 上传时间 */
-		double imageSize;				/*!< 图片大小 */
+		qint64 imageSize;				/*!< 图片大小 */
+		QString md5;					/*!< 文件MD5值 */
+		QString savePath;				/*!< 文件保存路径 */
+		qint64 recvSize;					/*!< 文件接收大小 */
 		QString description;			/*!< 图片描述 */
 	};
 
 	/*!
+	 * @brief 单条任务平台原始XML文件信息实体数据结构
+	 */
+	struct TaskPlatformOriginalXmlEntityData {
+		TaskPlatformOriginalXmlEntityData() :fileSize(0), recvSize(0) {
+		}
+
+		QString id;						/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		QString detectPlatformId;		/*!< 平台Id */
+		QString realName;				/*!< 原始文件名 */
+		qint64 fileSize;				/*!< 文件大小 */
+		QString startTime;				/*!< 开始时间 */
+		QString endTime;				/*!< 结束时间 */
+		QString md5;					/*!< 文件MD5值 */
+		QString savePath;				/*!< 文件保存路径 */
+		qint64 recvSize;				/*!< 文件接收大小 */
+	};
+
+	/*!
+	 * @brief 单条任务平台原始Data文件信息实体数据结构
+	 */
+	struct TaskPlatformOriginalDataEntityData {
+		TaskPlatformOriginalDataEntityData() :fileSize(0), startFrameIndex(0), endFrameIndex(0), recvSize(0){
+		}
+
+		QString id;						/*!< 唯一标识 */
+		QString taskId;					/*!< 任务标识 */
+		QString detectPlatformId;		/*!< 平台Id */
+		QString realName;				/*!< 原始文件名 */
+		qint64 fileSize;				/*!< 文件大小 */
+		qint64 startFrameIndex;			/*!< 开始帧序号 */
+		qint64 endFrameIndex;			/*!< 结束帧序号 */
+		QString startTime;				/*!< 开始时间 */
+		QString endTime;				/*!< 结束时间 */
+		QString md5;					/*!< 文件MD5值 */
+		QString savePath;				/*!< 文件保存路径 */
+		qint64 recvSize;				/*!< 文件接收大小 */
+	};
+
+	/*!
 	 * @brief  单条值班日志实体数据结构
-	 * @details 
 	 */
 	struct DutyRecordEntityData {
 		DutyRecordEntityData():wind(0), windSpeed(0),waveHigh(0), oceanCurrents(0){
@@ -149,7 +187,6 @@ namespace Datastruct {
 
 	/*!
 	 * @brief    单条试验记录实体数据结构
-	 * @details
 	 */
 	struct ExperimentRecordEntityData {
 		ExperimentRecordEntityData() :lon(0), lat(0), setHeadingDegree(0),actualHeadingDegree(0), acousticState(0), 
@@ -194,8 +231,8 @@ namespace Datastruct {
 	};
 
 	/*!
- * @brief 目标音频实体数据
- */
+	 * @brief 目标音频实体数据
+	 */
 	struct  TargetWavEntityData {
 		TargetWavEntityData() :tonnage(0), lon(0), lat(0), speed(0), axlesNumber(0), datalength(0),
 			type(0){

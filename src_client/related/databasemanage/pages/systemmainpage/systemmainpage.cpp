@@ -16,7 +16,8 @@ namespace Related {
 		m_platNumItem(nullptr),
 		m_newTaskButt(nullptr),
 		m_refreshTaskButt(nullptr),
-		m_firstLoadData(true)
+		m_firstLoadData(true),
+		m_fileUploadingDialog(nullptr)
 	{
 		m_taskItems.clear();
 		init();
@@ -103,6 +104,12 @@ namespace Related {
 			m_refreshTaskButt->setIcon(QIcon(WRAP_RESOURCE(刷新)));
 			connect(m_refreshTaskButt, SIGNAL(clicked()), this, SLOT(slotRefreshTaskClicked()));
 
+			m_fileUploadButt = new Base::RIconButton();
+			m_fileUploadButt->setText(QStringLiteral("文件传输"));
+			m_fileUploadButt->setMinimumSize(60, 30);
+			m_fileUploadButt->setIcon(QIcon(WRAP_RESOURCE(刷新)));
+			connect(m_fileUploadButt, SIGNAL(clicked()), this, SLOT(slotFileUploadListClicked()));
+			
 			m_timeRange = new TimeRangeEdit();
 
 			m_locationBox = new QComboBox();
@@ -123,6 +130,7 @@ namespace Related {
 			hlayout->setContentsMargins(0, 0, 0, 0);
 			hlayout->addWidget(m_newTaskButt);
 			hlayout->addWidget(m_refreshTaskButt);
+			hlayout->addWidget(m_fileUploadButt);
 			hlayout->addStretch(1);
 			hlayout->addWidget(m_timeRange);
 			hlayout->addWidget(m_locationBox);
@@ -158,6 +166,8 @@ namespace Related {
 		layout->setContentsMargins(4, 4, 4, 4);
 		layout->addWidget(mainWidget);
 		setLayout(layout);
+
+		m_fileUploadingDialog = new FileTransferDialog(this);
 	}
 
 	void SystemMainPage::initConnent()
@@ -177,8 +187,13 @@ namespace Related {
 
 	void SystemMainPage::slotNewTaskClickde()
 	{
-		NewTaskDialog dialog(Base::RUtil::UUID(), NewTaskDialog::Task_New, this);
-		if (QDialog::Accepted == dialog.exec()) {
+		NewTaskDialog m_newTaskDialog(Base::RUtil::UUID(), NewTaskDialog::Task_Create, this);
+		if (QDialog::Accepted == m_newTaskDialog.exec()) {
+
+			QList<FileDescriptionData > listFileDescriptions = m_newTaskDialog.getFileList();
+			if (listFileDescriptions.size() > 0) {
+				m_fileUploadingDialog->setFileData(listFileDescriptions);
+			}
 			refreshCurrTask();
 		}
 	}
@@ -186,6 +201,13 @@ namespace Related {
 	void SystemMainPage::slotRefreshTaskClicked()
 	{
 		refreshCurrTask();
+	}
+
+	void SystemMainPage::slotFileUploadListClicked()
+	{
+		if (!m_fileUploadingDialog->isVisible()) {
+			m_fileUploadingDialog->show();
+		}
 	}
 
 	void SystemMainPage::slotSearchTaskClicked()

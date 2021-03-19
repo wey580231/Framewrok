@@ -880,71 +880,56 @@ namespace CommonDefines {
 		});
 	}
 
-	/******************************      任务试验图片资源        ******************************************/
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageCreateRequest & request)
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDataFileCreateRequest & request)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.m_id);
 			obj.insert(m_jsonKey.taskId, request.m_taskId);
-			obj.insert(m_jsonKey.realName, request.m_realName);
+			obj.insert(m_jsonKey.name, request.m_name);
 			obj.insert(m_jsonKey.suffix, request.m_suffix);
-			obj.insert(m_jsonKey.uploadTime, request.m_uploadTime);
-			obj.insert(m_jsonKey.imageSize, request.m_imageSize);
-			obj.insert(m_jsonKey.description, request.m_description);
+			obj.insert(m_jsonKey.timeStamp, request.m_timeStamp);
+			obj.insert(m_jsonKey.size, request.m_size);
+			obj.insert(m_jsonKey.MD5, request.m_md5);
 		});
 	}
 
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageCreateRequest & request)
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDataFileCreateRequest & request)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.m_id = jsonObject.value(m_jsonKey.id).toString();
+
 			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
-			request.m_realName = jsonObject.value(m_jsonKey.realName).toString();
+			request.m_name = jsonObject.value(m_jsonKey.name).toString();
 			request.m_suffix = jsonObject.value(m_jsonKey.suffix).toString();
-			request.m_uploadTime = jsonObject.value(m_jsonKey.uploadTime).toString();
-			request.m_imageSize = jsonObject.value(m_jsonKey.imageSize).toDouble();
-			request.m_description = jsonObject.value(m_jsonKey.description).toString();
+			request.m_timeStamp = jsonObject.value(m_jsonKey.timeStamp).toString();
+			request.m_size = jsonObject.value(m_jsonKey.size).toString().toLongLong();
+			request.m_md5 = jsonObject.value(m_jsonKey.MD5).toString();
 		});
 	}
 
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageCreateResponse & response)
+	QByteArray JsonWrapper::wrap(const Datastruct::TaskDataFileCreateResponse & response)
 	{
 		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.result, response.m_createResult);
+			obj.insert(m_jsonKey.result, response.m_result);
+			obj.insert(m_jsonKey.taskId, response.m_taskId);
+			obj.insert(m_jsonKey.MD5, response.m_md5);
+			obj.insert(m_jsonKey.id, response.m_id);
+			obj.insert(m_jsonKey.currentLength, response.m_lastLen);
 			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
-			if (response.m_createResult) {
-				QJsonObject dataObj;
-				dataObj.insert(m_jsonKey.id, response.m_taskImageInfo.id);
-				dataObj.insert(m_jsonKey.taskId, response.m_taskImageInfo.taskId);
-				dataObj.insert(m_jsonKey.realName, response.m_taskImageInfo.realName);
-				dataObj.insert(m_jsonKey.suffix, response.m_taskImageInfo.suffix);
-				dataObj.insert(m_jsonKey.uploadTime, response.m_taskImageInfo.uploadTime);
-				dataObj.insert(m_jsonKey.imageSize, response.m_taskImageInfo.imageSize);
-				dataObj.insert(m_jsonKey.description, response.m_taskImageInfo.description);
-				obj.insert(m_jsonKey.data, dataObj);
-			}
 		});
 	}
 
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageCreateResponse & response)
+	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskDataFileCreateResponse & response)
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			response.m_createResult = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_result = jsonObject.value(m_jsonKey.result).toBool();
+			response.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
+			response.m_md5 = jsonObject.value(m_jsonKey.MD5).toString();
+			response.m_id = jsonObject.value(m_jsonKey.id).toString();
+			response.m_lastLen = jsonObject.value(m_jsonKey.lastLen).toString().toLongLong();
 			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
-			if (response.m_createResult) {
-				QJsonObject dataObj = jsonObject.value(m_jsonKey.data).toObject();
-				if (dataObj.isEmpty())
-					return;
-				response.m_taskImageInfo.id = dataObj.value(m_jsonKey.id).toString();
-				response.m_taskImageInfo.taskId = dataObj.value(m_jsonKey.taskId).toString();
-				response.m_taskImageInfo.realName = dataObj.value(m_jsonKey.realName).toString();
-				response.m_taskImageInfo.suffix = dataObj.value(m_jsonKey.suffix).toString();
-				response.m_taskImageInfo.uploadTime = dataObj.value(m_jsonKey.uploadTime).toString();
-				response.m_taskImageInfo.imageSize = dataObj.value(m_jsonKey.imageSize).toDouble();
-				response.m_taskImageInfo.description = dataObj.value(m_jsonKey.description).toString();
-			}
 		});
 	}
+
+	/******************************      任务试验图片资源        ******************************************/
 
 	QByteArray JsonWrapper::wrap(const Datastruct::LoadAllTaskImageRequest & request)
 	{
@@ -973,10 +958,10 @@ namespace CommonDefines {
 				QJsonObject dataObj;
 				dataObj.insert(m_jsonKey.id,		dRdata.id);
 				dataObj.insert(m_jsonKey.taskId,	dRdata.taskId);
-				dataObj.insert(m_jsonKey.realName,	dRdata.realName);
+				dataObj.insert(m_jsonKey.name,	dRdata.realName);
 				dataObj.insert(m_jsonKey.suffix,	dRdata.suffix);
-				dataObj.insert(m_jsonKey.uploadTime,dRdata.uploadTime);
-				dataObj.insert(m_jsonKey.imageSize, dRdata.imageSize);
+				dataObj.insert(m_jsonKey.timeStamp,dRdata.uploadTime);
+				dataObj.insert(m_jsonKey.size, dRdata.imageSize);
 				dataObj.insert(m_jsonKey.description,dRdata.description);
 				jarray.append(dataObj);
 			}
@@ -994,35 +979,15 @@ namespace CommonDefines {
 				QJsonObject dataObj = jarray.at(i).toObject();
 				data.id = dataObj.value(m_jsonKey.id).toString();
 				data.taskId = dataObj.value(m_jsonKey.taskId).toString();
-				data.realName = dataObj.value(m_jsonKey.realName).toString();
+				data.realName = dataObj.value(m_jsonKey.name).toString();
 				data.suffix = dataObj.value(m_jsonKey.suffix).toString();
-				data.uploadTime = dataObj.value(m_jsonKey.uploadTime).toString();
-				data.imageSize = dataObj.value(m_jsonKey.imageSize).toDouble();
+				data.uploadTime = dataObj.value(m_jsonKey.timeStamp).toString();
+				data.imageSize = dataObj.value(m_jsonKey.size).toDouble();
 				data.description = dataObj.value(m_jsonKey.description).toString();
 				response.m_taskImageInfos.append(data);
 			}
 			response.m_taskImageCount = jsonObject.value(m_jsonKey.totalDataSize).toInt();
 		});
-	}
-
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageByConditionRequest & request)
-	{
-		return QByteArray();
-	}
-
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageByConditionRequest & request)
-	{
-		return false;
-	}
-
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageByConditionResponse & response)
-	{
-		return QByteArray();
-	}
-
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageByConditionResponse & response)
-	{
-		return false;
 	}
 
 	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageDeleteRequest & request)
@@ -1053,48 +1018,6 @@ namespace CommonDefines {
 	{
 		return unwrapObject(data, [&](QJsonObject & jsonObject) {
 			response.m_deleteResult = jsonObject.value(m_jsonKey.result).toBool();
-			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
-		});
-	}
-
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageModifyRequest & request)
-	{
-		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.id, request.m_id);
-			obj.insert(m_jsonKey.taskId, request.m_taskId);
-			obj.insert(m_jsonKey.realName, request.m_realName);
-			obj.insert(m_jsonKey.suffix, request.m_suffix);
-			obj.insert(m_jsonKey.uploadTime, request.m_uploadTime);
-			obj.insert(m_jsonKey.imageSize, request.m_imageSize);
-			obj.insert(m_jsonKey.description, request.m_description);
-		});
-	}
-
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageModifyRequest & request)
-	{
-		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			request.m_id = jsonObject.value(m_jsonKey.id).toString();
-			request.m_taskId = jsonObject.value(m_jsonKey.taskId).toString();
-			request.m_realName = jsonObject.value(m_jsonKey.realName).toString();
-			request.m_suffix = jsonObject.value(m_jsonKey.suffix).toString();
-			request.m_uploadTime = jsonObject.value(m_jsonKey.uploadTime).toString();
-			request.m_imageSize = jsonObject.value(m_jsonKey.imageSize).toDouble();
-			request.m_description = jsonObject.value(m_jsonKey.description).toString();
-		});
-	}
-
-	QByteArray JsonWrapper::wrap(const Datastruct::TaskImageModifyResponse & response)
-	{
-		return wrapObject([&](QJsonObject & obj) {
-			obj.insert(m_jsonKey.result, response.m_modifyResult);
-			obj.insert(m_jsonKey.errorInfo, response.m_errorInfo);
-		});
-	}
-
-	bool JsonWrapper::unrap(const QByteArray & data, Datastruct::TaskImageModifyResponse & response)
-	{
-		return unwrapObject(data, [&](QJsonObject & jsonObject) {
-			response.m_modifyResult = jsonObject.value(m_jsonKey.result).toBool();
 			response.m_errorInfo = static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
@@ -2475,6 +2398,5 @@ namespace CommonDefines {
 			response.m_errorInfo	= static_cast<Datastruct::ErrorCode>(jsonObject.value(m_jsonKey.errorInfo).toInt());
 		});
 	}
-
 
 } //namespace CommonDefines 

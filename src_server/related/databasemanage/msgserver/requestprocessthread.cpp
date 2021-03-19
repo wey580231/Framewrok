@@ -87,7 +87,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case Datastruct::P_UserRegist: {
 				Datastruct::UserRegistRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -96,7 +95,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case Datastruct::P_UserList: {
 				Datastruct::LoadAllUserRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -113,6 +111,8 @@ namespace Related {
 				}
 			}
 				break;
+
+			/************************ 任务  *********************************/
 			case  Datastruct::P_CreateTask: {
 				Datastruct::TaskCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -174,7 +174,7 @@ namespace Related {
 			}
 				break;
 
-				/************************ 任务侦测平台亚型 *********************************/
+			/************************ 任务侦测平台亚型 *********************************/
 			case  Datastruct::P_TaskDetectPlatformCreate: {
 				Datastruct::TaskDetectPlatformCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -216,15 +216,30 @@ namespace Related {
 			}
 				break;
 
+			/************************ 任务数据文件 *********************************/
 			// 任务图片资源
-			case  Datastruct::P_TaskImageCreate : {
-				Datastruct::TaskImageCreateRequest request;
+			case  Datastruct::P_TaskDataFileCreate: {
+				Datastruct::TaskDataFileCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-					Datastruct::TaskImageCreateResponse response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
-					runit->m_resposneData = makePacket(Datastruct::P_TaskImageCreate, JsonWrapper::instance()->wrap(response));
+					Datastruct::TaskDataFileCreateResponse response;
+					if (request.m_suffix == QStringLiteral("png") || request.m_suffix == QStringLiteral("jpg")) {
+						response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
+					}
+					else if(request.m_suffix == QStringLiteral("xml"))
+					{
+						response = m_processCenter.processTaskOriginalXMLCreate(unit->m_clientId, request);
+
+					}
+					else if (request.m_suffix == QStringLiteral("dat"))
+					{
+						response = m_processCenter.processTaskOriginalDataCreate(unit->m_clientId, request);
+					}
+					runit->m_resposneData = makePacket(Datastruct::P_TaskDataFileCreate, JsonWrapper::instance()->wrap(response));
 				}
 			}
 				break;
+
+
 			case  Datastruct::P_TaskImageList : {
 				Datastruct::LoadAllTaskImageRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -233,27 +248,11 @@ namespace Related {
 				}
 			}
 				break;
-			case  Datastruct::P_TaskImageByCondition : {
-// 				Datastruct::TaskImageCreateRequest request;
-// 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-// 					Datastruct::TaskImageCreateResponse response = m_processCenter.processTaskImageCreate(unit->m_clientId, request);
-// 					runit->m_resposneData = makePacket(Datastruct::P_TaskImageCreate, JsonWrapper::instance()->wrap(response));
-// 				}
-			}
-				break;			
 			case  Datastruct::P_TaskImageDelete : {
 				Datastruct::TaskImageDeleteRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
 					Datastruct::TaskImageDeleteResponse response = m_processCenter.processTaskImageDelete(unit->m_clientId, request);
 					runit->m_resposneData = makePacket(Datastruct::P_TaskImageDelete, JsonWrapper::instance()->wrap(response));
-				}
-			}
-				break;
-			case  Datastruct::P_TaskImageModify : {
-				Datastruct::TaskImageModifyRequest request;
-				if (JsonWrapper::instance()->unrap(jsonData, request)) {
-					Datastruct::TaskImageModifyResponse response = m_processCenter.processTaskImageModify(unit->m_clientId, request);
-					runit->m_resposneData = makePacket(Datastruct::P_TaskImageModify, JsonWrapper::instance()->wrap(response));
 				}
 			}
 				break;
@@ -290,6 +289,8 @@ namespace Related {
 				}
 			}
 				break;
+
+			/******************************     数据       **********************************************/
 			case Datastruct::P_CreateExperimentRecord: {
 				Datastruct::ExperimentRecordCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -386,7 +387,8 @@ namespace Related {
 				}
 			}
 				break;
-
+	
+			/******************************     目标数据       **********************************************/
 			case  Datastruct::P_TargetCreate: {
 				Datastruct::TargetCreateRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -395,7 +397,6 @@ namespace Related {
 				}
 			} 
 				break;
-
 			case  Datastruct::P_TargetList: {
 				Datastruct::LoadAllTargetRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -404,12 +405,10 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_TargetByCondition: {
 
 			}
 				break;
-
 			case  Datastruct::P_TargetDelete: {
 				Datastruct::TargetDeleteRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -418,7 +417,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_TargetModify: {
 				Datastruct::TargetModifyRequest request;
 				if (JsonWrapper::instance()->unrap(jsonData, request)) {
@@ -427,12 +425,10 @@ namespace Related {
 				}
 			}
 				break;
-
 			case  Datastruct::P_TargetSimpleInfo: {
 
 			}
 				break;
-
 			case  Datastruct::P_TargetFullInfo: {
 
 			}
@@ -479,7 +475,6 @@ namespace Related {
 				}
 			}
 				break;
-
 			default:
 				break;
 		}
@@ -488,7 +483,6 @@ namespace Related {
 		if (runit->m_resposneData.size() > 0) {
 			sendProcessResult(runit);
 		}
-
 		delete unit;
 	}
 
