@@ -1,5 +1,5 @@
 /*!
- * @brief     任务图片表格数据模型   
+ * @brief     任务描述表格数据模型   
  * @author    wey
  * @version   1.0
  * @date      2021.01.26 16:02:39
@@ -11,22 +11,28 @@
 
 #include <QObject>
 #include <QFileInfo>
+#include <QDateTime>
 
 #include <base\selfwidget\tablemode\rtablemodel.h>
+#include <base/util/rutil.h>
+
+#include "../../../datastruct.h"
 
 namespace Related {
 
-	class ImageModel : public Base::RTableModel
+	class FileDescriptionModel : public Base::RTableModel
 	{
 		Q_OBJECT
 
 	public:
-		ImageModel(QObject *parent = nullptr);
-		~ImageModel();
+		FileDescriptionModel(QObject *parent = nullptr);
+		~FileDescriptionModel();
 
 		int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
-		void updateData(QList<QFileInfo> & fileInfos);
+		void updateData(QList<FileDescriptionData> & fileInfos);
+		QList<FileDescriptionData> getdatas();
+
 		void clearData();
 		int datasSize() const;
 
@@ -34,7 +40,7 @@ namespace Related {
 		QVariant displayData(int rowIndex, int dataIndex, int columnId) const;
 
 	private:
-		QList<QFileInfo> m_dataList;
+		QList<FileDescriptionData> m_dataList;
 	};
 
 } //namespace Related 

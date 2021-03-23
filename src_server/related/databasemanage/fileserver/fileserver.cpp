@@ -1,5 +1,7 @@
 #include "fileserver.h"
 
+#include <QDebug>
+
 namespace Related {
 
 	FileServer * FileServer::m_instance = nullptr;

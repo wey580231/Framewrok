@@ -52,7 +52,7 @@ namespace Related {
 		m_windSpeedLineEdit->setText(QString::number(data.windSpeed));
 		m_waveHighLineEdit->setText(QString::number(data.waveHigh));
 		m_oceanCurrentsLineEdit->setText(QString::number(data.oceanCurrents));
-		m_descriptionLineEdit->setText(data.description);
+		m_descriptionPlainTextEdit->setPlainText(data.description);
 	}
 
 	void DutyRecordEditDialog::acceptOk()
@@ -66,7 +66,7 @@ namespace Related {
 			request.m_windSpeed = m_windSpeedLineEdit->text().toDouble();
 			request.m_waveHigh = m_waveHighLineEdit->text().toDouble();
 			request.m_oceanCurrents = m_oceanCurrentsLineEdit->text().toDouble();
-			request.m_description = m_descriptionLineEdit->text();
+			request.m_description = m_descriptionPlainTextEdit->toPlainText();
 
 			createNewDutyRecord(request);
 		}
@@ -152,7 +152,7 @@ namespace Related {
 
 		QLabel * descriptionLabel = new QLabel();
 		descriptionLabel->setText(QStringLiteral("ÃèÊö:"));
-		m_descriptionLineEdit = new QLineEdit();
+		m_descriptionPlainTextEdit = new QPlainTextEdit();
 
 		QGridLayout * mainLayout = new QGridLayout();
 		mainLayout->addWidget(createTime, 0, 0);
@@ -171,7 +171,7 @@ namespace Related {
 		mainLayout->addWidget(m_oceanCurrentsLineEdit, 2, 3);
 
 		mainLayout->addWidget(descriptionLabel, 3, 0);
-		mainLayout->addWidget(m_descriptionLineEdit, 3, 1, 1, 3);
+		mainLayout->addWidget(m_descriptionPlainTextEdit, 3, 1, 1, 3);
 
 		mainLayout->setSpacing(20);
 		mainLayout->setContentsMargins(30, 4, 30, 4);

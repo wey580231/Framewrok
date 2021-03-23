@@ -99,42 +99,6 @@ namespace Related {
 	};
 
 	/*!
-	 * @brief 任务图片表格列
-	 */
-	enum ImageTableColumn {
-		Img_Id,
-		Img_Name,
-		Img_FileTimeStamp,
-		Img_FileType,
-		Img_FileSize,
-	};
-
-	/*!
-	 * @brief 数据分析页面数据结构
-	 */
-	enum DataAnalyseColumnIndex {
-		D_Id,
-		D_BatchNumber,
-		D_Time,
-		D_LocalDistinguish,
-		D_Result,
-		D_PlatformName,
-		D_DataType
-	};
-
-	/*!
-	 * @brief 用户管理表格列
-	 */
-	enum UserManageColumnIndex {
-		U_Id,
-		U_UserName,				/*!< 用户名 */
-		U_RegisterTime,			/*!< 注册时间 */
-		U_LastLoginTime,		/*!< 上次登录时间 */
-		U_UserRights,			/*!< 用户权限 */
-		U_IsManage				/*!< 是否为管理员 */
-	};
-
-	/*!
 	 * @brief 用户数据管理结构
 	 */
 	struct UserManageData {
@@ -145,34 +109,6 @@ namespace Related {
 		QString m_rights;			/*!< 用户权限 */
 	};
 
-	/*!
-	 * @brief 
-	 */
-	enum  TargetDatabaseDataColumnIndex {
-		T_Index,					/*!< 索引 */
-		T_TargetName,				/*!< 目标名称 */
-		T_Edttime,					/*!< 录取时间 */
-		T_Tonnage,					/*!< 吨位 */
-		T_Lon,					/*!< 经度 */
-		T_Lat,					/*!< 纬度 */
-		T_Speed,					/*!< 航行速度 */
-		T_AxlesNumber,				/*!< 轴数 */
-		T_Datalength,				/*!< 数据时长 */
-		T_Type						/*!< 类型 */
-	};
-
-	struct TargetDatabaseData{
-		int  index;					/*!< 索引 */
-		QString targetName;			/*!< 目标名称 */
-		QString edttime;			/*!< 录取时间 */
-		double tonnage;				/*!< 吨位 */
-		double lon;				/*!< 经度 */
-		double lat;				/*!<纬度 */
-		double speed;				/*!< 航行速度 */
-		int  axlesNumber;			/*!< 轴数 */
-		int datalength;				/*!< 数据时长 */
-		int type;					/*!< 类型 */
-	};
 
 	/*!
 	 * @brief 平台描述信息
@@ -199,20 +135,56 @@ namespace Related {
 		QString taskDescription;		/*!< 描述 */
 	};
 
+
 	/*!
-	 * @brief   原始数据文件参数信息
-	 * @details 
+	 * @brief 用户管理表格列
 	 */
-	struct OriginalDataFileParameter
-	{
-		QString name;				/*!< 名称 */
-		QString path;				/*!< 路径: 相对路径 */
-		double size;				/*!< 文件大小 */
-		int startIndex;				/*!< 起始数据帧 */
-		int  endIndex;				/*!< 结束数据帧 */
-		QString createTime;			/*!< 创建时间 */
-		bool isDir;					/*!< 是否为文件夹 */
+	enum UserManageColumnIndex {
+		U_Id,
+		U_UserName,				/*!< 用户名 */
+		U_RegisterTime,			/*!< 注册时间 */
+		U_LastLoginTime,		/*!< 上次登录时间 */
+		U_UserRights,			/*!< 用户权限 */
+		U_IsManage				/*!< 是否为管理员 */
 	};
+
+	/*!
+	 * @brief 文件描述表格列
+	 */
+	enum FileDescriptionTableColumn {
+		FileDescription_Index,					/*!< 索引 */
+		FileDescription_Name,					/*!< 文件名 */
+		FileDescription_FileTimeStamp,			/*!< 文件创建时间 */
+		FileDescription_FileType,				/*!< 文件类型 */
+		FileDescription_FileSize,				/*!< 文件大小 */
+	};
+
+	enum  FileType{
+		File_image,
+		File_Xml,
+		File_Dat,
+	};
+
+	/*!
+	 * @brief  文件描述书
+	 * @details 文件基本的描述信息
+	 */
+	struct FileDescriptionData {
+		FileDescriptionData() : m_size(0){
+		}
+
+		QString m_name;					/*!< 名称 */
+		QString m_suffix;				/*!< 后缀名 */
+		qint64 m_size;					/*!< 大小 */
+		QString m_fileTimeStamp;		/*!< 时间 */
+		QString m_md5;					/*!< MD5 */
+		QString m_filePath;				/*!< 全路径 */
+		QString m_rootPath;				/*!< 根路径 */
+
+		QString m_taskId;				/*!< 任务Id */
+		FileType m_FileType;			/*!< 文件类型 */
+	};
+
 
 	/*!
 	* @brief 值班日志表格列索引
@@ -362,6 +334,42 @@ namespace Related {
 		int rollAngle;				/*!< 横滚角 */
 	};
 
+
+	/*!
+	 * @brief 目标数据表格列
+	 */
+	enum  TargetDataColumnIndex {
+		T_Index,					/*!< 索引 */
+		T_TargetName,				/*!< 目标名称 */
+		T_Edttime,					/*!< 录取时间 */
+		T_Tonnage,					/*!< 吨位 */
+		T_Lon,						/*!< 经度 */
+		T_Lat,						/*!< 纬度 */
+		T_Speed,					/*!< 航行速度 */
+		T_AxlesNumber,				/*!< 轴数 */
+		T_Datalength,				/*!< 数据时长 */
+		T_Type						/*!< 类型 */
+	};
+
+	/*!
+ * @brief 目标数据表格列
+ */
+	enum  TargetWavDataColumnIndex {
+		TWAV_Index,					/*!< 索引 */
+		TWAV_TargetName,				/*!< 目标名称 */
+		TWAV_Edttime,					/*!< 录取时间 */
+		TWAV_Tonnage,					/*!< 吨位 */
+		TWAV_Lon,						/*!< 经度 */
+		TWAV_Lat,						/*!< 纬度 */
+		TWAV_Speed,					/*!< 航行速度 */
+		TWAV_AxlesNumber,				/*!< 轴数 */
+		TWAV_Datalength,				/*!< 数据时长 */
+		TWAV_Type						/*!< 类型 */
+	};
+
+	/*!
+	 * @brief AIS数据表格列
+     */
 	enum  AISDATAColumnIndex {
 		AIS_Index,					/*!< 唯一标识 */
 		AIS_TargetId,				/*!< 目标标识 */
@@ -380,6 +388,9 @@ namespace Related {
 		AIS_BuildDate,				/*!< 建造时间 */
 		AIS_Port,					/*!< 船籍港 */
 	};
+
+
+
 } //namespace Related
 
 

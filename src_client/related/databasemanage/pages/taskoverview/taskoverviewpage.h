@@ -32,6 +32,8 @@
 #include "../systemmainpage/overviewitem.h "
 #include "../../customwidget/customwidgetcontainer.h"
 
+#include "../systemmainpage/newtaskdialog.h"
+
 #include "taskbaseinfopage.h"
 #include "testimagesitem.h"
 #include "dialog/testimagesdetaildialog.h"
@@ -53,20 +55,24 @@ namespace Related {
 
 	private slots:
 		void processTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
+		void processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response);
+		void processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response);
 		void slotSelectedImagesIndex(int index);
+		void slotModiftTaskBaseInfo();
 
 	private:
 		void init();
 		void initConnect();
-		void updateTestImages();
+		void updateTaskImages();
 
 		void refreshCurrTaskSimple();
-		void createTestImagesItem();
 
 	private:
 		OverViewItem * m_taskPlatformType;
 		OverViewItem * m_platformdataSize;
 		OverViewItem * m_advSize;
+
+		Base::RIconButton * m_modifyTaskButt;
 
 		TaskBaseInfoPage   * m_taskBaseInfoPage;			/*!< 任务基本信息 */
 
@@ -77,6 +83,8 @@ namespace Related {
 
 		bool m_firstLoadData;								/*!< 第一次加载页面显示 */
 		QString m_taskId;									/*!< 任务Id */
+		TaskBaseInfo m_taskBaseInfo;
+		QList<Datastruct::TaskImageEntityData> m_taskImageInfos;
 	};
 
 } //namespace Related 

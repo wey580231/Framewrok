@@ -10,6 +10,7 @@
  #pragma once
 
 #include <QObject>
+#include <QFile>
 
 #include "netconnector.h"
 
@@ -23,11 +24,18 @@ namespace Related {
 		static FileNetConnector * instance();
 		~FileNetConnector();
 
+		void write(Datastruct::FileInfoParameter  parameter, QByteArray data);
+	
+	signals:
+		void signalSendFileStatus();
+
 	protected:
-		void processNetData(QByteArray & data);
+		void processNetData( QByteArray & data);
+
 		
 	private:
 		FileNetConnector();
+		QByteArray makePacket(Datastruct::PacketType type, Datastruct::FileInfoParameter parameter, QByteArray data);
 
 	private:
 		static FileNetConnector * m_instance;

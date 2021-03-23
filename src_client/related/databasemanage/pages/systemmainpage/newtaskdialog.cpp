@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFileDialog>
+#include <QMetaType>
 
 #include "../../customwidget/customwidgetcontainer.h"
 #include "../../net/datanetconnector.h"
@@ -13,25 +14,70 @@
 #include "../../utils/util.h"
 #include "../../global.h"
 
+#include "filedeal/checktaskdatafile.h"
+
 namespace Related {
 
-	NewTaskDialog::NewTaskDialog(QWidget *parent)
-		: Base::DialogProxy(parent)
+	NewTaskDialog::NewTaskDialog(QString taskId, TaskEditType type, QWidget *parent)
+		: Base::DialogProxy(parent), 
+		m_taskId(taskId),
+		m_taskEditType(type)
 	{
+		m_listFileDescriptions.clear();
+
+		switch (type) {
+		case Related::NewTaskDialog::Task_Create: {
+			setTitle(QStringLiteral("新建任务"));
+		}
+			break;
+		case Related::NewTaskDialog::Task_Modify: {
+			setTitle(QStringLiteral("修改任务"));
+		}
+			break;
+		default:
+			break;
+		}
+		setMinimumSize(900, 650);
+		setButton(DialogProxy::Ok, this, SLOT(respOk()));
+		setButton(DialogProxy::Cancel, this, SLOT(reject()));
+
 		init();
 		initConnect();
-
-		setTitle(QStringLiteral("新建任务"));
-		setMinimumSize(900, 650);
-
-		setButton(DialogProxy::Ok, this, SLOT(respOk()));
-
-		setButton(DialogProxy::Cancel, this, SLOT(reject()));
 	}
 
 	NewTaskDialog::~NewTaskDialog()
 	{
 
+	}
+
+	void NewTaskDialog::setTaskBaseInfo(TaskBaseInfo info)
+	{
+		m_newTaskWidget->setTaskBaseInfo(info);
+	}
+
+	void NewTaskDialog::setTaskImages(QList<Datastruct::TaskImageEntityData> list)
+	{
+		QList<FileDescriptionData > listFileDescs;
+		if (list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				FileDescriptionData fileDesc;
+				fileDesc. m_name = list.at(i).realName;
+				fileDesc.m_fileTimeStamp = list.at(i).uploadTime;		
+				fileDesc.m_suffix = list.at(i).suffix;			
+				fileDesc.m_size = list.at(i).imageSize;	
+				listFileDescs.append(fileDesc);
+			}
+		}
+
+		if (listFileDescs.size()> 0) {
+			m_imageTableModel->updateData(listFileDescs);
+		}
+		
+	}
+
+	QList<FileDescriptionData > NewTaskDialog::getFileList()
+	{
+		return m_listFileDescriptions;
 	}
 
 	void NewTaskDialog::init()
@@ -84,14 +130,14 @@ namespace Related {
 			m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-			m_imageTableModel = new ImageModel();
+			m_imageTableModel = new FileDescriptionModel();
 			m_tableView->setModel(m_imageTableModel);
 
-			m_tableView->addColumnItem(Base::ColumnItem(Img_Id, QStringLiteral("索引"),70));
-			m_tableView->addColumnItem(Base::ColumnItem(Img_Name, QStringLiteral("文件名"),300));
-			m_tableView->addColumnItem(Base::ColumnItem(Img_FileTimeStamp, QStringLiteral("修改时间"), 180));
-			m_tableView->addColumnItem(Base::ColumnItem(Img_FileType, QStringLiteral("类型"), 80));
-			m_tableView->addColumnItem(Base::ColumnItem(Img_FileSize, QStringLiteral("大小"), 80));
+			m_tableView->addColumnItem(Base::ColumnItem(FileDescription_Index, QStringLiteral("索引"),70));
+			m_tableView->addColumnItem(Base::ColumnItem(FileDescription_Name, QStringLiteral("文件名"),300));
+			m_tableView->addColumnItem(Base::ColumnItem(FileDescription_FileTimeStamp, QStringLiteral("修改时间"), 180));
+			m_tableView->addColumnItem(Base::ColumnItem(FileDescription_FileType, QStringLiteral("类型"), 80));
+			m_tableView->addColumnItem(Base::ColumnItem(FileDescription_FileSize, QStringLiteral("大小"), 80));
 
 			m_cardModel = new QScrollArea();
 			m_cardModel->setObjectName("mainWidget");
@@ -107,6 +153,7 @@ namespace Related {
 			imageWidget->setLayout(vlayout);
 		}
 
+		// 文件页面
 		{
 			Base::RIconButton * chooseDir = Util::createButt(WRAP_RESOURCE(上传_32_32), QStringLiteral("选择目录"));
 			chooseDir->setObjectName("file_choose");
@@ -135,14 +182,14 @@ namespace Related {
 			m_fileTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 			m_fileTableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-			m_fileTableModel = new ImageModel();
-			m_fileTableView->setModel(m_fileTableModel);
+			m_rawDataTableModel = new FileDescriptionModel();
+			m_fileTableView->setModel(m_rawDataTableModel);
 
-			m_fileTableView->addColumnItem(Base::ColumnItem(Img_Id, QStringLiteral("索引"), 70));
-			m_fileTableView->addColumnItem(Base::ColumnItem(Img_Name, QStringLiteral("文件名"), 300));
-			m_fileTableView->addColumnItem(Base::ColumnItem(Img_FileTimeStamp, QStringLiteral("修改时间"), 180));
-			m_fileTableView->addColumnItem(Base::ColumnItem(Img_FileType, QStringLiteral("类型"), 80));
-			m_fileTableView->addColumnItem(Base::ColumnItem(Img_FileSize, QStringLiteral("大小"), 80));
+			m_fileTableView->addColumnItem(Base::ColumnItem(FileDescription_Index, QStringLiteral("索引"), 70));
+			m_fileTableView->addColumnItem(Base::ColumnItem(FileDescription_Name, QStringLiteral("文件名"), 300));
+			m_fileTableView->addColumnItem(Base::ColumnItem(FileDescription_FileTimeStamp, QStringLiteral("修改时间"), 180));
+			m_fileTableView->addColumnItem(Base::ColumnItem(FileDescription_FileType, QStringLiteral("类型"), 80));
+			m_fileTableView->addColumnItem(Base::ColumnItem(FileDescription_FileSize, QStringLiteral("大小"), 80));
 
 			QVBoxLayout * vlayout = new QVBoxLayout();
 			vlayout->addWidget(toolWidget);
@@ -164,39 +211,115 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respTaskCreateResponse(const Datastruct::TaskCreateResponse &)),
 			this, SLOT(processTaskCreateResponse(const Datastruct::TaskCreateResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse &)),
+			this, SLOT(processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respTaskModifyResponse(const Datastruct::TaskModifyResponse &)),
+			this, SLOT(processTaskModifyResponse(const Datastruct::TaskModifyResponse &)));
+		connect(SignalDispatch::instance(), SIGNAL(respTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse &)),
+			this, SLOT(processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse &)));
 	}
 
 	void NewTaskDialog::respOk()
 	{
-		m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
-		sendTaskBaseInfo();
+		switch (m_taskEditType)
+		{
+		case Related::NewTaskDialog::Task_Create: {
+			//[] 任务基本信息 
+			m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
+			//
+			sendCreateTaskBaseInfo();
+
+			sendCreateTaskDetectPlatformInfo();
+		}
+			break;
+		case Related::NewTaskDialog::Task_Modify: {
+			m_taskBaseInfo = m_newTaskWidget->getTaskBaseInfo();
+			sendModifyTaskBaseInfo();
+		}
+			break;
+		default:
+			break;
+		}
 	}
 
 	void NewTaskDialog::openLocalFile()
 	{
 		bool fileChoose = QObject::sender()->objectName().contains("file");
 
-		QStringList imageList;
-		if (fileChoose) {
-			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.data)");
-		}
-		else {
-			imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择任务图片"),"/home", "Images (*.png *.jpg)");
-		}
-		if (imageList.isEmpty())
-			return;
+		QStringList fileList;
 
-		QList<QFileInfo> fileInfos;
-		for (QString fileName : imageList) {
-			QFileInfo fileInfo(fileName);
-			fileInfos.append(fileInfo);
-		}
+		// 原始数据
+		if (fileChoose) 
+		{
+			//imageList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择原始文件"), "/home", "Files (*.dat)");
 
-		if (fileChoose) {
-			m_fileTableModel->updateData(fileInfos);
+			QString filePath = QFileDialog::getExistingDirectory(this, QStringLiteral("请选择路径..."), "/ home");
+
+			CheckTaskDataFile * t_taskRawDataFileCheck = new CheckTaskDataFile();
+			t_taskRawDataFileCheck->setRawDataFileRootPath(filePath);
+			t_taskRawDataFileCheck->checkRawDataDir();
+			fileList = t_taskRawDataFileCheck->getFileLists();
+
+			if (fileList.isEmpty())
+				return;
+
+			QList<FileDescriptionData> listFileDescs;
+			for (QString fileName : fileList) {
+				FileDescriptionData data;
+
+				QFileInfo fileInfo(fileName);
+				data.m_name = fileInfo.baseName();
+				data.m_suffix = fileInfo.suffix();
+				data.m_size = fileInfo.size();
+				data.m_fileTimeStamp = fileInfo.created().toString("yyyy-MM-dd hh:mm:ss");
+				data.m_md5 = Base::RUtil::MD5(fileName);
+				data.m_filePath = fileName;
+				data.m_taskId = m_taskId;
+
+				if (fileInfo.suffix() == QStringLiteral("xml")) {
+					data.m_FileType = File_image;
+				}
+				else if (fileInfo.suffix() == QStringLiteral("dat"))
+				{
+					data.m_FileType = File_Dat;
+				}
+
+				listFileDescs.append(data);
+			}
+
+			if (listFileDescs.size() > 0) {
+				m_rawDataTableModel->updateData(listFileDescs);
+			}
 		}
-		else {
-			m_imageTableModel->updateData(fileInfos);
+		//[] 图片
+		else
+		{
+			fileList = QFileDialog::getOpenFileNames(this, QStringLiteral("选择任务图片"),"/home", "Images (*.png *.jpg)");
+
+			if (fileList.isEmpty())
+				return;
+
+			QList<FileDescriptionData> listFileDescs;
+			for (QString fileName : fileList) {
+				FileDescriptionData data;
+
+				QFileInfo fileInfo(fileName);
+				data.m_name = fileInfo.baseName();
+				data.m_suffix = fileInfo.suffix();
+				data.m_size = fileInfo.size();
+				data.m_fileTimeStamp = fileInfo.created().toString("yyyy-MM-dd hh:mm:ss");
+				data.m_md5 = Base::RUtil::MD5(fileName);
+				data.m_filePath = fileName;
+				data.m_taskId = m_taskId;
+				data.m_FileType = File_image;
+
+				listFileDescs.append(data);
+			}
+
+			if (listFileDescs.size() > 0) {
+				m_imageTableModel->updateData(listFileDescs);
+			}	
 		}
 	}
 
@@ -208,7 +331,7 @@ namespace Related {
 				m_imageTableModel->clearData();
 			}
 			else {
-				m_fileTableModel->clearData();
+				m_rawDataTableModel->clearData();
 			}
 		}
 	}
@@ -228,6 +351,15 @@ namespace Related {
 	void NewTaskDialog::processTaskCreateResponse(const Datastruct::TaskCreateResponse & response)
 	{
 		if(response.m_createResult){
+
+			if (m_imageTableModel->datasSize() > 0) {
+				m_listFileDescriptions.append(m_imageTableModel->getdatas());
+			}
+
+			if (m_rawDataTableModel->datasSize() > 0) {
+				m_listFileDescriptions.append(m_rawDataTableModel->getdatas());
+			}
+
 			this->accept();
 		}
 		else
@@ -239,10 +371,63 @@ namespace Related {
 		}
 	}
 
-	void NewTaskDialog::sendTaskBaseInfo()
+	void NewTaskDialog::processTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response)
+	{
+	
+	}
+
+	void NewTaskDialog::processTaskModifyResponse(const Datastruct::TaskModifyResponse & response)
+	{
+		if (response.m_result) {
+			this->accept();
+		}
+		else
+		{
+			int result = Base::RMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("创建任务失败，请从新填写信息。"), Base::RMessageBox::Yes);
+			if (result != Base::RMessageBox::Yes) {
+				this->reject();
+			}
+		}
+	}
+
+	void NewTaskDialog::processTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response)
+	{
+	}
+
+	void NewTaskDialog::sendCreateTaskBaseInfo()
 	{
 		Datastruct::TaskCreateRequest request;
-		request.taskId = Base::RUtil::UUID();
+		request.m_taskId = m_taskId;
+		request.m_taskName = m_taskBaseInfo.taskName;
+		request.m_startTime = m_taskBaseInfo.startTime;
+		request.m_endTime = m_taskBaseInfo.endTime;
+		request.m_location = m_taskBaseInfo.taskLocation;
+		request.lon = m_taskBaseInfo.lon;
+		request.lat = m_taskBaseInfo.lat;
+		request.description = QStringLiteral("description");
+
+		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendCreateTaskDetectPlatformInfo()
+	{
+		Datastruct::TaskDetectPlatformCreateRequest request;
+		request.m_id = Base::RUtil::UUID();
+		request.m_taskId = m_taskId;
+		request.m_detectId = 1;
+		request.m_name = QStringLiteral("测试平台");
+		request.m_sensorType = QStringLiteral("测试类型");
+		request.m_platformPower = 5;
+		request.m_startTime = QStringLiteral("2021-01-31 22:56:55");
+		request.m_endTime = QStringLiteral("2021-01-31 22:56:55");
+		request.m_lastTime = 10;
+		DataNetConnector::instance()->write(request);
+	}
+	
+	void NewTaskDialog::sendModifyTaskBaseInfo()
+	{
+		Datastruct::TaskModifyRequest request;
+		request.taskId = m_taskId;
 		request.taskName = m_taskBaseInfo.taskName;
 		request.startTime = m_taskBaseInfo.startTime;
 		request.endTime = m_taskBaseInfo.endTime;
@@ -252,6 +437,10 @@ namespace Related {
 		request.description = QStringLiteral("description");
 
 		DataNetConnector::instance()->write(request);
+	}
+
+	void NewTaskDialog::sendModifyTaskDetectPlatformInfo()
+	{
 	}
 
 }//namespace Related 

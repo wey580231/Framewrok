@@ -14,6 +14,7 @@
 #include <QMap>
 
 #include "../datastruct.h"
+#include "../global.h"
 
 namespace Related {
 

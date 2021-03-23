@@ -36,12 +36,29 @@ namespace Related {
 		void recvTaskDeleteResponse(const Datastruct::TaskDeleteResponse & response);
 		void recvTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response);
 		void recvTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
-		
+		void recvTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
+
+		//任务侦查平台
+		void recvTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response);
+		void recvQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response);
+		void recvTaskDetectPlatformByConditionResponse(const Datastruct::TaskDetectPlatformByConditionResponse & response);
+		void recvTaskDetectPlatformDeleteResponse(const Datastruct::TaskDetectPlatformDeleteResponse & response);
+		void recvTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response);
+
+		//任务数据文件
+		void recvTaskDataFileCreateResponse(const Datastruct::TaskDataFileCreateResponse & response);
+
+
+		//任务试验图片资源
+		void recvQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response);
+		void recvTaskImageDeleteResponse(const Datastruct::TaskImageDeleteResponse & response);
+
 		//值班日志
 		void recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
 		void recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response);
 		void recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response);
 		void recvDutyRecordModifyResponse(const Datastruct::DutyRecordModifyResponse & response);
+
 		//试验记录
 		void recvExperimentRecordCreateResponse(const Datastruct::ExperimentRecordCreateResponse & response);
 		void recvQueryAllExperimentRecordResponse(const Datastruct::LoadAllExperimentRecordsResponse & response);
@@ -59,8 +76,23 @@ namespace Related {
 		void recvQueryAllDetectPlatformSubtypesResponse(const Datastruct::LoadAllDetectPlatformSubtypesResponse & response);
 		void recvDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
 		void recvDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
+		
+		//目标信息
+		void recvTargetCreateResponse(const Datastruct::TargetCreateResponse & response);
+		void recvQueryAllTargetResponse(const Datastruct::LoadAllTargetResponse & response);
+		void recvTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response);
+		void recvTargetModifyResponse(const Datastruct::TargetModifyResponse & response);
+
+		//AIS数据信息
+		void recvAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response);
+		void recvQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response);
+		void recvAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response);
+		void recvAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response);
+
 
 	signals:
+		void signalTaskImageCreateResponse();
+
 		void respUserLoginResponse(const Datastruct::UserLoginResponse & response);
 		void respUserRegistResponse(const Datastruct::UserRegistResponse & response);
 		void respQueryUserListResponse(const Datastruct::LoadAllUserResponse & response);
@@ -73,6 +105,20 @@ namespace Related {
 		void respTaskeDleteResponse(const Datastruct::TaskDeleteResponse & response);
 		void respTaskStaticsInfoResponse(const Datastruct::TaskStaticsInfoResponse & response);
 		void respTaskSimpleResponse(const Datastruct::TaskSimpleResponse & response);
+		void respTaskModifyResponse(const Datastruct::TaskModifyResponse & response);
+		
+		//任务侦查平台
+		void respTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response);
+		void respQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response);
+		void respTaskDetectPlatformByConditionResponse(const Datastruct::TaskDetectPlatformByConditionResponse & response);
+		void respTaskDetectPlatformDeleteResponse(const Datastruct::TaskDetectPlatformDeleteResponse & response);
+		void respTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response);
+
+		void respTaskDataFileCreateResponse(const Datastruct::TaskDataFileCreateResponse & response);
+
+		//任务试验图片资源
+		void respQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response);
+		void respTaskImageDeleteResponse(const Datastruct::TaskImageDeleteResponse & response);
 		
 		//值班日志
  		void respDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response);
@@ -98,9 +144,20 @@ namespace Related {
 		void respDetectPlatformSubtypeDeleteResponse(const Datastruct::DetectPlatformSubtypeDeleteResponse & response);
 		void respDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response);
 
+		//目标信息
+		void respTargetCreateResponse(const Datastruct::TargetCreateResponse & response);
+		void respQueryAllTargetResponse(const Datastruct::LoadAllTargetResponse & response);
+		void respTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response);
+		void respTargetModifyResponse(const Datastruct::TargetModifyResponse & response);
+
+		//AIS数据信息
+		void respAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response);
+		void respQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response);
+		void respAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response);
+		void respAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response);
+
 	private:
 		SignalDispatch(QObject *parent = nullptr);
-
 
 	private:
 		static SignalDispatch * m_instance;

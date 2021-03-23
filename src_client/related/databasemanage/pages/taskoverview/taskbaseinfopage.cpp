@@ -24,7 +24,6 @@ namespace Related {
 		m_taskLon->setText(info.lon);
 		m_taskLat->setText(info.lat);
 
-
 	}
 
 	void TaskBaseInfoPage::paintEvent(QPaintEvent * event)

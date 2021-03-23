@@ -7,9 +7,17 @@
 
 namespace Related {
 
-	ExperimentRecordEditDialog::ExperimentRecordEditDialog(QWidget *parent)
-		: Base::DialogProxy(parent)
+	ExperimentRecordEditDialog::ExperimentRecordEditDialog(QString taskId, ExperimentRecordOperatioType type, QWidget *parent)
+		: Base::DialogProxy(parent),
+		m_taskId(taskId), m_operatioType(type)
 	{
+		if (m_operatioType == ERD_Create) {
+			setTitle(QStringLiteral("创建试验记录"));
+		}
+		else if (m_operatioType == ERD_Modify) {
+			setTitle(QStringLiteral("修改试验记录"));
+		}
+
 		setButton(DialogProxy::Ok, this, SLOT(acceptOk()));
 		setButton(DialogProxy::Cancel, this, SLOT(reject()));
 
@@ -24,47 +32,28 @@ namespace Related {
 
 	}
 
-	void ExperimentRecordEditDialog::setExperimentRecordDataOperatioType(ExperimentRecordOperatioType type)
-	{
-		m_operatioType = type;
-		if (m_operatioType == ERD_Create) 
-		{
-			setTitle(QStringLiteral("创建试验记录"));
-		}
-		else if(m_operatioType == ERD_Modify)
-		{
-			setTitle(QStringLiteral("修改试验记录"));
-		}
-	}
-
-	void ExperimentRecordEditDialog::setTaskId(QString taskId)
-	{
-		m_taskId = taskId;
-	}
-
 	void ExperimentRecordEditDialog::setExperimentRecordEntityData(Datastruct::ExperimentRecordEntityData data)
 	{
 		m_experimentRecordData = data;
 
-		m_lonLineEdit->setText(QString::number(data.lon));
-		m_latLineEdit->setText(QString::number(data.lat));
+		m_detectPlatformComboBox->setCurrentText(data.platformId);
+
+		m_lonEdit->setValue(data.lon);
+		m_latEdit->setValue(data.lat);
 		m_setHeadingDegreeLineEdit->setText(QString::number(data.setHeadingDegree));
 		m_actualHeadingDegreeLineEdit->setText(QString::number(data.actualHeadingDegree));
-
 	}
 
 	void ExperimentRecordEditDialog::acceptOk()
 	{
 		if (m_operatioType == ERD_Create) 
 		{
-
 			QDateTime current_date_time = QDateTime::currentDateTime();
-
 			Datastruct::ExperimentRecordCreateRequest request;
-			request.m_platformId = QStringLiteral("platform01");
+			request.m_platformId = m_detectPlatformComboBox->currentText();
 			request.m_floatingTime = current_date_time.toString(TIME_FORMAT);
-			request.m_lon = m_lonLineEdit->text().toDouble();
-			request.m_lat = m_latLineEdit->text().toDouble();
+			request.m_lon = m_lonEdit->getValue();
+			request.m_lat = m_latEdit->getValue();
 			request.m_setHeadingDegree = m_setHeadingDegreeLineEdit->text().toDouble();
 			request.m_actualHeadingDegree = m_actualHeadingDegreeLineEdit->text().toDouble();
 			request.m_acousticState = 0;
@@ -80,8 +69,8 @@ namespace Related {
 		}
 		else if(m_operatioType == ERD_Modify)
 		{
-			m_experimentRecordData.lon = m_lonLineEdit->text().toDouble();
-			m_experimentRecordData.lat = m_latLineEdit->text().toDouble();
+			m_experimentRecordData.lon = m_lonEdit->getValue();
+			m_experimentRecordData.lat = m_latEdit->getValue();
 			m_experimentRecordData.setHeadingDegree = m_setHeadingDegreeLineEdit->text().toDouble();
 			m_experimentRecordData.actualHeadingDegree = m_actualHeadingDegreeLineEdit->text().toDouble();
 
@@ -126,17 +115,26 @@ namespace Related {
 	{
 		QWidget *mainWidget = new QWidget();
 
+		QLabel * detectPlatformLabel = new QLabel();
+		detectPlatformLabel->setText(QStringLiteral("侦查平台:"));
+		detectPlatformLabel->setAlignment(Qt::AlignRight);
+		m_detectPlatformComboBox = new QComboBox();
+		QStringList strList;
+		strList << QStringLiteral("HXJ01")
+			<< QStringLiteral("HXJ02")
+			<< QStringLiteral("HXJ03")
+			<< QStringLiteral("HXJ04");
+		m_detectPlatformComboBox->addItems(strList);
+
 		QLabel * lonLabel = new QLabel();
 		lonLabel->setText(QStringLiteral("上浮经度:"));
 		lonLabel->setAlignment(Qt::AlignRight);
-		m_lonLineEdit = new QLineEdit();
-		m_lonLineEdit->setText(QString::number(0));
+		m_lonEdit = new Base::RLonLatEdit(true);
 
 		QLabel * latLabel = new QLabel();
 		latLabel->setText(QStringLiteral("上浮纬度:"));
 		latLabel->setAlignment(Qt::AlignRight);
-		m_latLineEdit = new QLineEdit();
-		m_latLineEdit->setText(QString::number(0));
+		m_latEdit = new Base::RLonLatEdit(false);
 
 		QLabel * setHeadingDegreeLabel = new QLabel();
 		setHeadingDegreeLabel->setText(QStringLiteral("设置航向角:"));
@@ -151,18 +149,19 @@ namespace Related {
 		m_actualHeadingDegreeLineEdit->setText(QString::number(0));
 
 		QGridLayout * mainLayout = new QGridLayout();
-		mainLayout->addWidget(lonLabel, 0, 0);
-		mainLayout->addWidget(m_lonLineEdit, 0, 1);
-		mainLayout->addWidget(latLabel, 1, 0);
-		mainLayout->addWidget(m_latLineEdit, 1, 1);
-		mainLayout->addWidget(setHeadingDegreeLabel, 2, 0);
-		mainLayout->addWidget(m_setHeadingDegreeLineEdit, 2, 1);
-		mainLayout->addWidget(actualHeadingDegreeLabel, 3, 0);
-		mainLayout->addWidget(m_actualHeadingDegreeLineEdit, 3, 1);
+		mainLayout->addWidget(detectPlatformLabel, 0, 0);
+		mainLayout->addWidget(m_detectPlatformComboBox, 0, 1);
+
+		mainLayout->addWidget(lonLabel, 1, 0);
+		mainLayout->addWidget(m_lonEdit, 1, 1);
+		mainLayout->addWidget(latLabel, 2, 0);
+		mainLayout->addWidget(m_latEdit, 2, 1);
+		mainLayout->addWidget(setHeadingDegreeLabel, 3, 0);
+		mainLayout->addWidget(m_setHeadingDegreeLineEdit, 3, 1);
+		mainLayout->addWidget(actualHeadingDegreeLabel, 4, 0);
+		mainLayout->addWidget(m_actualHeadingDegreeLineEdit, 4, 1);
 		mainLayout->setContentsMargins(100, 4, 100, 4);
 		mainWidget->setLayout(mainLayout);
-
-		
 
 		this->setContentWidget(mainWidget);
 	}

@@ -1,5 +1,7 @@
 #include "signaldispatch.h"
 
+#include <QDebug>
+
 namespace Related {
 
 	SignalDispatch * SignalDispatch::m_instance = nullptr;
@@ -59,6 +61,51 @@ namespace Related {
 		emit respTaskSimpleResponse(response);
 	}
 
+	void SignalDispatch::recvTaskModifyResponse(const Datastruct::TaskModifyResponse & response)
+	{
+		emit respTaskModifyResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformCreateResponse(const Datastruct::TaskDetectPlatformCreateResponse & response)
+	{
+		emit respTaskDetectPlatformCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response)
+	{
+		emit respQueryAllTaskDetectPlatformResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformByConditionResponse(const Datastruct::TaskDetectPlatformByConditionResponse & response)
+	{
+		emit respTaskDetectPlatformByConditionResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformDeleteResponse(const Datastruct::TaskDetectPlatformDeleteResponse & response)
+	{
+		emit respTaskDetectPlatformDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDetectPlatformModifyResponse(const Datastruct::TaskDetectPlatformModifyResponse & response)
+	{
+		emit respTaskDetectPlatformModifyResponse(response);
+	}
+
+	void SignalDispatch::recvTaskDataFileCreateResponse(const Datastruct::TaskDataFileCreateResponse & response)
+	{
+		emit respTaskDataFileCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response)
+	{
+		emit respQueryAllTaskImageResponse(response);
+	}
+
+	void SignalDispatch::recvTaskImageDeleteResponse(const Datastruct::TaskImageDeleteResponse & response)
+	{
+		emit respTaskImageDeleteResponse(response);
+	}
+
 	void SignalDispatch::recvDutyRecordCreateResponse(const Datastruct::DutyRecordCreateResponse & response)
 	{
 		emit respDutyRecordCreateResponse(response);
@@ -67,8 +114,8 @@ namespace Related {
 	void SignalDispatch::recvQueryAllDutyRecordResponse(const Datastruct::LoadAllDutyRecordResponse & response)
 	{
 		emit respQueryAllDutyRecordResponse(response);
-
 	}
+
 	void SignalDispatch::recvDutyRecordDeleteResponse(const Datastruct::DutyRecordDeleteResponse & response)
 	{
 		emit respDutyRecordDeleteResponse(response);
@@ -137,6 +184,46 @@ namespace Related {
 	void SignalDispatch::recvDetectPlatformSubtypeModifyResponse(const Datastruct::DetectPlatformSubtypeModifyResponse & response)
 	{
 		emit respDetectPlatformSubtypeModifyResponse(response);
+	}
+
+	void SignalDispatch::recvTargetCreateResponse(const Datastruct::TargetCreateResponse & response)
+	{
+		emit respTargetCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllTargetResponse(const Datastruct::LoadAllTargetResponse & response)
+	{
+		emit respQueryAllTargetResponse(response);
+	}
+
+	void SignalDispatch::recvTargetDeleteResponse(const Datastruct::TargetDeleteResponse & response)
+	{
+		emit respTargetDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvTargetModifyResponse(const Datastruct::TargetModifyResponse & response)
+	{
+		emit respTargetModifyResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response)
+	{
+		emit respAISDataCreateResponse(response);
+	}
+
+	void SignalDispatch::recvQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response)
+	{
+		emit respQueryAllAISDataResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response)
+	{
+		emit respAISDataDeleteResponse(response);
+	}
+
+	void SignalDispatch::recvAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response)
+	{
+		emit respAISDataModifyResponse(response);
 	}
 
 	SignalDispatch * SignalDispatch::instance()

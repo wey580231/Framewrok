@@ -30,8 +30,8 @@ namespace CommonDefines {
 		const QString manager = "manager";
 		const QString result = "result";
 		const QString errorInfo = "errorInfo";
-		const QString  offsetIndex = "offsetIndex";
-		const QString  limitIndex = "limitIndex";
+		const QString offsetIndex = "offsetIndex";
+		const QString limitIndex = "limitIndex";
 		const QString totalDataSize = "totalDataSize";
 		const QString type = "type";
 		const QString manageId = "manageId";
@@ -63,6 +63,50 @@ namespace CommonDefines {
 		const QString profileLength = "profileLength";
 		const QString profileDistance = "profileDistance";
 		const QString detectId = "detectId";
+
+		const QString count = "count";
+
+		const QString targetId = "targetId";
+		const QString mmsi = "mmsi";
+		const QString time = "time";
+		const QString course = "course";
+		const QString truehead = "truehead";
+		const QString shipType = "shipType";
+		const QString shipImo = "shipImo";
+		const QString navStatus = "navStatus";
+		const QString speed = "speed";
+		const QString eta = "eta";
+		const QString dest = "dest";
+		const QString length = "length";
+		const QString width = "width";
+		const QString callsign = "callsign";
+		const QString flag = "flag";
+		const QString buildDate = "buildDate";
+		const QString port = "port";
+
+		const QString suffix = "suffix";
+		const QString timeStamp = "timeStamp";
+		const QString size = "size";
+		const QString MD5 = "MD5";
+		const QString lastLen = "lastLen";
+		const QString fileType = "fileType";
+
+		const QString sensorType = "sensorType";
+		const QString platformPower = "platformPower";
+		const QString lastTime = "lastTime";
+
+		const QString detectPlatformId = "detectPlatformId";
+		
+		const QString fileSize = "fileSize";
+		const QString startFrameIndex = "startFrameIndex";
+		const QString endFrameIndex = "endFrameIndex";
+
+		const QString realPath = "realPath";
+	
+		const QString totalPackagesNum = "totalPackagesNum";
+		const QString currentPackagesNum = "currentPackagesNum";
+		const QString totalLength = "totalLength";
+		const QString currentLength = "currentLength";
 	};
 
 } //namespace CommonDefines 

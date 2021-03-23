@@ -36,8 +36,29 @@ namespace Table {
 	};
 
 	/*!
+	 * @brief 侦测平台表
+	 */
+	struct DetectPlatformEntity : public AbstractTable {
+		DetectPlatformEntity() :AbstractTable("detect_platform_entity") {}
+
+		QString id = "id";
+		QString name = "name";
+	};
+
+	/*!
+	 * @brief 侦测平台亚型表
+	 */
+	struct DetectPlatformSubtypeEntity : public AbstractTable {
+		DetectPlatformSubtypeEntity() :AbstractTable("detect_platform_subtype_entity") {}
+
+		QString id = "id";
+		QString detectId = "detect_id";
+		QString name = "name";
+	};
+
+	/*!
 	 * @brief 任务信息表
-	*/
+	 */
 	struct TaskEntity : public AbstractTable {
 		TaskEntity() :AbstractTable("task_entity") {}
 
@@ -49,27 +70,6 @@ namespace Table {
 		QString lon = "lon";
 		QString lat = "lat";
 		QString description = "description";
-	};
-
-	/*!
-	 * @brief 侦测平台表
-	 */
-	struct DetectPlatformEntity : public AbstractTable {
-		DetectPlatformEntity() :AbstractTable("detect_platform_entity") {}
-
-		QString id = "id";
-		QString name = "name";
-	};
-
-	/*!
-	 * @brief 侦测平台表
-	 */
-	struct DetectPlatformSubtypeEntity : public AbstractTable {
-		DetectPlatformSubtypeEntity() :AbstractTable("detect_platform_subtype_entity") {}
-
-		QString id = "id";
-		QString detectId = "detect_id";
-		QString name = "name";
 	};
 
 	/*!
@@ -90,8 +90,64 @@ namespace Table {
 	};
 
 	/*!
-	* @brief 值班日志信息表
-	*/
+	 * @brief 试验图片资源表
+	 */
+	struct TaskImageEntity : public AbstractTable {
+		TaskImageEntity() :AbstractTable("task_image_resource") {}
+
+		QString id = "id";
+		QString taskId = "task_id";
+		QString realName = "real_name";
+		QString suffix = "suffix";
+		QString uploadTime = "upload_time";
+		QString imageSize = "image_size";
+		QString md5 = "md5";
+		QString savePath = "save_path";
+		QString revcSize = "recv_size";
+		QString description = "description";
+	};
+
+	/*!
+	 * @brief 平台原始XML文件信息表
+	 */
+	struct TaskPlatformOriginalXmlEntity : public AbstractTable {
+		TaskPlatformOriginalXmlEntity() :AbstractTable("platform_original_xml") {}
+
+		QString id = "id";
+		QString taskId = "task_id";
+		QString detectPlatformId = "detect_platform_id";
+		QString realName = "real_name";
+		QString fileSize = "file_size";
+		QString startTime = "start_time";
+		QString endTime = "end_time";
+		QString md5 = "md5";
+		QString savePath = "save_path";
+		QString revcSize = "recv_size";
+	};
+
+	/*!
+	 * @brief 平台原始Data文件信息表
+	 */
+	struct TaskplatformOriginalDataEntity : public AbstractTable {
+		TaskplatformOriginalDataEntity() :AbstractTable("platform_original_data") {}
+
+		QString id = "id";
+		QString taskId = "task_id";
+		QString platformId = "platform_id";
+		QString realName = "real_name";
+		QString fileSize = "file_size";
+		QString startFrameIndex = "start_frame_index";
+		QString endFrameIndex = "end_frame_index";
+		QString startTime = "start_time";
+		QString endTime = "end_time";
+		QString md5 = "md5";
+		QString savePath = "save_path";
+		QString revcSize = "recv_size";
+	};
+
+	/*!
+	 * @brief 值班日志信息表
+	 */
 	struct DutyRecordEntity : public AbstractTable {
 		DutyRecordEntity() :AbstractTable("task_duty_record") {}
 
@@ -107,8 +163,8 @@ namespace Table {
 	};
 
 	/*!
-	* @brief 试验记录信息表
-	*/
+	 * @brief 试验记录信息表
+	 */
 	struct ExperimentRecordEntity : public AbstractTable {
 		ExperimentRecordEntity() :AbstractTable("task_experiment_record") {}
 
@@ -130,5 +186,45 @@ namespace Table {
 		QString profileDistance = "profile_distance";
 	};
 
+	/*!
+	 * @brief 目标数据信息表
+	 */
+	struct  TargetDataEntity : public AbstractTable {
+		TargetDataEntity() :AbstractTable("target_entity") {}
+
+		QString id = "id";
+		QString name = "name";
+		QString type = "type";
+		QString createTime = "create_time";
+	};
+
+	/*!
+	 * @brief AIS数据信息表
+	 */
+	struct  AISDataEntity : public AbstractTable {
+		AISDataEntity() :AbstractTable("ais_data") {}
+
+		QString id = "id";
+		QString targetId = "target_id";
+		QString mmsi = "mmsi";
+		QString time = "time";					
+		QString lon = "lon";
+		QString lat = "lat";
+		QString course = "course";
+		QString truehead = "truehead";
+		QString name = "name";
+		QString shipType = "ship_type";
+		QString shipImo = "ship_imo";
+		QString navStatus = "nav_status";
+		QString speed = "speed";
+		QString eta = "eta";
+		QString dest = "dest";
+		QString length = "length";
+		QString width = "width";
+		QString callsign = "callsign";
+		QString flag = "flag";
+		QString buildDate = "build_date";
+		QString port = "port";
+	};
 
 }	//namespace Table

@@ -12,6 +12,8 @@
 
 #include <QString>
 #include <QSettings>
+#include <QScreen>
+#include <QPixmap>
 
 #include "../base_global.h"
 
@@ -73,6 +75,9 @@ namespace Base {
 
 		/*!< 位置关系 */
 		static QPoint placeAInBCenter(QSize a,QSize b);
+
+		/*!< 截图 */
+		static QPixmap screenshotSize(int x, int y, int width, int height);
 
 	private:
 		static QSettings * gSettings;   //全局配置文件  只设置一次

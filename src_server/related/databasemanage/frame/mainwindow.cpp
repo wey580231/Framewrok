@@ -11,6 +11,7 @@
 #include "../msgserver/requestprocessthread.h"
 #include "../msgserver/msgserver.h"
 
+#include "../fileserver/filerequestprocessthread.h"
 #include "../fileserver/fileserver.h"
 
 namespace Related {
@@ -27,10 +28,14 @@ namespace Related {
 	MainWindow::~MainWindow()
 	{
 		RSingleton<RequestProcessThread>::instance()->stopMe();
+		RSingleton<FileRequestProcessThread>::instance()->stopMe();
 	}
 
 	void MainWindow::init()
 	{
+		ConfigKey ckey;
+		G_FileSaveRootPath = Base::RUtil::getGlobalValue(ckey.m_fileSave, ckey.m_filePath, "F:/RootPath").toString();
+
 		m_stackedWidget = new QStackedWidget();
 
 		QWidget * mainWidget = new QWidget();
@@ -81,6 +86,8 @@ namespace Related {
 		//TODO 20210124 待增加线程池对网络请求处理，需考虑同样一个客户端多个请求之间是否有先后顺序的要求，已经在发送结果时进行加锁处理。
 		RSingleton<RequestProcessThread>::instance()->startMe();
 		connect(RSingleton<RequestProcessThread>::instance(),SIGNAL(sendProcessResult(ResponseUnit *)),this,SLOT(processResponse(ResponseUnit *)));
+
+		RSingleton<FileRequestProcessThread>::instance()->startMe();
 	}
 
 	void MainWindow::initNetwork()

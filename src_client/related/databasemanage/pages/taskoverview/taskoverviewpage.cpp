@@ -10,7 +10,6 @@ namespace Related {
 	{
 		init();
 		initConnect();
-		createTestImagesItem();
 	}
 
 	TaskOverViewPage::~TaskOverViewPage()
@@ -48,14 +47,60 @@ namespace Related {
 	{
 		if (response.m_result == true) {
 			m_taskBaseInfoPage->setTaskBaseInfo(response.taskInfo);
+
+			m_taskBaseInfo.taskName = response.taskInfo.taskName;				
+			m_taskBaseInfo.taskLocation = response.taskInfo.location;			
+			m_taskBaseInfo.startTime = response.taskInfo.startTime;				
+			m_taskBaseInfo.endTime = response.taskInfo.endTime;				
+			m_taskBaseInfo.lon = response.taskInfo.lon;					
+			m_taskBaseInfo.lat = response.taskInfo.lat;					
+			m_taskBaseInfo.taskDescription = response.taskInfo.description;		
 		}
+	}
+
+	void TaskOverViewPage::processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse & response)
+	{
+		qDebug() << "_____________________processQueryAllTaskDetectPlatformResponse________________________";
+	}
+
+	void TaskOverViewPage::processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse & response)
+	{
+		if (m_imagesItems.size() > 0) {
+			std::for_each(m_imagesItems.begin(), m_imagesItems.end(), [](TestImagesItem * item) {
+				delete item;
+			});
+			m_imagesItems.clear();
+		}
+	
+		m_taskImageInfos = response.m_taskImageInfos;
+
+		for (int i = 0; i < response.m_taskImageCount; i++) {
+			TestImagesItem *item = new TestImagesItem();
+			item->setImagesType(TestImagesItem::TI_Sketch);
+			item->setImagesIndex(i + 1);
+			item->setMinimumSize(280, 270);
+			item->setMaximumSize(300, 290);
+			connect(item, SIGNAL(signalSeleteImagesIndex(int)), this, SLOT(slotSelectedImagesIndex(int)));
+			m_imagesItems.append(item);
+		}
+		updateTaskImages();
 	}
 
 	void TaskOverViewPage::slotSelectedImagesIndex(int index)
 	{
 		TestImagesDetailDialog dialog(this);
 		dialog.exec();
+	}
 
+	void TaskOverViewPage::slotModiftTaskBaseInfo()
+	{
+		NewTaskDialog dialog(m_taskId, NewTaskDialog::Task_Modify, this);
+		dialog.setTaskBaseInfo(m_taskBaseInfo);
+		dialog.setTaskImages(m_taskImageInfos);
+
+		if (QDialog::Accepted == dialog.exec()) {
+			refreshCurrTaskSimple();
+		}
 	}
 
 	void TaskOverViewPage::init()
@@ -103,11 +148,25 @@ namespace Related {
 		//[] 任务详细信息窗口		
 		CustomWidgetContainer * taskBaseInfoContainer = new CustomWidgetContainer();
 		{
+			m_modifyTaskButt = new Base::RIconButton();
+			m_modifyTaskButt->setText(QStringLiteral("修改任务"));
+			m_modifyTaskButt->setMinimumSize(60, 30);
+			m_modifyTaskButt->setIcon(QIcon(WRAP_RESOURCE(新增)));
+			connect(m_modifyTaskButt, SIGNAL(clicked()), this, SLOT(slotModiftTaskBaseInfo()));
+
+			QWidget * btnWidget = new QWidget();
+			QHBoxLayout * btnLayout = new QHBoxLayout();
+			btnLayout->addWidget(m_modifyTaskButt);
+			btnLayout->addStretch();
+			btnLayout->setContentsMargins(4,4,4,4);
+			btnWidget->setLayout(btnLayout);
+
 			m_taskBaseInfoPage = new TaskBaseInfoPage();
 			m_taskBaseInfoPage->setMinimumHeight(200);
 			m_taskBaseInfoPage->setMaximumHeight(240);
 
-			QHBoxLayout *taskBaseInfoLayout = new QHBoxLayout();
+			QVBoxLayout *taskBaseInfoLayout = new QVBoxLayout();
+			taskBaseInfoLayout->addWidget(btnWidget);
 			taskBaseInfoLayout->addWidget(m_taskBaseInfoPage);
 			taskBaseInfoLayout->setContentsMargins(0, 0, 0, 0);
 			taskBaseInfoContainer->setLayout(taskBaseInfoLayout);
@@ -148,9 +207,15 @@ namespace Related {
 	{
 		connect(SignalDispatch::instance(), SIGNAL(respTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)),
 			this, SLOT(processTaskSimpleResponse(const Datastruct::TaskSimpleResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse &)),
+			this, SLOT(processQueryAllTaskDetectPlatformResponse(const Datastruct::LoadAllTaskDetectPlatformResponse &)));
+
+		connect(SignalDispatch::instance(), SIGNAL(respQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse &)),
+			this, SLOT(processQueryAllTaskImageResponse(const Datastruct::LoadAllTaskImageResponse &)));
 	}
 
-	void TaskOverViewPage::updateTestImages()
+	void TaskOverViewPage::updateTaskImages()
 	{
 		QGridLayout * gLayout = nullptr;
 
@@ -177,23 +242,20 @@ namespace Related {
 
 	void TaskOverViewPage::refreshCurrTaskSimple()
 	{
+		// 任务基本信息
 		Datastruct::TaskSimpleRequest request;
 		request.taskId = m_taskId;
 		DataNetConnector::instance()->write(request);
-	}
 
-	void TaskOverViewPage::createTestImagesItem()
-	{
-		for (int i = 0; i < 15; i++ ) {
-			TestImagesItem *item = new TestImagesItem();
-			item->setImagesType(TestImagesItem::TI_Sketch);
-			item->setImagesIndex(i + 1);
-			item->setMinimumSize(280, 270);
-			item->setMaximumSize(300, 290);
-			connect(item, SIGNAL(signalSeleteImagesIndex(int)), this, SLOT(slotSelectedImagesIndex(int)));
-			m_imagesItems.append(item);
-		}
-		updateTestImages();
+		// 任务侦测平台
+		Datastruct::LoadAllTaskDetectPlatformRequest taskDetectPlatformRequest;
+		taskDetectPlatformRequest.m_taskId = m_taskId;
+		DataNetConnector::instance()->write(taskDetectPlatformRequest);
+
+		// 任务试验图片
+		Datastruct::LoadAllTaskImageRequest taskImageRequest;
+		taskImageRequest.m_taskId = m_taskId;
+		DataNetConnector::instance()->write(taskImageRequest);
 	}
 
 } //namespace Related

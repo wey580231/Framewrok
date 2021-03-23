@@ -38,16 +38,23 @@ namespace Related {
 		~AisDataPage();
 
 		PageType getPageType() const;
+		void prepareBringToTop();
 
 	private slots:
 		void respToolButtPressed(OperationToolsPage::ButtType type);
 		void setPageNum(int page);
 		void setFixedPageRowCount(int pageItemCount);
 
+		void processQueryAllAISDataResponse(const Datastruct::LoadAllAISDatasResponse & response);
+		void processAISDataCreateResponse(const Datastruct::AISDataCreateResponse & response);
+		void processAISDataDeleteResponse(const Datastruct::AISDataDeleteResponse & response);
+		void processAISDataModifyResponse(const Datastruct::AISDataModifyResponse & response);
 	private:
 		void init();
 		void initConnect();
-		void createData();
+		void refreshCurrPage();
+
+		void createAISData();
 
 	private:
 		OperationToolsPage * m_operationToolsPage;				/*!< 操作工具页面 */

@@ -14,12 +14,20 @@
 #include <qstackedwidget.h>
 
 #include <base\selfwidget\rtabwidget.h>
+
 #include "../abstractpage.h"
 
 namespace Related {
 
-	class TargetDatabaseManagePage;
+	class TargetOverViewPage;
 	class TargetDetailPage;
+
+	class FrequencyDomainAnalyse;
+	class TimeDomainAnalyse;
+	class DynamicGraphAnalysis;
+	class DemonGraph;
+	class LofarGraph;
+	class SituationAnalysis;
 
 	class TargetDatabaseWidget : public AbstractPage
 	{
@@ -31,14 +39,25 @@ namespace Related {
 
 		PageType getPageType() const;
 
+		void prepareBringToTop();
+
+	private slots:
+		void slotSelecteTargetDataInfo(QString indexId);
+
 	private:
 		void init();
 
 	private:
-		Base::RTabWidget * m_tabWidget;
+		Base::RTabWidget * m_tabWidget;							/*!<  */
+		TargetOverViewPage * m_targetOverViewPage;				/*!< 目标库概览界面 */
+		TargetDetailPage * m_targetDetailPage;					/*!< 目标详情页面 */
 
-		TargetDatabaseManagePage * m_targetDatabaseManagePage;
-		TargetDetailPage * m_targetDetailPage;
+		TimeDomainAnalyse * m_timeAnalyseWidget;			/*!< 时域分析页面 */
+		DynamicGraphAnalysis * m_audioDataWidget;			/*!< 频分析界面 */
+		DemonGraph * m_demonAnalysis;						/*!< demon分析界面 */
+		LofarGraph * m_lofarAnalysis;						/*!< lfoar分析界面 */
+		SituationAnalysis * m_situationAnalysis;			/*!< 态势分析页面 */
+
 	};
 
 }//namespace Related 

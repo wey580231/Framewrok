@@ -1,6 +1,17 @@
+/*!
+ * @brief     
+ * @details 
+ * @author    yzg
+ * @version   1.0
+ * @date      2021.03.19 11:30:04
+ * @warning
+ * @copyright NanJing RenGu.
+ * @note
+ */ 
 #pragma once
 
 #include <QObject>
+#include <QMap>
 
 #include <commondefines\protocol.h>
 #include <commondefines\structdefines.h>
